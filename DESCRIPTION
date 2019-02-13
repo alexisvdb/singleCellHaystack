@@ -1,0 +1,15 @@
+Package: singleCellHaystack
+Type: Package
+Title: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data).
+Version: 0.1.0
+Author: Alexis Vandenbon
+Maintainer: Alexis Vandenbon <alexis.vandenbon@gmail.com>
+Description: Haystack finds genes that have a biased expression level in a two-dimensional representation of 
+    higher-dimensional transcriptome data, such as single-cell RNA-seq data (scRNA-seq). scRNA-seq data is often 
+    represented in 2D plots, such as plots of two principal components, or in t-SNE plots. Many genes are not 
+    expressed in all cells in these plots, but rather only in a subset of cells, which might be located in 1 or more
+    clusters in the 2D plot. Haystack can be used to find such genes, that have a highly non-random pattern of expression.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
