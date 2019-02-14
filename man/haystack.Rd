@@ -25,5 +25,5 @@ An object of class "haystack"
 The main Haystack function.
 }
 \examples{
-warn("I will add this later")
+warning("I will add this later")
 }

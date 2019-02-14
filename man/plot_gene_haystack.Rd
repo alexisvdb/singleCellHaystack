@@ -27,5 +27,5 @@ A plot
 Visualizing the detection/expression of a gene in a 2D plot
 }
 \examples{
-warn("I will add this later")
+warning("I will add this later")
 }

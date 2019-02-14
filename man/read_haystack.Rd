@@ -16,5 +16,5 @@ An object of class "haystack"
 Function to read haystack results from file.
 }
 \examples{
-warn("I will add this later")
+warning("I will add this later")
 }

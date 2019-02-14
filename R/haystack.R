@@ -495,19 +495,20 @@ get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
 
 ########################################
 ########################################
-### get_significant_haystack
-#' Returns the most significant results of the 'haystack' analysis
+### show_result_haystack
+#' Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.
 #'
 #' @param res.haystack A 'haystack' result variable
-#' @param n If defined, the top "n" sigificant genes will be returned. Default: 10.
+#' @param n If defined, the top "n" sigificant genes will be returned. Default: NA, which shows all results.
 #' @param p.value.threshold If defined, genes passing this p-value threshold will be returned.
+#' @param gene If defined, the results of this (these) gene(s) will be returned.
 #'
-#' @return A subset of significant genes in the 'haystack' result.
+#' @return A table with a sorted subset of the 'haystack' result according to input parameters.
 #' @export
 #'
 #' @examples
 #' warning("I will add this later")
-get_significant_haystack = function(res.haystack, n=10, p.value.threshold=NA){
+show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=NA){
 
   # check input
   if(missing(res.haystack))
@@ -516,21 +517,26 @@ get_significant_haystack = function(res.haystack, n=10, p.value.threshold=NA){
     stop("'res.haystack' must be of class 'haystack'")
   if(is.null(res.haystack$results))
     stop("Results seem to be missing from 'haystack' result. Is 'res.haystack' a valid 'haystack' result?")
-  if(!is.numeric(n))
+  if(!is.na(n) & !is.numeric(n))
     stop("The value of 'n' should be an integer")
-  if(n > nrow(res.haystack$results))
+  if(!is.na(n) & n > nrow(res.haystack$results))
     warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
   if(!is.na(p.value.threshold) & (p.value.threshold<0 | p.value.threshold>1))
     stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
 
-  # by default (if p.value.threhsold is NA), use 'n' to define the results
-  if(is.na(p.value.threshold)){
-    o <- order(res.haystack$results$log.p.vals)
-    res.haystack$results[o[1:n],]
-  } else {
-    res.tmp <- subset(res.haystack$results, log.p.vals<=log10(p.value.threshold))
-    o <- order(res.tmp$log.p.vals)
-    res.tmp[o,]
+  # run through filters, one by one, if they are not NA
+  # priority is genes > p.value.threshold > n
+  result <- res.haystack$results
+  if(any(!is.na(gene))){
+    result <- subset(result, is.element(rownames(result),gene))
   }
+  if(!is.na(p.value.threshold)){
+    result <- subset(result, log.p.vals<=log10(p.value.threshold))
+  }
+
+  # at this point: 1) decide no. to return, and 2) sort by significance
+  n.to.select <- ifelse(is.na(n), nrow(result), min(n, nrow(result)))
+  o <- order(result$log.p.vals)
+  result[o[1:n.to.select],]
 
 }

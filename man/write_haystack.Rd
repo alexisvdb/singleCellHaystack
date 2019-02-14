@@ -15,5 +15,5 @@ write_haystack(res.haystack, file)
 Function to write haystack result data to file.
 }
 \examples{
-warn("I will add this later")
+warning("I will add this later")
 }
