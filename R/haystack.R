@@ -9,13 +9,13 @@ library(splines)
 
 ########################################
 ########################################
-### kde2d.faster
+### kde2d_faster
 #' Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.
 #'
 #' @param dens.x Contribution of all cells to densities of the x-axis grid points.
 #' @param dens.y Contribution of all cells to densities of the y-axis grid points.
 #'
-kde2d.faster = function (dens.x, dens.y){
+kde2d_faster = function (dens.x, dens.y){
   tcrossprod(dens.x, dens.y)
 }
 
@@ -27,7 +27,7 @@ kde2d.faster = function (dens.x, dens.y){
 #' @param x A numeric vector
 #'
 #' @return A suitable bandwith.
-default.bandwidth.nrd = function(x){
+default_bandwidth.nrd = function(x){
   r <- quantile(x, c(0.25, 0.75))
   h <- (r[2] - r[1])/1.34
   4 * 1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
@@ -43,7 +43,7 @@ default.bandwidth.nrd = function(x){
 #' @param high.resolution Logical: should high resolution be used? Default is FALSE.
 #'
 #' @return A list containing various parameters to use in the analysis.
-get.parameters.density.estimate = function(x,y,high.resolution=F){
+get_parameters_haystack = function(x,y,high.resolution=F){
 
   # I want to have a fixed number of bins between the 10th and 90th percentile in each dimension
   # this is to avoid bins getting squished because of a few outliers
@@ -90,8 +90,8 @@ get.parameters.density.estimate = function(x,y,high.resolution=F){
   limits <- c(x.lim.min,x.lim.max,y.lim.min,y.lim.max)
 
   # the bandwidths used for the kernel function
-  bandwidth.x <- default.bandwidth.nrd(x)
-  bandwidth.y <- default.bandwidth.nrd(y)
+  bandwidth.x <- default_bandwidth.nrd(x)
+  bandwidth.y <- default_bandwidth.nrd(y)
   bandwidths <- c(bandwidth.x,bandwidth.y)
   bandwidths <- bandwidths/4
 
@@ -123,12 +123,12 @@ get.parameters.density.estimate = function(x,y,high.resolution=F){
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
 #' @param classes A logical vector. Values are T is the gene is expressed in a cell, F is not.
-#' @param parameters Parameters of the analysis, as set by function 'get.parameters.density.estimate'
+#' @param parameters Parameters of the analysis, as set by function 'get_parameters_haystack'
 #' @param reference.prob A reference distribution to calculate the divergence against.
 #' @param pseudo A pseudocount, used to avoid log(0) problems.
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
-get.D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
+get_D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
 
   class.types = c(F,T)
 
@@ -143,7 +143,7 @@ get.D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
     cl.subset <- classes==cl
     if(sum(cl.subset)==0)
       next
-    density <- kde2d.faster(dens.x=parameters$dens.x[,cl.subset],dens.y=parameters$dens.y[,cl.subset])
+    density <- kde2d_faster(dens.x=parameters$dens.x[,cl.subset],dens.y=parameters$dens.y[,cl.subset])
 
     # only decide pseudo if no value was given as input
     # (in total this takes some time)
@@ -170,7 +170,7 @@ get.D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
 #' @param output.dir Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.
 #'
 #' @return A vector of log10 p values, corrected for multiple testing using the Bonferroni correction.
-get.log.p.D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL){
+get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL){
 
   t.points <- as.numeric(row.names(D_KL.randomized))
   dat.mean.log2 <- apply(log2(D_KL.randomized),1,mean)
@@ -300,12 +300,12 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   # add pseudocount to densities to avoid Inf problems
   # normalize to sum to 1
   message("### setting parameters...")
-  parameters <- get.parameters.density.estimate(x,y)
+  parameters <- get_parameters_haystack(x,y)
   if(is.null(use.advanced.sampling)){
-    density <- kde2d.faster(dens.x=parameters$dens.x,dens.y=parameters$dens.y)
+    density <- kde2d_faster(dens.x=parameters$dens.x,dens.y=parameters$dens.y)
     pseudo <- quantile(density[density>0],0.01)
   } else {
-    density <- kde2d.faster(dens.x=t(t(parameters$dens.x)*use.advanced.sampling),
+    density <- kde2d_faster(dens.x=t(t(parameters$dens.x)*use.advanced.sampling),
                             dens.y=t(t(parameters$dens.y)*use.advanced.sampling))
     density <- density / sum(density)
     pseudo <- quantile(density[density>0],0.01)
@@ -328,7 +328,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   message("### calculating Kulback-Leibler divergences...")
   D_KL.observed <- c()
   for(i in 1:count.genes){
-    D_KL.observed[i] <- get.D_KL(x=x, y=y, classes=logical[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
+    D_KL.observed[i] <- get_D_KL(x=x, y=y, classes=logical[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
     if(i%%1000==0)
       message(paste0("### ... ",i," values out of ",count.genes," done"))
   }
@@ -404,7 +404,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
         samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = F)
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
-        D_KL.randomized[r] <- get.D_KL(x=x, y=y,
+        D_KL.randomized[r] <- get_D_KL(x=x, y=y,
                                        classes=classes,
                                        parameters=parameters, reference.prob=Q, pseudo=pseudo)
       }
@@ -422,7 +422,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
       vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(logical)-T.count))
       for(r in 1:randomization.count){
         # using default sampling
-        D_KL.randomized[r] <- get.D_KL(x=x, y=y,
+        D_KL.randomized[r] <- get_D_KL(x=x, y=y,
                                        classes=sample(x = vector.to.randomize),
                                        parameters=parameters, reference.prob=Q, pseudo=pseudo)
       }
@@ -431,7 +431,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   }# end if else
 
   message("### estimating p-values...")
-  p.vals <- get.log.p.D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
+  p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
 
   if(!is.null(dir.randomization)){
     message("### writing randomized Kulback-Leibler divergences to file...")
@@ -440,7 +440,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   }
 
   message("### returning result...")
-  # return the result
+  # prepare the 'haystack' object to return
   res <- list(
     results = data.frame(
       D_KL = D_KL.observed,
@@ -449,19 +449,19 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
       row.names = row.names(logical)
     )
   )
-  structure(res, class= "haystack")
+  class(res) <- "haystack"
   res
 }
 
 
 ########################################
 ########################################
-### get.density
+### get_density
 # a function to get the density of points with value TRUE in the (x,y) plot
-get.density = function(x, y, logical, rows.subset=1:nrow(logical), high.resolution=F){
+get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resolution=F){
 
   # set the parameters for getting the densities
-  parameters <- get.parameters.density.estimate(x,y,high.resolution)
+  parameters <- get_parameters_haystack(x,y,high.resolution)
 
   densities <- array(data=NA, dim=c(length(rows.subset),parameters$grid.points))
 
@@ -470,7 +470,7 @@ get.density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
     r <- rows.subset[i]
     x.subset <- logical[r,]==cl
     y.subset <- logical[r,]==cl
-    density <- kde2d.faster(dens.x=parameters$dens.x[,x.subset],
+    density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
                             dens.y=parameters$dens.y[,y.subset])
 
     densities[i,,] <- density
@@ -483,10 +483,10 @@ get.density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
 
 ########################################
 ########################################
-### get.hierarchical.clustering
+### get_hierarchical_clustering
 # clusters genes according to their density profile in the (x,y) plot
-get.hierarchical.clustering = function(x, y, logical, rows.subset=1:nrow(logical)){
-  densities <- get.density(x=x, y=y, logical=classes, rows.subset = rows.subset)
+get_hierarchical_clustering = function(x, y, logical, rows.subset=1:nrow(logical)){
+  densities <- get_density(x=x, y=y, logical=classes, rows.subset = rows.subset)
   mat.dens <- apply(densities,1, function(x) as.vector(x))
   colnames(mat.dens) <- row.names(logical)[rows.subset]
   dist <- as.dist(1 - cor(mat.dens))
@@ -498,10 +498,10 @@ get.hierarchical.clustering = function(x, y, logical, rows.subset=1:nrow(logical
 
 ########################################
 ########################################
-### get.high.resolution.density.of.clusters
+### get_high_resolution_density_of_clusters
 # Given clusters of genes, this function return the averaged density profile
 # in the (x,y) plot for each cluster.
-get.high.resolution.density.of.clusters = function(x, y, logical, clusters){
+get_high_resolution_density_of_clusters = function(x, y, logical, clusters){
 
   unique.clusters <- sort(unique(clusters))
   mean.densities <- list()
@@ -511,7 +511,7 @@ get.high.resolution.density.of.clusters = function(x, y, logical, clusters){
     cl <- unique.clusters[c]
     genes <- names(clusters[clusters==cl])
     gene.indices <- which(is.element(row.names(logical),genes))
-    d <- get.density(x=x, y=y, logical=logical, rows.subset = gene.indices, high.resolution = T)
+    d <- get_density(x=x, y=y, logical=logical, rows.subset = gene.indices, high.resolution = T)
     mean.density <- apply(d,c(2,3),mean)
     mean.densities[[cl]] <- mean.density
     #heatmap.2(t(mean.density)[ncol(mean.density):1,], Rowv = NA, Colv=NA, dendrogram = "none", scale="none", trace="none")
