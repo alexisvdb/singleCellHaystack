@@ -256,7 +256,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #' @export
 #'
 #' @examples
-#' warn("I will add this later")
+#' warning("I will add this later")
 haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization = NULL){
 
   # check input
@@ -277,9 +277,9 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
 
   # warn about unusal input sizes
   if(length(x) < 50)
-    warn("The number of cells seems very low (",length(x),"). Check your input.")
+    warning("The number of cells seems very low (",length(x),"). Check your input.")
   if(nrow(logical) < 100)
-    warn("The number of genes seems very low (",nrow(logical),"). Check your input.")
+    warning("The number of genes seems very low (",nrow(logical),"). Check your input.")
 
 
   # make dir if needed
@@ -506,7 +506,7 @@ get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
 #' @export
 #'
 #' @examples
-#' warn("I will add this later")
+#' warning("I will add this later")
 get_significant_haystack = function(res.haystack, n=10, p.value.threshold=NA){
 
   # check input
@@ -519,7 +519,7 @@ get_significant_haystack = function(res.haystack, n=10, p.value.threshold=NA){
   if(!is.numeric(n))
     stop("The value of 'n' should be an integer")
   if(n > nrow(res.haystack$results))
-    stop("Integer value of 'n' is larger than the number of rows in the 'haystack' results")
+    warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
   if(!is.na(p.value.threshold) & (p.value.threshold<0 | p.value.threshold>1))
     stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
 

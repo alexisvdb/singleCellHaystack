@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' warn("I will add this later")
+#' warning("I will add this later")
 write_haystack = function (res.haystack, file){
 
   # check input
@@ -37,7 +37,7 @@ write_haystack = function (res.haystack, file){
 #' @export
 #'
 #' @examples
-#' warn("I will add this later")
+#' warning("I will add this later")
 read_haystack = function (file){
 
   # check input

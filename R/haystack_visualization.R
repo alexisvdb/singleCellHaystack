@@ -23,7 +23,7 @@ library(reshape2)
 #' @export
 #'
 #' @examples
-#' warn("I will add this later")
+#' warning("I will add this later")
 plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=F){
 
   # check input
