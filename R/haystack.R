@@ -45,9 +45,14 @@ default_bandwidth.nrd = function(x){
 #' @return A list containing various parameters to use in the analysis.
 get_parameters_haystack = function(x,y,high.resolution=F){
 
+  # the bandwidths used for the kernel function
+  bandwidth.x <- default_bandwidth.nrd(x)
+  bandwidth.y <- default_bandwidth.nrd(y)
+  bandwidths <- c(bandwidth.x,bandwidth.y)
+  bandwidths <- bandwidths/4
+
   # I want to have a fixed number of bins between the 10th and 90th percentile in each dimension
   # this is to avoid bins getting squished because of a few outliers
-
   # the default number of bins between the 10% and 90% points in each dimension
   if(high.resolution==T){
     grid.points.10.90 <- 125
@@ -62,10 +67,11 @@ get_parameters_haystack = function(x,y,high.resolution=F){
   y90 <- as.numeric(quantile(y,0.90))
 
   # get the minimum and maximum of each dimension
-  x.min <- min(x)
-  x.max <- max(x)
-  y.min <- min(y)
-  y.max <- max(y)
+  # with an added padding the size of a bandwidth
+  x.min <- min(x) - bandwidths[1]
+  x.max <- max(x) + bandwidths[1]
+  y.min <- min(y) - bandwidths[2]
+  y.max <- max(y) + bandwidths[2]
 
   # set the bin size and total number of bins in each dimension
   x.bin.size <- (x90-x10)/grid.points.10.90
@@ -88,12 +94,6 @@ get_parameters_haystack = function(x,y,high.resolution=F){
 
   # the limits of the grid in both dimensions
   limits <- c(x.lim.min,x.lim.max,y.lim.min,y.lim.max)
-
-  # the bandwidths used for the kernel function
-  bandwidth.x <- default_bandwidth.nrd(x)
-  bandwidth.y <- default_bandwidth.nrd(y)
-  bandwidths <- c(bandwidth.x,bandwidth.y)
-  bandwidths <- bandwidths/4
 
   # getting the distances (in units of bandwidths) between all cells and all grid points
   gx <- seq.int(x.lim.min, x.lim.max, length.out = x.total.grid.points)
@@ -457,7 +457,15 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
 ########################################
 ########################################
 ### get_density
-# a function to get the density of points with value TRUE in the (x,y) plot
+#' Function to get the density of points with value TRUE in the (x,y) plot
+#'
+#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
+#' @param y y-axis coordinates of cells in a 2D representation
+#' @param logical A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param rows.subset Indices of the rows of 'logical' for which to get the densities. Default: all.
+#' @param high.resolution logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution
+#'
+#' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
 get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resolution=F){
 
   # set the parameters for getting the densities
@@ -473,49 +481,15 @@ get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
     density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
                             dens.y=parameters$dens.y[,y.subset])
 
-    densities[i,,] <- density
+    densities[i,,] <- density / sum(density)
 
   }
 
+  # set dimension names to genes, and grid points of x and y axes
+  dimnames(densities) <- list(rownames(logical)[rows.subset],
+                         seq(parameters$limits[1],parameters$limits[2],length.out = parameters$grid.points[1]), # x grid
+                         seq(parameters$limits[3],parameters$limits[4],length.out = parameters$grid.points[2])  # y grid
+                         )
   densities
 }
 
-
-########################################
-########################################
-### get_hierarchical_clustering
-# clusters genes according to their density profile in the (x,y) plot
-get_hierarchical_clustering = function(x, y, logical, rows.subset=1:nrow(logical)){
-  densities <- get_density(x=x, y=y, logical=classes, rows.subset = rows.subset)
-  mat.dens <- apply(densities,1, function(x) as.vector(x))
-  colnames(mat.dens) <- row.names(logical)[rows.subset]
-  dist <- as.dist(1 - cor(mat.dens))
-  hc <- hclust(dist, method="ward.D")
-
-  hc
-}
-
-
-########################################
-########################################
-### get_high_resolution_density_of_clusters
-# Given clusters of genes, this function return the averaged density profile
-# in the (x,y) plot for each cluster.
-get_high_resolution_density_of_clusters = function(x, y, logical, clusters){
-
-  unique.clusters <- sort(unique(clusters))
-  mean.densities <- list()
-
-  # run through the genes in each cluster and average their densities
-  for(c in 1:length(unique.clusters)){
-    cl <- unique.clusters[c]
-    genes <- names(clusters[clusters==cl])
-    gene.indices <- which(is.element(row.names(logical),genes))
-    d <- get_density(x=x, y=y, logical=logical, rows.subset = gene.indices, high.resolution = T)
-    mean.density <- apply(d,c(2,3),mean)
-    mean.densities[[cl]] <- mean.density
-    #heatmap.2(t(mean.density)[ncol(mean.density):1,], Rowv = NA, Colv=NA, dendrogram = "none", scale="none", trace="none")
-  }
-
-  mean.densities
-}

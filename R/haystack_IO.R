@@ -10,19 +10,19 @@
 #'
 #' @examples
 #' warn("I will add this later")
-write_haystack = function (x, file){
+write_haystack = function (res.haystack, file){
 
   # check input
-  if(missing(x))
-    stop("Parameter 'x' ('haystack' result) is missing")
-  if(class(x)!="haystack")
-    stop("'x' must be of class 'haystack'")
-  if(is.null(x$results))
-    stop("Results seem to be missing from 'haystack' result. Is 'x' a valid 'haystack' result?")
+  if(missing(res.haystack))
+    stop("Parameter 'res.haystack' ('haystack' result) is missing")
+  if(class(res.haystack)!="haystack")
+    stop("'res.haystack' must be of class 'haystack'")
+  if(is.null(res.haystack$results))
+    stop("Results seem to be missing from 'haystack' result. Is 'res.haystack' a valid 'haystack' result?")
   if(missing(file))
     stop("Parameter 'file' is missing")
 
-  write.csv(x = x$results, file = file)
+  write.csv(x = res.haystack$results, file = file)
 }
 
 

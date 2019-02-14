@@ -4,12 +4,12 @@
 \alias{write_haystack}
 \title{Function to write haystack result data to file.}
 \usage{
-write_haystack(x, file)
+write_haystack(res.haystack, file)
 }
 \arguments{
-\item{x}{A 'haystack' result variable}
-
 \item{file}{A file to write to}
+
+\item{x}{A 'haystack' result variable}
 }
 \description{
 Function to write haystack result data to file.
