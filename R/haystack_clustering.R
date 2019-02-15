@@ -28,7 +28,7 @@ hclust_haystack= function(x, y, detection, genes, method="ward.D"){
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!all(is.character(genes)))
     stop("Value of 'genes' should be characters")
-  if(is.element(genes, rownames(detection))==0)
+  if(sum(is.element(genes, rownames(detection)))==0)
     stop("None of the values in 'genes' are present in row names of 'detection'")
 
 
