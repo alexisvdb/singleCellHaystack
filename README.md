@@ -11,6 +11,7 @@ A small toy dataset is included in the package. The toy dataset includes:
 
 - 'dat.tsne':       a 2D representation of the cell in dat.expression
 
+
 ``` r
 # Turn the expression data into detection (gene detected = T, not detected = F)
 dat.detection <- dat.expression > 1
@@ -29,23 +30,24 @@ show_result_haystack(res.haystack = res, n=10)
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
 
 # visualize one of the surprizing genes
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene=gene, detection = detection, high.resolution = T)
+plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, 
+                      gene=gene, detection = dat.detection, high.resolution = T)
 
-# get the top 100 most significant genes, and cluster them by their distribution pattern in the 2D plot
-sorted.table <- show_result_haystack(res.haystack = res, n=100)
+# get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
+sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
 gene.subset <- row.names(sorted.table)
 
 # k-means clustering
-km <- kmeans_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=detection, genes=gene.subset, k=5)
+km <- kmeans_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset, k=5)
 km.clusters <- km$cluster
 
 # alternatively: hierarchical clustering
-#hc <- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=detection, genes=gene.subset)
+#hc <- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset)
 #hc.clusters <- cutree(hc,k = 5)
 
 # visualize cluster distributions
-plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=detection, genes=names(km.clusters[km.clusters==1]))
-
+plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, 
+                          genes=names(km.clusters[km.clusters==1]))
 
 ```
 
