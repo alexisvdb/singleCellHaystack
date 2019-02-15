@@ -1,39 +1,96 @@
 
 ########################################
 ########################################
-### get_hierarchical_clustering
-# clusters genes according to their density profile in the (x,y) plot
-get_hierarchical_clustering = function(x, y, logical, rows.subset=1:nrow(logical)){
-  densities <- get_density(x=x, y=y, logical=classes, rows.subset = rows.subset)
-  mat.dens <- apply(densities,1, function(x) as.vector(x))
-  colnames(mat.dens) <- row.names(logical)[rows.subset]
-  dist <- as.dist(1 - cor(mat.dens))
-  hc <- hclust(dist, method="ward.D")
+### hclust_haystack
+#' Function for hierarchical clustering of genes according to their distribution on a 2D plot.
+#'
+#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
+#' @param y y-axis coordinates of cells in a 2D representation
+#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param genes A set of genes (of the 'detection' data) which will be clustered.
+#' @param method The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".
+#'
+#' @return An object of class hclust, describing a hierarchical clustering tree.
+#' @export
+#'
+#' @examples
+#' warning("I will add this later")
+hclust_haystack= function(x, y, detection, genes, method="ward.D"){
 
+  # check input
+  if(!is.numeric(x))
+    stop("'x' must be a numeric vector")
+  if(!is.numeric(y))
+    stop("'y' must be a numeric vector")
+  if(length(x) != length(y))
+    stop("'x' and 'y' must have the same length")
+  if(ncol(detection) != length(x))
+    stop("The number of columns in 'detection' must be the same as the length of 'x'")
+  if(!all(is.character(genes)))
+    stop("Value of 'genes' should be characters")
+  if(is.element(genes, rownames(detection))==0)
+    stop("None of the values in 'genes' are present in row names of 'detection'")
+
+
+  # get densities (not in high relosultion)
+  detection.rownames <- rownames(detection)
+  row.index.subset <- which(is.element(detection.rownames, genes))
+
+  densities <- get_density(x=x, y=y, detection=detection, rows.subset = row.index.subset)
+  mat.dens <- apply(densities,1, function(x) as.vector(x))
+  colnames(mat.dens) <- detection.rownames[row.index.subset]
+
+  dist <- as.dist(1 - cor(mat.dens))
+  hc <- hclust(dist, method=method)
   hc
 }
 
 
 ########################################
 ########################################
-### get_high_resolution_density_of_clusters
-# Given clusters of genes, this function return the averaged density profile
-# in the (x,y) plot for each cluster.
-get_high_resolution_density_of_clusters = function(x, y, logical, clusters){
+### kmeans_haystack
+#' Function for k-means clustering of genes according to their distribution on a 2D plot.
+#'
+#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
+#' @param y y-axis coordinates of cells in a 2D representation
+#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param genes A set of genes (of the 'detection' data) which will be clustered.
+#' @param k The number of clusters to return.
+#' @param ... Additional parameters which will be passed on to the kmeans function.
+#'
+#' @return An object of class kmeans, describing a clustering into 'k' clusters
+#' @export
+#'
+#' @examples
+#' warning("I will add this later")
+kmeans_haystack= function(x, y, detection, genes, k, ...){
 
-  unique.clusters <- sort(unique(clusters))
-  mean.densities <- list()
+  # check input
+  if(!is.numeric(x))
+    stop("'x' must be a numeric vector")
+  if(!is.numeric(y))
+    stop("'y' must be a numeric vector")
+  if(length(x) != length(y))
+    stop("'x' and 'y' must have the same length")
+  if(ncol(detection) != length(x))
+    stop("The number of columns in 'detection' must be the same as the length of 'x'")
+  if(!all(is.character(genes)))
+    stop("Value of 'genes' should be characters")
+  if(sum(is.element(genes, rownames(detection)))==0)
+    stop("None of the values in 'genes' are present in row names of 'detection'")
+  if(missing(k) | !is.numeric(k) | k < 1)
+    stop("Value of 'k' should be an integer larger than 1")
 
-  # run through the genes in each cluster and average their densities
-  for(c in 1:length(unique.clusters)){
-    cl <- unique.clusters[c]
-    genes <- names(clusters[clusters==cl])
-    gene.indices <- which(is.element(row.names(logical),genes))
-    d <- get_density(x=x, y=y, logical=logical, rows.subset = gene.indices, high.resolution = T)
-    mean.density <- apply(d,c(2,3),mean)
-    mean.densities[[cl]] <- mean.density
-    #heatmap.2(t(mean.density)[ncol(mean.density):1,], Rowv = NA, Colv=NA, dendrogram = "none", scale="none", trace="none")
-  }
 
-  mean.densities
+  # get densities (not in high relosultion)
+  detection.rownames <- rownames(detection)
+  row.index.subset <- which(is.element(detection.rownames, genes))
+
+  densities <- get_density(x=x, y=y, detection=detection, rows.subset = row.index.subset)
+  mat.dens <- apply(densities,1, function(x) as.vector(x))
+  colnames(mat.dens) <- detection.rownames[row.index.subset]
+
+  km <- kmeans(x=t(mat.dens), centers=k, ...)
+  km
 }
+

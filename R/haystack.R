@@ -248,7 +248,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param logical A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
 #' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #'
@@ -257,7 +257,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #'
 #' @examples
 #' warning("I will add this later")
-haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization = NULL){
+haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
 
   # check input
   if(!is.numeric(x))
@@ -266,8 +266,8 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
     stop("'y' must be a numeric vector")
   if(length(x) != length(y))
     stop("'x' and 'y' must have the same length")
-  if(ncol(logical) != length(x))
-    stop("The number of columns in 'logical' must be the same as the length of 'x'")
+  if(ncol(detection) != length(x))
+    stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!is.null(use.advanced.sampling)){
     if(!is.numeric(use.advanced.sampling))
       stop("'use.advanced.sampling' must either be NULL or a numeric vector")
@@ -278,8 +278,8 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   # warn about unusal input sizes
   if(length(x) < 50)
     warning("The number of cells seems very low (",length(x),"). Check your input.")
-  if(nrow(logical) < 100)
-    warning("The number of genes seems very low (",nrow(logical),"). Check your input.")
+  if(nrow(detection) < 100)
+    warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
 
 
   # make dir if needed
@@ -288,8 +288,8 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
       dir.create(dir.randomization)
   }
 
-  count.cells <- ncol(logical)
-  count.genes <- nrow(logical)
+  count.cells <- ncol(detection)
+  count.genes <- nrow(detection)
 
   ##################################
   ### get reference probabilities "Q"
@@ -328,7 +328,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   message("### calculating Kulback-Leibler divergences...")
   D_KL.observed <- c()
   for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL(x=x, y=y, classes=logical[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
+    D_KL.observed[i] <- get_D_KL(x=x, y=y, classes=detection[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
     if(i%%1000==0)
       message(paste0("### ... ",i," values out of ",count.genes," done"))
   }
@@ -348,11 +348,11 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
   # - use those to estimate p values
 
   message("### starting randomizations...")
-  T.counts <- apply(logical,1,sum)
+  T.counts <- apply(detection,1,sum)
   T.counts.unique <- sort(unique(T.counts))
   T.counts.unique.no <- length(T.counts.unique)
-  p.vals <- rep(NA,nrow(logical))
-  p.types <- rep(NA,nrow(logical))
+  p.vals <- rep(NA,nrow(detection))
+  p.types <- rep(NA,nrow(detection))
   randomization.count <- 50
 
   # select T counts to include in randomizations
@@ -419,7 +419,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
       T.count <- T.counts.selected[i]
 
       D_KL.randomized <- rep(NA,randomization.count)
-      vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(logical)-T.count))
+      vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(detection)-T.count))
       for(r in 1:randomization.count){
         # using default sampling
         D_KL.randomized[r] <- get_D_KL(x=x, y=y,
@@ -446,7 +446,7 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
       D_KL = D_KL.observed,
       log.p.vals = p.vals,
       T.counts = T.counts,
-      row.names = row.names(logical)
+      row.names = row.names(detection)
     )
   )
   class(res) <- "haystack"
@@ -461,12 +461,12 @@ haystack = function(x, y, logical, use.advanced.sampling=NULL, dir.randomization
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param logical A logical matrix showing which gens (rows) are detected in which cells (columns)
-#' @param rows.subset Indices of the rows of 'logical' for which to get the densities. Default: all.
+#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param rows.subset Indices of the rows of 'detection' for which to get the densities. Default: all.
 #' @param high.resolution logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
-get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resolution=F){
+get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution=F){
 
   # set the parameters for getting the densities
   parameters <- get_parameters_haystack(x,y,high.resolution)
@@ -476,8 +476,8 @@ get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
   cl <- T # we are only looking at the T points here
   for(i in 1:length(rows.subset)){
     r <- rows.subset[i]
-    x.subset <- logical[r,]==cl
-    y.subset <- logical[r,]==cl
+    x.subset <- detection[r,]==cl
+    y.subset <- detection[r,]==cl
     density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
                             dens.y=parameters$dens.y[,y.subset])
 
@@ -486,7 +486,7 @@ get_density = function(x, y, logical, rows.subset=1:nrow(logical), high.resoluti
   }
 
   # set dimension names to genes, and grid points of x and y axes
-  dimnames(densities) <- list(rownames(logical)[rows.subset],
+  dimnames(densities) <- list(rownames(detection)[rows.subset],
                          seq(parameters$limits[1],parameters$limits[2],length.out = parameters$grid.points[1]), # x grid
                          seq(parameters$limits[3],parameters$limits[4],length.out = parameters$grid.points[2])  # y grid
                          )

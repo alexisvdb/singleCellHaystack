@@ -4,7 +4,7 @@
 \alias{get_density}
 \title{Function to get the density of points with value TRUE in the (x,y) plot}
 \usage{
-get_density(x, y, logical, rows.subset = 1:nrow(logical),
+get_density(x, y, detection, rows.subset = 1:nrow(detection),
   high.resolution = F)
 }
 \arguments{
@@ -12,9 +12,9 @@ get_density(x, y, logical, rows.subset = 1:nrow(logical),
 
 \item{y}{y-axis coordinates of cells in a 2D representation}
 
-\item{logical}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
+\item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
 
-\item{rows.subset}{Indices of the rows of 'logical' for which to get the densities. Default: all.}
+\item{rows.subset}{Indices of the rows of 'detection' for which to get the densities. Default: all.}
 
 \item{high.resolution}{logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution}
 }
