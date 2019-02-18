@@ -116,10 +116,10 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!all(is.na(genes)) & !all(is.integer(genes)) & !all(is.character(genes)))
     stop("Entries of 'genes' should be either characters, or integers")
-  if(is.integer(gene) & gene > nrow(expression))
-    stop("Integer value of 'gene' (\"",gene,"\") is larger than the number of rows in 'expression' (",nrow(expression),")")
-  if(!all(is.na(genes)) & all(is.character(genes)) & sum(is.element(gene, rownames(expression)))==0)
-    stop("None of the entries in 'genes' are present in row names of 'expression'")
+  if(all(is.integer(genes)) & any(genes > nrow(detection)))
+    stop("Integer index of some genes is larger than the number of rows in 'expression' (",nrow(detection),")")
+  if(!all(is.na(genes)) & all(is.character(genes)) & sum(is.element(genes, rownames(detection)))==0)
+    stop("None of the entries in 'genes' are present in row names of 'detection'")
   if(!is.logical(high.resolution))
     stop("Value of 'high.resolution' should be logical (TRUE or FALSE")
 
@@ -128,8 +128,8 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
   if(all(is.na(genes))){
     gene.indices <- 1:nrow(detection)
   }
-  else if(all(is.character(gene))){
-    gene.indices <- which(is.element(rownames(expression),genes))
+  else if(all(is.character(genes))){
+    gene.indices <- which(is.element(rownames(detection),genes))
   } else {
     gene.indices <- unique(genes)
   }
