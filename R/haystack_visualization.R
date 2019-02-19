@@ -61,15 +61,17 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
   # if detection is NULL: just show expression or presence of the gene in the 2D plot
   # else: get the density distribution of the cells expressing the gene and add it to the plot
   if(is.null(detection)){
-    d <- ggplot()
+    d <- ggplot() + theme_bw()
   } else {
     # get the density pattern around cells
     dens <- get_density(x=x, y=y, detection=detection, rows.subset=gene.index, high.resolution = high.resolution)
     dens.melted <- melt(dens[1,,])
     colnames(dens.melted) <- c("x", "y", "Density")
     d <- ggplot(dens.melted, aes(x, y))
-    d <- d + geom_tile(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
+    d <- d + geom_raster(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
+    d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   }
+  d <- d + theme(panel.border = element_rect(colour = "black", fill=NA))
 
   # if expression is logical: treat as detection (TRUE or FALSE)
   # else, treat as expression levels
@@ -138,10 +140,10 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
   ### get mean density
 
   # get densities of all genes
-  d <- get_density(x=x, y=y, detection=detection, rows.subset = gene.indices, high.resolution = high.resolution)
+  dens <- get_density(x=x, y=y, detection=detection, rows.subset = gene.indices, high.resolution = high.resolution)
 
   # get average density
-  mean.density <- apply(d,c(2,3),mean)
+  mean.density <- apply(dens,c(2,3),mean)
 
   ##############################
   ### get mean detection level
@@ -155,9 +157,10 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
   ### make plot
   dens.melted <- melt(mean.density)
   colnames(dens.melted) <- c("x", "y", "Density")
-  d <- ggplot(dens.melted, aes(x, y))
-  d <- d + geom_tile(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
-
+  d <- ggplot(dens.melted, aes(x, y)) +
+    theme(panel.border = element_rect(colour = "black", fill=NA))
+  d <- d + geom_raster(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
+  d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   Detection <- mean.detection
   d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection)) + scale_color_gradient(low="grey", high="red")
 
