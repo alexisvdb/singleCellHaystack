@@ -9,6 +9,10 @@ Description: Haystack finds genes that have a biased expression level in a two-d
     represented in 2D plots, such as plots of two principal components, or in t-SNE plots. Many genes are not 
     expressed in all cells in these plots, but rather only in a subset of cells, which might be located in 1 or more
     clusters in the 2D plot. Haystack can be used to find such genes, that have a highly non-random pattern of expression.
+Imports: 
+    splines,
+    ggplot2,
+    reshape2
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
