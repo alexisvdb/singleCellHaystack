@@ -4,7 +4,7 @@
 \name{singleCellHaystack-package}
 \alias{singleCellHaystack}
 \alias{singleCellHaystack-package}
-\title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data).}
+\title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data)}
 \description{
 Haystack finds genes that have a biased expression level in a two-dimensional representation of 
     higher-dimensional transcriptome data, such as single-cell RNA-seq data (scRNA-seq). scRNA-seq data is often 
