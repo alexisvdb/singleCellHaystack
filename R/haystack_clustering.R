@@ -1,5 +1,5 @@
-########################################
-########################################
+
+
 ### hclust_haystack
 #' Function for hierarchical clustering of genes according to their distribution on a 2D plot.
 #'
@@ -45,8 +45,8 @@ hclust_haystack= function(x, y, detection, genes, method="ward.D"){
 }
 
 
-########################################
-########################################
+
+
 ### kmeans_haystack
 #' Function for k-means clustering of genes according to their distribution on a 2D plot.
 #'

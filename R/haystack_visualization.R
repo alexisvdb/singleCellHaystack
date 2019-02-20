@@ -1,5 +1,5 @@
-########################################
-########################################
+
+
 #' Visualizing the detection/expression of a gene in a 2D plot
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -80,8 +80,8 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
 
 
 
-########################################
-########################################
+
+
 #' Visualizing the detection/expression of a set of genes in a 2D plot
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -126,7 +126,7 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
     gene.indices <- unique(genes)
   }
 
-  ##############################
+
   ### get mean density
 
   # get densities of all genes
@@ -135,7 +135,7 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
   # get average density
   mean.density <- apply(dens,c(2,3),mean)
 
-  ##############################
+
   ### get mean detection level
   if(length(gene.indices)==1){
     mean.detection <- apply(t(detection[gene.indices,]),2,mean)
@@ -143,7 +143,7 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
     mean.detection <- apply(detection[gene.indices,],2,mean)
   }
 
-  ##############################
+
   ### make plot
   dens.melted <- melt(mean.density)
   colnames(dens.melted) <- c("x", "y", "Density")

@@ -1,7 +1,5 @@
-
-########################################
-########################################
-### kde2d_faster
+#' kde2d_faster
+#'
 #' Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.
 #'
 #' @param dens.x Contribution of all cells to densities of the x-axis grid points.
@@ -11,9 +9,6 @@ kde2d_faster = function (dens.x, dens.y){
   tcrossprod(dens.x, dens.y)
 }
 
-
-########################################
-########################################
 #' Default function given by function bandwidth.nrd in MASS. No changes were made to this function.
 #'
 #' @param x A numeric vector
@@ -25,9 +20,6 @@ default_bandwidth.nrd = function(x){
   4 * 1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
 }
 
-
-########################################
-########################################
 #' Function that decides most of the parameters that will be during the "Haystack" analysis.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -107,9 +99,6 @@ get_parameters_haystack = function(x,y,high.resolution=F){
   )
 }
 
-
-########################################
-########################################
 #' Calculates the Kullback-Leibler divergence between distributions.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -151,9 +140,6 @@ get_D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
   sum(D_KLs)
 }
 
-
-########################################
-########################################
 #' Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.
 #'
 #' @param T.counts The number of cells in which a gene is detected.
@@ -168,8 +154,6 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   dat.mean.log2 <- apply(log2(D_KL.randomized),1,mean)
   dat.sd.log2 <- apply(log2(D_KL.randomized),1,sd)
 
-  ##############################################
-  ##############################################
   # fitting a spline for the mean D_KL
 
   # set df to 10, but lower if there are few points
@@ -195,8 +179,6 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   }
 
 
-  ##############################################
-  ##############################################
   # fitting a spline for the standard deviation of D_KL
 
   # set df to 10, but lower if there are few points
@@ -217,8 +199,6 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
     dev.off()
   }
 
-  ##############################################
-  ##############################################
   # apply on actual observed values
 
   fitted.mean.log2 <- predict(model.mean.log2, data.frame(t.points=T.counts), type="response")
@@ -233,9 +213,6 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   fitted.log.p.vals
 }
 
-
-########################################
-########################################
 #' The main Haystack function.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -283,9 +260,9 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
 
-  ##################################
+
   ### get reference probabilities "Q"
-  ##################################
+
 
   # using all points, get number of grid points, limits, and bandwidths
   # get 2D densities using all points (using above grid points, limits, bandwidths)
@@ -307,10 +284,10 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   Q <- density / sum(density)
 
 
-  ##################################
+
   ### get probabilities "P" for each group ("F" and "T")
   ### this has to be one for every gene X
-  ##################################
+
 
   # for class "F" points, and for "T" points, separately
   # get 2D densities (using above grid points, limits, bandwidths)
@@ -328,10 +305,10 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   # store this value for each gene X
 
 
-  ##################################
+
   ### use randomization to estimate expected values
   ### and p values for D_KL
-  ##################################
+
 
   # Randomized D_KL values depend on the number of "F" and "T" cases
   # Thereofre, for all observed numbers of "T" cases (from 0 to 100%):
@@ -445,10 +422,8 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   res
 }
 
-
-########################################
-########################################
-### get_density
+#' get_density
+#'
 #' Function to get the density of points with value TRUE in the (x,y) plot
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -485,9 +460,8 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities
 }
 
-########################################
-########################################
-### show_result_haystack
+#' show_result_haystack
+#'
 #' Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.
 #'
 #' @param res.haystack A 'haystack' result variable
@@ -530,5 +504,4 @@ show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=N
   n.to.select <- ifelse(is.na(n), nrow(result), min(n, nrow(result)))
   o <- order(result$log.p.vals)
   result[o[1:n.to.select],]
-
 }

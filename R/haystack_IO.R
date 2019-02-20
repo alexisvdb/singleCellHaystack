@@ -1,5 +1,5 @@
-########################################
-########################################
+
+
 ### write_haystack
 #' Function to write haystack result data to file.
 #'
@@ -26,8 +26,8 @@ write_haystack = function (res.haystack, file){
 }
 
 
-########################################
-########################################
+
+
 ### read_haystack
 #' Function to read haystack results from file.
 #'
