@@ -1,13 +1,3 @@
-
-########################################
-########################################
-### loading necessary packages
-
-# for plots
-library(ggplot2)
-library(reshape2)
-
-
 ########################################
 ########################################
 #' Visualizing the detection/expression of a gene in a 2D plot

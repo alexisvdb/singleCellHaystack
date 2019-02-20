@@ -1,14 +1,6 @@
 
 ########################################
 ########################################
-### loading necessary packages
-
-# for b splines
-library(splines)
-
-
-########################################
-########################################
 ### kde2d_faster
 #' Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.
 #'
