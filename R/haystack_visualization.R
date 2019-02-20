@@ -58,7 +58,7 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
     dens.melted <- melt(dens[1,,])
     colnames(dens.melted) <- c("x", "y", "Density")
     d <- ggplot(dens.melted, aes(x, y))
-    d <- d + geom_raster(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
+    d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
     d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   }
   d <- d + theme(panel.border = element_rect(colour = "black", fill=NA))
@@ -149,7 +149,7 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
   colnames(dens.melted) <- c("x", "y", "Density")
   d <- ggplot(dens.melted, aes(x, y)) +
     theme(panel.border = element_rect(colour = "black", fill=NA))
-  d <- d + geom_raster(aes(fill = Density)) + scale_fill_gradient(low = "white", high = "steelblue")
+  d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
   d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   Detection <- mean.detection
   d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection)) + scale_color_gradient(low="grey", high="red")
