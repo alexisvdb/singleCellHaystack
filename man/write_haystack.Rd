@@ -7,9 +7,9 @@
 write_haystack(res.haystack, file)
 }
 \arguments{
-\item{file}{A file to write to}
+\item{res.haystack}{A 'haystack' result variable}
 
-\item{x}{A 'haystack' result variable}
+\item{file}{A file to write to}
 }
 \description{
 Function to write haystack result data to file.

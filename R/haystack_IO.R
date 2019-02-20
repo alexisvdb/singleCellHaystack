@@ -3,7 +3,7 @@
 ### write_haystack
 #' Function to write haystack result data to file.
 #'
-#' @param x A 'haystack' result variable
+#' @param res.haystack A 'haystack' result variable
 #' @param file A file to write to
 #'
 #' @export
