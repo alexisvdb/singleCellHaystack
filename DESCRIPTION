@@ -1,6 +1,6 @@
 Package: singleCellHaystack
 Type: Package
-Title: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data).
+Title: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data)
 Version: 0.1.0
 Author: Alexis Vandenbon
 Maintainer: Alexis Vandenbon <alexis.vandenbon@gmail.com>
