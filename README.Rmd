@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 ```
 # singleCellHaystack
 
-'singleCellHaystack' is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). 'singleCellHaystack' can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
+`singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
 
 ## Installation
 
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 <!-- install.packages("singleCellHaystack") -->
 <!-- ``` -->
 
-You can install the 'singleCellHaystack' from the GitHub repository as follows:
+You can install the `singleCellHaystack` from the GitHub repository as follows:
 
 
 ``` r
@@ -37,9 +37,9 @@ remotes::install_github("alexisvdb/singleCellHaystack")
 
 A small toy dataset is included in the package. The toy dataset includes:
 
-- 'dat.expression': scRNA-seq expression of genes (rows) in cells (columns)
+- `dat.expression`: scRNA-seq expression of genes (rows) in cells (columns)
 
-- 'dat.tsne':       a 2D representation of the cell in dat.expression
+- `dat.tsne`:       a 2D representation of the cell in dat.expression
 
 
 ```{r example}

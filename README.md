@@ -3,7 +3,7 @@
 singleCellHaystack
 ==================
 
-'singleCellHaystack' is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). 'singleCellHaystack' can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
+`singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
 
 Installation
 ------------
@@ -12,7 +12,7 @@ Installation
 <!-- ``` r -->
 <!-- install.packages("singleCellHaystack") -->
 <!-- ``` -->
-You can install the 'singleCellHaystack' from the GitHub repository as follows:
+You can install the `singleCellHaystack` from the GitHub repository as follows:
 
 ``` r
 remotes::install_github("alexisvdb/singleCellHaystack")
@@ -23,9 +23,9 @@ Example usage
 
 A small toy dataset is included in the package. The toy dataset includes:
 
--   'dat.expression': scRNA-seq expression of genes (rows) in cells (columns)
+-   `dat.expression`: scRNA-seq expression of genes (rows) in cells (columns)
 
--   'dat.tsne': a 2D representation of the cell in dat.expression
+-   `dat.tsne`: a 2D representation of the cell in dat.expression
 
 ``` r
 library(singleCellHaystack)
@@ -53,16 +53,16 @@ class(res)
 # show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 #>              D_KL log.p.vals T.counts
-#> gene_497 1.599646  -20.71165       86
-#> gene_79  1.929800  -20.42938       68
-#> gene_62  1.519993  -19.81214       81
-#> gene_61  1.470475  -19.30211       80
-#> gene_339 1.414814  -19.21873       87
-#> gene_351 1.408946  -19.10597       89
-#> gene_137 1.349994  -18.60667       89
-#> gene_317 1.386194  -18.39036       94
-#> gene_444 1.435882  -18.29215       75
-#> gene_24  1.857497  -17.91641       59
+#> gene_242 1.360661  -24.19126       96
+#> gene_79  1.929800  -23.39861       68
+#> gene_275 1.345251  -23.34978       95
+#> gene_317 1.386194  -23.16551       94
+#> gene_497 1.599646  -22.25720       86
+#> gene_244 1.238011  -22.20655       95
+#> gene_351 1.408946  -21.32386       89
+#> gene_62  1.519993  -20.97712       81
+#> gene_339 1.414814  -20.88130       87
+#> gene_137 1.349994  -20.77851       89
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
