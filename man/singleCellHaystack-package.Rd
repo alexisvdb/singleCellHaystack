@@ -6,10 +6,12 @@
 \alias{singleCellHaystack-package}
 \title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data)}
 \description{
-Haystack finds genes that have a biased expression level in a two-dimensional representation of 
-    higher-dimensional transcriptome data, such as single-cell RNA-seq data (scRNA-seq). scRNA-seq data is often 
-    represented in 2D plots, such as plots of two principal components, or in t-SNE plots. Many genes are not 
-    expressed in all cells in these plots, but rather only in a subset of cells, which might be located in 1 or more
-    clusters in the 2D plot. Haystack can be used to find such genes, that have a highly non-random pattern of expression.
+`singleCellHaystack` is a package for finding surprising 
+    needles (=genes) in haystacks (=2D representations of single cell 
+    transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often 
+    represented in 2-dimentional plots (e.g. plots of two principal 
+    components, or t-SNE plots). `singleCellHaystack` can be used for 
+    finding genes that are expressed in subsets of cells that are 
+    non-randomly distributed in this 2D representation.
 }
 \keyword{internal}
