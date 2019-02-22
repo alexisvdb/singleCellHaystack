@@ -13,7 +13,20 @@
 #' @export
 #'
 #' @examples
-#' warning("I will add this later")
+#' # using the toy example of the singleCellHaystack package
+#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
+#' dat.detection <- dat.expression > 1
+#'
+#' # running haystack in default mode
+#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#' # list top 10 biased genes
+#' show_result_haystack(res.haystack = res, n =10)
+#'
+#' # various was of pltting gene expression patterns
+#' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+#' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
+#' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+#' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
 plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=F){
 
   # check input
@@ -94,7 +107,23 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
 #' @export
 #'
 #' @examples
-#' warning("I will add this later")
+#' # using the toy example of the singleCellHaystack package
+#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
+#' dat.detection <- dat.expression > 1
+#'
+#' # running haystack in default mode
+#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#'
+#' # get biased genes, store in variable gene.subset
+#' sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-5)
+#' gene.subset <- row.names(sorted.table)
+#'
+#' # hierarchical clustering, and cutting into 5 clusters
+#' hc <- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset)
+#' hc.clusters <- cutree(hc,k = 5)
+#'
+#' # visualization of average pattern of cluster 1
+#' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
 plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T){
 
   # check input

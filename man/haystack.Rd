@@ -25,5 +25,21 @@ An object of class "haystack"
 The main Haystack function.
 }
 \examples{
-warning("I will add this later")
+# using the toy example of the singleCellHaystack package
+# define a logical matrix with detection of each gene (rows) in each cell (columns)
+dat.detection <- dat.expression > 1
+
+# running haystack in default mode
+res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+# list top 10 biased genes
+show_result_haystack(res.haystack = res, n =10)
+# plot one of the genes
+plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+
+# to running haystack in advanced mode, first get number of genes detected in each cell
+count.detected <- apply(dat.detection,2,sum)
+# give count of detected genes as input to parameter use.advanced.sampling
+res.adv <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, use.advanced.sampling = count.detected)
+# list top 10 biased genes
+show_result_haystack(res.haystack = res.adv, n =10)
 }

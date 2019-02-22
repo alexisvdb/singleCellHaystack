@@ -9,7 +9,18 @@
 #' @export
 #'
 #' @examples
-#' warning("I will add this later")
+#' # using the toy example of the singleCellHaystack package
+#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
+#' dat.detection <- dat.expression > 1
+#'
+#' # running haystack in default mode
+#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#'
+#' # write result to file outfile.csv
+#' write_haystack(res.haystack = res, file = "outfile.csv")
+#'
+#' # read in result from file
+#' res.copy <- read_haystack(file = "outfile.csv")
 write_haystack = function (res.haystack, file){
 
   # check input
@@ -37,7 +48,18 @@ write_haystack = function (res.haystack, file){
 #' @export
 #'
 #' @examples
-#' warning("I will add this later")
+#' # using the toy example of the singleCellHaystack package
+#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
+#' dat.detection <- dat.expression > 1
+#'
+#' # running haystack in default mode
+#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#'
+#' # write result to file outfile.csv
+#' write_haystack(res.haystack = res, file = "outfile.csv")
+#'
+#' # read in result from file
+#' res.copy <- read_haystack(file = "outfile.csv")
 read_haystack = function (file){
 
   # check input

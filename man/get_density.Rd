@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{get_density}
 \alias{get_density}
-\title{Function to get the density of points with value TRUE in the (x,y) plot}
+\title{get_density}
 \usage{
 get_density(x, y, detection, rows.subset = 1:nrow(detection),
   high.resolution = F)

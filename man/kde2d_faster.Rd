@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{kde2d_faster}
 \alias{kde2d_faster}
-\title{Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.}
+\title{kde2d_faster}
 \usage{
 kde2d_faster(dens.x, dens.y)
 }

@@ -24,5 +24,21 @@ An object of class hclust, describing a hierarchical clustering tree.
 Function for hierarchical clustering of genes according to their distribution on a 2D plot.
 }
 \examples{
-warning("I will add this later")
+# using the toy example of the singleCellHaystack package
+# define a logical matrix with detection of each gene (rows) in each cell (columns)
+dat.detection <- dat.expression > 1
+
+# running haystack in default mode
+res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+
+# get biased genes, store in variable gene.subset
+sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-5)
+gene.subset <- row.names(sorted.table)
+
+# hierarchical clustering, and cutting into 5 clusters
+hc <- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset)
+hc.clusters <- cutree(hc,k = 5)
+
+# visualizing average pattern of cluster 1
+plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
 }
