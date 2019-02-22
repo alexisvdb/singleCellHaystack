@@ -26,7 +26,6 @@ knitr::opts_chunk$set(
 
 You can install the 'singleCellHaystack' from the GitHub repository as follows:
 
-## Introduction
 
 ``` r
 remotes::install_github("alexisvdb/singleCellHaystack")

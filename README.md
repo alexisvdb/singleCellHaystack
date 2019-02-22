@@ -14,9 +14,6 @@ Installation
 <!-- ``` -->
 You can install the 'singleCellHaystack' from the GitHub repository as follows:
 
-Introduction
-------------
-
 ``` r
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
@@ -56,16 +53,16 @@ class(res)
 # show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 #>              D_KL log.p.vals T.counts
-#> gene_497 1.599646  -21.54038       86
-#> gene_317 1.386194  -20.60853       94
-#> gene_242 1.360661  -20.42848       96
-#> gene_351 1.408946  -20.38033       89
-#> gene_275 1.345251  -20.27026       95
-#> gene_339 1.414814  -20.15582       87
-#> gene_62  1.519993  -19.94011       81
-#> gene_137 1.349994  -19.85072       89
-#> gene_79  1.929800  -19.69907       68
-#> gene_61  1.470475  -19.32448       80
+#> gene_497 1.599646  -20.71165       86
+#> gene_79  1.929800  -20.42938       68
+#> gene_62  1.519993  -19.81214       81
+#> gene_61  1.470475  -19.30211       80
+#> gene_339 1.414814  -19.21873       87
+#> gene_351 1.408946  -19.10597       89
+#> gene_137 1.349994  -18.60667       89
+#> gene_317 1.386194  -18.39036       94
+#> gene_444 1.435882  -18.29215       75
+#> gene_24  1.857497  -17.91641       59
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
