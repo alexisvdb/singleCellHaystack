@@ -1,40 +1,34 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+singleCellHaystack
+==================
 
-# singleCellHaystack
+'singleCellHaystack' is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). 'singleCellHaystack' can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
 
-The goal of singleCellHaystack is to …
+Installation
+------------
 
-## Installation
+<!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
+<!-- ``` r -->
+<!-- install.packages("singleCellHaystack") -->
+<!-- ``` -->
+You can install the 'singleCellHaystack' from the GitHub repository as follows:
 
-You can install the released version of singleCellHaystack from
-[CRAN](https://CRAN.R-project.org) with:
+Introduction
+------------
 
 ``` r
-install.packages("singleCellHaystack")
+remotes::install_github("alexisvdb/singleCellHaystack")
 ```
 
-## Introduction
+Example usage
+-------------
 
-‘haystack’ is a package for finding surprising needles (=genes) in
-haystacks (=2D representations of single cell transcriptome data).
-Single-cell RNA-seq (scRNA-seq) data is often represented in
-2-dimentional plots (e.g. plots of two principal components, or t-SNE
-plots). ‘haystack’ can be used for finding genes that are expressed in
-subsets of cells that are non-randomly distributed in this 2D
-representation.
+A small toy dataset is included in the package. The toy dataset includes:
 
-## Example usage
+-   'dat.expression': scRNA-seq expression of genes (rows) in cells (columns)
 
-A small toy dataset is included in the package. The toy dataset
-includes:
-
-  - ‘dat.expression’: scRNA-seq expression of genes (rows) in cells
-    (columns)
-
-  - ‘dat.tsne’: a 2D representation of the cell in dat.expression
-
-<!-- end list -->
+-   'dat.tsne': a 2D representation of the cell in dat.expression
 
 ``` r
 library(singleCellHaystack)
@@ -58,28 +52,27 @@ res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
 # the returned results 'res' is of class 'haystack'
 class(res)
 #> [1] "haystack"
-## [1] "haystack"
 
 # show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 #>              D_KL log.p.vals T.counts
-#> gene_497 1.599646  -23.96215       86
-#> gene_62  1.519993  -23.34565       81
-#> gene_61  1.470475  -22.69847       80
-#> gene_339 1.414814  -22.03340       87
-#> gene_79  1.929800  -21.34321       68
-#> gene_351 1.408946  -21.30571       89
-#> gene_444 1.435882  -20.79259       75
-#> gene_137 1.349994  -20.75643       89
-#> gene_313 1.294544  -20.45329       78
-#> gene_325 1.209385  -20.37269       84
+#> gene_497 1.599646  -21.54038       86
+#> gene_317 1.386194  -20.60853       94
+#> gene_242 1.360661  -20.42848       96
+#> gene_351 1.408946  -20.38033       89
+#> gene_275 1.345251  -20.27026       95
+#> gene_339 1.414814  -20.15582       87
+#> gene_62  1.519993  -19.94011       81
+#> gene_137 1.349994  -19.85072       89
+#> gene_79  1.929800  -19.69907       68
+#> gene_61  1.470475  -19.32448       80
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
 
 # visualize one of the surprizing genes
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, 
-                      gene="gene_11", detection = dat.detection, high.resolution = TRUE)
+                      gene="gene_497", detection = dat.detection, high.resolution = TRUE)
 ```
 
 <img src="man/figures/README-example-1.png" width="100%" />
