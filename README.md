@@ -5,6 +5,8 @@ singleCellHaystack
 
 `singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
 
+Our manuscript about `singleCellHaystack` is now availabe on [bioRxiv](https://www.biorxiv.org/content/10.1101/557967v1).
+
 Installation
 ------------
 
@@ -53,16 +55,16 @@ class(res)
 # show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 #>              D_KL log.p.vals T.counts
-#> gene_242 1.360661  -24.19126       96
-#> gene_79  1.929800  -23.39861       68
-#> gene_275 1.345251  -23.34978       95
-#> gene_317 1.386194  -23.16551       94
-#> gene_497 1.599646  -22.25720       86
-#> gene_244 1.238011  -22.20655       95
-#> gene_351 1.408946  -21.32386       89
-#> gene_62  1.519993  -20.97712       81
-#> gene_339 1.414814  -20.88130       87
-#> gene_137 1.349994  -20.77851       89
+#> gene_79  1.929800  -19.84487       68
+#> gene_497 1.599646  -18.63016       86
+#> gene_24  1.857497  -18.55327       59
+#> gene_71  1.868822  -18.18769       56
+#> gene_242 1.360661  -18.10933       96
+#> gene_317 1.386194  -17.97809       94
+#> gene_275 1.345251  -17.81448       95
+#> gene_479 1.697257  -17.72562       61
+#> gene_62  1.519993  -17.71438       81
+#> gene_351 1.408946  -17.51032       89
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
