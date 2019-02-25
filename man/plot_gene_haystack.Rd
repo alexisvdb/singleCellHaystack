@@ -5,7 +5,7 @@
 \title{Visualizing the detection/expression of a gene in a 2D plot}
 \usage{
 plot_gene_haystack(x, y, gene, expression, detection = NULL,
-  high.resolution = F, point.size = 1)
+  high.resolution = FALSE, point.size = 1, order.by.signal = FALSE)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
@@ -21,6 +21,8 @@ plot_gene_haystack(x, y, gene, expression, detection = NULL,
 \item{high.resolution}{logical (default: FALSE). If set to TRUE, the density plot will be of a higher resolution}
 
 \item{point.size}{numerical value to set size of points in plot. Default is 1.}
+
+\item{order.by.signal}{If TRUE, cells with higher signal will be put on the foreground in the plot. Default is FALSE.}
 }
 \value{
 A plot
@@ -44,4 +46,7 @@ plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
+
+# sort cells in the plot so cells with high signal come on top
+plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=T)
 }

@@ -9,6 +9,7 @@
 #' @param detection an optional logical matrix showing detection of genes (rows) in cells (columns). If left as NULL, the density distribution of the gene is not plotted.
 #' @param high.resolution logical (default: FALSE). If set to TRUE, the density plot will be of a higher resolution
 #' @param point.size numerical value to set size of points in plot. Default is 1.
+#' @param order.by.signal If TRUE, cells with higher signal will be put on the foreground in the plot. Default is FALSE.
 #'
 #' @return A plot
 #' @export
@@ -29,7 +30,10 @@
 #' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
 #' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
 #' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
-plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=F, point.size=1){
+#'
+#' # sort cells in the plot so cells with high signal come on top
+#' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=T)
+plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=FALSE, point.size=1, order.by.signal=FALSE){
 
   # check input
   if(!is.numeric(x))
@@ -56,6 +60,8 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
     stop("Value of 'high.resolution' should be logical (TRUE or FALSE")
   if(!is.numeric(point.size))
     stop("'point.size' must have a numeric value")
+  if(!is.logical(order.by.signal))
+    stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
 
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index
@@ -84,10 +90,22 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
   # else, treat as expression levels
   if(is.numeric(expression)){
     Level <- expression[gene,]
-    d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y, colour=Level), size=point.size) + scale_color_gradient(low="grey", high="red")
+    # if needed order by signal
+    if(order.by.signal){
+      o <- order(Level,decreasing=F)
+      d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y, colour=Level[o]), size=point.size) + scale_color_gradient(low="grey", high="red")
+    } else {
+      d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y, colour=Level), size=point.size) + scale_color_gradient(low="grey", high="red")
+    }
   } else {
     Detection <- expression[gene,]
-    d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size)
+    # if needed order by signal (here: TRUE on top of FALSE)
+    if(order.by.signal){
+      o <- order(Detection, decreasing=F)
+      d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y,colour=Detection[o]), size=point.size)
+    } else {
+      d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size)
+    }
   }
 
   d
@@ -107,6 +125,7 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
 #' @param detection a logical matrix showing detection of genes (rows) in cells (columns)
 #' @param high.resolution logical (default: TRUE). If set to FALSE, the density plot will be of a lower resolution
 #' @param point.size numerical value to set size of points in plot. Default is 1.
+#' @param order.by.signal If TRUE, cells with higher signal will be put on the foreground in the plot. Default is FALSE.
 #'
 #' @return A plot
 #' @export
@@ -132,7 +151,10 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
 #'
 #' # tweak size of points in plot sing 'point.size'
 #' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
-plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T, point.size=1){
+#'
+#' # sort cells in the plot so cells with high average signal come on top
+#' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=T)
+plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=TRUE, point.size=1, order.by.signal=FALSE){
 
   # check input
   if(!is.numeric(x))
@@ -153,6 +175,8 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T, 
     stop("Value of 'high.resolution' should be logical (TRUE or FALSE")
   if(!is.numeric(point.size))
     stop("'point.size' must have a numeric value")
+  if(!is.logical(order.by.signal))
+    stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
 
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index
@@ -191,8 +215,14 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=T, 
   d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
   d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   Detection <- mean.detection
-  d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size) + scale_color_gradient(low="grey", high="red")
 
+  # if needed order by signal (here: TRUE on top of FALSE)
+  if(order.by.signal){
+    o <- order(Detection,decreasing=F)
+    d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y,colour=Detection[o]), size=point.size) + scale_color_gradient(low="grey", high="red")
+  } else {
+    d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size) + scale_color_gradient(low="grey", high="red")
+  }
   d
 }
 
