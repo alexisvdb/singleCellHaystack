@@ -48,5 +48,5 @@ plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection,
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
 
 # sort cells in the plot so cells with high signal come on top
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=T)
+plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
 }

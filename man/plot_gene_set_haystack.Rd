@@ -51,5 +51,5 @@ plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detecti
 plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
 
 # sort cells in the plot so cells with high average signal come on top
-plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=T)
+plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=TRUE)
 }
