@@ -14,4 +14,13 @@
     finding genes that are expressed in subsets of cells that are 
     non-randomly distributed in this 2D representation.
 }
+\author{
+\strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com}
+
+Authors:
+\itemize{
+  \item Diego Diez \email{diego10ruiz@gmail.com}
+}
+
+}
 \keyword{internal}

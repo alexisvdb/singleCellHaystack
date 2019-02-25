@@ -2,8 +2,10 @@ Package: singleCellHaystack
 Type: Package
 Title: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data)
 Version: 0.1.0
-Author: Alexis Vandenbon
-Maintainer: Alexis Vandenbon <alexis.vandenbon@gmail.com>
+Authors@R: c(
+    person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre")),
+    person("Diego", "Diez", email = "diego10ruiz@gmail.com", role = c("aut"))
+    )
 Description: `singleCellHaystack` is a package for finding surprising 
     needles (=genes) in haystacks (=2D representations of single cell 
     transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often 
