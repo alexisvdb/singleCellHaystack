@@ -5,7 +5,7 @@
 \title{Visualizing the detection/expression of a gene in a 2D plot}
 \usage{
 plot_gene_haystack(x, y, gene, expression, detection = NULL,
-  high.resolution = F)
+  high.resolution = F, point.size = 1)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
@@ -19,6 +19,8 @@ plot_gene_haystack(x, y, gene, expression, detection = NULL,
 \item{detection}{an optional logical matrix showing detection of genes (rows) in cells (columns). If left as NULL, the density distribution of the gene is not plotted.}
 
 \item{high.resolution}{logical (default: FALSE). If set to TRUE, the density plot will be of a higher resolution}
+
+\item{point.size}{numerical value to set size of points in plot. Default is 1.}
 }
 \value{
 A plot
@@ -36,8 +38,9 @@ res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
 # list top 10 biased genes
 show_result_haystack(res.haystack = res, n =10)
 
-# various was of pltting gene expression patterns
+# various was of plotting gene expression patterns
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE, point.size = .1)
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
