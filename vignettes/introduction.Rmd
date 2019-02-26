@@ -18,6 +18,11 @@ knitr::opts_chunk$set(
   fig.align = 'center'
 )
 ```
+# singleCellHaystack
+
+`singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
+
+Our manuscript about `singleCellHaystack` is now availabe on [bioRxiv](https://www.biorxiv.org/content/10.1101/557967v1).
 
 ## Installation
 
@@ -29,14 +34,12 @@ knitr::opts_chunk$set(
 
 You can install the `singleCellHaystack` from the GitHub repository as follows:
 
+
 ``` r
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
 
 
-## Introduction
-
-`singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often represented in 2-dimentional plots (e.g. plots of two principal components, or t-SNE plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in this 2D representation.
 
 ## Example usage
 
@@ -47,8 +50,10 @@ A small toy dataset is included in the package. The toy dataset includes:
 - `dat.tsne`:       a 2D representation of the cell in dat.expression
 
 
-```{r example}
+First, apply `haystack` (the main function of the package) on the toy dataset.
+```{r example1}
 library(singleCellHaystack)
+set.seed(1234)
 
 # Turn the expression data into detection (gene detected = T, not detected = F)
 dat.detection <- dat.expression > 1
@@ -58,17 +63,27 @@ res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
 
 # the returned results 'res' is of class 'haystack'
 class(res)
+```
+Let's have a look at the "most surprising" genes.
 
+```{r example2}
 # show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
+```
 
+One of the most non-random genes is "gene_497". Here we visualize it's expression in the t-SNE plot.
+```{r example3}
 # visualize one of the surprizing genes
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, 
-                      gene="gene_497", detection = dat.detection, high.resolution = TRUE)
+                      gene="gene_497", detection = dat.detection, high.resolution = TRUE, point.size=2)
+```
+Yes, the pattern of cells in the toy example roughly resembles a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
 
+You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.
+```{r example4}
 # get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
 sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
 gene.subset <- row.names(sorted.table)
@@ -80,9 +95,12 @@ km.clusters <- km$cluster
 # alternatively: hierarchical clustering
 #hc <- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset)
 #hc.clusters <- cutree(hc,k = 5)
+```
 
+... and visualize the average pattern of the genes in cluster 1 (for example).
+```{r example5}
 # visualize cluster distributions
 plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, 
-                          genes=names(km.clusters[km.clusters==1]))
+                          genes=names(km.clusters[km.clusters==1]), point.size=2)
 
 ```
