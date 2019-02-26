@@ -82,7 +82,7 @@ One of the most non-random genes is "gene\_497". Here we visualize it's expressi
 ``` r
 # visualize one of the surprizing genes
 plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, 
-                      gene="gene_497", detection = dat.detection, high.resolution = TRUE)
+                      gene="gene_497", detection = dat.detection, high.resolution = TRUE, point.size=2)
 ```
 
 <img src="man/figures/README-example3-1.png" width="100%" /> Yes, the pattern of cells in the toy example roughly resembles a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
@@ -108,7 +108,7 @@ km.clusters <- km$cluster
 ``` r
 # visualize cluster distributions
 plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, 
-                          genes=names(km.clusters[km.clusters==1]))
+                          genes=names(km.clusters[km.clusters==1]), point.size=2)
 ```
 
 <img src="man/figures/README-example5-1.png" width="100%" />
