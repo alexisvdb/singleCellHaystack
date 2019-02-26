@@ -86,26 +86,25 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
   }
   d <- d + theme(panel.border = element_rect(colour = "black", fill=NA))
 
+  # prepare to plot "expression" levels
+  dat.plot <- data.frame(
+    x     = x,
+    y     = y,
+    value = expression[gene,]
+  )
+
+  # if needed order by signal
+  if(order.by.signal){
+    o <- order(dat.plot$value,decreasing=F)
+    dat.plot <- dat.plot[o,]
+  }
+
   # if expression is logical: treat as detection (TRUE or FALSE)
   # else, treat as expression levels
-  if(is.numeric(expression)){
-    Level <- expression[gene,]
-    # if needed order by signal
-    if(order.by.signal){
-      o <- order(Level,decreasing=F)
-      d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y, colour=Level[o]), size=point.size) + scale_color_gradient(low="grey", high="red")
-    } else {
-      d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y, colour=Level), size=point.size) + scale_color_gradient(low="grey", high="red")
-    }
-  } else {
-    Detection <- expression[gene,]
-    # if needed order by signal (here: TRUE on top of FALSE)
-    if(order.by.signal){
-      o <- order(Detection, decreasing=F)
-      d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y,colour=Detection[o]), size=point.size)
-    } else {
-      d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size)
-    }
+  if(is.numeric(dat.plot$value)){
+    d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Level")
+  } else if(is.logical(dat.plot$value)) {
+    d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + labs(color = "Detection")
   }
 
   d
@@ -214,15 +213,22 @@ plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=TRU
     theme(panel.border = element_rect(colour = "black", fill=NA))
   d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
   d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
-  Detection <- mean.detection
 
-  # if needed order by signal (here: TRUE on top of FALSE)
+  # prepare to plot "expression" levels
+  dat.plot <- data.frame(
+    x     = x,
+    y     = y,
+    value = mean.detection
+  )
+
+  # if needed order by signal
   if(order.by.signal){
-    o <- order(Detection,decreasing=F)
-    d <- d + geom_point(data=data.frame(x=x[o],y=y[o]), aes(x, y,colour=Detection[o]), size=point.size) + scale_color_gradient(low="grey", high="red")
-  } else {
-    d <- d + geom_point(data=data.frame(x=x,y=y), aes(x, y,colour=Detection), size=point.size) + scale_color_gradient(low="grey", high="red")
+    o <- order(dat.plot$value,decreasing=F)
+    dat.plot <- dat.plot[o,]
   }
+
+  d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Detection")
+
   d
 }
 
