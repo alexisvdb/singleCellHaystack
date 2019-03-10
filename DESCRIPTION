@@ -16,7 +16,10 @@ Description: `singleCellHaystack` is a package for finding surprising
 Imports: 
     splines,
     ggplot2,
-    reshape2
+    reshape2,
+    SummarizedExperiment,
+    SingleCellExperiment,
+    Seurat
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
