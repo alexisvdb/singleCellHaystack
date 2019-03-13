@@ -4,13 +4,9 @@
 \alias{get_D_KL}
 \title{Calculates the Kullback-Leibler divergence between distributions.}
 \usage{
-get_D_KL(x, y, classes, parameters, reference.prob, pseudo)
+get_D_KL(classes, parameters, reference.prob, pseudo)
 }
 \arguments{
-\item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
-
-\item{y}{y-axis coordinates of cells in a 2D representation}
-
 \item{classes}{A logical vector. Values are T is the gene is expressed in a cell, F is not.}
 
 \item{parameters}{Parameters of the analysis, as set by function 'get_parameters_haystack'}

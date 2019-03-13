@@ -101,15 +101,13 @@ get_parameters_haystack = function(x,y,high.resolution=F){
 
 #' Calculates the Kullback-Leibler divergence between distributions.
 #'
-#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
-#' @param y y-axis coordinates of cells in a 2D representation
 #' @param classes A logical vector. Values are T is the gene is expressed in a cell, F is not.
 #' @param parameters Parameters of the analysis, as set by function 'get_parameters_haystack'
 #' @param reference.prob A reference distribution to calculate the divergence against.
 #' @param pseudo A pseudocount, used to avoid log(0) problems.
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
-get_D_KL = function(x, y, classes, parameters, reference.prob, pseudo){
+get_D_KL = function(classes, parameters, reference.prob, pseudo){
 
   class.types = c(F,T)
 
@@ -310,10 +308,10 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   # add pseudocount to densities to avoid Inf problems
   # normalize to sum to 1
   # get D_KL (or relative entropy) of this P vs reference Q
-  message("### calculating Kulback-Leibler divergences...")
+  message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- c()
   for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL(x=x, y=y, classes=detection[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
+    D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
     if(i%%1000==0)
       message(paste0("### ... ",i," values out of ",count.genes," done"))
   }
@@ -389,8 +387,7 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
         samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = F)
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
-        D_KL.randomized[r] <- get_D_KL(x=x, y=y,
-                                       classes=classes,
+        D_KL.randomized[r] <- get_D_KL(classes=classes,
                                        parameters=parameters, reference.prob=Q, pseudo=pseudo)
       }
       all.D_KL.randomized[i,] <- D_KL.randomized
@@ -407,8 +404,7 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
       vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(detection)-T.count))
       for(r in 1:randomization.count){
         # using default sampling
-        D_KL.randomized[r] <- get_D_KL(x=x, y=y,
-                                       classes=sample(x = vector.to.randomize),
+        D_KL.randomized[r] <- get_D_KL(classes=sample(x = vector.to.randomize),
                                        parameters=parameters, reference.prob=Q, pseudo=pseudo)
       }
       all.D_KL.randomized[i,] <- D_KL.randomized
@@ -419,7 +415,7 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
 
   if(!is.null(dir.randomization)){
-    message("### writing randomized Kulback-Leibler divergences to file...")
+    message("### writing randomized Kullback-Leibler divergences to file...")
     outputfile.randomized.D_KL <- paste0(dir.randomization,"/random.D_KL.csv")
     write.csv(file=outputfile.randomized.D_KL,all.D_KL.randomized)
   }
