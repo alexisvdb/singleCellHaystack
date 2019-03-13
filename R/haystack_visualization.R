@@ -90,7 +90,7 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
   dat.plot <- data.frame(
     x     = x,
     y     = y,
-    value = expression[gene,]
+    value = unlist(expression[gene,])
   )
 
   # if needed order by signal
