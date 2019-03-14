@@ -1,28 +1,19 @@
-# new function used for highD version
-# get distances between all cells and all centers, in first PCs space
-#' Title
+#' Calculate the Euclidean distance between x and y.
 #'
-#' @param x
-#' @param y
+#' @param x A numerical vector.
+#' @param y A numerical vector.
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return A numerical value, the Euclidean distance.
 get_euclidean_distance = function(x,y){
   sqrt(sum((x-y)^2))
 }
 
-# new function used for highD version
-#' Title
+#' Calculate the pairwise Euclidean distances between the rows of 2 matrices.
 #'
-#' @param set1
-#' @param set2
+#' @param set1 A numerical matrix.
+#' @param set2 A numerical matrix.
 #'
-#' @return
-#' @export
-#'
-#' @examples
+#' @return A matrix of pairwise distances between the rows of 2 matrices.
 get_dist_two_sets = function(set1,set2){
   pairwise.dist <- matrix(NA,nrow=nrow(set1), ncol=nrow(set2))
   for(s2 in 1:nrow(set2)){
@@ -66,52 +57,66 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
 
 
 
-#' Title
+#' The main Haystack function, for higher-dimensional spaces.
 #'
-#' @param x
-#' @param detection
-#' @param centers
-#' @param use.advanced.sampling
-#' @param dir.randomization
-#' @param scale
+#' @param x Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.
+#' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
+#' @param centers An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
+#' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
+#' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
+#' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
 #'
-#' @return
+#' @return An object of class "haystack"
 #' @export
 #'
 #' @examples
+#' # I need to add some examples.
+#' # A toy example will be added too.
 haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE){
 
-  ##################################
-  ##################################
-  ### COMMENTED OUT FOR THE MOMENT
-  ##################################
-  ##################################
-  # # check input
-  # if(!is.numeric(x))
-  #   stop("'x' must be a numeric vector")
-  # if(!is.numeric(y))
-  #   stop("'y' must be a numeric vector")
-  # if(length(x) != length(y))
-  #   stop("'x' and 'y' must have the same length")
-  # if(ncol(detection) != length(x))
-  #   stop("The number of columns in 'detection' must be the same as the length of 'x'")
-  # if(!is.null(use.advanced.sampling)){
-  #   if(!is.numeric(use.advanced.sampling))
-  #     stop("'use.advanced.sampling' must either be NULL or a numeric vector")
-  #   if(length(use.advanced.sampling) != length(x))
-  #     stop("The length of 'use.advanced.sampling' must be the same as that of 'x'")
-  # }
-  #
-  # # warn about unusal input sizes
-  # if(length(x) < 50)
-  #   warning("The number of cells seems very low (",length(x),"). Check your input.")
-  # if(nrow(detection) < 100)
-  #   warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
-  ##################################
-  ##################################
+  # if data.frame, convert to matrix
+  if(is.data.frame(x))
+    x <- as.matrix(x)
+
+  # check input
+  if(!is.numeric(x) | !is.matrix(x))
+    stop("'x' must be a numeric matrix")
+  if(ncol(x) < 2)
+    stop("'x' must have at least 2 columns")
+  if(ncol(detection) != nrow(x))
+    stop("The number of columns in 'detection' must be the same as the rows in 'x'")
+  if(!is.numeric(centers))
+    stop("The value of 'centers' must be a numeric")
+  if(centers >= ncol(detection))
+    stop("The number of centers appears to be very high; higher than the number of cells. Please check your input.")
+  if(!is.null(use.advanced.sampling)){
+    if(!is.numeric(use.advanced.sampling))
+      stop("'use.advanced.sampling' must either be NULL or a numeric vector")
+    if(length(use.advanced.sampling) != nrow(x))
+      stop("The length of 'use.advanced.sampling' must be the same as the number of rows in 'x'")
+  }
+  if(!is.logical(scale) | length(scale) > 1)
+    stop("The value of 'scale' must be either TRUE of FALSE")
+
+  count.cells <- ncol(detection)
+  count.genes <- nrow(detection)
+
+  # warn about unusal input sizes
+  if(nrow(x) < 50)
+    warning("The number of cells seems very low (",nrow(x),"). Check your input.")
+  if(nrow(detection) < 100)
+    warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
+
+  # warn about extreme values for 'centers'
+  if(centers < 10)
+    warning("The number of centers appears to be very low (<10). Please check your input.")
+  if(centers > count.cells/10)
+    warning("The number of centers appears to be very high (> No. of cells / 10). Please check your input.")
+
 
   # scale data if needed
   if(scale){
+    message("### scaling input data...")
     x <- scale(x)
   }
 
@@ -121,8 +126,6 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
       dir.create(dir.randomization)
   }
 
-  count.cells <- ncol(detection)
-  count.genes <- nrow(detection)
 
 
   ### get reference probabilities "Q"
@@ -134,6 +137,7 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
   # from those, estimate Q
   # normalize to sum to 1
 
+  message("### deciding center grid points...")
   center.n <- centers # 100 centers might be reasonable
   res.kmeans <- kmeans(x, centers=center.n, iter.max = 10, nstart = 10)
   center.coord <- res.kmeans$centers
