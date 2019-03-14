@@ -289,7 +289,7 @@ haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomizati
     pseudo <- quantile(density[density>0],0.01)
   } else {
     density <- kde2d_faster(dens.x=t(t(parameters$dens.x)*use.advanced.sampling),
-                            dens.y=t(t(parameters$dens.y)*use.advanced.sampling))
+                            dens.y=t(t(parameters$dens.y)))
     density <- density / sum(density)
     pseudo <- quantile(density[density>0],0.01)
   }
