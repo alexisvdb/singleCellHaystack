@@ -35,6 +35,11 @@
 #' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
 plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=FALSE, point.size=1, order.by.signal=FALSE){
 
+  if(is.data.frame(expression)){
+    warning("'expression' is a matrix, should be a matrix. Converting to matrix.")
+    expression <- as.matrix(expression)
+  }
+
   # check input
   if(!is.numeric(x))
     stop("'x' must be a numeric vector")
