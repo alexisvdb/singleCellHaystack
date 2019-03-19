@@ -55,6 +55,48 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
   sum(D_KLs)
 }
 
+get.distance.to.nearest.higher.degree = function(entries_n, dist, degree_counts){
+
+  #run through the correlations again
+  # each time, check which of the pair has the highest degree
+  # keep track of "closest" entries with higher degree
+  dist_vector <- as.vector(dist)
+  dist_n <- entries_n * (entries_n-1) / 2
+  index_1 <- 1
+  index_2 <- 2
+  max_distance <- max(dist)
+  distance_to_nearest_higher_degree <- apply(as.matrix(dist),1, max)
+  for(i in 1:dist_n){
+    c <- dist_vector[i]
+
+    degree_1 <- degree_counts[index_1]
+    degree_2 <- degree_counts[index_2]
+
+    if(degree_1 > degree_2){
+      if(c < distance_to_nearest_higher_degree[index_2]){
+        distance_to_nearest_higher_degree[index_2] <- c
+      }
+    } else if (degree_2 > degree_1){
+      if(c < distance_to_nearest_higher_degree[index_1]){
+        distance_to_nearest_higher_degree[index_1] <- c
+      }
+    }
+
+    # update indices
+    index_2 <- index_2 + 1
+    if(index_2 > entries_n){
+      index_1 <- index_1 + 1
+      index_2 <- index_1 + 1
+    }
+
+  }
+
+  # return result
+  distance_to_nearest_higher_degree
+
+}# end function get.distance.to.nearest.higher.degree
+
+
 
 get_grid_points = function(input=x, method=method, grid.points=grid.points){
 
@@ -64,7 +106,41 @@ get_grid_points = function(input=x, method=method, grid.points=grid.points){
     grid.coord <- res.kmeans$centers
 
   } else if(method=="grid"){
+    # first decide a grid in all dimensions
+    # then, "round" cells to the nearest grid point
+    # from all gird points, keep those that are closest to many cells, and far away from other points
 
+    x.dim <- ncol(x)
+
+    # get the 10% and 90% points in each dimension
+    x10 <- apply(x, 2, function(x) as.numeric(quantile(x,0.10)))
+    x90 <- apply(x, 2, function(x) as.numeric(quantile(x,0.90)))
+    # set bin size of each dimension
+    grid.points.10.90 <- round(log(x=2000,base=x.dim)) # naively, this should result in about 2000 initial grid points in total
+    x.bin.size <- (x90-x10)/grid.points.10.90
+
+    # round to nearest grid point
+    x.grid <- t(apply(x,1, function(a) round(a / x.bin.size) * x.bin.size))
+    ### no idea why this transposes this!! So, for the moment I added t()
+
+    # filter out grid points assigned to only 1 cell
+    count.threshold.grid <- 1
+    x.table <- data.table::as.data.table(x.grid)
+    N <- nrow(x.table)
+    x.table.count <- x.table[, .N, by = c(colnames(x))]
+    x.table.subset <- subset(x.table.count, N>count.threshold.grid)
+
+    degrees <- x.table.subset$N
+    x.grid.candidates <- as.matrix(x.table.subset)[,-ncol(x.table.subset)]
+    dist.x.grid.candidats <- dist(x.grid.candidates)
+
+    dist.nearest.higher.degree <- get.distance.to.nearest.higher.degree(entries=nrow(x.grid.candidates), dist=dist.x.grid.candidats, degree_counts = degrees)
+    # gamma <- degrees*dist.nearest.higher.degree # original version
+    gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
+    # plot(sort(gamma, decreasing = T))
+
+    center.indices <- order(gamma,decreasing = T)[1:grid.points]
+    grid.coord <- x.grid.candidates[center.indices,]
   }
   grid.coord
 }
@@ -299,7 +375,8 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
       log.p.vals = p.vals,
       T.counts = T.counts,
       row.names = row.names(detection)
-    )
+    ),
+    grid.coordinates = grid.coord
   )
   class(res) <- "haystack"
   res
