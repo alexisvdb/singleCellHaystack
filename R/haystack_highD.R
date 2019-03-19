@@ -56,6 +56,19 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
 }
 
 
+get_grid_points = function(input=x, method=method, grid.points=grid.points){
+
+  if(method=="kmeans"){
+    # perform k-means clustering and get the centers
+    res.kmeans <- kmeans(x, centers=grid.points, iter.max = 10, nstart = 10)
+    grid.coord <- res.kmeans$centers
+
+  } else if(method=="grid"){
+
+  }
+  grid.coord
+}
+
 
 #' The main Haystack function, for higher-dimensional spaces.
 #'
@@ -72,7 +85,7 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE){
+haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, method="grid"){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -85,10 +98,10 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
     stop("'x' must have at least 2 columns")
   if(ncol(detection) != nrow(x))
     stop("The number of columns in 'detection' must be the same as the rows in 'x'")
-  if(!is.numeric(centers))
-    stop("The value of 'centers' must be a numeric")
-  if(centers >= ncol(detection))
-    stop("The number of centers appears to be very high; higher than the number of cells. Please check your input.")
+  if(!is.numeric(grid.points))
+    stop("The value of 'grid.points' must be a numeric")
+  if(grid.points >= ncol(detection))
+    stop("The number of grid.points appears to be very high; higher than the number of cells. Please check your input.")
   if(!is.null(use.advanced.sampling)){
     if(!is.numeric(use.advanced.sampling))
       stop("'use.advanced.sampling' must either be NULL or a numeric vector")
@@ -96,7 +109,9 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
       stop("The length of 'use.advanced.sampling' must be the same as the number of rows in 'x'")
   }
   if(!is.logical(scale) | length(scale) > 1)
-    stop("The value of 'scale' must be either TRUE of FALSE")
+    stop("The value of 'scale' must be either TRUE or FALSE")
+  if(method!="grid" & method!="kmeans")
+    stop("The value of 'method' must be either 'grid' or 'kmeans'")
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
@@ -107,11 +122,11 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
   if(nrow(detection) < 100)
     warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
 
-  # warn about extreme values for 'centers'
-  if(centers < 10)
-    warning("The number of centers appears to be very low (<10). Please check your input.")
-  if(centers > count.cells/10)
-    warning("The number of centers appears to be very high (> No. of cells / 10). Please check your input.")
+  # warn about extreme values for 'grid.points'
+  if(grid.points < 10)
+    warning("The value of 'grid.points' appears to be very low (<10). Please check your input.")
+  if(grid.points > count.cells/10)
+    warning("The value of grid.points appears to be very high (> No. of cells / 10). Please check your input.")
 
 
   # scale data if needed
@@ -129,26 +144,19 @@ haystack_highD = function(x, detection, centers = 50, use.advanced.sampling=NULL
 
 
   ### get reference probabilities "Q"
-
-  # using all points, set centers
-  # get distance between all points and all centers
-  # set a reasonable bandwidth distance
-  # get density contributions of each point to each center
+  # using all points, set grid.points
   # from those, estimate Q
   # normalize to sum to 1
+  message("### deciding grid points...")
+  grid.coord <- get_grid_points(input=x, method=method, grid.points=grid.points)
 
-  message("### deciding center grid points...")
-  center.n <- centers # 100 centers might be reasonable
-  res.kmeans <- kmeans(x, centers=center.n, iter.max = 10, nstart = 10)
-  center.coord <- res.kmeans$centers
-
-  dist.to.centers <- get_dist_two_sets(x,center.coord)
+  dist.to.grid <- get_dist_two_sets(x,grid.coord)
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
   bandwidth <- sqrt( sum( (apply(x,2,default_bandwidth.nrd)/4)^2 ) )
-  dist.to.centers.norm <- dist.to.centers/bandwidth
-  density.contributions <- exp(- dist.to.centers.norm*dist.to.centers.norm/2)
+  dist.to.grid.norm <- dist.to.grid/bandwidth
+  density.contributions <- exp(- dist.to.grid.norm*dist.to.grid.norm/2)
 
   if(is.null(use.advanced.sampling)){
     Q <- apply(density.contributions,2,sum)
