@@ -4,22 +4,24 @@
 \alias{haystack_highD}
 \title{The main Haystack function, for higher-dimensional spaces.}
 \usage{
-haystack_highD(x, detection, centers = 50,
+haystack_highD(x, detection, grid.points = 50,
   use.advanced.sampling = NULL, dir.randomization = NULL,
-  scale = TRUE)
+  scale = TRUE, grid.method = "grid")
 }
 \arguments{
 \item{x}{Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.}
 
 \item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
 
-\item{centers}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.}
+\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.}
 
 \item{use.advanced.sampling}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
 
 \item{dir.randomization}{If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.}
 
 \item{scale}{Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.}
+
+\item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".}
 }
 \value{
 An object of class "haystack"

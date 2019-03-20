@@ -55,9 +55,16 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
   sum(D_KLs)
 }
 
-get.distance.to.nearest.higher.degree = function(entries_n, dist, degree_counts){
+#' Function for finding for a point in space the distance to the nearest point with higher density. See
+#'
+#' @param entries_n The number of points.
+#' @param dist A distance object with the distances between all pairs oof points.
+#' @param degree_counts A vector with the degree or density of each point.
+#'
+#' @return A vector with distances.
+get.distance.to.nearest.higher.degree = function(entries_n=length(degree_counts), dist, degree_counts){
 
-  #run through the correlations again
+  # run through the distances between pairs of points
   # each time, check which of the pair has the highest degree
   # keep track of "closest" entries with higher degree
   dist_vector <- as.vector(dist)
@@ -98,11 +105,18 @@ get.distance.to.nearest.higher.degree = function(entries_n, dist, degree_counts)
 
 
 
-get_grid_points = function(input=x, method=method, grid.points=grid.points){
+#' A function to decide grid points in a higher-dimensional space
+#'
+#' @param input A numerical matrix with higher-dimensional coordinates (columns) of points (rows)
+#' @param method The method to decide grid points. Should be "grid" (default) or "kmeans".
+#' @param grid.points The number of grid points to return. Default is 50.
+#'
+#' @return Coordinates of grid points in the higher-dimensonal space.
+get_grid_points = function(input, method="grid", grid.points = 50){
 
   if(method=="kmeans"){
     # perform k-means clustering and get the centers
-    res.kmeans <- kmeans(x, centers=grid.points, iter.max = 10, nstart = 10)
+    res.kmeans <- kmeans(input, centers=grid.points, iter.max = 10, nstart = 10)
     grid.coord <- res.kmeans$centers
 
   } else if(method=="grid"){
@@ -110,50 +124,53 @@ get_grid_points = function(input=x, method=method, grid.points=grid.points){
     # then, "round" cells to the nearest grid point
     # from all gird points, keep those that are closest to many cells, and far away from other points
 
-    x.dim <- ncol(x)
+    input.dim <- ncol(input)
 
     # get the 10% and 90% points in each dimension
-    x10 <- apply(x, 2, function(x) as.numeric(quantile(x,0.10)))
-    x90 <- apply(x, 2, function(x) as.numeric(quantile(x,0.90)))
+    input10 <- apply(input, 2, function(x) as.numeric(quantile(x,0.10)))
+    input90 <- apply(input, 2, function(x) as.numeric(quantile(x,0.90)))
     # set bin size of each dimension
-    grid.points.10.90 <- round(log(x=2000,base=x.dim)) # naively, this should result in about 2000 initial grid points in total
-    x.bin.size <- (x90-x10)/grid.points.10.90
+    grid.points.10.90 <- round(log(x=2000,base=input.dim)) # naively, this should result in about 2000 initial grid points in total
+    input.bin.size <- (input90-input10)/grid.points.10.90
 
     # round to nearest grid point
-    x.grid <- t(apply(x,1, function(a) round(a / x.bin.size) * x.bin.size))
+    input.grid <- t(apply(input,1, function(a) round(a / input.bin.size) * input.bin.size))
     ### no idea why this transposes this!! So, for the moment I added t()
 
     # filter out grid points assigned to only 1 cell
     count.threshold.grid <- 1
-    x.table <- data.table::as.data.table(x.grid)
-    N <- nrow(x.table)
-    x.table.count <- x.table[, .N, by = c(colnames(x))]
-    x.table.subset <- subset(x.table.count, N>count.threshold.grid)
+    input.table <- data.table::as.data.table(input.grid)
+    N <- nrow(input.table)
+    input.table.count <- input.table[, .N, by = c(colnames(input))]
+    input.table.subset <- subset(input.table.count, N>count.threshold.grid)
 
-    degrees <- x.table.subset$N
-    x.grid.candidates <- as.matrix(x.table.subset)[,-ncol(x.table.subset)]
-    dist.x.grid.candidats <- dist(x.grid.candidates)
+    degrees <- input.table.subset$N
+    input.grid.candidates <- as.matrix(input.table.subset)[,-ncol(input.table.subset)]
+    dist.input.grid.candidats <- dist(input.grid.candidates)
 
-    dist.nearest.higher.degree <- get.distance.to.nearest.higher.degree(entries=nrow(x.grid.candidates), dist=dist.x.grid.candidats, degree_counts = degrees)
+    dist.nearest.higher.degree <- get.distance.to.nearest.higher.degree(entries=nrow(input.grid.candidates), dist=dist.input.grid.candidats, degree_counts = degrees)
     # gamma <- degrees*dist.nearest.higher.degree # original version
     gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
     # plot(sort(gamma, decreasing = T))
 
     center.indices <- order(gamma,decreasing = T)[1:grid.points]
-    grid.coord <- x.grid.candidates[center.indices,]
+    grid.coord <- input.grid.candidates[center.indices,]
   }
   grid.coord
 }
+
+
 
 
 #' The main Haystack function, for higher-dimensional spaces.
 #'
 #' @param x Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.
 #' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
-#' @param centers An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
 #' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
+#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
+#' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".
 #'
 #' @return An object of class "haystack"
 #' @export
@@ -161,7 +178,7 @@ get_grid_points = function(input=x, method=method, grid.points=grid.points){
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, method="grid"){
+haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="grid"){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -252,7 +269,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   # add pseudocount to densities to avoid Inf problems
   # normalize to sum to 1
   # get D_KL (or relative entropy) of this P vs reference Q
-  message("### calculating Kulback-Leibler divergences...")
+  message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
   class.types = c(F,T)
   for(i in 1:count.genes){
@@ -362,7 +379,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
 
   if(!is.null(dir.randomization)){
-    message("### writing randomized Kulback-Leibler divergences to file...")
+    message("### writing randomized Kullback-Leibler divergences to file...")
     outputfile.randomized.D_KL <- paste0(dir.randomization,"/random.D_KL.csv")
     write.csv(file=outputfile.randomized.D_KL,all.D_KL.randomized)
   }
