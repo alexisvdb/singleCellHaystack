@@ -203,8 +203,8 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   }
   if(!is.logical(scale) | length(scale) > 1)
     stop("The value of 'scale' must be either TRUE or FALSE")
-  if(method!="grid" & method!="kmeans")
-    stop("The value of 'method' must be either 'grid' or 'kmeans'")
+  if(grid.method!="grid" & grid.method!="kmeans")
+    stop("The value of 'grid.method' must be either 'grid' or 'kmeans'")
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
@@ -241,7 +241,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   # from those, estimate Q
   # normalize to sum to 1
   message("### deciding grid points...")
-  grid.coord <- get_grid_points(input=x, method=method, grid.points=grid.points)
+  grid.coord <- get_grid_points(input=x, method=grid.method, grid.points=grid.points)
 
   dist.to.grid <- get_dist_two_sets(x,grid.coord)
 
