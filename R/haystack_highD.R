@@ -172,7 +172,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
 #' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
 #' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".
 #'
-#' @return An object of class "haystack"
+#' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
 #'
 #' @examples
@@ -226,6 +226,9 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   if(scale){
     message("### scaling input data...")
     x <- scale(x)
+    # save the mean and stdev of the scaling
+    x.scale.center <- attr(x = x, which = "scaled:center")
+    x.scale.scale <- attr(x = x, which = "scaled:scale")
   }
 
   # make dir if needed
@@ -383,6 +386,12 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
     outputfile.randomized.D_KL <- paste0(dir.randomization,"/random.D_KL.csv")
     write.csv(file=outputfile.randomized.D_KL,all.D_KL.randomized)
   }
+
+  # prepare grid coordinates to return
+  # if input data was scaled, the grid points have to be re-scaled
+  # else nothing has to be done
+  if(scale)
+    grid.coord <- grid.coord*x.scale.scale + x.scale.center
 
   message("### returning result...")
   # prepare the 'haystack' object to return
