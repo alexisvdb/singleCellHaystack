@@ -47,7 +47,7 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
     cl.subset <- classes==cl
     if(sum(cl.subset)==0)
       next
-    P <- apply(density.contributions[cl.subset,],2,sum)
+    P <- apply(density.contributions[cl.subset,,drop=FALSE],2,sum)
     P <- P/sum(P)
     D_KL <- sum(P * log(P/Q))
     D_KLs[c] <- D_KL
