@@ -24,7 +24,7 @@ haystack_highD(x, detection, grid.points = 50,
 \item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".}
 }
 \value{
-An object of class "haystack"
+An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 }
 \description{
 The main Haystack function, for higher-dimensional spaces.
