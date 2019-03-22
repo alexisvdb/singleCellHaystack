@@ -14,10 +14,10 @@
 #' dat.detection <- dat.expression > 1
 #'
 #' # running haystack in default mode
-#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 #'
 #' # write result to file outfile.csv
-#' write_haystack(res.haystack = res, file = "outfile.csv")
+#' write_haystack(res, file = "outfile.csv")
 #'
 #' # read in result from file
 #' res.copy <- read_haystack(file = "outfile.csv")
@@ -53,10 +53,10 @@ write_haystack = function (res.haystack, file){
 #' dat.detection <- dat.expression > 1
 #'
 #' # running haystack in default mode
-#' res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 #'
 #' # write result to file outfile.csv
-#' write_haystack(res.haystack = res, file = "outfile.csv")
+#' write_haystack(res, file = "outfile.csv")
 #'
 #' # read in result from file
 #' res.copy <- read_haystack(file = "outfile.csv")

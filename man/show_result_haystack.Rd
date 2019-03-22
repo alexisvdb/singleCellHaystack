@@ -28,7 +28,7 @@ Shows the results of the 'haystack' analysis in various ways, sorted by signific
 dat.detection <- dat.expression > 1
 
 # running haystack in default mode
-res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 
 # below are variations for showing the results in a table
 # 1. list top 10 biased genes

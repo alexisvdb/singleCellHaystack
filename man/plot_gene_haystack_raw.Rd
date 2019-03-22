@@ -36,17 +36,17 @@ Visualizing the detection/expression of a gene in a 2D plot
 dat.detection <- dat.expression > 1
 
 # running haystack in default mode
-res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 # list top 10 biased genes
-show_result_haystack(res.haystack = res, n =10)
+show_result_haystack(res, n =10)
 
 # various was of plotting gene expression patterns
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE, point.size = .1)
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE, point.size = .1)
+plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
 
 # sort cells in the plot so cells with high signal come on top
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
 }

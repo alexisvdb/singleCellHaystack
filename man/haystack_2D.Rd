@@ -30,16 +30,16 @@ The main Haystack function, for 2-dimensional spaces.
 dat.detection <- dat.expression > 1
 
 # running haystack in default mode
-res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 # list top 10 biased genes
-show_result_haystack(res.haystack = res, n =10)
+show_result_haystack(res, n =10)
 # plot one of the genes
-plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
+plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
 
 # to running haystack in advanced mode, first get number of genes detected in each cell
 count.detected <- apply(dat.detection,2,sum)
 # give count of detected genes as input to parameter use.advanced.sampling
-res.adv <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, use.advanced.sampling = count.detected)
+res.adv <- haystack(dat.tsne, detection=dat.detection, use.advanced.sampling = count.detected, method = "2D")
 # list top 10 biased genes
-show_result_haystack(res.haystack = res.adv, n =10)
+show_result_haystack(res.adv, n =10)
 }

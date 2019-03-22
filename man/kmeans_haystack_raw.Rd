@@ -31,16 +31,16 @@ Function for k-means clustering of genes according to their distribution on a 2D
 dat.detection <- dat.expression > 1
 
 # running haystack in default mode
-res <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection)
+res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 
 # get biased genes, store in variable gene.subset
-sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-5)
+sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
 gene.subset <- row.names(sorted.table)
 
 # k-means clustering into 5 clusters
-km <- kmeans_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset, k=5)
+km <- kmeans_haystack(dat.tsne, detection=dat.detection, genes=gene.subset, k=5)
 km.clusters <- km$cluster
 
 # visualizing average pattern of cluster 1
-plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(km.clusters[km.clusters==1]))
+plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(km.clusters[km.clusters==1]))
 }

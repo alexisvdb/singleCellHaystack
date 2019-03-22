@@ -2,16 +2,16 @@
 % Please edit documentation in R/s3.R
 \name{hclust_haystack}
 \alias{hclust_haystack}
-\alias{hclut_haystack.matrix}
-\alias{hclut_haystack.data.frame}
+\alias{hclust_haystack.matrix}
+\alias{hclust_haystack.data.frame}
 \alias{kmeans_haystack.data.frame}
 \title{hclust_haystack}
 \usage{
 hclust_haystack(x, ...)
 
-hclut_haystack.matrix(x, dim1 = 1, dim2 = 2, ...)
+\method{hclust_haystack}{matrix}(x, dim1 = 1, dim2 = 2, ...)
 
-hclut_haystack.data.frame(x, dim1 = 1, dim2 = 2, ...)
+\method{hclust_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
 
 \method{kmeans_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
 }
