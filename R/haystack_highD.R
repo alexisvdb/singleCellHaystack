@@ -140,7 +140,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
     # filter out grid points assigned to only 1 cell
     count.threshold.grid <- 1
     input.table <- data.table::as.data.table(input.grid)
-    N <- nrow(input.table)
+    .N <- NULL # trick to avoid 'undefined global function' NOTE.
     input.table.count <- input.table[, .N, by = c(colnames(input))]
     input.table.subset <- input.table.count[input.table.count[["N"]] > count.threshold.grid]
 
