@@ -27,7 +27,7 @@ default_bandwidth.nrd = function(x){
 #' @param high.resolution Logical: should high resolution be used? Default is FALSE.
 #'
 #' @return A list containing various parameters to use in the analysis.
-get_parameters_haystack = function(x,y,high.resolution=F){
+get_parameters_haystack = function(x, y, high.resolution = FALSE){
 
   # the bandwidths used for the kernel function
   bandwidth.x <- default_bandwidth.nrd(x)
@@ -109,7 +109,7 @@ get_parameters_haystack = function(x,y,high.resolution=F){
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL = function(classes, parameters, reference.prob, pseudo){
 
-  class.types = c(F,T)
+  class.types = c(FALSE, TRUE)
 
   # the reference distribution Q of cells in the 2D plot
   Q <- reference.prob
@@ -202,7 +202,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   fitted.mean.log2 <- predict(model.mean.log2, data.frame(t.points=T.counts), type="response")
   fitted.sd.log2 <- predict(model.sd.log2, data.frame(t.points=T.counts), type="response")
 
-  fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.mean.log2, sd = fitted.sd.log2, lower.tail = F, log.p = T)/log(10)
+  fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.mean.log2, sd = fitted.sd.log2, lower.tail = FALSE, log.p = T)/log(10)
 
   # bonferroni correction for multiple testing
   fitted.log.p.vals <- fitted.log.p.vals + log10(length(fitted.log.p.vals))
@@ -389,7 +389,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       for(r in 1:randomization.count){
         # using sampling according to the number of genes expressed in each cell
         # pick cells according to the number of genes they express
-        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = F)
+        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL(classes=classes,
@@ -406,7 +406,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       T.count <- T.counts.selected[i]
 
       D_KL.randomized <- rep(NA,randomization.count)
-      vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(detection)-T.count))
+      vector.to.randomize <- c(rep(TRUE, T.count), rep(FALSE, ncol(detection) - T.count))
       for(r in 1:randomization.count){
         # using default sampling
         D_KL.randomized[r] <- get_D_KL(classes=sample(x = vector.to.randomize),
@@ -450,7 +450,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #' @param high.resolution logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
-get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution=F){
+get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution = FALSE){
 
   # set the parameters for getting the densities
   parameters <- get_parameters_haystack(x,y,high.resolution)

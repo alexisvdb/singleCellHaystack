@@ -5,7 +5,7 @@
 \title{get_density}
 \usage{
 get_density(x, y, detection, rows.subset = 1:nrow(detection),
-  high.resolution = F)
+  high.resolution = FALSE)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}

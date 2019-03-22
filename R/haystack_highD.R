@@ -34,7 +34,7 @@ get_dist_two_sets = function(set1,set2){
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo = 0){
 
-  class.types = c(F,T)
+  class.types = c(FALSE, TRUE)
 
   # the reference distribution Q of cells in the 2D plot
   Q <- reference.prob
@@ -47,7 +47,7 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
     cl.subset <- classes==cl
     if(sum(cl.subset)==0)
       next
-    P <- apply(density.contributions[cl.subset,,drop=FALSE],2,sum)
+    P <- apply(density.contributions[cl.subset, , drop = FALSE], 2, sum)
     P <- P/sum(P)
     D_KL <- sum(P * log(P/Q))
     D_KLs[c] <- D_KL
@@ -275,7 +275,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   # get D_KL (or relative entropy) of this P vs reference Q
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
-  class.types = c(F,T)
+  class.types = c(FALSE, TRUE)
   for(i in 1:count.genes){
     D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q)
 
@@ -351,7 +351,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
       for(r in 1:randomization.count){
         # using sampling according to the number of genes expressed in each cell
         # pick cells according to the number of genes they express
-        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = F)
+        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL_highD(classes=classes,
@@ -368,7 +368,7 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
       T.count <- T.counts.selected[i]
 
       D_KL.randomized <- rep(NA,randomization.count)
-      vector.to.randomize <- c(rep(T,T.count),rep(F,ncol(detection)-T.count))
+      vector.to.randomize <- c(rep(TRUE, T.count), rep(FALSE, ncol(detection)-T.count))
       for(r in 1:randomization.count){
         # using default sampling
         D_KL.randomized[r] <- get_D_KL_highD(classes=sample(x = vector.to.randomize),

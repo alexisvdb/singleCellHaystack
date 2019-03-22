@@ -4,12 +4,13 @@
 # singleCellHaystack
 
 `singleCellHaystack` is a package for finding surprising needles
-(=genes) in haystacks (=2D representations of single cell transcriptome
-data). Single-cell RNA-seq (scRNA-seq) data is often represented in
-2-dimentional plots (e.g. plots of two principal components, or t-SNE
-plots). `singleCellHaystack` can be used for finding genes that are
-expressed in subsets of cells that are non-randomly distributed in this
-2D representation.
+(=genes) in haystacks (=single cell transcriptome data). Single-cell
+RNA-seq (scRNA-seq) data is often converted to fewer dimensions using
+Principal Component Analysis (PCA) and represented in 2-dimentional
+plots (e.g. t-SNE or UMAP plots). `singleCellHaystack` can be used for
+finding genes that are expressed in subsets of cells that are
+non-randomly distributed in these multi-dimensional spaces or 2D
+representations.
 
 Our manuscript about `singleCellHaystack` is now availabe on
 [bioRxiv](https://www.biorxiv.org/content/10.1101/557967v1).
@@ -48,11 +49,12 @@ dataset.
 library(singleCellHaystack)
 set.seed(1234)
 
-# Turn the expression data into detection (gene detected = T, not detected = F)
+# Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)
 dat.detection <- dat.expression > 1
 
 # run the main 'haystack' analysis
 res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
+#> ### calling haystack_2D()...
 #> ### setting parameters...
 #> ### calculating Kullback-Leibler divergences...
 #> ### starting randomizations...

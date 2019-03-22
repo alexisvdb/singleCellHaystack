@@ -49,7 +49,7 @@ First, apply `haystack` (the main function of the package) on the toy dataset.
 library(singleCellHaystack)
 set.seed(1234)
 
-# Turn the expression data into detection (gene detected = T, not detected = F)
+# Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)
 dat.detection <- dat.expression > 1
 
 # run the main 'haystack' analysis

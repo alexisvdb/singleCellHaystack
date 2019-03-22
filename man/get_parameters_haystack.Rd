@@ -4,7 +4,7 @@
 \alias{get_parameters_haystack}
 \title{Function that decides most of the parameters that will be during the "Haystack" analysis.}
 \usage{
-get_parameters_haystack(x, y, high.resolution = F)
+get_parameters_haystack(x, y, high.resolution = FALSE)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
