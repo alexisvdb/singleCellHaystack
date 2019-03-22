@@ -240,7 +240,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #' res.adv <- haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, use.advanced.sampling = count.detected)
 #' # list top 10 biased genes
 #' show_result_haystack(res.haystack = res.adv, n =10)
-haystack = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
+haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
 
   # check input
   if(!is.numeric(x))
