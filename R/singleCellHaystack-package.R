@@ -7,4 +7,5 @@
 #' @importFrom SummarizedExperiment assay
 #' @importFrom SingleCellExperiment reducedDim
 #' @importFrom Seurat GetAssayData Embeddings
+#' @importFrom data.table as.data.table
 "_PACKAGE"
