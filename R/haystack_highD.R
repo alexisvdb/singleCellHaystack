@@ -153,7 +153,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
     gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
     # plot(sort(gamma, decreasing = T))
 
-    center.indices <- order(gamma,decreasing = T)[1:grid.points]
+    center.indices <- order(gamma, decreasing = TRUE)[1:grid.points]
     grid.coord <- input.grid.candidates[center.indices,]
   }
   grid.coord
