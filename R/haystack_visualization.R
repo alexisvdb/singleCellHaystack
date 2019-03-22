@@ -33,7 +33,7 @@
 #'
 #' # sort cells in the plot so cells with high signal come on top
 #' plot_gene_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
-plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.resolution=FALSE, point.size=1, order.by.signal=FALSE){
+plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high.resolution=FALSE, point.size=1, order.by.signal=FALSE){
 
   if(is.data.frame(expression)){
     warning("'expression' is a matrix, should be a matrix. Converting to matrix.")
@@ -158,7 +158,7 @@ plot_gene_haystack = function(x, y, gene, expression, detection = NULL, high.res
 #'
 #' # sort cells in the plot so cells with high average signal come on top
 #' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=TRUE)
-plot_gene_set_haystack = function(x, y, genes=NA, detection, high.resolution=TRUE, point.size=1, order.by.signal=FALSE){
+plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution=TRUE, point.size=1, order.by.signal=FALSE){
 
   # check input
   if(!is.numeric(x))

@@ -30,7 +30,7 @@
 #'
 #' # visualizing average pattern of cluster 1
 #' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
-hclust_haystack= function(x, y, detection, genes, method="ward.D"){
+hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
 
   # check input
   if(!is.numeric(x))
@@ -94,7 +94,7 @@ hclust_haystack= function(x, y, detection, genes, method="ward.D"){
 #'
 #' # visualizing average pattern of cluster 1
 #' plot_gene_set_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=names(km.clusters[km.clusters==1]))
-kmeans_haystack= function(x, y, detection, genes, k, ...){
+kmeans_haystack_raw = function(x, y, detection, genes, k, ...){
 
   # check input
   if(!is.numeric(x))
