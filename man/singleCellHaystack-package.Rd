@@ -4,15 +4,15 @@
 \name{singleCellHaystack-package}
 \alias{singleCellHaystack}
 \alias{singleCellHaystack-package}
-\title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=2D representations of single cell transcriptome data)}
+\title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=single cell transcriptome data)}
 \description{
-`singleCellHaystack` is a package for finding surprising 
-    needles (=genes) in haystacks (=2D representations of single cell 
-    transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often 
-    represented in 2-dimentional plots (e.g. plots of two principal 
-    components, or t-SNE plots). `singleCellHaystack` can be used for 
-    finding genes that are expressed in subsets of cells that are 
-    non-randomly distributed in this 2D representation.
+`singleCellHaystack` is a package for finding surprising needles
+    (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq
+    (scRNA-seq) data is often converted to fewer dimensions using Principal 
+    Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE 
+    or UMAP plots). `singleCellHaystack` can be used for finding genes that are 
+    expressed in subsets of cells that are non-randomly distributed in these 
+    multi-dimensional spaces or 2D representations.
 }
 \author{
 \strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com}
