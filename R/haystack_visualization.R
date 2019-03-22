@@ -91,7 +91,7 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
     dens <- get_density(x=x, y=y, detection=detection, rows.subset=gene.index, high.resolution = high.resolution)
     dens.melted <- melt(dens[1,,])
     colnames(dens.melted) <- c("x", "y", "Density")
-    d <- ggplot(dens.melted, aes(x, y))
+    d <- ggplot(dens.melted, aes_string("x", "y"))
     d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
     d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
   }
@@ -113,9 +113,9 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   # if expression is logical: treat as detection (TRUE or FALSE)
   # else, treat as expression levels
   if(is.numeric(dat.plot$value)){
-    d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Level")
+    d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Level")
   } else if(is.logical(dat.plot$value)) {
-    d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + labs(color = "Detection")
+    d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + labs(color = "Detection")
   }
 
   d
@@ -225,7 +225,7 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
   ### make plot
   dens.melted <- melt(mean.density)
   colnames(dens.melted) <- c("x", "y", "Density")
-  d <- ggplot(dens.melted, aes(x, y)) +
+  d <- ggplot(dens.melted, aes_string("x", "y")) +
     theme(panel.border = element_rect(colour = "black", fill=NA))
   d <- d + geom_raster(aes_string(fill = "Density")) + scale_fill_gradient(low = "white", high = "steelblue")
   d <- d + scale_x_continuous(expand = c(0, 0)) + scale_y_continuous(expand = c(0, 0))
@@ -243,7 +243,7 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
     dat.plot <- dat.plot[o,]
   }
 
-  d <- d + geom_point(data=dat.plot, aes(x, y, colour=value), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Detection")
+  d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Detection")
 
   d
 }
