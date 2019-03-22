@@ -11,7 +11,7 @@ kmeans_haystack(x, y, detection, genes, k, ...)
 
 \item{y}{y-axis coordinates of cells in a 2D representation}
 
-\item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
+\item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
 
 \item{genes}{A set of genes (of the 'detection' data) which will be clustered.}
 

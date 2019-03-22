@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{haystack}
 \alias{haystack}
-\title{The main Haystack function.}
+\title{The main Haystack function, for 2-dimensional spaces.}
 \usage{
 haystack(x, y, detection, use.advanced.sampling = NULL,
   dir.randomization = NULL)
@@ -12,7 +12,7 @@ haystack(x, y, detection, use.advanced.sampling = NULL,
 
 \item{y}{y-axis coordinates of cells in a 2D representation}
 
-\item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
+\item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
 
 \item{use.advanced.sampling}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
 
@@ -22,7 +22,7 @@ haystack(x, y, detection, use.advanced.sampling = NULL,
 An object of class "haystack"
 }
 \description{
-The main Haystack function.
+The main Haystack function, for 2-dimensional spaces.
 }
 \examples{
 # using the toy example of the singleCellHaystack package

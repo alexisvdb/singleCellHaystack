@@ -5,7 +5,7 @@
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
 #' @param genes A set of genes (of the 'detection' data) which will be clustered.
 #' @param method The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".
 #'
@@ -47,7 +47,7 @@ hclust_haystack= function(x, y, detection, genes, method="ward.D"){
     stop("None of the values in 'genes' are present in row names of 'detection'")
 
 
-  # get densities (not in high relosultion)
+  # get densities (not in high resolution)
   detection.rownames <- rownames(detection)
   row.index.subset <- which(is.element(detection.rownames, genes))
 
@@ -68,7 +68,7 @@ hclust_haystack= function(x, y, detection, genes, method="ward.D"){
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
 #' @param genes A set of genes (of the 'detection' data) which will be clustered.
 #' @param k The number of clusters to return.
 #' @param ... Additional parameters which will be passed on to the kmeans function.
@@ -113,7 +113,7 @@ kmeans_haystack= function(x, y, detection, genes, k, ...){
     stop("Value of 'k' should be an integer larger than 1")
 
 
-  # get densities (not in high relosultion)
+  # get densities (not in high resolution)
   detection.rownames <- rownames(detection)
   row.index.subset <- which(is.element(detection.rownames, genes))
 

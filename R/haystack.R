@@ -211,11 +211,11 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   fitted.log.p.vals
 }
 
-#' The main Haystack function.
+#' The main Haystack function, for 2-dimensional spaces.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
 #' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #'
