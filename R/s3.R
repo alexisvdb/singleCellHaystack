@@ -152,13 +152,13 @@ hclust_haystack <- function(x, ...) {
 
 #' @rdname hclust_haystack
 #' @export
-hclut_haystack.matrix <- function(x, dim1 = 1, dim2 = 2, ...) {
+hclust_haystack.matrix <- function(x, dim1 = 1, dim2 = 2, ...) {
   hclust_haystack_raw(x[, dim1], x[, dim2], ...)
 }
 
 #' @rdname hclust_haystack
 #' @export
-hclut_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
+hclust_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
   hclust_haystack_raw(x[, dim1], x[, dim2], ...)
 }
 
