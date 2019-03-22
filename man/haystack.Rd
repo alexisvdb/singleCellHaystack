@@ -30,6 +30,8 @@ haystack(x, ...)
 
 \item{dim2}{column index or name of matrix for y-axis coordinates.}
 
+\item{method}{choose between highD (default) and 2D haystack.}
+
 \item{assay}{name of assay data for Seurat method.}
 
 \item{slot}{name of slot for assay data for Seurat method.}

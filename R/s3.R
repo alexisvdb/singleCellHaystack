@@ -7,6 +7,7 @@
 #' @param slot name of slot for assay data for Seurat method.
 #' @param coord name of coordinates slot for specific methods.
 #' @param cutoff cutoff for detection.
+#' @param method choose between highD (default) and 2D haystack.
 #' @param ... further paramters passed to haystack_raw().
 #'
 #' @return An object of class "haystack"
