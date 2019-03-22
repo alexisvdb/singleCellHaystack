@@ -142,7 +142,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
     input.table <- data.table::as.data.table(input.grid)
     N <- nrow(input.table)
     input.table.count <- input.table[, .N, by = c(colnames(input))]
-    input.table.subset <- subset(input.table.count, N>count.threshold.grid)
+    input.table.subset <- input.table.count[input.table.count[["N"]] > count.threshold.grid]
 
     degrees <- input.table.subset$N
     input.grid.candidates <- as.matrix(input.table.subset)[,-ncol(input.table.subset)]

@@ -525,10 +525,10 @@ show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=N
   # priority is genes > p.value.threshold > n
   result <- res.haystack$results
   if(any(!is.na(gene))){
-    result <- subset(result, is.element(rownames(result),gene))
+    result <- result[is.element(rownames(result), gene), ]
   }
   if(!is.na(p.value.threshold)){
-    result <- subset(result, log.p.vals<=log10(p.value.threshold))
+    result <- result[result[["log.p.vals"]] <= log10(p.value.threshold), ]
   }
 
   # at this point: 1) decide no. to return, and 2) sort by significance
