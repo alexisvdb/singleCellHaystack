@@ -35,16 +35,28 @@ haystack.data.frame <- function(x, ...) {
 #' @rdname haystack
 #' @export
 haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cutoff = 1, ...) {
-  y <- GetAssayData(x, slot = slot, assay = assay)
-  z <- Embeddings(x, coord)
+  if (!requireNamespace("Seurat", quietly = TRUE)) {
+    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
+  z <- Seurat::Embeddings(x, coord)
   haystack(as.matrix(z), detection = y > cutoff, ...)
 }
 
 #' @rdname haystack
 #' @export
 haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, ...) {
-  y <- assay(x, assay)
-  z <- reducedDim(x, coord)
+  if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
+    stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (!requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+    stop("Package \"SingleCellExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- SummarizedExperiment::assay(x, assay)
+  z <- SingleCellExperiment::reducedDim(x, coord)
   haystack(as.matrix(z), detection = y > cutoff, ...)
 }
 
@@ -79,16 +91,28 @@ plot_gene_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
 #' @rdname plot_gene_haystack
 #' @export
 plot_gene_haystack.SingleCellExperiment <- function(x, dim1 = 1, dim2 = 2, assay = "counts", coord = "TSNE", ...) {
-  y <- assay(x, assay)
-  z <- reducedDim(x, coord)
+  if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
+    stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (!requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+    stop("Package \"SingleCellExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- SummarizedExperiment::assay(x, assay)
+  z <- SingleCellExperiment::reducedDim(x, coord)
   plot_gene_haystack_raw(z[, dim1], z[, dim2], expression = y, ...)
 }
 
 #' @rdname plot_gene_haystack
 #' @export
 plot_gene_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot = "data", coord = "tsne", ...) {
-  y <- GetAssayData(x, slot = slot, assay = assay)
-  z <- Embeddings(x, coord)
+  if (!requireNamespace("Seurat", quietly = TRUE)) {
+    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
+  z <- Seurat::Embeddings(x, coord)
   plot_gene_haystack_raw(z[, dim1], z[, dim2], expression = y, ...)
 }
 
@@ -123,16 +147,28 @@ plot_gene_set_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
 #' @rdname plot_gene_set_haystack
 #' @export
 plot_gene_set_haystack.SingleCellExperiment <- function(x, dim1 = 1, dim2 = 2, assay = "counts", coord = "TSNE", ...) {
-  y <- assay(x, assay)
-  z <- reducedDim(x, coord)
+  if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
+    stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (!requireNamespace("SingleCellExperiment", quietly = TRUE)) {
+    stop("Package \"SingleCellExperiment\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- SummarizedExperiment::assay(x, assay)
+  z <- SingleCellExperiment::reducedDim(x, coord)
   plot_gene_set_haystack_raw(z[, dim1], z[, dim2], detection = y > 1, ...)
 }
 
 #' @rdname plot_gene_set_haystack
 #' @export
 plot_gene_set_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot = "data", coord = "tsne", ...) {
-  y <- GetAssayData(x, slot = slot, assay = assay)
-  z <- Embeddings(x, coord)
+  if (!requireNamespace("Seurat", quietly = TRUE)) {
+    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
+  z <- Seurat::Embeddings(x, coord)
   plot_gene_set_haystack_raw(z[, dim1], z[, dim2], detection = y > 1, ...)
 }
 
