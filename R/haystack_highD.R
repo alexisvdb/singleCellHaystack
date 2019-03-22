@@ -179,16 +179,17 @@ get_grid_points = function(input, method="grid", grid.points = 50){
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="grid"){
-
-  # if data.frame, convert to matrix
-  if(is.data.frame(x))
-    x <- as.matrix(x)
+  message("### calling haystack_highD()...")
 
   # check input
-  if(!is.numeric(x) | !is.matrix(x))
+  if(!is.numeric(x))
+    stop("'x' must be a numeric matrix")
+  if(!is.matrix(x))
     stop("'x' must be a numeric matrix")
   if(ncol(x) < 2)
     stop("'x' must have at least 2 columns")
+  if(!is.matrix(detection))
+    stop("'detection' must be a matrix")
   if(ncol(detection) != nrow(x))
     stop("The number of columns in 'detection' must be the same as the rows in 'x'")
   if(!is.numeric(grid.points))

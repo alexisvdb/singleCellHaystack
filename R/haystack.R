@@ -241,6 +241,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #' # list top 10 biased genes
 #' show_result_haystack(res.adv, n =10)
 haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
+  message("### calling haystack_2D()...")
 
   # check input
   if(!is.numeric(x))
@@ -249,6 +250,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     stop("'y' must be a numeric vector")
   if(length(x) != length(y))
     stop("'x' and 'y' must have the same length")
+  if(!is.matrix(detection))
+    stop("'detection' must be a matrix")
   if(ncol(detection) != length(x))
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!is.null(use.advanced.sampling)){
