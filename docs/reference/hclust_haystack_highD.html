@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>get_density — get_density • singleCellHaystack</title>
+<title>Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space. — hclust_haystack_highD • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="get_density — get_density" />
+<meta property="og:title" content="Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space. — hclust_haystack_highD" />
 
-<meta property="og:description" content="Function to get the density of points with value TRUE in the (x,y) plot" />
+<meta property="og:description" content="Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,50 +106,53 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>get_density</h1>
+    <h1>Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space.</h1>
     
-    <div class="hidden name"><code>get_density.Rd</code></div>
+    <div class="hidden name"><code>hclust_haystack_highD.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to get the density of points with value TRUE in the (x,y) plot</p>
+    <p>Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_density</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>detection</span>, <span class='kw'>rows.subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>detection</span>),
-  <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+    <pre class="usage"><span class='fu'>hclust_haystack_highD</span>(<span class='no'>x</span>, <span class='no'>detection</span>, <span class='no'>genes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ward.D"</span>,
+  <span class='kw'>grid.coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)</p></td>
-    </tr>
-    <tr>
-      <th>y</th>
-      <td><p>y-axis coordinates of cells in a 2D representation</p></td>
+      <td><p>Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.</p></td>
     </tr>
     <tr>
       <th>detection</th>
-      <td><p>A logical matrix showing which gens (rows) are detected in which cells (columns)</p></td>
+      <td><p>A logical matrix showing which genes (rows) are detected in which cells (columns)</p></td>
     </tr>
     <tr>
-      <th>rows.subset</th>
-      <td><p>Indices of the rows of 'detection' for which to get the densities. Default: all.</p></td>
+      <th>genes</th>
+      <td><p>A set of genes (of the 'detection' data) which will be clustered.</p></td>
     </tr>
     <tr>
-      <th>high.resolution</th>
-      <td><p>logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution</p></td>
+      <th>method</th>
+      <td><p>The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".</p></td>
+    </tr>
+    <tr>
+      <th>grid.coordinates</th>
+      <td><p>Coordinates of grid points in the same space as 'x', to be used to estimate densities for clustering.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data</p>
+    <p>An object of class hclust, describing a hierarchical clustering tree.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'># to be added
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -157,7 +160,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

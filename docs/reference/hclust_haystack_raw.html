@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function to read haystack results from file. — read_haystack • singleCellHaystack</title>
+<title>Function for hierarchical clustering of genes according to their distribution on a 2D plot. — hclust_haystack_raw • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Function to read haystack results from file. — read_haystack" />
+<meta property="og:title" content="Function for hierarchical clustering of genes according to their distribution on a 2D plot. — hclust_haystack_raw" />
 
-<meta property="og:description" content="Function to read haystack results from file." />
+<meta property="og:description" content="Function for hierarchical clustering of genes according to their distribution on a 2D plot." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,31 +106,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function to read haystack results from file.</h1>
+    <h1>Function for hierarchical clustering of genes according to their distribution on a 2D plot.</h1>
     
-    <div class="hidden name"><code>read_haystack.Rd</code></div>
+    <div class="hidden name"><code>hclust_haystack_raw.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to read haystack results from file.</p>
+    <p>Function for hierarchical clustering of genes according to their distribution on a 2D plot.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>read_haystack</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>hclust_haystack_raw</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>detection</span>, <span class='no'>genes</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ward.D"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
-      <td><p>A file containing 'haystack' results to read</p></td>
+      <th>x</th>
+      <td><p>x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>y-axis coordinates of cells in a 2D representation</p></td>
+    </tr>
+    <tr>
+      <th>detection</th>
+      <td><p>A logical matrix showing which genes (rows) are detected in which cells (columns)</p></td>
+    </tr>
+    <tr>
+      <th>genes</th>
+      <td><p>A set of genes (of the 'detection' data) which will be clustered.</p></td>
+    </tr>
+    <tr>
+      <th>method</th>
+      <td><p>The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class "haystack"</p>
+    <p>An object of class hclust, describing a hierarchical clustering tree.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -140,11 +156,16 @@
 
 <span class='co'># running haystack in default mode</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'>
-<span class='co'># write result to file outfile.csv</span>
-<span class='fu'><a href='write_haystack.html'>write_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"outfile.csv"</span>)
+<span class='co'># get biased genes, store in variable gene.subset</span>
+<span class='no'>sorted.table</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>p.value.threshold</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>)
+<span class='no'>gene.subset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/row.names'>row.names</a></span>(<span class='no'>sorted.table</span>)
 
-<span class='co'># read in result from file</span>
-<span class='no'>res.copy</span> <span class='kw'>&lt;-</span> <span class='fu'>read_haystack</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"outfile.csv"</span>)</div></pre>
+<span class='co'># hierarchical clustering, and cutting into 5 clusters</span>
+<span class='no'>hc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hclust_haystack.html'>hclust_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='no'>gene.subset</span>)
+<span class='no'>hc.clusters</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/cutree'>cutree</a></span>(<span class='no'>hc</span>,<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>5</span>)
+
+<span class='co'># visualizing average pattern of cluster 1</span>
+<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/names'>names</a></span>(<span class='no'>hc.clusters</span>[<span class='no'>hc.clusters</span><span class='kw'>==</span><span class='fl'>1</span>]))</div><div class='img'><img src='hclust_haystack_raw-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>get_density — get_density • singleCellHaystack</title>
+<title>Calculate the pairwise Euclidean distances between the rows of 2 matrices. — get_dist_two_sets • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="get_density — get_density" />
+<meta property="og:title" content="Calculate the pairwise Euclidean distances between the rows of 2 matrices. — get_dist_two_sets" />
 
-<meta property="og:description" content="Function to get the density of points with value TRUE in the (x,y) plot" />
+<meta property="og:description" content="Calculate the pairwise Euclidean distances between the rows of 2 matrices." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -106,48 +106,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>get_density</h1>
+    <h1>Calculate the pairwise Euclidean distances between the rows of 2 matrices.</h1>
     
-    <div class="hidden name"><code>get_density.Rd</code></div>
+    <div class="hidden name"><code>get_dist_two_sets.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function to get the density of points with value TRUE in the (x,y) plot</p>
+    <p>Calculate the pairwise Euclidean distances between the rows of 2 matrices.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_density</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>detection</span>, <span class='kw'>rows.subset</span> <span class='kw'>=</span> <span class='fl'>1</span>:<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>detection</span>),
-  <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='no'>F</span>)</pre>
+    <pre class="usage"><span class='fu'>get_dist_two_sets</span>(<span class='no'>set1</span>, <span class='no'>set2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)</p></td>
+      <th>set1</th>
+      <td><p>A numerical matrix.</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>y-axis coordinates of cells in a 2D representation</p></td>
-    </tr>
-    <tr>
-      <th>detection</th>
-      <td><p>A logical matrix showing which gens (rows) are detected in which cells (columns)</p></td>
-    </tr>
-    <tr>
-      <th>rows.subset</th>
-      <td><p>Indices of the rows of 'detection' for which to get the densities. Default: all.</p></td>
-    </tr>
-    <tr>
-      <th>high.resolution</th>
-      <td><p>logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution</p></td>
+      <th>set2</th>
+      <td><p>A numerical matrix.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data</p>
+    <p>A matrix of pairwise distances between the rows of 2 matrices.</p>
     
 
   </div>

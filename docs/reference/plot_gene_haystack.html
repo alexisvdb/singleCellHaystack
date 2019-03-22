@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Visualizing the detection/expression of a gene in a 2D plot — plot_gene_haystack • singleCellHaystack</title>
+<title>plot_gene_haystack — plot_gene_haystack • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Visualizing the detection/expression of a gene in a 2D plot — plot_gene_haystack" />
+<meta property="og:title" content="plot_gene_haystack — plot_gene_haystack" />
 
-<meta property="og:description" content="Visualizing the detection/expression of a gene in a 2D plot" />
+<meta property="og:description" content="plot_gene_haystack" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +63,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -106,94 +106,73 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Visualizing the detection/expression of a gene in a 2D plot</h1>
+    <h1>plot_gene_haystack</h1>
     
     <div class="hidden name"><code>plot_gene_haystack.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Visualizing the detection/expression of a gene in a 2D plot</p>
+    <p>plot_gene_haystack</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>gene</span>, <span class='no'>expression</span>, <span class='kw'>detection</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>point.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>order.by.signal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for SingleCellExperiment</span>
+<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"counts"</span>, <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"TSNE"</span>, <span class='no'>...</span>)
+
+<span class='co'># S3 method for Seurat</span>
+<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>, <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>, <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)</p></td>
+      <td><p>a matrix or other object from which coordinates of cells can be extracted.</p></td>
     </tr>
     <tr>
-      <th>y</th>
-      <td><p>y-axis coordinates of cells in a 2D representation</p></td>
+      <th>...</th>
+      <td><p>further paramters passed to plot_gene_haystack_raw().</p></td>
     </tr>
     <tr>
-      <th>gene</th>
-      <td><p>name of a gene that is present in the input expression data, or a numerical index</p></td>
+      <th>dim1</th>
+      <td><p>column index or name of matrix for x-axis coordinates.</p></td>
     </tr>
     <tr>
-      <th>expression</th>
-      <td><p>a logical/numerical matrix showing detection/expression of genes (rows) in cells (columns)</p></td>
+      <th>dim2</th>
+      <td><p>column index or name of matrix for y-axis coordinates.</p></td>
     </tr>
     <tr>
-      <th>detection</th>
-      <td><p>an optional logical matrix showing detection of genes (rows) in cells (columns). If left as NULL, the density distribution of the gene is not plotted.</p></td>
+      <th>assay</th>
+      <td><p>name of assay data for Seurat method.</p></td>
     </tr>
     <tr>
-      <th>high.resolution</th>
-      <td><p>logical (default: FALSE). If set to TRUE, the density plot will be of a higher resolution</p></td>
+      <th>coord</th>
+      <td><p>name of coordinates slot for specific methods.</p></td>
     </tr>
     <tr>
-      <th>point.size</th>
-      <td><p>numerical value to set size of points in plot. Default is 1.</p></td>
-    </tr>
-    <tr>
-      <th>order.by.signal</th>
-      <td><p>If TRUE, cells with higher signal will be put on the foreground in the plot. Default is FALSE.</p></td>
+      <th>slot</th>
+      <td><p>name of slot for assay data for Seurat method.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A plot</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># using the toy example of the singleCellHaystack package</span>
-<span class='co'># define a logical matrix with detection of each gene (rows) in each cell (columns)</span>
-<span class='no'>dat.detection</span> <span class='kw'>&lt;-</span> <span class='no'>dat.expression</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>
-
-<span class='co'># running haystack in default mode</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>)</div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
-<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals T.counts
-#&gt; gene_497 1.599646  -21.96315       86
-#&gt; gene_62  1.519993  -21.01774       81
-#&gt; gene_79  1.929800  -20.58899       68
-#&gt; gene_61  1.470475  -20.44495       80
-#&gt; gene_339 1.414814  -20.35420       87
-#&gt; gene_351 1.408946  -20.11081       89
-#&gt; gene_137 1.349994  -19.58937       89
-#&gt; gene_444 1.435882  -19.07475       75
-#&gt; gene_317 1.386194  -18.80056       94
-#&gt; gene_313 1.294544  -18.49628       78</div><div class='input'>
-<span class='co'># various was of plotting gene expression patterns</span>
-<span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>point.size</span> <span class='kw'>=</span> <span class='fl'>.1</span>)</div><div class='img'><img src='plot_gene_haystack-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack-4.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack-5.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># sort cells in the plot so cells with high signal come on top</span>
-<span class='fu'>plot_gene_haystack</span>(<span class='kw'>x</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE1</span>, <span class='kw'>y</span><span class='kw'>=</span><span class='no'>dat.tsne</span>$<span class='no'>tSNE2</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>2</span>, <span class='kw'>order.by.signal</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack-6.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>
