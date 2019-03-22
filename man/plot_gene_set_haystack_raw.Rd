@@ -41,15 +41,20 @@ sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
 gene.subset <- row.names(sorted.table)
 
 # hierarchical clustering, and cutting into 5 clusters
-hc <- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)
+hc <- hclust_haystack(dat.tsne, detection=dat.detection,
+ genes=gene.subset)
 hc.clusters <- cutree(hc,k = 5)
 
 # visualization of average pattern of cluster 1
-plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
+plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+ genes=names(hc.clusters[hc.clusters==1]))
 
 # tweak size of points in plot sing 'point.size'
-plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
+plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+ genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
 
 # sort cells in the plot so cells with high average signal come on top
-plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=TRUE)
+plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+ genes=names(hc.clusters[hc.clusters==1]), point.size=2,
+ order.by.signal=TRUE)
 }

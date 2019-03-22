@@ -25,14 +25,20 @@
 #' show_result_haystack(res, n =10)
 #'
 #' # various was of plotting gene expression patterns
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", detection = dat.detection, high.resolution = TRUE, point.size = .1)
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", high.resolution = TRUE)
-#' plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242", detection = dat.detection, high.resolution = TRUE)
-#' plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242", high.resolution = TRUE)
+#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
+#'  detection = dat.detection, high.resolution = TRUE)
+#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
+#'  detection = dat.detection, high.resolution = TRUE, point.size = .1)
+#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
+#'  high.resolution = TRUE)
+#' plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242",
+#'  detection = dat.detection, high.resolution = TRUE)
+#' plot_gene_haystack(dat.tsne, expression=dat.detection, gene="gene_242",
+#'  high.resolution = TRUE)
 #'
 #' # sort cells in the plot so cells with high signal come on top
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242", high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
+#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
+#'  high.resolution = TRUE, point.size=2, order.by.signal=TRUE)
 plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high.resolution=FALSE, point.size=1, order.by.signal=FALSE){
 
   if(is.data.frame(expression)){
@@ -147,17 +153,22 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
 #' gene.subset <- row.names(sorted.table)
 #'
 #' # hierarchical clustering, and cutting into 5 clusters
-#' hc <- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)
+#' hc <- hclust_haystack(dat.tsne, detection=dat.detection,
+#'  genes=gene.subset)
 #' hc.clusters <- cutree(hc,k = 5)
 #'
 #' # visualization of average pattern of cluster 1
-#' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
+#' plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+#'  genes=names(hc.clusters[hc.clusters==1]))
 #'
 #' # tweak size of points in plot sing 'point.size'
-#' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
+#' plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+#'  genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
 #'
 #' # sort cells in the plot so cells with high average signal come on top
-#' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]), point.size=2, order.by.signal=TRUE)
+#' plot_gene_set_haystack(dat.tsne, detection=dat.detection,
+#'  genes=names(hc.clusters[hc.clusters==1]), point.size=2,
+#'  order.by.signal=TRUE)
 plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution=TRUE, point.size=1, order.by.signal=FALSE){
 
   # check input
