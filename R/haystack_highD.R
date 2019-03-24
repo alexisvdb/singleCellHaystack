@@ -62,7 +62,7 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
 #' @param degree_counts A vector with the degree or density of each point.
 #'
 #' @return A vector with distances.
-get.distance.to.nearest.higher.degree = function(entries_n=length(degree_counts), dist, degree_counts){
+get_distance_to_nearest_higher_degree = function(entries_n=length(degree_counts), dist, degree_counts){
 
   # run through the distances between pairs of points
   # each time, check which of the pair has the highest degree
@@ -101,7 +101,7 @@ get.distance.to.nearest.higher.degree = function(entries_n=length(degree_counts)
   # return result
   distance_to_nearest_higher_degree
 
-}# end function get.distance.to.nearest.higher.degree
+}# end function get_distance_to_nearest_higher_degree
 
 
 
@@ -148,7 +148,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
     input.grid.candidates <- as.matrix(input.table.subset)[,-ncol(input.table.subset)]
     dist.input.grid.candidats <- dist(input.grid.candidates)
 
-    dist.nearest.higher.degree <- get.distance.to.nearest.higher.degree(entries_n=nrow(input.grid.candidates), dist=dist.input.grid.candidats, degree_counts = degrees)
+    dist.nearest.higher.degree <- get_distance_to_nearest_higher_degree(entries_n=nrow(input.grid.candidates), dist=dist.input.grid.candidats, degree_counts = degrees)
     # gamma <- degrees*dist.nearest.higher.degree # original version
     gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
     # plot(sort(gamma, decreasing = T))
