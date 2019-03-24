@@ -4,7 +4,7 @@
 \alias{hclust_haystack}
 \alias{hclust_haystack.matrix}
 \alias{hclust_haystack.data.frame}
-\title{hclust_haystack}
+\title{Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space}
 \usage{
 hclust_haystack(x, ...)
 
@@ -22,5 +22,5 @@ hclust_haystack(x, ...)
 \item{dim2}{column index or name of matrix for y-axis coordinates.}
 }
 \description{
-hclust_haystack
+Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space
 }

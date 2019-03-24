@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{kde2d_faster}
 \alias{kde2d_faster}
-\title{kde2d_faster}
+\title{Based on the MASS kde2d() function, but heavily simplified; it's just tcrossprod() now.}
 \usage{
 kde2d_faster(dens.x, dens.y)
 }
@@ -12,5 +12,5 @@ kde2d_faster(dens.x, dens.y)
 \item{dens.y}{Contribution of all cells to densities of the y-axis grid points.}
 }
 \description{
-Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.
+Based on the MASS kde2d() function, but heavily simplified; it's just tcrossprod() now.
 }

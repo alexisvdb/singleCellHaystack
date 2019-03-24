@@ -43,10 +43,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
+  <a href="articles/dplyr.html">Intro</a>
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
@@ -59,18 +56,34 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="articles/two-table.html">Two-table verbs</a>
     </li>
     <li>
-      <a href="articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="articles/window-functions.html">Window functions</a>
     </li>
     <li>
-      <a href="articles/introduction.html">Introduction to singleCellHaystack</a>
+      <a href="http://dbplyr.tidyverse.org/articles/dbplyr.html">Databases with dbplyr</a>
+    </li>
+    <li>
+      <a href="articles/programming.html">Programming with dplyr</a>
+    </li>
+    <li>
+      <a href="articles/compatibility.html">Compatibility</a>
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">News</a>
+</li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/alexisvdb/singleCellHaystack">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -87,8 +100,7 @@
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <div id="singlecellhaystack" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h1></div>
+
 <p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional spaces or 2D representations.</p>
 <p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v1">bioRxiv</a>.</p>
 <div id="installation" class="section level2">
@@ -177,7 +189,14 @@ km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <div class="license">
+    <div class="links">
+<h2>Links</h2>
+<ul class="list-unstyled">
+<li>Learn more at <br><a href="https://www.biorxiv.org/content/10.1101/557967v1">https://​www.biorxiv.org/​content/​10.1101/​557967v1</a>
+</li>
+</ul>
+</div>
+<div class="license">
 <h2>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>

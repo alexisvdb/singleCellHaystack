@@ -6,7 +6,7 @@
 \alias{plot_gene_haystack.data.frame}
 \alias{plot_gene_haystack.SingleCellExperiment}
 \alias{plot_gene_haystack.Seurat}
-\title{plot_gene_haystack}
+\title{Visualizing the detection/expression of a gene in a 2D plot}
 \usage{
 plot_gene_haystack(x, ...)
 
@@ -36,5 +36,5 @@ plot_gene_haystack(x, ...)
 \item{slot}{name of slot for assay data for Seurat method.}
 }
 \description{
-plot_gene_haystack
+Visualizing the detection/expression of a gene in a 2D plot
 }

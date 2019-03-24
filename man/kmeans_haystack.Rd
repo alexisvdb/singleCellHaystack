@@ -4,7 +4,7 @@
 \alias{kmeans_haystack}
 \alias{kmeans_haystack.matrix}
 \alias{kmeans_haystack.data.frame}
-\title{kmeans_haystack}
+\title{Function for k-means clustering of genes according to their expression distribution in 2D or multi-dimensional space}
 \usage{
 kmeans_haystack(x, ...)
 
@@ -22,5 +22,5 @@ kmeans_haystack(x, ...)
 \item{dim2}{column index or name of matrix for y-axis coordinates.}
 }
 \description{
-kmeans_haystack
+Function for k-means clustering of genes according to their expression distribution in 2D or multi-dimensional space
 }

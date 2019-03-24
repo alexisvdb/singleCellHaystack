@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{get_density}
 \alias{get_density}
-\title{get_density}
+\title{Function to get the density of points with value TRUE in the (x,y) plot}
 \usage{
 get_density(x, y, detection, rows.subset = 1:nrow(detection),
   high.resolution = FALSE)
@@ -15,8 +15,6 @@ get_density(x, y, detection, rows.subset = 1:nrow(detection),
 \item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
 
 \item{rows.subset}{Indices of the rows of 'detection' for which to get the densities. Default: all.}
-
-\item{high.resolution}{logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution}
 }
 \value{
 A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data

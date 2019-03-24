@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{show_result_haystack}
 \alias{show_result_haystack}
-\title{show_result_haystack}
+\title{Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.}
 \usage{
 show_result_haystack(res.haystack, n = NA, p.value.threshold = NA,
   gene = NA)

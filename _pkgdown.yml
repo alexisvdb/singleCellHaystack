@@ -1,0 +1,86 @@
+url: https://alexisvdb.github.io/singleCellHaystack/
+
+template:
+#  params:
+#    bootswatch: cerulean
+
+home:
+  strip_header: true
+
+  links:
+  - text: Learn more
+    href: https://www.biorxiv.org/content/10.1101/557967v1
+
+reference:
+- title: Main haystack functions
+  contents:
+  - haystack
+  - haystack_2D
+  - haystack_highD
+  - show_result_haystack
+
+- title: Visualization functions
+  contents:
+  - plot_gene_haystack
+  - plot_gene_haystack_raw
+  - plot_gene_set_haystack
+  - plot_gene_set_haystack_raw
+
+- title: Clustering functions
+  contents:
+  - hclust_haystack
+  - hclust_haystack_highD
+  - hclust_haystack_raw
+  - kmeans_haystack
+  - kmeans_haystack_highD
+  - kmeans_haystack_raw
+
+- title: IO functions
+  contents:
+  - read_haystack
+  - write_haystack
+
+- title: Toy example data
+  contents:
+  - dat.expression
+  - dat.tsne
+
+- title: Background functions
+  contents:
+  - default_bandwidth.nrd
+  - get_D_KL
+  - get_D_KL_highD
+  - get_density
+  - get_dist_two_sets
+  - get_distance_to_nearest_higher_degree
+  - get_euclidean_distance
+  - get_grid_points
+  - get_log_p_D_KL
+  - get_parameters_haystack
+  - kde2d_faster
+
+
+navbar:
+  type: default
+  left:
+  - text: Intro
+    href: articles/dplyr.html
+  - text: Reference
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: Two-table verbs
+      href: articles/two-table.html
+    - text: Window functions
+      href: articles/window-functions.html
+    - text: Databases with dbplyr
+      href: http://dbplyr.tidyverse.org/articles/dbplyr.html
+    - text: Programming with dplyr
+      href: articles/programming.html
+    - text: Compatibility
+      href: articles/compatibility.html
+  - text: News
+    href: news/index.html
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/alexisvdb/singleCellHaystack

@@ -1,4 +1,4 @@
-#' The main Haystack function.
+#' The main Haystack function
 #'
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
@@ -60,7 +60,7 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
   haystack(as.matrix(z), detection = y > cutoff, ...)
 }
 
-#' plot_gene_haystack
+#' Visualizing the detection/expression of a gene in a 2D plot
 #'
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
@@ -116,7 +116,7 @@ plot_gene_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot
   plot_gene_haystack_raw(z[, dim1], z[, dim2], expression = y, ...)
 }
 
-#' plot_gene_set_haystack
+#' Visualizing the detection/expression of a set of genes in a 2D plot
 #'
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
@@ -173,7 +173,7 @@ plot_gene_set_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", 
 }
 
 
-#' hclust_haystack
+#' Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space
 #'
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
@@ -198,7 +198,7 @@ hclust_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
   hclust_haystack_raw(x[, dim1], x[, dim2], ...)
 }
 
-#' kmeans_haystack
+#' Function for k-means clustering of genes according to their expression distribution in 2D or multi-dimensional space
 #'
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.

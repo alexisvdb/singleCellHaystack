@@ -5,4 +5,7 @@ articles:
   example_tsne2d_advanced: example_tsne2d_advanced.html
   example_tsne2D_default: example_tsne2D_default.html
   introduction: introduction.html
+urls:
+  reference: https://alexisvdb.github.io/singleCellHaystack//reference
+  article: https://alexisvdb.github.io/singleCellHaystack//articles
 

@@ -1,6 +1,4 @@
-#' kde2d_faster
-#'
-#' Based on the MASS kde2d() function, but simplified beyond recognition; it's just tcrossprod() now.
+#' Based on the MASS kde2d() function, but heavily simplified; it's just tcrossprod() now.
 #'
 #' @param dens.x Contribution of all cells to densities of the x-axis grid points.
 #' @param dens.y Contribution of all cells to densities of the y-axis grid points.
@@ -439,15 +437,12 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   res
 }
 
-#' get_density
-#'
 #' Function to get the density of points with value TRUE in the (x,y) plot
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
 #' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
 #' @param rows.subset Indices of the rows of 'detection' for which to get the densities. Default: all.
-#' @param high.resolution logical (default: FALSE). If set to TRUE, the density data will be of a higher resolution
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
 get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution = FALSE){
@@ -477,8 +472,6 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities
 }
 
-#' show_result_haystack
-#'
 #' Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.
 #'
 #' @param res.haystack A 'haystack' result variable

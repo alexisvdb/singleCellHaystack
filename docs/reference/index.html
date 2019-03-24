@@ -67,10 +67,7 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
+  <a href="../articles/dplyr.html">Intro</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -83,20 +80,34 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/two-table.html">Two-table verbs</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/window-functions.html">Window functions</a>
     </li>
     <li>
-      <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
+      <a href="http://dbplyr.tidyverse.org/articles/dbplyr.html">Databases with dbplyr</a>
+    </li>
+    <li>
+      <a href="../articles/programming.html">Programming with dplyr</a>
+    </li>
+    <li>
+      <a href="../articles/compatibility.html">Compatibility</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/alexisvdb/singleCellHaystack">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -123,7 +134,135 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
+          <h2 id="section-main-haystack-functions" class="hasAnchor"><a href="#section-main-haystack-functions" class="anchor"></a>Main haystack functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="haystack.html">haystack()</a></code> </p>
+        </td>
+        <td><p>The main Haystack function</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="haystack_2D.html">haystack_2D()</a></code> </p>
+        </td>
+        <td><p>The main Haystack function, for 2-dimensional spaces.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="haystack_highD.html">haystack_highD()</a></code> </p>
+        </td>
+        <td><p>The main Haystack function, for higher-dimensional spaces.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="show_result_haystack.html">show_result_haystack()</a></code> </p>
+        </td>
+        <td><p>Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &gt; p.value.threshold &gt; n.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-visualization-functions" class="hasAnchor"><a href="#section-visualization-functions" class="anchor"></a>Visualization functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="plot_gene_haystack.html">plot_gene_haystack()</a></code> </p>
+        </td>
+        <td><p>Visualizing the detection/expression of a gene in a 2D plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_gene_haystack_raw.html">plot_gene_haystack_raw()</a></code> </p>
+        </td>
+        <td><p>Visualizing the detection/expression of a gene in a 2D plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_gene_set_haystack.html">plot_gene_set_haystack()</a></code> </p>
+        </td>
+        <td><p>Visualizing the detection/expression of a set of genes in a 2D plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot_gene_set_haystack_raw.html">plot_gene_set_haystack_raw()</a></code> </p>
+        </td>
+        <td><p>Visualizing the detection/expression of a set of genes in a 2D plot</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-clustering-functions" class="hasAnchor"><a href="#section-clustering-functions" class="anchor"></a>Clustering functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="hclust_haystack.html">hclust_haystack()</a></code> </p>
+        </td>
+        <td><p>Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hclust_haystack_highD.html">hclust_haystack_highD()</a></code> </p>
+        </td>
+        <td><p>Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="hclust_haystack_raw.html">hclust_haystack_raw()</a></code> </p>
+        </td>
+        <td><p>Function for hierarchical clustering of genes according to their distribution on a 2D plot.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kmeans_haystack.html">kmeans_haystack()</a></code> </p>
+        </td>
+        <td><p>Function for k-means clustering of genes according to their expression distribution in 2D or multi-dimensional space</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kmeans_haystack_highD.html">kmeans_haystack_highD()</a></code> </p>
+        </td>
+        <td><p>Function for k-means clustering of genes according to their distribution in a higher-dimensional space.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kmeans_haystack_raw.html">kmeans_haystack_raw()</a></code> </p>
+        </td>
+        <td><p>Function for k-means clustering of genes according to their distribution on a 2D plot.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-io-functions" class="hasAnchor"><a href="#section-io-functions" class="anchor"></a>IO functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="read_haystack.html">read_haystack()</a></code> </p>
+        </td>
+        <td><p>Function to read haystack results from file.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="write_haystack.html">write_haystack()</a></code> </p>
+        </td>
+        <td><p>Function to write haystack result data to file.</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-toy-example-data" class="hasAnchor"><a href="#section-toy-example-data" class="anchor"></a>Toy example data</h2>
           <p class="section-desc"></p>
         </th>
       </tr>
@@ -139,30 +278,20 @@
           <p><code><a href="dat.tsne.html">dat.tsne</a></code> </p>
         </td>
         <td><p>Single cell tSNE coordingates.</p></td>
-      </tr><tr>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-background-functions" class="hasAnchor"><a href="#section-background-functions" class="anchor"></a>Background functions</h2>
+          <p class="section-desc"></p>
+        </th>
+      </tr>
+      <tr>
         
         <td>
           <p><code><a href="default_bandwidth.nrd.html">default_bandwidth.nrd()</a></code> </p>
         </td>
         <td><p>Default function given by function bandwidth.nrd in MASS. No changes were made to this function.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get.distance.to.nearest.higher.degree.html">get.distance.to.nearest.higher.degree()</a></code> </p>
-        </td>
-        <td><p>Function for finding for a point in space the distance to the nearest point with higher density. See</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_density.html">get_density()</a></code> </p>
-        </td>
-        <td><p>get_density</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_dist_two_sets.html">get_dist_two_sets()</a></code> </p>
-        </td>
-        <td><p>Calculate the pairwise Euclidean distances between the rows of 2 matrices.</p></td>
       </tr><tr>
         
         <td>
@@ -175,6 +304,24 @@
           <p><code><a href="get_D_KL_highD.html">get_D_KL_highD()</a></code> </p>
         </td>
         <td><p>Calculates the Kullback-Leibler divergence between distributions for the high-dimensional version of haystack().</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_density.html">get_density()</a></code> </p>
+        </td>
+        <td><p>Function to get the density of points with value TRUE in the (x,y) plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_dist_two_sets.html">get_dist_two_sets()</a></code> </p>
+        </td>
+        <td><p>Calculate the pairwise Euclidean distances between the rows of 2 matrices.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="get_distance_to_nearest_higher_degree.html">get_distance_to_nearest_higher_degree()</a></code> </p>
+        </td>
+        <td><p>Function for finding for a point in space the distance to the nearest point with higher density. See</p></td>
       </tr><tr>
         
         <td>
@@ -202,105 +349,9 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="haystack.html">haystack()</a></code> </p>
-        </td>
-        <td><p>The main Haystack function.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="haystack_2D.html">haystack_2D()</a></code> </p>
-        </td>
-        <td><p>The main Haystack function, for 2-dimensional spaces.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="haystack_highD.html">haystack_highD()</a></code> </p>
-        </td>
-        <td><p>The main Haystack function, for higher-dimensional spaces.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hclust_haystack.html">hclust_haystack()</a></code> </p>
-        </td>
-        <td><p>hclust_haystack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hclust_haystack_highD.html">hclust_haystack_highD()</a></code> </p>
-        </td>
-        <td><p>Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="hclust_haystack_raw.html">hclust_haystack_raw()</a></code> </p>
-        </td>
-        <td><p>Function for hierarchical clustering of genes according to their distribution on a 2D plot.</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="kde2d_faster.html">kde2d_faster()</a></code> </p>
         </td>
-        <td><p>kde2d_faster</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="kmeans_haystack.html">kmeans_haystack()</a></code> </p>
-        </td>
-        <td><p>kmeans_haystack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="kmeans_haystack_highD.html">kmeans_haystack_highD()</a></code> </p>
-        </td>
-        <td><p>Function for k-means clustering of genes according to their distribution in a higher-dimensional space.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="kmeans_haystack_raw.html">kmeans_haystack_raw()</a></code> </p>
-        </td>
-        <td><p>Function for k-means clustering of genes according to their distribution on a 2D plot.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_gene_haystack.html">plot_gene_haystack()</a></code> </p>
-        </td>
-        <td><p>plot_gene_haystack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_gene_haystack_raw.html">plot_gene_haystack_raw()</a></code> </p>
-        </td>
-        <td><p>Visualizing the detection/expression of a gene in a 2D plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_gene_set_haystack.html">plot_gene_set_haystack()</a></code> </p>
-        </td>
-        <td><p>plot_gene_set_haystack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plot_gene_set_haystack_raw.html">plot_gene_set_haystack_raw()</a></code> </p>
-        </td>
-        <td><p>Visualizing the detection/expression of a set of genes in a 2D plot</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="read_haystack.html">read_haystack()</a></code> </p>
-        </td>
-        <td><p>Function to read haystack results from file.</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="show_result_haystack.html">show_result_haystack()</a></code> </p>
-        </td>
-        <td><p>show_result_haystack</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="write_haystack.html">write_haystack()</a></code> </p>
-        </td>
-        <td><p>Function to write haystack result data to file.</p></td>
+        <td><p>Based on the MASS kde2d() function, but heavily simplified; it's just tcrossprod() now.</p></td>
       </tr>
     </tbody>
     </table>
@@ -309,7 +360,12 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#section-main-haystack-functions">Main haystack functions</a></li>
+      <li><a href="#section-visualization-functions">Visualization functions</a></li>
+      <li><a href="#section-clustering-functions">Clustering functions</a></li>
+      <li><a href="#section-io-functions">IO functions</a></li>
+      <li><a href="#section-toy-example-data">Toy example data</a></li>
+      <li><a href="#section-background-functions">Background functions</a></li>
     </ul>
   </div>
 </div>

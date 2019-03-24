@@ -6,7 +6,7 @@
 \alias{haystack.data.frame}
 \alias{haystack.Seurat}
 \alias{haystack.SingleCellExperiment}
-\title{The main Haystack function.}
+\title{The main Haystack function}
 \usage{
 haystack(x, ...)
 
@@ -44,5 +44,5 @@ haystack(x, ...)
 An object of class "haystack"
 }
 \description{
-The main Haystack function.
+The main Haystack function
 }
