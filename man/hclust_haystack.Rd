@@ -4,7 +4,6 @@
 \alias{hclust_haystack}
 \alias{hclust_haystack.matrix}
 \alias{hclust_haystack.data.frame}
-\alias{kmeans_haystack.data.frame}
 \title{hclust_haystack}
 \usage{
 hclust_haystack(x, ...)
@@ -12,8 +11,6 @@ hclust_haystack(x, ...)
 \method{hclust_haystack}{matrix}(x, dim1 = 1, dim2 = 2, ...)
 
 \method{hclust_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
-
-\method{kmeans_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}

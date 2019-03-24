@@ -217,7 +217,7 @@ kmeans_haystack.matrix <- function(x, dim1 = 1, dim2 = 2, ...) {
   kmeans_haystack_raw(x[, dim1], x[, dim2], ...)
 }
 
-#' @rdname hclust_haystack
+#' @rdname kmeans_haystack
 #' @export
 kmeans_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
   kmeans_haystack_raw(x[, dim1], x[, dim2], ...)
