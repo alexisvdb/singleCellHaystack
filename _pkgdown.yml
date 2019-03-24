@@ -63,24 +63,20 @@ reference:
 navbar:
   type: default
   left:
-  - text: Intro
-    href: articles/dplyr.html
+#  - text: Intro
+#    href: index.html
   - text: Reference
     href: reference/index.html
   - text: Articles
     menu:
-    - text: Two-table verbs
-      href: articles/two-table.html
-    - text: Window functions
-      href: articles/window-functions.html
-    - text: Databases with dbplyr
-      href: http://dbplyr.tidyverse.org/articles/dbplyr.html
-    - text: Programming with dplyr
-      href: articles/programming.html
-    - text: Compatibility
-      href: articles/compatibility.html
-  - text: News
-    href: news/index.html
+    - text: Introduction
+      href: articles/introduction.html
+    - text: Default application on 2D data
+      href: articles/example_tsne2D_default.html
+    - text: Advanced application on 2D data
+      href: articles/example_tsne2D_advanced.html
+#  - text: News
+#    href: news/index.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
