@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Application of singleCellHaystack on 2D t-SNE coordinates • singleCellHaystack</title>
+<title>Application of ‘advanced’ mode on 2D t-SNE coordinates • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Application of singleCellHaystack on 2D t-SNE coordinates">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Application of ‘advanced’ mode on 2D t-SNE coordinates">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -76,18 +76,23 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Application of singleCellHaystack on 2D t-SNE coordinates</h1>
+      <h1>Application of ‘advanced’ mode on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
             <h4 class="date">2019-03-24</h4>
       
       
-      <div class="hidden name"><code>example_tsne2D_default.Rmd</code></div>
+      <div class="hidden name"><code>example_tsne2d_advanced.Rmd</code></div>
 
     </div>
 
     
     
+<div id="tldr" class="section level1">
+<h1 class="hasAnchor">
+<a href="#tldr" class="anchor"></a>tl;dr</h1>
+<p>You can indicate the general expression levels of cells using input parameter <code>use.advanced.sampling</code>. If you do that,<code>singleCellHaystack</code> takes the general expression levels into account and finds genes that are different from that general expression pattern.</p>
+</div>
 <div id="preparing-the-input-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
@@ -108,13 +113,17 @@
 <li>
 <code>dat.umap</code>: a data.frame with UMAP coordinates (2D).</li>
 </ul>
-<p>Let’s have a look at the t-SNE plot:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes_string</span>(<span class="dt">x =</span> <span class="st">"V1"</span>, <span class="dt">y =</span> <span class="st">"V2"</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot.</p>
+<p>Let’s have a look at the t-SNE plot, colouring cells be the number of genes detected in each cell:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">general.detection &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/apply">apply</a></span>(dat.detection,<span class="dv">2</span>,sum)
+<span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes_string</span>(<span class="dt">x =</span> <span class="st">"V1"</span>, <span class="dt">y =</span> <span class="st">"V2"</span>, <span class="dt">colour =</span> general.detection)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span>
+<span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_gradient</span>(<span class="dt">low=</span><span class="st">"yellow"</span>, <span class="dt">high=</span><span class="st">"red"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">"Det. genes"</span>)</code></pre></div>
+<p><img src="example_tsne2d_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.</p>
+<p>Moreover, the cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend would be especially surprizing.</p>
+<p>We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot, taking into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
 </div>
-<div id="application-of-singlecellhaystack-in-default-mode" class="section level1">
+<div id="application-of-singlecellhaystack-in-advanced-mode" class="section level1">
 <h1 class="hasAnchor">
-<a href="#application-of-singlecellhaystack-in-default-mode" class="anchor"></a>Application of <code>singleCellHaystack</code> in default mode</h1>
+<a href="#application-of-singlecellhaystack-in-advanced-mode" class="anchor"></a>Application of <code>singleCellHaystack</code> in advanced mode</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
@@ -123,8 +132,8 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;     dat.expression, dat.tsne</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
-<p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
+<p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. <code>use.advanced.sampling</code> is set to the vector of detected genes per cell, <code>general.detection</code>. By doing this, <code>haystack</code> will calculate cell distributions and perform randomizations taking into account the general detection levels.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne.adv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">use.advanced.sampling =</span> general.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span>
@@ -163,23 +172,25 @@
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 200 values out of 200 done</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></code></pre></div>
-<p>Let’s have a look at the most biased genes. The most strongly biased gene is Alox5ap. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Alox5ap is not detected in the upper right and lower right group of cells.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)
-<span class="co">#&gt;              D_KL log.p.vals T.counts</span>
-<span class="co">#&gt; Alox5ap 1.0284127  -68.18293     1354</span>
-<span class="co">#&gt; Lyz1    0.8561399  -67.30395     1183</span>
-<span class="co">#&gt; Clec4a2 0.7561418  -66.62938      947</span>
-<span class="co">#&gt; Cybb    0.8090982  -65.94909     1172</span>
-<span class="co">#&gt; S100a10 0.7155384  -64.46251     1094</span>
+<p>Let’s have a look at the most biased genes. The most strongly biased gene is Trim10. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne.adv, <span class="dt">n =</span> <span class="dv">5</span>)
+<span class="co">#&gt;            D_KL log.p.vals T.counts</span>
+<span class="co">#&gt; Trim10 2.491996  -2303.037      368</span>
+<span class="co">#&gt; Gypa   2.208790  -2171.948      448</span>
+<span class="co">#&gt; Snca   2.177563  -2094.571      474</span>
+<span class="co">#&gt; Slc4a1 2.148274  -2001.420      372</span>
+<span class="co">#&gt; Rsad2  1.974219  -1930.471      434</span>
 <span class="co"># plotting detection of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
+<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Trim10"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
+<p><img src="example_tsne2d_advanced_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
+<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Trim10"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
+<p><img src="example_tsne2d_advanced_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"> From these plots, we can see that Trim10 is expressed almost exclusively in the bottom right group of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Trim10 is especially surprizing: it is deteced in cells that express in general few genes.</p>
+<p>This explains why the advanced mode of <code>singleCellHaystack</code> judges Trim10 to be the most significantly biased.</p>
+<p>Compare the pattern of Trim10 with that of Alox5ap, the most biased gene in the default mode (see <a href="articles/example_tsne2D_default.html">here</a>). Alox5ap is strongly biased, but is detected in cells that have in general many detected genes.</p>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
-res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)
+res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne.adv, <span class="dt">n =</span> <span class="dv">1000</span>)
 <span class="co"># cluster biased genes by their expression pattern in the 2D plot</span>
 genes.top &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(res.top)
 res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclust_haystack.html">hclust_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> genes.top, <span class="dt">detection =</span> dat.detection)</code></pre></div>
@@ -188,8 +199,7 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res.hc.clusters)
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 454 289 104 133  20</span></code></pre></div>
-<p>Cluster 1 contains 454 genes, and the smallest cluster (cluster 5) contains just 20 genes.</p>
+<span class="co">#&gt; 184 234 223 114 245</span></code></pre></div>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="cf">for</span>(cluster <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>){
   gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]
@@ -198,11 +208,11 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
   p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title)
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p)
 }</code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example7-1.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_default_files/figure-html/example7-2.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_default_files/figure-html/example7-3.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_default_files/figure-html/example7-4.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_default_files/figure-html/example7-5.png" width="384" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Alox5ap"</span>] <span class="co"># the most biased gene is in cluster 4</span>
-<span class="co">#&gt; Alox5ap </span>
-<span class="co">#&gt;       4</span></code></pre></div>
-<p>The most biased genes, Alox5ap, was clustered into cluster 4. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 4. The pattern of cluster 5 (containing 20 genes) is rather different from all other clusters.</p>
+<p><img src="example_tsne2d_advanced_files/figure-html/example7-1.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-2.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-3.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-4.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-5.png" width="384" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Trim10"</span>] <span class="co"># the most biased gene is in cluster 4</span>
+<span class="co">#&gt; Trim10 </span>
+<span class="co">#&gt;      4</span></code></pre></div>
+<p>The most biased genes, Trim10, was clustered into cluster 4. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 4. Cluster 4 genes are on average detected almost exclusively in the bottom right group of cells.</p>
 </div>
   </div>
 
@@ -211,8 +221,9 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#preparing-the-input-data">Preparing the input data</a></li>
-      <li><a href="#application-of-singlecellhaystack-in-default-mode">Application of <code>singleCellHaystack</code> in default mode</a></li>
+<li><a href="#tldr">tl;dr</a></li>
+      <li><a href="#preparing-the-input-data">Preparing the input data</a></li>
+      <li><a href="#application-of-singlecellhaystack-in-advanced-mode">Application of <code>singleCellHaystack</code> in advanced mode</a></li>
       </ul>
 </div>
       </div>
