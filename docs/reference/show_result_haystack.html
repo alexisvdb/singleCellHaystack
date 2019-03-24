@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>show_result_haystack — show_result_haystack • singleCellHaystack</title>
+<title>Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &gt; p.value.threshold &gt; n. — show_result_haystack • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="show_result_haystack — show_result_haystack" />
+<meta property="og:title" content="Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &gt; p.value.threshold &gt; n. — show_result_haystack" />
 
 <meta property="og:description" content="Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &amp;gt; p.value.threshold &amp;gt; n." />
 <meta name="twitter:card" content="summary" />
@@ -70,7 +70,10 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../articles/dplyr.html">Intro</a>
+  <a href="../index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -83,24 +86,15 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/two-table.html">Two-table verbs</a>
+      <a href="../articles/example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/window-functions.html">Window functions</a>
+      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="http://dbplyr.tidyverse.org/articles/dbplyr.html">Databases with dbplyr</a>
-    </li>
-    <li>
-      <a href="../articles/programming.html">Programming with dplyr</a>
-    </li>
-    <li>
-      <a href="../articles/compatibility.html">Compatibility</a>
+      <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../news/index.html">News</a>
 </li>
       </ul>
       
@@ -123,7 +117,7 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>show_result_haystack</h1>
+    <h1>Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &gt; p.value.threshold &gt; n.</h1>
     
     <div class="hidden name"><code>show_result_haystack.Rd</code></div>
     </div>
@@ -173,62 +167,63 @@
 <span class='co'># below are variations for showing the results in a table</span>
 <span class='co'># 1. list top 10 biased genes</span>
 <span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals T.counts
-#&gt; gene_79  1.929800  -20.39882       68
-#&gt; gene_242 1.360661  -19.81458       96
-#&gt; gene_317 1.386194  -19.34307       94
-#&gt; gene_275 1.345251  -19.31956       95
-#&gt; gene_497 1.599646  -19.27905       86
-#&gt; gene_24  1.857497  -18.82686       59
-#&gt; gene_244 1.238011  -18.35909       95
-#&gt; gene_351 1.408946  -18.31724       89
-#&gt; gene_71  1.868822  -18.24264       56
-#&gt; gene_62  1.519993  -18.20658       81</div><div class='input'><span class='co'># 2. list genes with p value below a certain threshold</span>
+#&gt; gene_497 1.599646  -22.31043       86
+#&gt; gene_62  1.519993  -20.90104       81
+#&gt; gene_351 1.408946  -20.84695       89
+#&gt; gene_339 1.414814  -20.80586       87
+#&gt; gene_79  1.929800  -20.45369       68
+#&gt; gene_317 1.386194  -20.40589       94
+#&gt; gene_137 1.349994  -20.30840       89
+#&gt; gene_61  1.470475  -20.27907       80
+#&gt; gene_275 1.345251  -19.90779       95
+#&gt; gene_242 1.360661  -19.88499       96</div><div class='input'><span class='co'># 2. list genes with p value below a certain threshold</span>
 <span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>p.value.threshold</span><span class='kw'>=</span><span class='fl'>1e-10</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals T.counts
-#&gt; gene_79  1.9298000  -20.39882       68
-#&gt; gene_242 1.3606607  -19.81458       96
-#&gt; gene_317 1.3861936  -19.34307       94
-#&gt; gene_275 1.3452514  -19.31956       95
-#&gt; gene_497 1.5996456  -19.27905       86
-#&gt; gene_24  1.8574968  -18.82686       59
-#&gt; gene_244 1.2380108  -18.35909       95
-#&gt; gene_351 1.4089458  -18.31724       89
-#&gt; gene_71  1.8688220  -18.24264       56
-#&gt; gene_62  1.5199933  -18.20658       81
-#&gt; gene_479 1.6972565  -18.09352       61
-#&gt; gene_339 1.4148142  -18.03610       87
-#&gt; gene_137 1.3499940  -17.84196       89
-#&gt; gene_300 1.6001648  -17.79484       64
-#&gt; gene_61  1.4704748  -17.76936       80
-#&gt; gene_381 1.6793541  -17.41947       58
-#&gt; gene_155 1.5347601  -17.41061       65
-#&gt; gene_57  1.8012672  -17.30271       54
-#&gt; gene_444 1.4358815  -17.24922       75
-#&gt; gene_321 1.5354565  -17.19459       63
-#&gt; gene_59  1.4605859  -16.93129       66
-#&gt; gene_429 1.0719883  -16.45631       94
-#&gt; gene_112 1.4955762  -16.27271       59
-#&gt; gene_313 1.2945440  -16.25847       78
-#&gt; gene_325 1.2093850  -15.97830       84
-#&gt; gene_400 1.8579716  -15.91618       48
-#&gt; gene_135 1.7259726  -15.40546       49
-#&gt; gene_340 1.4521210  -15.32917       56
-#&gt; gene_463 2.1619665  -15.22789       41
-#&gt; gene_213 1.0901441  -15.00598       85
-#&gt; gene_78  2.3302373  -14.95233       38
-#&gt; gene_424 1.4472784  -14.82870       54
-#&gt; gene_458 0.9508191  -14.70925       92
-#&gt; gene_99  1.0849556  -14.03625       71
-#&gt; gene_291 2.2015170  -13.64200       36
-#&gt; gene_295 1.7966484  -13.62162       42
-#&gt; gene_51  1.6407593  -13.01865       43
-#&gt; gene_488 3.0647537  -11.67277       22
-#&gt; gene_10  1.3278710  -11.24572       44
-#&gt; gene_13  1.4534620  -10.91637       40
-#&gt; gene_449 2.4810190  -10.45894       24</div><div class='input'><span class='co'># 3. list a set of specified genes</span>
+#&gt; gene_497 1.5996456  -22.31043       86
+#&gt; gene_62  1.5199933  -20.90104       81
+#&gt; gene_351 1.4089458  -20.84695       89
+#&gt; gene_339 1.4148142  -20.80586       87
+#&gt; gene_79  1.9298000  -20.45369       68
+#&gt; gene_317 1.3861936  -20.40589       94
+#&gt; gene_137 1.3499940  -20.30840       89
+#&gt; gene_61  1.4704748  -20.27907       80
+#&gt; gene_275 1.3452514  -19.90779       95
+#&gt; gene_242 1.3606607  -19.88499       96
+#&gt; gene_244 1.2380108  -18.91327       95
+#&gt; gene_444 1.4358815  -18.80945       75
+#&gt; gene_325 1.2093850  -18.54440       84
+#&gt; gene_313 1.2945440  -18.27911       78
+#&gt; gene_24  1.8574968  -17.51135       59
+#&gt; gene_213 1.0901441  -17.42695       85
+#&gt; gene_429 1.0719883  -17.35265       94
+#&gt; gene_300 1.6001648  -17.09222       64
+#&gt; gene_479 1.6972565  -16.98287       61
+#&gt; gene_155 1.5347601  -16.88542       65
+#&gt; gene_71  1.8688220  -16.87939       56
+#&gt; gene_59  1.4605859  -16.59295       66
+#&gt; gene_321 1.5354565  -16.36856       63
+#&gt; gene_381 1.6793541  -16.14979       58
+#&gt; gene_458 0.9508191  -16.12652       92
+#&gt; gene_57  1.8012672  -16.03445       54
+#&gt; gene_78  2.3302373  -15.37371       38
+#&gt; gene_463 2.1619665  -15.25658       41
+#&gt; gene_112 1.4955762  -15.12303       59
+#&gt; gene_400 1.8579716  -15.12158       48
+#&gt; gene_99  1.0849556  -14.60397       71
+#&gt; gene_135 1.7259726  -14.54798       49
+#&gt; gene_488 3.0647537  -14.38967       22
+#&gt; gene_291 2.2015170  -14.28109       36
+#&gt; gene_340 1.4521210  -14.16820       56
+#&gt; gene_424 1.4472784  -13.72857       54
+#&gt; gene_295 1.7966484  -13.53518       42
+#&gt; gene_51  1.6407593  -12.82867       43
+#&gt; gene_449 2.4810190  -12.53533       24
+#&gt; gene_13  1.4534620  -11.04548       40
+#&gt; gene_10  1.3278710  -10.99048       44
+#&gt; gene_136 1.6923133  -10.20170       30</div><div class='input'><span class='co'># 3. list a set of specified genes</span>
 <span class='no'>set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"gene_497"</span>,<span class='st'>"gene_386"</span>, <span class='st'>"gene_275"</span>)
 <span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='no'>set</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals T.counts
-#&gt; gene_275 1.3452514  -19.31956       95
-#&gt; gene_497 1.5996456  -19.27905       86
+#&gt; gene_497 1.5996456  -22.31043       86
+#&gt; gene_275 1.3452514  -19.90779       95
 #&gt; gene_386 0.2531526    0.00000       30</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

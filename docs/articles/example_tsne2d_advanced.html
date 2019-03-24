@@ -53,7 +53,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
       <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
@@ -64,7 +64,14 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="https://github.com/alexisvdb/singleCellHaystack">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -82,7 +89,7 @@
             <h4 class="date">2019-03-24</h4>
       
       
-      <div class="hidden name"><code>example_tsne2d_advanced.Rmd</code></div>
+      <div class="hidden name"><code>example_tsne2D_advanced.Rmd</code></div>
 
     </div>
 
@@ -117,7 +124,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">general.detection &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/apply">apply</a></span>(dat.detection,<span class="dv">2</span>,sum)
 <span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes_string</span>(<span class="dt">x =</span> <span class="st">"V1"</span>, <span class="dt">y =</span> <span class="st">"V2"</span>, <span class="dt">colour =</span> general.detection)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span>
 <span class="kw">geom_point</span>(<span class="dt">size=</span><span class="dv">2</span>) <span class="op">+</span><span class="st"> </span><span class="kw">scale_color_gradient</span>(<span class="dt">low=</span><span class="st">"yellow"</span>, <span class="dt">high=</span><span class="st">"red"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">color =</span> <span class="st">"Det. genes"</span>)</code></pre></div>
-<p><img src="example_tsne2d_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.</p>
+<p><img src="example_tsne2D_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.</p>
 <p>Moreover, the cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend would be especially surprizing.</p>
 <p>We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot, taking into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
 </div>
@@ -182,10 +189,10 @@
 <span class="co">#&gt; Rsad2  1.974219  -1930.471      434</span>
 <span class="co"># plotting detection of this gene</span>
 <span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Trim10"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
-<p><img src="example_tsne2d_advanced_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="example_tsne2D_advanced_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
 <span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Trim10"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
-<p><img src="example_tsne2d_advanced_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"> From these plots, we can see that Trim10 is expressed almost exclusively in the bottom right group of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Trim10 is especially surprizing: it is deteced in cells that express in general few genes.</p>
+<p><img src="example_tsne2D_advanced_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"> From these plots, we can see that Trim10 is expressed almost exclusively in the bottom right group of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Trim10 is especially surprizing: it is deteced in cells that express in general few genes.</p>
 <p>This explains why the advanced mode of <code>singleCellHaystack</code> judges Trim10 to be the most significantly biased.</p>
 <p>Compare the pattern of Trim10 with that of Alox5ap, the most biased gene in the default mode (see <a href="articles/example_tsne2D_default.html">here</a>). Alox5ap is strongly biased, but is detected in cells that have in general many detected genes.</p>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
@@ -208,7 +215,7 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
   p &lt;-<span class="st"> </span>p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title)
   <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/print">print</a></span>(p)
 }</code></pre></div>
-<p><img src="example_tsne2d_advanced_files/figure-html/example7-1.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-2.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-3.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-4.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2d_advanced_files/figure-html/example7-5.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="example_tsne2D_advanced_files/figure-html/example7-1.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_advanced_files/figure-html/example7-2.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_advanced_files/figure-html/example7-3.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_advanced_files/figure-html/example7-4.png" width="384" style="display: block; margin: auto;"><img src="example_tsne2D_advanced_files/figure-html/example7-5.png" width="384" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Trim10"</span>] <span class="co"># the most biased gene is in cluster 4</span>
 <span class="co">#&gt; Trim10 </span>
 <span class="co">#&gt;      4</span></code></pre></div>

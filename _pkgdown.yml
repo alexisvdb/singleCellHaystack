@@ -59,24 +59,32 @@ reference:
   - get_parameters_haystack
   - kde2d_faster
 
-
 navbar:
-  type: default
-  left:
-#  - text: Intro
-#    href: index.html
-  - text: Reference
-    href: reference/index.html
-  - text: Articles
-    menu:
-    - text: Introduction
-      href: articles/introduction.html
-    - text: Default application on 2D data
-      href: articles/example_tsne2D_default.html
-    - text: Advanced application on 2D data
-      href: articles/example_tsne2D_advanced.html
-#  - text: News
-#    href: news/index.html
+  structure:
+    left:
+    - home
+#    - intro
+    - reference
+    - articles
+#    - tutorials
+#    - news
+    right: github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    articles:
+      text: Articles
+      menu:
+      - text: Introduction to singleCellHaystack
+        href: articles/introduction.html
+      - text: Application of singleCellHaystack on 2D t-SNE coordinates
+        href: articles/example_tsne2D_default.html
+      - text: Application of advanced mode on 2D t-SNE coordinates
+        href: articles/example_tsne2D_advanced.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
