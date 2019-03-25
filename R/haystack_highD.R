@@ -45,12 +45,15 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
   for(c in 1:length(class.types)){
     cl <- class.types[c]
     cl.subset <- classes==cl
-    if(sum(cl.subset)==0)
-      next
-    P <- apply(density.contributions[cl.subset, , drop = FALSE], 2, sum)
-    P <- P/sum(P)
-    D_KL <- sum(P * log(P/Q))
-    D_KLs[c] <- D_KL
+    if(sum(cl.subset)==0){ # this means a gene is expressed or not expressed in all cells; return 0
+      #D_KLs[c] <- 0
+      return(0)
+    } else {
+      P <- apply(density.contributions[cl.subset, , drop = FALSE], 2, sum)
+      P <- P/sum(P)
+      D_KL <- sum(P * log(P/Q))
+      D_KLs[c] <- D_KL
+    }
   }
   sum(D_KLs)
 }
@@ -115,6 +118,11 @@ get_distance_to_nearest_higher_degree = function(entries_n=length(degree_counts)
 get_grid_points = function(input, method="grid", grid.points = 50){
 
   if(method=="kmeans"){
+    if(nrow(input) < grid.points){
+      warning("Fewer input points than grid.points. Adjusting value of grid.points to ",nrow(input))
+      grid.points <- nrow(input)
+    }
+
     # perform k-means clustering and get the centers
     res.kmeans <- kmeans(input, centers=grid.points, iter.max = 10, nstart = 10)
     grid.coord <- res.kmeans$centers
@@ -122,7 +130,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
   } else if(method=="grid"){
     # first decide a grid in all dimensions
     # then, "round" cells to the nearest grid point
-    # from all gird points, keep those that are closest to many cells, and far away from other points
+    # from all grid points, keep those that are closest to many cells, and far away from other points
 
     input.dim <- ncol(input)
 
@@ -153,8 +161,15 @@ get_grid_points = function(input, method="grid", grid.points = 50){
     gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
     # plot(sort(gamma, decreasing = T))
 
-    center.indices <- order(gamma, decreasing = TRUE)[1:grid.points]
-    grid.coord <- input.grid.candidates[center.indices,]
+    # check if there are sufficient candidate grid points left
+    # if no: reduce the number of grid points to return
+    if(length(gamma) < grid.points){
+      warning("Fewer input points than grid.points. Adjusting value of grid.points to ",nrow(input.grid.candidates))
+      grid.coord <- input.grid.candidates
+    } else {
+      center.indices <- order(gamma, decreasing = TRUE)[1:grid.points]
+      grid.coord <- input.grid.candidates[center.indices,]
+    }
   }
   grid.coord
 }
@@ -246,6 +261,12 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   # normalize to sum to 1
   message("### deciding grid points...")
   grid.coord <- get_grid_points(input=x, method=grid.method, grid.points=grid.points)
+
+  # add another warning for the case that the number of grid.points was changed
+  if(nrow(grid.coord) != grid.points){
+    warning("The number of grid points was changed from ",grid.points," to ",nrow(grid.coord))
+    grid.points <- nrow(grid.coord)
+  }
 
   dist.to.grid <- get_dist_two_sets(x,grid.coord)
 

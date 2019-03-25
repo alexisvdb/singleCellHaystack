@@ -118,20 +118,23 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
   for(c in 1:length(class.types)){
     cl <- class.types[c]
     cl.subset <- classes==cl
-    if(sum(cl.subset)==0)
-      next
-    density <- kde2d_faster(dens.x=parameters$dens.x[,cl.subset],dens.y=parameters$dens.y[,cl.subset])
+    if(sum(cl.subset)==0){ # this means a gene is expressed or not expressed in all cells; return 0
+      #D_KLs[c] <- 0
+      return(0)
+    } else {
+      density <- kde2d_faster(dens.x=parameters$dens.x[,cl.subset],dens.y=parameters$dens.y[,cl.subset])
 
-    # only decide pseudo if no value was given as input
-    # (in total this takes some time)
-    if(missing(pseudo))
-      pseudo <- quantile(density[density>0],0.01)
+      # only decide pseudo if no value was given as input
+      # (in total this takes some time)
+      if(missing(pseudo))
+        pseudo <- quantile(density[density>0],0.01)
 
-    density <- density + pseudo
-    P <- density / sum(density)
+      density <- density + pseudo
+      P <- density / sum(density)
 
-    D_KL <- sum(P * log(P/Q))
-    D_KLs[c] <- D_KL
+      D_KL <- sum(P * log(P/Q))
+      D_KLs[c] <- D_KL
+    }
   }
   sum(D_KLs)
 }
