@@ -8,10 +8,11 @@
 \alias{haystack.SingleCellExperiment}
 \title{The main Haystack function.}
 \usage{
-haystack(x, ...)
+haystack(x, dim1 = 1, dim2 = 2, detection, method = "highD",
+  use.advanced.sampling = NULL, dir.randomization = NULL,
+  scale = TRUE, grid.points = 50, grid.method = "grid", ...)
 
-\method{haystack}{matrix}(x, dim1 = 1, dim2 = 2, method = "highD",
-  ...)
+\method{haystack}{matrix}(x, ...)
 
 \method{haystack}{data.frame}(x, ...)
 
@@ -19,18 +20,31 @@ haystack(x, ...)
   coord = "tsne", cutoff = 1, ...)
 
 \method{haystack}{SingleCellExperiment}(x, assay = "counts",
-  coord = "TSNE", cutoff = 1, ...)
+  coord = "TSNE", cutoff = 1, use.advanced.sampling = NULL,
+  dir.randomization = NULL, ...)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
-
-\item{...}{further paramters passed to haystack_raw().}
 
 \item{dim1}{column index or name of matrix for x-axis coordinates.}
 
 \item{dim2}{column index or name of matrix for y-axis coordinates.}
 
+\item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
+
 \item{method}{choose between highD (default) and 2D haystack.}
+
+\item{use.advanced.sampling}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
+
+\item{dir.randomization}{If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.}
+
+\item{scale}{Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.}
+
+\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.}
+
+\item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".}
+
+\item{...}{further paramters passed down to methods.}
 
 \item{assay}{name of assay data for Seurat method.}
 
