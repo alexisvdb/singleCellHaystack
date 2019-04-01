@@ -70,7 +70,7 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cut
 
 #' @rdname haystack
 #' @export
-haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, use.advanced.sampling = NULL, dir.randomization = NULL, ...) {
+haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, ...) {
   if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
     stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
   }

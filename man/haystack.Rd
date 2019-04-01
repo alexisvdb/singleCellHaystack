@@ -24,8 +24,7 @@ haystack(x, ...)
   coord = "tsne", cutoff = 1, ...)
 
 \method{haystack}{SingleCellExperiment}(x, assay = "counts",
-  coord = "TSNE", cutoff = 1, use.advanced.sampling = NULL,
-  dir.randomization = NULL, ...)
+  coord = "TSNE", cutoff = 1, ...)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
