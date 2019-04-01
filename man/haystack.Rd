@@ -8,13 +8,17 @@
 \alias{haystack.SingleCellExperiment}
 \title{The main Haystack function.}
 \usage{
-haystack(x, dim1 = 1, dim2 = 2, detection, method = "highD",
-  use.advanced.sampling = NULL, dir.randomization = NULL,
-  scale = TRUE, grid.points = 50, grid.method = "grid", ...)
+haystack(x, ...)
 
-\method{haystack}{matrix}(x, ...)
+\method{haystack}{matrix}(x, dim1 = 1, dim2 = 2, detection,
+  method = "highD", use.advanced.sampling = NULL,
+  dir.randomization = NULL, scale = TRUE, grid.points = 50,
+  grid.method = "grid", ...)
 
-\method{haystack}{data.frame}(x, ...)
+\method{haystack}{data.frame}(x, dim1 = 1, dim2 = 2, detection,
+  method = "highD", use.advanced.sampling = NULL,
+  dir.randomization = NULL, scale = TRUE, grid.points = 50,
+  grid.method = "grid", ...)
 
 \method{haystack}{Seurat}(x, assay = "RNA", slot = "data",
   coord = "tsne", cutoff = 1, ...)
@@ -25,6 +29,8 @@ haystack(x, dim1 = 1, dim2 = 2, detection, method = "highD",
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
+
+\item{...}{further paramters passed down to methods.}
 
 \item{dim1}{column index or name of matrix for x-axis coordinates.}
 
@@ -43,8 +49,6 @@ haystack(x, dim1 = 1, dim2 = 2, detection, method = "highD",
 \item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.}
 
 \item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".}
-
-\item{...}{further paramters passed down to methods.}
 
 \item{assay}{name of assay data for Seurat method.}
 

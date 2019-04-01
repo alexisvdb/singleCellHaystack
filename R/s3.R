@@ -19,13 +19,13 @@
 #' @return An object of class "haystack"
 #' @export
 #'
-haystack <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", use.advanced.sampling = NULL, dir.randomization = NULL, scale = TRUE, grid.points = 50, grid.method="grid", ...) {
+haystack <- function(x, ...) {
   UseMethod("haystack")
 }
 
 #' @rdname haystack
 #' @export
-haystack.matrix <- function(x, ...) {
+haystack.matrix <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", use.advanced.sampling = NULL, dir.randomization = NULL, scale = TRUE, grid.points = 50, grid.method = "grid", ...) {
   method <- match.arg(method, c("highD", "2D"))
 
   switch(method,
@@ -52,8 +52,8 @@ haystack.matrix <- function(x, ...) {
 
 #' @rdname haystack
 #' @export
-haystack.data.frame <- function(x, ...) {
-  haystack(as.matrix(x), dim1 = dim1, dim2 = dim2, ...)
+haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", use.advanced.sampling = NULL, dir.randomization = NULL, scale = TRUE, grid.points = 50, grid.method = "grid", ...) {
+  haystack(as.matrix(x), dim1 = dim1, dim2 = dim2, detection = detection, method = method, use.advanced.sampling = use.advanced.sampling, dir.randomization = dir.randomization, scale = scale, grid.points = grid.points, grid.method = grid.method, ...)
 }
 
 #' @rdname haystack
