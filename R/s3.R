@@ -81,6 +81,10 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
 
   y <- SummarizedExperiment::assay(x, assay)
   z <- SingleCellExperiment::reducedDim(x, coord)
+  if(is.null(z)) {
+    stop("No coordinates named ", coord, " found.")
+  }
+
   haystack(as.matrix(z), detection = y > cutoff, ...)
 }
 
