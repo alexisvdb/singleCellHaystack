@@ -84,7 +84,7 @@ navbar:
       - text: Application of singleCellHaystack on 2D t-SNE coordinates
         href: articles/example_tsne2D_default.html
       - text: Application of advanced mode on 2D t-SNE coordinates
-        href: articles/example_tsne2D_advanced.html
+        href: articles/example_tsne2d_advanced.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
