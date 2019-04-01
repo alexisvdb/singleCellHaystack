@@ -52,7 +52,6 @@ reference:
   - get_D_KL_highD
   - get_density
   - get_dist_two_sets
-  - get_distance_to_nearest_higher_degree
   - get_euclidean_distance
   - get_grid_points
   - get_log_p_D_KL
