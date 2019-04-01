@@ -8,7 +8,13 @@
 #' @param coord name of coordinates slot for specific methods.
 #' @param cutoff cutoff for detection.
 #' @param method choose between highD (default) and 2D haystack.
-#' @param ... further paramters passed to haystack_raw().
+#' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
+#' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
+#' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
+#' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
+#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
+#' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".
+#' @param ... further paramters passed down to methods.
 #'
 #' @return An object of class "haystack"
 #' @export
@@ -19,17 +25,35 @@ haystack <- function(x, ...) {
 
 #' @rdname haystack
 #' @export
-haystack.matrix <- function(x, dim1 = 1, dim2 = 2, method = "highD", ...) {
-  if (method == "highD")
-    haystack_highD(x, ...)
-  else
-    haystack_2D(x[, dim1], x[, dim2], ...)
+haystack.matrix <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", use.advanced.sampling = NULL, dir.randomization = NULL, scale = TRUE, grid.points = 50, grid.method = "grid", ...) {
+  method <- match.arg(method, c("highD", "2D"))
+
+  switch(method,
+         "highD" = {
+           haystack_highD(
+             x,
+             detection = detection,
+             use.advanced.sampling = use.advanced.sampling,
+             dir.randomization = dir.randomization,
+             scale = scale,
+             grid.points = grid.points,
+             grid.method = grid.method)
+         },
+         "2D" = {
+           haystack_2D(
+             x[, dim1],
+             x[, dim2],
+             detection = detection,
+             use.advanced.sampling = use.advanced.sampling,
+             dir.randomization = dir.randomization)
+         }
+         )
 }
 
 #' @rdname haystack
 #' @export
-haystack.data.frame <- function(x, ...) {
-  haystack(as.matrix(x), ...)
+haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", use.advanced.sampling = NULL, dir.randomization = NULL, scale = TRUE, grid.points = 50, grid.method = "grid", ...) {
+  haystack(as.matrix(x), dim1 = dim1, dim2 = dim2, detection = detection, method = method, use.advanced.sampling = use.advanced.sampling, dir.randomization = dir.randomization, scale = scale, grid.points = grid.points, grid.method = grid.method, ...)
 }
 
 #' @rdname haystack
@@ -57,6 +81,10 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
 
   y <- SummarizedExperiment::assay(x, assay)
   z <- SingleCellExperiment::reducedDim(x, coord)
+  if(is.null(z)) {
+    stop("No coordinates named ", coord, " found.")
+  }
+
   haystack(as.matrix(z), detection = y > cutoff, ...)
 }
 
