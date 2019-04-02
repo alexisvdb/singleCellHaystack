@@ -327,7 +327,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # density <- density + pseudo
   # # heatmap(density, Rowv=NA,Colv=NA,scale="none")
   # Q <- density / sum(density)
-  ref <- get_reference(param, use.advanced.sampling)
+  ref <- get_reference(parameters, use.advanced.sampling)
 
   ### get probabilities "P" for each group ("F" and "T")
   ### this has to be one for every gene X
