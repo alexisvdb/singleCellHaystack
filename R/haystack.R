@@ -418,7 +418,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL(classes=classes,
-                                       parameters=parameters, reference.prob=Q, pseudo=pseudo)
+                                       parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
       }
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
@@ -435,7 +435,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       for(r in 1:randomization.count){
         # using default sampling
         D_KL.randomized[r] <- get_D_KL(classes=sample(x = vector.to.randomize),
-                                       parameters=parameters, reference.prob=Q, pseudo=pseudo)
+                                       parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
       }
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
