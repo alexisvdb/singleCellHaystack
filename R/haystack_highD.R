@@ -58,120 +58,74 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
   sum(D_KLs)
 }
 
-#' Function for finding for a point in space the distance to the nearest point with higher density. See
-#'
-#' @param entries_n The number of points.
-#' @param dist A distance object with the distances between all pairs oof points.
-#' @param degree_counts A vector with the degree or density of each point.
-#'
-#' @return A vector with distances.
-get_distance_to_nearest_higher_degree = function(entries_n=length(degree_counts), dist, degree_counts){
-
-  # run through the distances between pairs of points
-  # each time, check which of the pair has the highest degree
-  # keep track of "closest" entries with higher degree
-  dist_vector <- as.vector(dist)
-  dist_n <- entries_n * (entries_n-1) / 2
-  index_1 <- 1
-  index_2 <- 2
-  max_distance <- max(dist)
-  distance_to_nearest_higher_degree <- apply(as.matrix(dist),1, max)
-  for(i in 1:dist_n){
-    c <- dist_vector[i]
-
-    degree_1 <- degree_counts[index_1]
-    degree_2 <- degree_counts[index_2]
-
-    if(degree_1 > degree_2){
-      if(c < distance_to_nearest_higher_degree[index_2]){
-        distance_to_nearest_higher_degree[index_2] <- c
-      }
-    } else if (degree_2 > degree_1){
-      if(c < distance_to_nearest_higher_degree[index_1]){
-        distance_to_nearest_higher_degree[index_1] <- c
-      }
-    }
-
-    # update indices
-    index_2 <- index_2 + 1
-    if(index_2 > entries_n){
-      index_1 <- index_1 + 1
-      index_2 <- index_1 + 1
-    }
-
-  }
-
-  # return result
-  distance_to_nearest_higher_degree
-
-}# end function get_distance_to_nearest_higher_degree
-
 
 
 #' A function to decide grid points in a higher-dimensional space
 #'
 #' @param input A numerical matrix with higher-dimensional coordinates (columns) of points (rows)
-#' @param method The method to decide grid points. Should be "grid" (default) or "kmeans".
-#' @param grid.points The number of grid points to return. Default is 50.
+#' @param method The method to decide grid points. Should be "centroid" (default) or "seeding".
+#' @param grid.points The number of grid points to return. Default is 100.
 #'
 #' @return Coordinates of grid points in the higher-dimensonal space.
-get_grid_points = function(input, method="grid", grid.points = 50){
+get_grid_points = function(input, method="centroid", grid.points = 100){
 
-  if(method=="kmeans"){
-    if(nrow(input) < grid.points){
-      warning("Fewer input points than grid.points. Adjusting value of grid.points to ",nrow(input))
-      grid.points <- nrow(input)
-    }
+  if(nrow(input) < grid.points){
+    warning("Fewer input points than grid.points. Adjusting value of grid.points to ",nrow(input))
+    grid.points <- nrow(input)
+  }
 
-    # perform k-means clustering and get the centers
+  if(method=="centroid"){
+    # perform k-means clustering and get the centroids (centers) of each cluser
     res.kmeans <- kmeans(input, centers=grid.points, iter.max = 10, nstart = 10)
     grid.coord <- res.kmeans$centers
 
-  } else if(method=="grid"){
-    # first decide a grid in all dimensions
-    # then, "round" cells to the nearest grid point
-    # from all grid points, keep those that are closest to many cells, and far away from other points
+  } else if(method=="seeding"){
+    # do seeing as used in the seeding step of the kmeans++ algorithm
+    # one by one pick points which are distal to the points picked so far
 
     input.dim <- ncol(input)
+    input.points <- nrow(input)
 
-    # get the 10% and 90% points in each dimension
-    input10 <- apply(input, 2, function(x) as.numeric(quantile(x,0.10)))
-    input90 <- apply(input, 2, function(x) as.numeric(quantile(x,0.90)))
-    # set bin size of each dimension
-    grid.points.10.90 <- round(log(x=2000,base=input.dim)) # naively, this should result in about 2000 initial grid points in total
-    input.bin.size <- (input90-input10)/grid.points.10.90
+    # pick a first grid point at random
+    index <- sample(input.points,1)
+    grid.coord <- matrix(NA, nrow=grid.points, ncol=input.dim)
+    grid.coord[1,] <- input[index,]
+    min.dist.to.grid <- get_dist_two_sets(set1 = input,set2 = grid.coord[1,,drop=F])
 
-    # round to nearest grid point
-    input.grid <- t(apply(input,1, function(a) round(a / input.bin.size) * input.bin.size))
-    ### no idea why this transposes this!! So, for the moment I added t()
+    # matrix with distances between inputs and grid points
+    dist.to.grid <- matrix(NA, nrow=input.points, ncol = grid.points)
+    dist.to.grid[,1] <- min.dist.to.grid
 
-    # filter out grid points assigned to only 1 cell
-    count.threshold.grid <- 1
-    input.table <- data.table::as.data.table(input.grid)
-    .N <- NULL # trick to avoid 'undefined global function' NOTE.
-    input.table.count <- input.table[, .N, by = c(colnames(input))]
-    input.table.subset <- input.table.count[input.table.count[["N"]] > count.threshold.grid]
+    for(i in 2:grid.points){
 
-    degrees <- input.table.subset$N
-    input.grid.candidates <- as.matrix(input.table.subset)[,-ncol(input.table.subset)]
-    dist.input.grid.candidats <- dist(input.grid.candidates)
+      # get probabilities based on min. distance to grid points
+      probs <- min.dist.to.grid^2
 
-    dist.nearest.higher.degree <- get_distance_to_nearest_higher_degree(entries_n=nrow(input.grid.candidates), dist=dist.input.grid.candidats, degree_counts = degrees)
-    # gamma <- degrees*dist.nearest.higher.degree # original version
-    gamma <- log2(degrees)*dist.nearest.higher.degree # more stress on spreading out points
-    # plot(sort(gamma, decreasing = T))
+      # pick new grid point
+      index <- sample(input.points,1,prob = probs)
+      grid.coord[i,] <- matrix(input[index,], nrow=1)
 
-    # check if there are sufficient candidate grid points left
-    # if no: reduce the number of grid points to return
-    if(length(gamma) < grid.points){
-      warning("Fewer input points than grid.points. Adjusting value of grid.points to ",nrow(input.grid.candidates))
-      grid.coord <- input.grid.candidates
-    } else {
-      center.indices <- order(gamma, decreasing = TRUE)[1:grid.points]
-      grid.coord <- input.grid.candidates[center.indices,]
+      # get distances to this new grid point and update min. distances
+      tmp.dist.to.grid <- get_dist_two_sets(set1 = input,set2 = grid.coord[i,,drop=F])
+      dist.to.grid[,i] <- tmp.dist.to.grid
+      min.dist.to.grid <- apply(cbind(min.dist.to.grid,tmp.dist.to.grid),1,min)
+
     }
+
+    # if necessary, average grid points out to nearest few points
+    # here we always do this
+    average.grid.points = TRUE
+    if(average.grid.points){
+      weights <- c(2,1,1) # more weight to closest point
+      for(i in 1:grid.points){
+        o <- order(dist.to.grid[,i])
+        grid.coord[i,] <- apply(input[o[1:3],],2, weighted.mean, weights)
+      }
+    }
+
   }
   grid.coord
+
 }
 
 
@@ -184,8 +138,8 @@ get_grid_points = function(input, method="grid", grid.points = 50){
 #' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
-#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.
-#' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".
+#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.
+#' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -193,7 +147,7 @@ get_grid_points = function(input, method="grid", grid.points = 50){
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="grid"){
+haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="centroid"){
   message("### calling haystack_highD()...")
 
   # check input
@@ -219,8 +173,8 @@ haystack_highD = function(x, detection, grid.points = 50, use.advanced.sampling=
   }
   if(!is.logical(scale) | length(scale) > 1)
     stop("The value of 'scale' must be either TRUE or FALSE")
-  if(grid.method!="grid" & grid.method!="kmeans")
-    stop("The value of 'grid.method' must be either 'grid' or 'kmeans'")
+  if(grid.method!="centroid" & grid.method!="seeding")
+    stop("The value of 'grid.method' must be either 'centroid' or 'seeding'")
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)

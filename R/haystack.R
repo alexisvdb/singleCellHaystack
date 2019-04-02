@@ -299,6 +299,9 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     density <- density / sum(density)
     pseudo <- quantile(density[density>0],0.01)
   }
+  # adjust pseudocount if it is too small (to avoid log(0) problems)
+  if(pseudo < 1e-300)
+    pseudo <- 1e-300
   density <- density + pseudo
   # heatmap(density, Rowv=NA,Colv=NA,scale="none")
   Q <- density / sum(density)
