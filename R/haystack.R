@@ -212,6 +212,30 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   fitted.log.p.vals
 }
 
+
+#' Get reference distribution
+#'
+#' @param param Parameters of the analysis, as set by function 'get_parameters_haystack'
+#' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
+#'
+#' @return A list with two components, Q for the reference distribution and pseudo.
+#'
+get_reference <- function(param, use.advanced.sampling = NULL) {
+  if (is.null(use.advanced.sampling)) {
+    density <- kde2d_faster(param$dens.x, param$dens.y)
+    pseudo <- quantile(density[density > 0], 0.01)
+  } else {
+    density <- kde2d_faster(t(t(param$dens.x) * use.advanced.sampling),
+                            t(t(param$dens.y)))
+    density <- density / sum(density)
+    pseudo <- quantile(density[density>0],0.01)
+  }
+  density <- density + pseudo
+
+  Q = density / sum(density)
+  list(Q = Q, pseudo = pseudo)
+}
+
 #' The main Haystack function, for 2-dimensional spaces.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
@@ -290,23 +314,20 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # normalize to sum to 1
   message("### setting parameters...")
   parameters <- get_parameters_haystack(x,y)
-  if(is.null(use.advanced.sampling)){
-    density <- kde2d_faster(dens.x=parameters$dens.x,dens.y=parameters$dens.y)
-    pseudo <- quantile(density[density>0],0.01)
-  } else {
-    density <- kde2d_faster(dens.x=t(t(parameters$dens.x)*use.advanced.sampling),
-                            dens.y=t(t(parameters$dens.y)))
-    density <- density / sum(density)
-    pseudo <- quantile(density[density>0],0.01)
-  }
-  # adjust pseudocount if it is too small (to avoid log(0) problems)
-  if(pseudo < 1e-300)
-    pseudo <- 1e-300
-  density <- density + pseudo
-  # heatmap(density, Rowv=NA,Colv=NA,scale="none")
-  Q <- density / sum(density)
 
-
+  # if(is.null(use.advanced.sampling)){
+  #   density <- kde2d_faster(dens.x=parameters$dens.x,dens.y=parameters$dens.y)
+  #   pseudo <- quantile(density[density>0],0.01)
+  # } else {
+  #   density <- kde2d_faster(dens.x=t(t(parameters$dens.x)*use.advanced.sampling),
+  #                           dens.y=t(t(parameters$dens.y)))
+  #   density <- density / sum(density)
+  #   pseudo <- quantile(density[density>0],0.01)
+  # }
+  # density <- density + pseudo
+  # # heatmap(density, Rowv=NA,Colv=NA,scale="none")
+  # Q <- density / sum(density)
+  ref <- get_reference(param, use.advanced.sampling)
 
   ### get probabilities "P" for each group ("F" and "T")
   ### this has to be one for every gene X
@@ -320,7 +341,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- c()
   for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=Q, pseudo=pseudo)
+    D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
     if(i%%1000==0)
       message(paste0("### ... ",i," values out of ",count.genes," done"))
   }
