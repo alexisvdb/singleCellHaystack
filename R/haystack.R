@@ -36,7 +36,7 @@ get_parameters_haystack = function(x, y, high.resolution = FALSE){
   # I want to have a fixed number of bins between the 10th and 90th percentile in each dimension
   # this is to avoid bins getting squished because of a few outliers
   # the default number of bins between the 10% and 90% points in each dimension
-  if(high.resolution == TRUE){
+  if(high.resolution) {
     grid.points.10.90 <- 125
   } else {
     grid.points.10.90 <- 25
