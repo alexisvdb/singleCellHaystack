@@ -15,6 +15,8 @@ get_density(x, y, detection, rows.subset = 1:nrow(detection),
 \item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
 
 \item{rows.subset}{Indices of the rows of 'detection' for which to get the densities. Default: all.}
+
+\item{high.resolution}{Logical: should high resolution be used? Default is FALSE.}
 }
 \value{
 A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data

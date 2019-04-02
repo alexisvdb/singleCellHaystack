@@ -470,6 +470,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #' @param y y-axis coordinates of cells in a 2D representation
 #' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
 #' @param rows.subset Indices of the rows of 'detection' for which to get the densities. Default: all.
+#' @param high.resolution Logical: should high resolution be used? Default is FALSE.
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
 get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution = FALSE){
