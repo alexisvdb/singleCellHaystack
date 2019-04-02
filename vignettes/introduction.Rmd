@@ -34,12 +34,9 @@ Our manuscript about `singleCellHaystack` is now availabe on [bioRxiv](https://w
 
 You can install the `singleCellHaystack` from the GitHub repository as follows:
 
-
 ``` r
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
-
-
 
 ## Example usage
 
@@ -51,6 +48,7 @@ A small toy dataset is included in the package. The toy dataset includes:
 
 
 First, apply `haystack` (the main function of the package) on the toy dataset.
+
 ```{r example1}
 library(singleCellHaystack)
 set.seed(1234)
@@ -64,6 +62,7 @@ res <- haystack(dat.tsne, detection = dat.detection, method = "2D")
 # the returned results 'res' is of class 'haystack'
 class(res)
 ```
+
 Let's have a look at the "most surprising" genes.
 
 ```{r example2}
@@ -75,6 +74,7 @@ show_result_haystack(res.haystack = res, n=10)
 ```
 
 One of the most non-random genes is "gene_497". Here we visualize it's expression in the t-SNE plot.
+
 ```{r example3}
 # visualize one of the surprizing genes
 plot_gene_haystack(
@@ -86,9 +86,11 @@ plot_gene_haystack(
   point.size = 2
 )
 ```
+
 Yes, the pattern of cells in the toy example roughly resembles a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
 
 You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.
+
 ```{r example4}
 # get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
 sorted.table <- show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
@@ -104,9 +106,9 @@ km.clusters <- km$cluster
 ```
 
 ... and visualize the average pattern of the genes in cluster 1 (for example).
+
 ```{r example5}
 # visualize cluster distributions
 plot_gene_set_haystack(dat.tsne, detection = dat.detection, 
-                          genes=names(km.clusters[km.clusters==1]), point.size=2)
-
+                        genes=names(km.clusters[km.clusters==1]), point.size=2)
 ```
