@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
@@ -128,7 +128,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>get_grid_points</span>(<span class='no'>input</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>)</pre>
+    <pre class="usage"><span class='fu'>get_grid_points</span>(<span class='no'>input</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -139,11 +139,11 @@
     </tr>
     <tr>
       <th>method</th>
-      <td><p>The method to decide grid points. Should be "grid" (default) or "kmeans".</p></td>
+      <td><p>The method to decide grid points. Should be "centroid" (default) or "seeding".</p></td>
     </tr>
     <tr>
       <th>grid.points</th>
-      <td><p>The number of grid points to return. Default is 50.</p></td>
+      <td><p>The number of grid points to return. Default is 100.</p></td>
     </tr>
     </table>
     

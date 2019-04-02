@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
@@ -131,11 +131,16 @@
     <pre class="usage"><span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>,
-  <span class='no'>...</span>)
+<span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>detection</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>, <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+<span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>detection</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>, <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>, <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
@@ -154,7 +159,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>further paramters passed to haystack_raw().</p></td>
+      <td><p>further paramters passed down to methods.</p></td>
     </tr>
     <tr>
       <th>dim1</th>
@@ -165,8 +170,32 @@
       <td><p>column index or name of matrix for y-axis coordinates.</p></td>
     </tr>
     <tr>
+      <th>detection</th>
+      <td><p>A logical matrix showing which genes (rows) are detected in which cells (columns)</p></td>
+    </tr>
+    <tr>
       <th>method</th>
       <td><p>choose between highD (default) and 2D haystack.</p></td>
+    </tr>
+    <tr>
+      <th>use.advanced.sampling</th>
+      <td><p>If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.</p></td>
+    </tr>
+    <tr>
+      <th>dir.randomization</th>
+      <td><p>If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.</p></td>
+    </tr>
+    <tr>
+      <th>scale</th>
+      <td><p>Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.</p></td>
+    </tr>
+    <tr>
+      <th>grid.points</th>
+      <td><p>An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.</p></td>
+    </tr>
+    <tr>
+      <th>grid.method</th>
+      <td><p>The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".</p></td>
     </tr>
     <tr>
       <th>assay</th>

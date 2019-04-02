@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function for finding for a point in space the distance to the nearest point with higher density. See — get.distance.to.nearest.higher.degree • singleCellHaystack</title>
+<title>Get reference distribution — get_reference • singleCellHaystack</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Function for finding for a point in space the distance to the nearest point with higher density. See — get.distance.to.nearest.higher.degree" />
+<meta property="og:title" content="Get reference distribution — get_reference" />
 
-<meta property="og:description" content="Function for finding for a point in space the distance to the nearest point with higher density. See" />
+<meta property="og:description" content="Get reference distribution" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
@@ -99,7 +99,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/alexisvdb/singleCellHaystack">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -112,40 +117,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function for finding for a point in space the distance to the nearest point with higher density. See</h1>
+    <h1>Get reference distribution</h1>
     
-    <div class="hidden name"><code>get.distance.to.nearest.higher.degree.Rd</code></div>
+    <div class="hidden name"><code>get_reference.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Function for finding for a point in space the distance to the nearest point with higher density. See</p>
+    <p>Get reference distribution</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>get.distance.to.nearest.higher.degree</span>(<span class='kw'>entries_n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/length'>length</a></span>(<span class='no'>degree_counts</span>),
-  <span class='no'>dist</span>, <span class='no'>degree_counts</span>)</pre>
+    <pre class="usage"><span class='fu'>get_reference</span>(<span class='no'>param</span>, <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>entries_n</th>
-      <td><p>The number of points.</p></td>
+      <th>param</th>
+      <td><p>Parameters of the analysis, as set by function 'get_parameters_haystack'</p></td>
     </tr>
     <tr>
-      <th>dist</th>
-      <td><p>A distance object with the distances between all pairs oof points.</p></td>
-    </tr>
-    <tr>
-      <th>degree_counts</th>
-      <td><p>A vector with the degree or density of each point.</p></td>
+      <th>use.advanced.sampling</th>
+      <td><p>If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector with distances.</p>
+    <p>A list with two components, Q for the reference distribution and pseudo.</p>
     
 
   </div>

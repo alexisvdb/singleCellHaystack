@@ -86,10 +86,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
     <li>
       <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
@@ -128,9 +128,9 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>haystack_highD</span>(<span class='no'>x</span>, <span class='no'>detection</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+    <pre class="usage"><span class='fu'>haystack_highD</span>(<span class='no'>x</span>, <span class='no'>detection</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>,
   <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>)</pre>
+  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,7 +145,7 @@
     </tr>
     <tr>
       <th>grid.points</th>
-      <td><p>An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.</p></td>
+      <td><p>An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.</p></td>
     </tr>
     <tr>
       <th>use.advanced.sampling</th>
@@ -161,7 +161,7 @@
     </tr>
     <tr>
       <th>grid.method</th>
-      <td><p>The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".</p></td>
+      <td><p>The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".</p></td>
     </tr>
     </table>
     
