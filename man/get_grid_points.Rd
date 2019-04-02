@@ -4,14 +4,14 @@
 \alias{get_grid_points}
 \title{A function to decide grid points in a higher-dimensional space}
 \usage{
-get_grid_points(input, method = "grid", grid.points = 50)
+get_grid_points(input, method = "centroid", grid.points = 100)
 }
 \arguments{
 \item{input}{A numerical matrix with higher-dimensional coordinates (columns) of points (rows)}
 
-\item{method}{The method to decide grid points. Should be "grid" (default) or "kmeans".}
+\item{method}{The method to decide grid points. Should be "centroid" (default) or "seeding".}
 
-\item{grid.points}{The number of grid points to return. Default is 50.}
+\item{grid.points}{The number of grid points to return. Default is 100.}
 }
 \value{
 Coordinates of grid points in the higher-dimensonal space.

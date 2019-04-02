@@ -52,7 +52,6 @@ reference:
   - get_D_KL_highD
   - get_density
   - get_dist_two_sets
-  - get_distance_to_nearest_higher_degree
   - get_euclidean_distance
   - get_grid_points
   - get_log_p_D_KL
@@ -63,11 +62,8 @@ navbar:
   structure:
     left:
     - home
-#    - intro
     - reference
     - articles
-#    - tutorials
-#    - news
     right: github
   components:
     home:
@@ -84,7 +80,7 @@ navbar:
       - text: Application of singleCellHaystack on 2D t-SNE coordinates
         href: articles/example_tsne2D_default.html
       - text: Application of advanced mode on 2D t-SNE coordinates
-        href: articles/example_tsne2D_advanced.html
+        href: articles/example_tsne2d_advanced.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack

@@ -4,11 +4,9 @@ author: "Alexis Vandenbon"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Application of singleCellHaystack on 2D t-SNE coordinates}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-params:
-  path.to.rda.file: "../background/tabula_muris_micro_marrow_p7_2/tabula_muris_marrow_P7_2.rda"
 ---
 
 ```{r setup, include = FALSE}
@@ -19,22 +17,20 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.align = 'center'
 )
+
+library(ggplot2)
+library(cowplot)
 ```
 
 
 # Preparing the input data
 The data used in these examples can be found [here](https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/). We recommend downloading the .rda file and loading it using the `load()` function. You can also download the individual data files separately.
 
-```{r example0, include = FALSE}
-load(file = "../background/tabula_muris_micro_marrow_p7_2/tabula_muris_marrow_P7_2.rda")
-library(ggplot2) # need to load this for adding plot titles?
+```{r example0}
+load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
+ls()
 ```
 
-``` r
-load("path/to/rda/file/tabula_muris_marrow_P7_2.rda")
-ls()
-# [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"       "dat.umap" 
-```
 This data should include the following objects:
 
 - `dat.expression`: a matrix object with the expression of genes (rows) in each cell (columns).
@@ -44,15 +40,17 @@ This data should include the following objects:
 - `dat.umap`:       a data.frame with UMAP coordinates (2D).
 
 Let's have a look at the t-SNE plot:
+
 ```{r example1}
 ggplot(dat.tsne, aes_string(x = "V1", y = "V2")) + labs(x = "t-SNE1", y = "t-SNE2") + geom_point()
 ```
-There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to find genes with biased expression patterns in this 2D plot.
 
+There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to find genes with biased expression patterns in this 2D plot.
 
 # Application of `singleCellHaystack` in default mode
 
 First, load the package, and set a random seed to ensure replicability.
+
 ```{r example2}
 library(singleCellHaystack)
 set.seed(1)
@@ -65,6 +63,7 @@ res.tsne <- haystack(x = dat.tsne, detection = dat.detection, method = "2D")
 ```
 
 Let's have a look at the most biased genes. The most strongly biased gene is Alox5ap. We can plot the expression an detection of this gene using the `plot_gene_haystack` function. From the plots we can see that Alox5ap is not detected in the upper right and lower right group of cells.
+
 ```{r example4}
 show_result_haystack(res.haystack = res.tsne, n = 5)
 # plotting detection of this gene
@@ -74,6 +73,7 @@ plot_gene_haystack(x = dat.tsne, gene = "Alox5ap", expression = log10(dat.expres
 ```
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
+
 ```{r example5}
 # get the top 1000 biased genes in the result
 res.top <- show_result_haystack(res.haystack = res.tsne, n = 1000)
@@ -93,18 +93,18 @@ Cluster 1 contains 454 genes, and the smallest cluster (cluster 5) contains just
 
 Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
 
-```{r example7, fig.height = 3, fig.width = 4}
-for(cluster in 1:5){
+```{r example7, fig.height = 9, fig.width = 8, fig.align='center'}
+pl <- lapply(1:5, function(cluster) {
   gene.set <- names(res.hc.clusters)[res.hc.clusters==cluster]
   plot.title <- paste0("Cluster ", cluster)
   p <- plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
-  p <- p + ggtitle(plot.title)
-  print(p)
-}
+  p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
+})
+plot_grid(plotlist = pl, ncol = 2)
 ```
+
 
 ```{r example8}
 res.hc.clusters["Alox5ap"] # the most biased gene is in cluster 4
 ```
 The most biased genes, Alox5ap, was clustered into cluster 4. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 4. The pattern of cluster 5 (containing 20 genes) is rather different from all other clusters.
-
