@@ -14,8 +14,8 @@ kde2d_faster = function (dens.x, dens.y){
 #' @return A suitable bandwith.
 default_bandwidth.nrd = function(x){
   r <- quantile(x, c(0.25, 0.75))
-  h <- (r[2] - r[1])/1.34
-  4 * 1.06 * min(sqrt(var(x)), h) * length(x)^(-1/5)
+  h <- (r[2] - r[1]) / 1.34
+  1.06 * min(sqrt(var(x)), h) * length(x) ^ (-1 / 5)
 }
 
 #' Function that decides most of the parameters that will be during the "Haystack" analysis.
@@ -31,7 +31,7 @@ get_parameters_haystack = function(x, y, high.resolution = FALSE){
   bandwidth.x <- default_bandwidth.nrd(x)
   bandwidth.y <- default_bandwidth.nrd(y)
   bandwidths <- c(bandwidth.x,bandwidth.y)
-  bandwidths <- bandwidths/4
+  bandwidths <- bandwidths
 
   # I want to have a fixed number of bins between the 10th and 90th percentile in each dimension
   # this is to avoid bins getting squished because of a few outliers
