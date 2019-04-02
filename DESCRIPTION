@@ -24,6 +24,7 @@ Suggests:
     SummarizedExperiment,
     SingleCellExperiment,
     Seurat,
+    cowplot,
     testthat
 License: MIT + file LICENSE
 Encoding: UTF-8
