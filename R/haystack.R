@@ -84,8 +84,8 @@ get_parameters_haystack = function(x, y, high.resolution = FALSE){
   ay <- outer(gy, y, "-")/bandwidths[2L]
 
   # densities based on a simplified Gaussian
-  dens.x <- matrix(exp(-0.5 * ax * ax), , length(x))
-  dens.y <- matrix(exp(-0.5 * ay * ay), , length(x)) # length(x) should be the same as length(y), of course
+  dens.x <- matrix(exp(-0.5 * ax * ax), ncol = length(x))
+  dens.y <- matrix(exp(-0.5 * ay * ay), ncol = length(x)) # length(x) should be the same as length(y), of course
 
   # return results
   list(
