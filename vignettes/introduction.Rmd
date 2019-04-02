@@ -17,6 +17,9 @@ knitr::opts_chunk$set(
   fig.height = 5,
   fig.align = 'center'
 )
+
+dat.tsne <- singleCellHaystack::dat.tsne
+dat.expression <- singleCellHaystack::dat.expression
 ```
 # singleCellHaystack
 

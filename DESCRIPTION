@@ -23,7 +23,8 @@ Suggests:
     rmarkdown,
     SummarizedExperiment,
     SingleCellExperiment,
-    Seurat
+    Seurat,
+    testthat
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
