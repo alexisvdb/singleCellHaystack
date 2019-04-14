@@ -53,13 +53,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/a01_introduction.html">Introduction to singleCellHaystack</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/a02_example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
+      <a href="../articles/a03_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -86,10 +86,10 @@
       <h1>Introduction to singleCellHaystack</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-04-02</h4>
+            <h4 class="date">2019-04-14</h4>
       
       
-      <div class="hidden name"><code>introduction.Rmd</code></div>
+      <div class="hidden name"><code>a01_introduction.Rmd</code></div>
 
     </div>
 
@@ -169,7 +169,7 @@
 <a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">high.resolution =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">point.size =</span> <span class="dv">2</span></a>
 <a class="sourceLine" id="cb4-9" data-line-number="9">)</a></code></pre></div>
-<p><img src="introduction_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a01_introduction_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Yes, the pattern of cells in the toy example roughly resembles a haystack; see <a href="https://en.wikipedia.org/wiki/Haystacks_(Monet_series)">the Haystack paintings by Monet</a>.</p>
 <p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span></a>
@@ -187,7 +187,7 @@
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># visualize cluster distributions</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, </a>
 <a class="sourceLine" id="cb6-3" data-line-number="3">                        <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">1</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="introduction_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a01_introduction_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>

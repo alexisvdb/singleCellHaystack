@@ -53,13 +53,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/a01_introduction.html">Introduction to singleCellHaystack</a>
     </li>
     <li>
-      <a href="../articles/example_tsne2d_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/a02_example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/introduction.html">Introduction to singleCellHaystack</a>
+      <a href="../articles/a03_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -86,10 +86,10 @@
       <h1>Application of singleCellHaystack on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-04-02</h4>
+            <h4 class="date">2019-04-14</h4>
       
       
-      <div class="hidden name"><code>example_tsne2D_default.Rmd</code></div>
+      <div class="hidden name"><code>a02_example_tsne2D_default.Rmd</code></div>
 
     </div>
 
@@ -118,7 +118,7 @@
 </ul>
 <p>Let’s have a look at the t-SNE plot:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes_string</span>(<span class="dt">x =</span> <span class="st">"V1"</span>, <span class="dt">y =</span> <span class="st">"V2"</span>)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a02_example_tsne2D_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot.</p>
 </div>
 <div id="application-of-singlecellhaystack-in-default-mode" class="section level1">
@@ -182,10 +182,10 @@
 <a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; S100a10 0.7155384  -64.46251     1094</span></a>
 <a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># plotting detection of this gene</span></a>
 <a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> dat.detection)</a></code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a02_example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># plotting log expression of this gene</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </a></code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a02_example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># get the top 1000 biased genes in the result</span></a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)</a>
@@ -207,7 +207,7 @@
 <a class="sourceLine" id="cb9-5" data-line-number="5">  p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))</a>
 <a class="sourceLine" id="cb9-6" data-line-number="6">})</a>
 <a class="sourceLine" id="cb9-7" data-line-number="7"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> pl, <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
-<p><img src="example_tsne2D_default_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
+<p><img src="a02_example_tsne2D_default_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">res.hc.clusters[<span class="st">"Alox5ap"</span>] <span class="co"># the most biased gene is in cluster 4</span></a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Alox5ap </span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;       4</span></a></code></pre></div>
