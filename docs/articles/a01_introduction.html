@@ -86,7 +86,7 @@
       <h1>Introduction to singleCellHaystack</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-04-14</h4>
+            <h4 class="date">2019-06-17</h4>
       
       
       <div class="hidden name"><code>a01_introduction.Rmd</code></div>
@@ -108,7 +108,7 @@
 <!-- install.packages("singleCellHaystack") -->
 <!-- ``` -->
 <p>You can install the <code>singleCellHaystack</code> from the GitHub repository as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</code></pre></div>
 </div>
 <div id="example-usage" class="section level2">
 <h2 class="hasAnchor">
@@ -119,74 +119,74 @@
 <li><p><code>dat.tsne</code>: a 2D representation of the cell in dat.expression</p></li>
 </ul>
 <p>First, apply <code>haystack</code> (the main function of the package) on the toy dataset.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co"># Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">dat.detection &lt;-<span class="st"> </span>dat.expression <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># run the main 'haystack' analysis</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> starting randomizations...</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10 values out of 58 done</span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 20 values out of 58 done</span></a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 30 values out of 58 done</span></a>
-<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 40 values out of 58 done</span></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 50 values out of 58 done</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span></a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></a>
-<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co"># the returned results 'res' is of class 'haystack'</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(res)</a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="co">#&gt; [1] "haystack"</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)
+
+<span class="co"># Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)</span>
+dat.detection &lt;-<span class="st"> </span>dat.expression <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>
+
+<span class="co"># run the main 'haystack' analysis</span>
+res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> starting randomizations...</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10 values out of 58 done</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 20 values out of 58 done</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 30 values out of 58 done</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 40 values out of 58 done</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 50 values out of 58 done</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
+<span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span>
+
+<span class="co"># the returned results 'res' is of class 'haystack'</span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(res)
+<span class="co">#&gt; [1] "haystack"</span></code></pre></div>
 <p>Let’s have a look at the “most surprising” genes.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># show top 10 "surprising" genes</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">n=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;              D_KL log.p.vals T.counts</span></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; gene_242 1.360661  -21.57548       96</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; gene_275 1.345251  -20.97236       95</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; gene_317 1.386194  -20.94379       94</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="co">#&gt; gene_497 1.599646  -20.46697       86</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; gene_79  1.929800  -20.43333       68</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; gene_244 1.238011  -19.91416       95</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; gene_351 1.408946  -19.57361       89</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="co">#&gt; gene_339 1.414814  -19.17568       87</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; gene_62  1.519993  -19.06512       81</span></a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">#&gt; gene_137 1.349994  -19.05803       89</span></a>
-<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="co"># alternatively: use a p-value threshold</span></a>
-<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show top 10 "surprising" genes</span>
+<span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">n=</span><span class="dv">10</span>)
+<span class="co">#&gt;              D_KL log.p.vals T.counts</span>
+<span class="co">#&gt; gene_242 1.360661  -21.57548       96</span>
+<span class="co">#&gt; gene_275 1.345251  -20.97236       95</span>
+<span class="co">#&gt; gene_317 1.386194  -20.94379       94</span>
+<span class="co">#&gt; gene_497 1.599646  -20.46697       86</span>
+<span class="co">#&gt; gene_79  1.929800  -20.43333       68</span>
+<span class="co">#&gt; gene_244 1.238011  -19.91416       95</span>
+<span class="co">#&gt; gene_351 1.408946  -19.57361       89</span>
+<span class="co">#&gt; gene_339 1.414814  -19.17568       87</span>
+<span class="co">#&gt; gene_62  1.519993  -19.06512       81</span>
+<span class="co">#&gt; gene_137 1.349994  -19.05803       89</span>
+
+<span class="co"># alternatively: use a p-value threshold</span>
+<span class="co">#show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)</span></code></pre></div>
 <p>One of the most non-random genes is “gene_497”. Here we visualize it’s expression in the t-SNE plot.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># visualize one of the surprizing genes</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  dat.tsne,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">  <span class="dt">expression =</span> dat.expression,</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">  <span class="dt">gene =</span> <span class="st">"gene_497"</span>,</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">detection =</span> dat.detection,</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">  <span class="dt">high.resolution =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">  <span class="dt">point.size =</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9">)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize one of the surprizing genes</span>
+<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(
+  dat.tsne,
+  <span class="dt">expression =</span> dat.expression,
+  <span class="dt">gene =</span> <span class="st">"gene_497"</span>,
+  <span class="dt">detection =</span> dat.detection,
+  <span class="dt">high.resolution =</span> <span class="ot">TRUE</span>,
+  <span class="dt">point.size =</span> <span class="dv">2</span>
+)</code></pre></div>
 <p><img src="a01_introduction_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Yes, the pattern of cells in the toy example roughly resembles a haystack; see <a href="https://en.wikipedia.org/wiki/Haystacks_(Monet_series)">the Haystack paintings by Monet</a>.</p>
 <p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">sorted.table &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">p.value.threshold =</span> <span class="fl">1e-10</span>)</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">gene.subset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(sorted.table)</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># k-means clustering</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">km &lt;-<span class="st"> </span><span class="kw"><a href="../reference/kmeans_haystack.html">kmeans_haystack</a></span>(dat.tsne, <span class="dt">detection=</span>dat.detection, <span class="dt">genes=</span>gene.subset, <span class="dt">k=</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co"># alternatively: hierarchical clustering</span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#hc &lt;- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)</span></a>
-<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co">#hc.clusters &lt;- cutree(hc,k = 5)</span></a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span>
+sorted.table &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">p.value.threshold =</span> <span class="fl">1e-10</span>)
+gene.subset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(sorted.table)
+
+<span class="co"># k-means clustering</span>
+km &lt;-<span class="st"> </span><span class="kw"><a href="../reference/kmeans_haystack.html">kmeans_haystack</a></span>(dat.tsne, <span class="dt">detection=</span>dat.detection, <span class="dt">genes=</span>gene.subset, <span class="dt">k=</span><span class="dv">5</span>)
+km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
+
+<span class="co"># alternatively: hierarchical clustering</span>
+<span class="co">#hc &lt;- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)</span>
+<span class="co">#hc.clusters &lt;- cutree(hc,k = 5)</span></code></pre></div>
 <p>… and visualize the average pattern of the genes in cluster 1 (for example).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># visualize cluster distributions</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, </a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">                        <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">1</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize cluster distributions</span>
+<span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, 
+                        <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">1</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="a01_introduction_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>

@@ -12,13 +12,13 @@ haystack(x, ...)
 
 \method{haystack}{matrix}(x, dim1 = 1, dim2 = 2, detection,
   method = "highD", use.advanced.sampling = NULL,
-  dir.randomization = NULL, scale = TRUE, grid.points = 50,
-  grid.method = "grid", ...)
+  dir.randomization = NULL, scale = TRUE, grid.points = 100,
+  grid.method = "centroid", ...)
 
 \method{haystack}{data.frame}(x, dim1 = 1, dim2 = 2, detection,
   method = "highD", use.advanced.sampling = NULL,
-  dir.randomization = NULL, scale = TRUE, grid.points = 50,
-  grid.method = "grid", ...)
+  dir.randomization = NULL, scale = TRUE, grid.points = 100,
+  grid.method = "centroid", ...)
 
 \method{haystack}{Seurat}(x, assay = "RNA", slot = "data",
   coord = "tsne", cutoff = 1, ...)
@@ -45,9 +45,9 @@ haystack(x, ...)
 
 \item{scale}{Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.}
 
-\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.}
+\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.}
 
-\item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".}
+\item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".}
 
 \item{assay}{name of assay data for Seurat method.}
 

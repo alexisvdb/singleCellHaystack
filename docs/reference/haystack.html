@@ -133,14 +133,14 @@
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>detection</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>, <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>, <span class='no'>...</span>)
+  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>detection</span>,
   <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>, <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>50</span>,
-  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"grid"</span>, <span class='no'>...</span>)
+  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>, <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
@@ -191,11 +191,11 @@
     </tr>
     <tr>
       <th>grid.points</th>
-      <td><p>An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 50.</p></td>
+      <td><p>An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.</p></td>
     </tr>
     <tr>
       <th>grid.method</th>
-      <td><p>The method to decide grid points for estimating the density in the high-dimensional space. Should be "grid" (default) or "kmeans".</p></td>
+      <td><p>The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".</p></td>
     </tr>
     <tr>
       <th>assay</th>

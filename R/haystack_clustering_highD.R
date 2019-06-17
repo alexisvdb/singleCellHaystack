@@ -54,6 +54,9 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
     densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
   }
 
+  # rescale to sum to 1. This is to avoid R thinking sd=0 in the case where an entire row has very low values
+  densities <- densities / apply(densities,1,sum)
+
   dist <- as.dist(1 - cor(t(densities)))
   hc <- hclust(dist, method=method)
   hc
