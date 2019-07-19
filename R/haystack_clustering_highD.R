@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' # to be added
-hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coordinates = NULL){
+hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coordinates = NULL, scale=TRUE){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -35,6 +35,19 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
   if(ncol(grid.coordinates)!=ncol(x))
     stop("The number of columns in 'x' and 'grid.coordinates' don't match.")
 
+  if(!is.logical(scale) | length(scale) > 1)
+    stop("The value of 'scale' must be either TRUE or FALSE")
+
+  # scale data if needed
+  if(scale){
+    x <- scale(x)
+    # save the mean and stdev of the scaling
+    x.scale.center <- attr(x = x, which = "scaled:center")
+    x.scale.scale <- attr(x = x, which = "scaled:scale")
+    grid.coordinates <- (grid.coordinates - rep(x.scale.center,each=nrow(grid.coordinates))) / rep(x.scale.scale,each=nrow(grid.coordinates))
+  }
+
+
   # get densities
   detection.rownames <- rownames(detection)
   row.index.subset <- which(is.element(detection.rownames, genes))
@@ -43,9 +56,10 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
-  bandwidth <- sqrt( sum( (apply(x,2,default_bandwidth.nrd)/4)^2 ) )
-  dist.to.grid.norm <- dist.to.grid/bandwidth
-  density.contributions <- exp(- dist.to.grid.norm*dist.to.grid.norm/2)
+  bandwidth <- sqrt( sum( (apply(x, 2, default_bandwidth.nrd))^2) )
+  dist.to.grid.norm <- dist.to.grid / bandwidth
+  density.contributions <-
+    exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
 
   densities <- matrix(NA, nrow=length(row.index.subset), ncol=ncol(density.contributions))
   row.names(densities) <- detection.rownames[row.index.subset]
@@ -78,7 +92,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 #'
 #' @examples
 #' # to be added
-kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k, ...){
+kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k, scale=TRUE, ...){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -102,6 +116,17 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
   if(ncol(grid.coordinates)!=ncol(x))
     stop("The number of columns in 'x' and 'grid.coordinates' don't match.")
 
+  if(!is.logical(scale) | length(scale) > 1)
+    stop("The value of 'scale' must be either TRUE or FALSE")
+
+  # scale data if needed
+  if(scale){
+    x <- scale(x)
+    # save the mean and stdev of the scaling
+    x.scale.center <- attr(x = x, which = "scaled:center")
+    x.scale.scale <- attr(x = x, which = "scaled:scale")
+    grid.coordinates <- (grid.coordinates - rep(x.scale.center,each=nrow(grid.coordinates))) / rep(x.scale.scale,each=nrow(grid.coordinates))
+  }
 
   # get densities
   detection.rownames <- rownames(detection)
@@ -111,9 +136,10 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
-  bandwidth <- sqrt( sum( (apply(x,2,default_bandwidth.nrd)/4)^2 ) )
-  dist.to.grid.norm <- dist.to.grid/bandwidth
-  density.contributions <- exp(- dist.to.grid.norm*dist.to.grid.norm/2)
+  bandwidth <- sqrt( sum( (apply(x, 2, default_bandwidth.nrd))^2) )
+  dist.to.grid.norm <- dist.to.grid / bandwidth
+  density.contributions <-
+    exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
 
   densities <- matrix(NA, nrow=length(row.index.subset), ncol=ncol(density.contributions))
   row.names(densities) <- detection.rownames[row.index.subset]

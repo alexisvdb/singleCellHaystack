@@ -368,7 +368,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   # if input data was scaled, the grid points have to be re-scaled
   # else nothing has to be done
   if(scale)
-    grid.coord <- grid.coord*x.scale.scale + x.scale.center
+    grid.coord <- grid.coord*rep(x.scale.scale,each=nrow(grid.coord)) + rep(x.scale.center,each=nrow(grid.coord))
 
   message("### returning result...")
   # prepare the 'haystack' object to return
