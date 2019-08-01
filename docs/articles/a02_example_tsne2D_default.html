@@ -86,7 +86,7 @@
       <h1>Application of singleCellHaystack on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-06-17</h4>
+            <h4 class="date">2019-08-01</h4>
       
       
       <div class="hidden name"><code>a02_example_tsne2D_default.Rmd</code></div>
@@ -127,10 +127,10 @@
 <p>First, load the package, and set a random seed to ensure replicability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
-<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
+<span class="co">#&gt;  次のパッケージを付け加えます: 'singleCellHaystack'</span>
+<span class="co">#&gt;  以下のオブジェクトは '.GlobalEnv' によってマスクされています: </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;     dat.expression, dat.tsne</span>
+<span class="co">#&gt;      dat.expression, dat.tsne</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
 <p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
@@ -172,19 +172,19 @@
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 200 values out of 200 done</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></code></pre></div>
-<p>Let’s have a look at the most biased genes. The most strongly biased gene is Alox5ap. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Alox5ap is not detected in the upper right and lower right group of cells.</p>
+<p>Let’s have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)
 <span class="co">#&gt;              D_KL log.p.vals T.counts</span>
-<span class="co">#&gt; Alox5ap 1.0284127  -68.18293     1354</span>
-<span class="co">#&gt; Lyz1    0.8561399  -67.30395     1183</span>
-<span class="co">#&gt; Clec4a2 0.7561418  -66.62938      947</span>
-<span class="co">#&gt; Cybb    0.8090982  -65.94909     1172</span>
-<span class="co">#&gt; S100a10 0.7155384  -64.46251     1094</span>
+<span class="co">#&gt; Clec4a2 0.7561418  -65.39972      947</span>
+<span class="co">#&gt; Lyz1    0.8561399  -64.83459     1183</span>
+<span class="co">#&gt; Alox5ap 1.0284127  -64.70018     1354</span>
+<span class="co">#&gt; Cybb    0.8090982  -63.60491     1172</span>
+<span class="co">#&gt; S100a10 0.7155384  -62.71029     1094</span>
 <span class="co"># plotting detection of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
+<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
 <p><img src="a02_example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Alox5ap"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
+<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
 <p><img src="a02_example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
@@ -197,8 +197,8 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res.hc.clusters)
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 454 289 104 133  20</span></code></pre></div>
-<p>Cluster 1 contains 454 genes, and the smallest cluster (cluster 5) contains just 20 genes.</p>
+<span class="co">#&gt; 434 384 112  46  24</span></code></pre></div>
+<p>Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="cf">function</span>(cluster) {
   gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]
@@ -208,10 +208,10 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
 })
 <span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> pl, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
 <p><img src="a02_example_tsne2D_default_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Alox5ap"</span>] <span class="co"># the most biased gene is in cluster 4</span>
-<span class="co">#&gt; Alox5ap </span>
-<span class="co">#&gt;       4</span></code></pre></div>
-<p>The most biased genes, Alox5ap, was clustered into cluster 4. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 4. The pattern of cluster 5 (containing 20 genes) is rather different from all other clusters.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Clec4a2"</span>] <span class="co"># the most biased gene is in cluster 2</span>
+<span class="co">#&gt; Clec4a2 </span>
+<span class="co">#&gt;       2</span></code></pre></div>
+<p>The most biased genes, Clec4a2, was clustered into cluster 2. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 2. The pattern of cluster 5 (containing 24 genes) is rather different from all other clusters.</p>
 </div>
   </div>
 

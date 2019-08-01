@@ -86,7 +86,7 @@
       <h1>Application of ‘advanced’ mode on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-06-17</h4>
+            <h4 class="date">2019-08-01</h4>
       
       
       <div class="hidden name"><code>a03_example_tsne2D_advanced.Rmd</code></div>
@@ -135,10 +135,10 @@
 <p>First, load the package, and set a random seed to ensure replicability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
-<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
+<span class="co">#&gt;  次のパッケージを付け加えます: 'singleCellHaystack'</span>
+<span class="co">#&gt;  以下のオブジェクトは '.GlobalEnv' によってマスクされています: </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;     dat.expression, dat.tsne</span>
+<span class="co">#&gt;      dat.expression, dat.tsne</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
 <p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. <code>use.advanced.sampling</code> is set to the vector of detected genes per cell, <code>general.detection</code>. By doing this, <code>haystack</code> will calculate cell distributions and perform randomizations taking into account the general detection levels.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne.adv &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">use.advanced.sampling =</span> general.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)

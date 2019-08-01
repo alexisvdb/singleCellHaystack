@@ -62,14 +62,14 @@ Next, run `haystack` on the t-SNE coordinates. These are 2D coordinates, so we s
 res.tsne <- haystack(x = dat.tsne, detection = dat.detection, method = "2D")
 ```
 
-Let's have a look at the most biased genes. The most strongly biased gene is Alox5ap. We can plot the expression an detection of this gene using the `plot_gene_haystack` function. From the plots we can see that Alox5ap is not detected in the upper right and lower right group of cells.
+Let's have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the `plot_gene_haystack` function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.
 
 ```{r example4}
 show_result_haystack(res.haystack = res.tsne, n = 5)
 # plotting detection of this gene
-plot_gene_haystack(x = dat.tsne, gene = "Alox5ap", expression = dat.detection)
+plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = dat.detection)
 # plotting log expression of this gene
-plot_gene_haystack(x = dat.tsne, gene = "Alox5ap", expression = log10(dat.expression)) 
+plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = log10(dat.expression)) 
 ```
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
@@ -89,7 +89,7 @@ res.hc.clusters <- cutree(res.hc, k=5)
 table(res.hc.clusters)
 ``` 
 
-Cluster 1 contains 454 genes, and the smallest cluster (cluster 5) contains just 20 genes.
+Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.
 
 Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
 
@@ -105,6 +105,6 @@ plot_grid(plotlist = pl, ncol = 2)
 
 
 ```{r example8}
-res.hc.clusters["Alox5ap"] # the most biased gene is in cluster 4
+res.hc.clusters["Clec4a2"] # the most biased gene is in cluster 2
 ```
-The most biased genes, Alox5ap, was clustered into cluster 4. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 4. The pattern of cluster 5 (containing 20 genes) is rather different from all other clusters.
+The most biased genes, Clec4a2, was clustered into cluster 2. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 2. The pattern of cluster 5 (containing 24 genes) is rather different from all other clusters.

@@ -96,7 +96,7 @@
 <div id="singlecellhaystack" class="section level1">
 
 <p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional spaces or 2D representations.</p>
-<p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v1">bioRxiv</a>.</p>
+<p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v3">bioRxiv</a>.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -143,16 +143,16 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="reference/haystack.h
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show top 10 "surprising" genes</span>
 <span class="kw"><a href="reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">n=</span><span class="dv">10</span>)
 <span class="co">#&gt;              D_KL log.p.vals T.counts</span>
-<span class="co">#&gt; gene_242 1.360661  -21.57548       96</span>
-<span class="co">#&gt; gene_275 1.345251  -20.97236       95</span>
-<span class="co">#&gt; gene_317 1.386194  -20.94379       94</span>
-<span class="co">#&gt; gene_497 1.599646  -20.46697       86</span>
-<span class="co">#&gt; gene_79  1.929800  -20.43333       68</span>
-<span class="co">#&gt; gene_244 1.238011  -19.91416       95</span>
-<span class="co">#&gt; gene_351 1.408946  -19.57361       89</span>
-<span class="co">#&gt; gene_339 1.414814  -19.17568       87</span>
-<span class="co">#&gt; gene_62  1.519993  -19.06512       81</span>
-<span class="co">#&gt; gene_137 1.349994  -19.05803       89</span>
+<span class="co">#&gt; gene_497 1.599646  -22.85430       86</span>
+<span class="co">#&gt; gene_79  1.929800  -22.24037       68</span>
+<span class="co">#&gt; gene_62  1.519993  -21.98972       81</span>
+<span class="co">#&gt; gene_61  1.470475  -21.42928       80</span>
+<span class="co">#&gt; gene_339 1.414814  -21.17211       87</span>
+<span class="co">#&gt; gene_351 1.408946  -20.92487       89</span>
+<span class="co">#&gt; gene_137 1.349994  -20.38122       89</span>
+<span class="co">#&gt; gene_444 1.435882  -20.22446       75</span>
+<span class="co">#&gt; gene_317 1.386194  -19.68530       94</span>
+<span class="co">#&gt; gene_313 1.294544  -19.47089       78</span>
 
 <span class="co"># alternatively: use a p-value threshold</span>
 <span class="co">#show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)</span></code></pre></div>
@@ -186,7 +186,7 @@ km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Learn more at <br><a href="https://www.biorxiv.org/content/10.1101/557967v1">https://​www.biorxiv.org/​content/​10.1101/​557967v1</a>
+<li>Learn more at <br><a href="https://www.biorxiv.org/content/10.1101/557967v3">https://​www.biorxiv.org/​content/​10.1101/​557967v3</a>
 </li>
 </ul>
 </div>
