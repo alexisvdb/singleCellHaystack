@@ -113,8 +113,10 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   # if expression is logical: treat as detection (TRUE or FALSE)
   # else, treat as expression levels
   if(is.numeric(dat.plot$value)){
-    d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Level")
+    # d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Level")
+    d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradientn(colours=c("#BBBBBB","#F0E442","#E69F00","#FF0000")) + labs(color = "Level")
   } else if(is.logical(dat.plot$value)) {
+
     d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + labs(color = "Detection")
   }
 
@@ -243,7 +245,9 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
     dat.plot <- dat.plot[o,]
   }
 
-  d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Detection")
+  #d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradient(low="grey", high="red") + labs(color = "Detection")
+  #d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradientn(colours=c("grey","red","dark red")) + labs(color = "Detection")
+  d <- d + geom_point(data=dat.plot, aes_string("x", "y", colour="value"), size=point.size) + scale_color_gradientn(colours=c("#BBBBBB","#F0E442","#E69F00","#FF0000")) + labs(color = "Detection")
 
   d
 }

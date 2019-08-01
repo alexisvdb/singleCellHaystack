@@ -226,7 +226,9 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
-  bandwidth <- sqrt(sum((apply(x, 2, default_bandwidth.nrd)) ^ 2))
+  # bandwidth <- sqrt(sum((apply(x, 2, default_bandwidth.nrd)) ^ 2))
+  # message("### using new bandwidth definition...")
+  bandwidth <- median(apply(dist.to.grid,1,min))
   dist.to.grid.norm <- dist.to.grid / bandwidth
   density.contributions <-
     exp(-dist.to.grid.norm * dist.to.grid.norm / 2)

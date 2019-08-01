@@ -56,7 +56,8 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
-  bandwidth <- sqrt( sum( (apply(x, 2, default_bandwidth.nrd))^2) )
+  # bandwidth <- sqrt(sum((apply(x, 2, default_bandwidth.nrd)) ^ 2))
+  bandwidth <- median(apply(dist.to.grid,1,min))
   dist.to.grid.norm <- dist.to.grid / bandwidth
   density.contributions <-
     exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
@@ -68,10 +69,13 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
     densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
   }
 
+  #heatmap(dist.to.grid.norm, Rowv=NA, Colv=NA, scale="none")
+  #heatmap(densities, Rowv=NA, Colv=NA, scale="none")
+
   # rescale to sum to 1. This is to avoid R thinking sd=0 in the case where an entire row has very low values
   densities <- densities / apply(densities,1,sum)
 
-  dist <- as.dist(1 - cor(t(densities)))
+  dist <- as.dist(1 - cor(t(densities),method = "spearman")) # dist(densities)
   hc <- hclust(dist, method=method)
   hc
 }
@@ -136,7 +140,8 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
 
   # process the distances to a suitable density contribution
   # first, set bandwidth
-  bandwidth <- sqrt( sum( (apply(x, 2, default_bandwidth.nrd))^2) )
+  # bandwidth <- sqrt(sum((apply(x, 2, default_bandwidth.nrd)) ^ 2))
+  bandwidth <- median(apply(dist.to.grid,1,min))
   dist.to.grid.norm <- dist.to.grid / bandwidth
   density.contributions <-
     exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
