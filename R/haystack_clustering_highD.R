@@ -7,13 +7,14 @@
 #' @param genes A set of genes (of the 'detection' data) which will be clustered.
 #' @param method The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".
 #' @param grid.coordinates Coordinates of grid points in the same space as 'x', to be used to estimate densities for clustering.
+#' @param scale whether to scale data.
 #'
 #' @return An object of class hclust, describing a hierarchical clustering tree.
 #' @export
 #'
 #' @examples
 #' # to be added
-hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coordinates = NULL, scale=TRUE){
+hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coordinates = NULL, scale = TRUE){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -39,7 +40,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
     stop("The value of 'scale' must be either TRUE or FALSE")
 
   # scale data if needed
-  if(scale){
+  if(scale) {
     x <- scale(x)
     # save the mean and stdev of the scaling
     x.scale.center <- attr(x = x, which = "scaled:center")
@@ -89,6 +90,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 #' @param genes A set of genes (of the 'detection' data) which will be clustered.
 #' @param grid.coordinates Coordinates of grid points in the same space as 'x', to be used to estimate densities for clustering.
 #' @param k The number of clusters to return.
+#' @param scale whether to scale data.
 #' @param ... Additional parameters which will be passed on to the kmeans function.
 #'
 #' @return An object of class kmeans, describing a clustering into 'k' clusters
@@ -96,7 +98,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 #'
 #' @examples
 #' # to be added
-kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k, scale=TRUE, ...){
+kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k, scale = TRUE, ...){
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))

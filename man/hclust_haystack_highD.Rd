@@ -17,6 +17,8 @@ hclust_haystack_highD(x, detection, genes, method = "ward.D",
 \item{method}{The method to use for hierarchical clustering. See '?hclust' for more information. Default: "ward.D".}
 
 \item{grid.coordinates}{Coordinates of grid points in the same space as 'x', to be used to estimate densities for clustering.}
+
+\item{scale}{whether to scale data.}
 }
 \value{
 An object of class hclust, describing a hierarchical clustering tree.

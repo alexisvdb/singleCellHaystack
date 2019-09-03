@@ -18,6 +18,8 @@ kmeans_haystack_highD(x, detection, genes, grid.coordinates = NULL, k,
 
 \item{k}{The number of clusters to return.}
 
+\item{scale}{whether to scale data.}
+
 \item{...}{Additional parameters which will be passed on to the kmeans function.}
 }
 \value{
