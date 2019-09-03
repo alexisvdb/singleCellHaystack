@@ -1,7 +1,7 @@
 Package: singleCellHaystack
 Type: Package
 Title: Finding surprising needles (=genes) in haystacks (=single cell transcriptome data)
-Version: 0.2.0
+Version: 0.3.0
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre")),
     person("Diego", "Diez", email = "diego10ruiz@gmail.com", role = c("aut"))
