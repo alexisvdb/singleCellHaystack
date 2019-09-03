@@ -10,12 +10,12 @@ test_that("haystack works", {
   expect_equal(names(x), "results")
   expect_equal(class(x$results), "data.frame")
   expect_equal(dim(x$results), c(500, 3))
-  expect_equal(x$results["gene_1", "D_KL"], 0.06756395)
+  expect_equal(x$results["gene_1", "D_KL"], 0.06756395, tolerance = 1e-6)
   expect_equal(x$results["gene_1", "log.p.vals"], 0)
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
 
-x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "centroid")
+x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "centroid", grid.points = 60)
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -24,14 +24,13 @@ test_that("haystack works", {
   expect_equal(class(x$results), "data.frame")
   expect_equal(dim(x$results), c(500, 3))
   expect_equal(class(x$grid.coordinates), "matrix")
-  expect_equal(dim(x$grid.coordinates), c(50, 2))
-  expect_equal(x$results["gene_1", "D_KL"], 0.01781055)
+  expect_equal(dim(x$grid.coordinates), c(60, 2))
+  expect_equal(x$results["gene_1", "D_KL"], 0.6742179, tolerance = 1e-6)
   expect_equal(x$results["gene_1", "log.p.vals"], 0)
   expect_equal(x$results["gene_1", "T.counts"], 27)
-
 })
 
-x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "seeding")
+x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "seeding", grid.points = 60)
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -40,8 +39,8 @@ test_that("haystack works", {
   expect_equal(class(x$results), "data.frame")
   expect_equal(dim(x$results), c(500, 3))
   expect_equal(class(x$grid.coordinates), "matrix")
-  expect_equal(dim(x$grid.coordinates), c(50, 2))
-  expect_equal(x$results["gene_1", "D_KL"], 0.01789938)
+  expect_equal(dim(x$grid.coordinates), c(60, 2))
+  expect_equal(x$results["gene_1", "D_KL"], 0.4650268, tolerance = 1e-6)
   expect_equal(x$results["gene_1", "log.p.vals"], 0)
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
