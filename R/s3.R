@@ -65,7 +65,7 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cut
 
   y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
   z <- Seurat::Embeddings(x, coord)
-  haystack(as.matrix(z), detection = y > cutoff, ...)
+  haystack(as.matrix(z), detection = as.matrix(y) > cutoff, ...)
 }
 
 #' @rdname haystack
