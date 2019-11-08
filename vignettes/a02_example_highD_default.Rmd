@@ -44,7 +44,7 @@ This data should include the following objects:
 Let's have a look at the t-SNE plot:
 
 ```{r example1}
-ggplot(dat.tsne, aes_string(x = "V1", y = "V2")) + labs(x = "t-SNE1", y = "t-SNE2") + geom_point()
+ggplot(dat.tsne, aes(x = V1, y = V2)) + labs(x = "t-SNE1", y = "t-SNE2") + geom_point()
 ```
 
 There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to find genes with biased expression patterns in this data.
