@@ -56,7 +56,7 @@ Moreover, the cells in the bottom right have in general fewer detected genes. If
 
 We can use `singleCellHaystack` to find genes with biased expression patterns, taking into account general gene expression trends, using the option `use.advanced.sampling`.
 
-# Application of `singleCellHaystack` in advanced mode
+# Running `haystack` with `use.advanced.sampling`
 
 First, load the package, and set a random seed to ensure replicability.
 
@@ -86,6 +86,8 @@ From the plots we can see that Snca is detected in the lower right groups of cel
 This explains why the advanced mode of `singleCellHaystack` judges Snca to be the most significantly biased.
 
 Compare the pattern of Snca with that of the most biased gene in the default mode (see [here](articles/examplehighD_default.html)). The most biased gene found in the "default" mode is strongly biased, but is detected in cells that have in general many detected genes.
+
+# Clustering and visualization
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the input space (first 10 PCs). Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
 

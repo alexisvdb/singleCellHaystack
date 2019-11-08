@@ -102,9 +102,9 @@
     
     
 <p>In this article, we show the application of <code>singleCellHaystack</code> on high-dimensional coordinates. Our method takes the coordinates of the cells in a &gt;2-dimensional space (e.g. the first few principal components, etc), and finds genes that are detected in a non-random pattern in that space.</p>
-<div id="preparing-the-input-data" class="section level1">
+<div id="preparing-input-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
+<a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
 <p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://www.rdocumentation.org/packages/base/topics/load">load()</a></code> function. You can also download the individual data files separately.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/connections">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ls">ls</a></span>()
@@ -128,9 +128,9 @@
 <p><img src="a02_example_highD_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this data.</p>
 </div>
-<div id="application-of-singlecellhaystack-on-high-dimensional-coordinates" class="section level1">
+<div id="running-haystack-on-multi-dimensional-coordinates" class="section level1">
 <h1 class="hasAnchor">
-<a href="#application-of-singlecellhaystack-on-high-dimensional-coordinates" class="anchor"></a>Application of <code>singleCellHaystack</code> on high-dimensional coordinates</h1>
+<a href="#running-haystack-on-multi-dimensional-coordinates" class="anchor"></a>Running <code>haystack</code> on multi-dimensional coordinates</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
@@ -194,6 +194,10 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
 <span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Smc2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
+</div>
+<div id="clustering-and-visualization" class="section level1">
+<h1 class="hasAnchor">
+<a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the input space (first 10 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
 res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.pc10, <span class="dt">n =</span> <span class="dv">1000</span>)
@@ -228,8 +232,9 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#preparing-the-input-data">Preparing the input data</a></li>
-      <li><a href="#application-of-singlecellhaystack-on-high-dimensional-coordinates">Application of <code>singleCellHaystack</code> on high-dimensional coordinates</a></li>
+<li><a href="#preparing-input-data">Preparing input data</a></li>
+      <li><a href="#running-haystack-on-multi-dimensional-coordinates">Running <code>haystack</code> on multi-dimensional coordinates</a></li>
+      <li><a href="#clustering-and-visualization">Clustering and visualization</a></li>
       </ul>
 </div>
       </div>

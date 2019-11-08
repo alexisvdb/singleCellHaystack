@@ -135,9 +135,10 @@
 <p>Moreover, the cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend would be especially surprizing.</p>
 <p>We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot, taking into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
 </div>
-<div id="application-of-singlecellhaystack-in-advanced-mode" class="section level1">
+<div id="running-haystack-with-use-advanced-sampling" class="section level1">
 <h1 class="hasAnchor">
-<a href="#application-of-singlecellhaystack-in-advanced-mode" class="anchor"></a>Application of <code>singleCellHaystack</code> in advanced mode</h1>
+<a href="#running-haystack-with-use-advanced-sampling" class="anchor"></a>Running <code>haystack</code> with <code>use.advanced.sampling</code>
+</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
@@ -203,6 +204,10 @@
 <p>From these plots, we can see that Trim10 is expressed almost exclusively in the bottom right group of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Trim10 is especially surprizing: it is deteced in cells that express in general few genes.</p>
 <p>This explains why the advanced mode of <code>singleCellHaystack</code> judges Trim10 to be the most significantly biased.</p>
 <p>Compare the pattern of Trim10 with that of the most biased gene in the default mode (see <a href="articles/example_tsne2D_default.html">here</a>). The most biased gene found in the “default” mode is strongly biased, but is detected in cells that have in general many detected genes.</p>
+</div>
+<div id="clustering-and-visualization" class="section level1">
+<h1 class="hasAnchor">
+<a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
 res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne.adv, <span class="dt">n =</span> <span class="dv">1000</span>)
@@ -238,7 +243,8 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#tldr">tl;dr</a></li>
       <li><a href="#preparing-the-input-data">Preparing the input data</a></li>
-      <li><a href="#application-of-singlecellhaystack-in-advanced-mode">Application of <code>singleCellHaystack</code> in advanced mode</a></li>
+      <li><a href="#running-haystack-with-use-advanced-sampling">Running <code>haystack</code> with <code>use.advanced.sampling</code></a></li>
+      <li><a href="#clustering-and-visualization">Clustering and visualization</a></li>
       </ul>
 </div>
       </div>

@@ -101,9 +101,9 @@
 
     
     
-<div id="example-usage-on-a-small-toy-dataset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage-on-a-small-toy-dataset" class="anchor"></a>Example usage on a small toy dataset</h2>
+<div id="application-on-a-toy-dataset" class="section level1">
+<h1 class="hasAnchor">
+<a href="#application-on-a-toy-dataset" class="anchor"></a>Application on a toy dataset</h1>
 <p>A small toy dataset is included in the package. The toy dataset includes:</p>
 <ul>
 <li><p><code>dat.expression</code>: scRNA-seq expression of genes (rows) in cells (columns)</p></li>
@@ -162,6 +162,10 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystac
 )</code></pre></div>
 <p><img src="a01_toy_example_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Yes, the pattern of cells in the toy example roughly resembles a haystack; see <a href="https://en.wikipedia.org/wiki/Haystacks_(Monet_series)">the Haystack paintings by Monet</a>.</p>
+</div>
+<div id="clustering-and-visualization" class="section level1">
+<h1 class="hasAnchor">
+<a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span>
 sorted.table &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">p.value.threshold =</span> <span class="fl">1e-10</span>)
@@ -187,7 +191,8 @@ km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#example-usage-on-a-small-toy-dataset">Example usage on a small toy dataset</a></li>
+<li><a href="#application-on-a-toy-dataset">Application on a toy dataset</a></li>
+      <li><a href="#clustering-and-visualization">Clustering and visualization</a></li>
       </ul>
 </div>
       </div>

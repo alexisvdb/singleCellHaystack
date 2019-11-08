@@ -22,7 +22,7 @@ dat.tsne <- singleCellHaystack::dat.tsne
 dat.expression <- singleCellHaystack::dat.expression
 ```
 
-## Example usage on a small toy dataset
+# Application on a toy dataset
 
 A small toy dataset is included in the package. The toy dataset includes:
 
@@ -73,6 +73,8 @@ plot_gene_haystack(
 
 Yes, the pattern of cells in the toy example roughly resembles a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
 
+# Clustering and visualization
+
 You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.
 
 ```{r example4}
@@ -96,3 +98,4 @@ km.clusters <- km$cluster
 plot_gene_set_haystack(dat.tsne, detection = dat.detection, 
                         genes=names(km.clusters[km.clusters==1]), point.size=2)
 ```
+

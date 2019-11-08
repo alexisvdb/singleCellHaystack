@@ -47,7 +47,7 @@ ggplot(dat.tsne, aes(x = V1, y = V2)) + labs(x = "t-SNE1", y = "t-SNE2") + geom_
 
 There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to find genes with biased expression patterns in this 2D plot.
 
-# Application of `singleCellHaystack` in default mode
+# Running `haystack` on 2D coordinates
 
 First, load the package, and set a random seed to ensure replicability.
 
@@ -71,6 +71,9 @@ plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = dat.detection)
 # plotting log expression of this gene
 plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = log10(dat.expression)) 
 ```
+
+
+# Clustering and visualization
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
 
