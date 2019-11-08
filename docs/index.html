@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -59,13 +59,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/a01_introduction.html">Introduction to singleCellHaystack</a>
+      <a href="articles/a01_toy_example.html">Application on toy example</a>
     </li>
     <li>
-      <a href="articles/a02_example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="articles/a03_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="articles/a03_example_highD_advanced.html">Application of 'advanced' mode on multi-dimensional coordinates</a>
+    </li>
+    <li>
+      <a href="articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="articles/a05_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -93,10 +99,24 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="singlecellhaystack" class="section level1">
-
-<p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional spaces or 2D representations.</p>
+<div id="singlecellhaystack" class="section level2">
+<h2 class="hasAnchor">
+<a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h2>
+<p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional (first principal components) spaces or 2D (t-SNE, UMAP) representations.</p>
 <p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v3">bioRxiv</a>.</p>
+</div>
+<div id="contents" class="section level2">
+<h2 class="hasAnchor">
+<a href="#contents" class="anchor"></a>Contents</h2>
+<p>We have prepared a few example applications showing how to use our package:</p>
+<ul>
+<li><a href="articles/a01_toy_example.html">Application on toy example</a></li>
+<li><a href="articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a></li>
+<li><a href="articles/a03_example_highD_advanced.html">Application of the ‘advanced’ mode on multi-dimensional coordinates</a></li>
+<li><a href="articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a></li>
+<li><a href="articles/a05_example_tsne2D_advanced.html">Application of the ‘advanced’ mode on 2D t-SNE coordinates</a></li>
+</ul>
+</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -106,79 +126,6 @@
 <!-- ``` -->
 <p>You can install the <code>singleCellHaystack</code> from the GitHub repository as follows:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</code></pre></div>
-</div>
-<div id="example-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage" class="anchor"></a>Example usage</h2>
-<p>A small toy dataset is included in the package. The toy dataset includes:</p>
-<ul>
-<li><p><code>dat.expression</code>: scRNA-seq expression of genes (rows) in cells (columns)</p></li>
-<li><p><code>dat.tsne</code>: a 2D representation of the cell in dat.expression</p></li>
-</ul>
-<p>First, apply <code>haystack</code> (the main function of the package) on the toy dataset.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1234</span>)
-
-<span class="co"># Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)</span>
-dat.detection &lt;-<span class="st"> </span>dat.expression <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>
-
-<span class="co"># run the main 'haystack' analysis</span>
-res &lt;-<span class="st"> </span><span class="kw"><a href="reference/haystack.html">haystack</a></span>(dat.tsne, <span class="dt">detection=</span>dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> starting randomizations...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10 values out of 58 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 20 values out of 58 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 30 values out of 58 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 40 values out of 58 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 50 values out of 58 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span>
-
-<span class="co"># the returned results 'res' is of class 'haystack'</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(res)
-<span class="co">#&gt; [1] "haystack"</span></code></pre></div>
-<p>Let’s have a look at the “most surprising” genes.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># show top 10 "surprising" genes</span>
-<span class="kw"><a href="reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">n=</span><span class="dv">10</span>)
-<span class="co">#&gt;              D_KL log.p.vals T.counts</span>
-<span class="co">#&gt; gene_497 1.599646  -22.85430       86</span>
-<span class="co">#&gt; gene_79  1.929800  -22.24037       68</span>
-<span class="co">#&gt; gene_62  1.519993  -21.98972       81</span>
-<span class="co">#&gt; gene_61  1.470475  -21.42928       80</span>
-<span class="co">#&gt; gene_339 1.414814  -21.17211       87</span>
-<span class="co">#&gt; gene_351 1.408946  -20.92487       89</span>
-<span class="co">#&gt; gene_137 1.349994  -20.38122       89</span>
-<span class="co">#&gt; gene_444 1.435882  -20.22446       75</span>
-<span class="co">#&gt; gene_317 1.386194  -19.68530       94</span>
-<span class="co">#&gt; gene_313 1.294544  -19.47089       78</span>
-
-<span class="co"># alternatively: use a p-value threshold</span>
-<span class="co">#show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)</span></code></pre></div>
-<p>One of the most non-random genes is “gene_497”. Here we visualize it’s expression in the t-SNE plot.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize one of the surprizing genes</span>
-<span class="kw"><a href="reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(dat.tsne, <span class="dt">expression=</span>dat.expression, 
-                      <span class="dt">gene=</span><span class="st">"gene_497"</span>, <span class="dt">detection =</span> dat.detection, <span class="dt">high.resolution =</span> <span class="ot">TRUE</span>, <span class="dt">point.size=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="reference/figures/README-example3-1.png" width="100%"> Yes, the pattern of cells in the toy example roughly resembles a haystack; see <a href="https://en.wikipedia.org/wiki/Haystacks_(Monet_series)">the Haystack paintings by Monet</a>.</p>
-<p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span>
-sorted.table &lt;-<span class="st"> </span><span class="kw"><a href="reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">p.value.threshold =</span> <span class="fl">1e-10</span>)
-gene.subset &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(sorted.table)
-
-<span class="co"># k-means clustering</span>
-km &lt;-<span class="st"> </span><span class="kw"><a href="reference/kmeans_haystack.html">kmeans_haystack</a></span>(<span class="dt">x=</span>dat.tsne, <span class="dt">detection=</span>dat.detection, <span class="dt">genes=</span>gene.subset, <span class="dt">k=</span><span class="dv">5</span>)
-km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
-
-<span class="co"># alternatively: hierarchical clustering</span>
-<span class="co">#hc &lt;- hclust_haystack(x=dat.tsne$tSNE1, y=dat.tsne$tSNE2, detection=dat.detection, genes=gene.subset)</span>
-<span class="co">#hc.clusters &lt;- cutree(hc,k = 5)</span></code></pre></div>
-<p>… and visualize the average pattern of the genes in cluster 1 (for example).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize cluster distributions</span>
-<span class="kw"><a href="reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="dt">x=</span>dat.tsne, <span class="dt">detection=</span>dat.detection, 
-                          <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">1</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="reference/figures/README-example5-1.png" width="100%"></p>
-</div>
 </div>
   </div>
 

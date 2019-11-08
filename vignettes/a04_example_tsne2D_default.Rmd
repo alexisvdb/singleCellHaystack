@@ -1,0 +1,110 @@
+---
+title: "Application on 2D t-SNE coordinates"
+author: "Alexis Vandenbon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Application on 2D t-SNE coordinates}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 6,
+  fig.height = 5,
+  fig.align = 'center'
+)
+
+library(ggplot2)
+library(cowplot)
+```
+
+
+# Preparing the input data
+The data used in these examples can be found [here](https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/). We recommend downloading the .rda file and loading it using the `load()` function. You can also download the individual data files separately.
+
+```{r example0}
+load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
+ls()
+```
+
+This data should include the following objects:
+
+- `dat.expression`: a matrix object with the expression of genes (rows) in each cell (columns).
+- `dat.detection`:  a logical matrix object with the detection of genes (rows) in each cell (columns). TRUE means detected, FALSE means not detected.
+- `dat.pca`:        the output of PCA. This data.frame contains thefirst 50 pricipal components.
+- `dat.tsne`:       a data.frame with t-SNE coordinates (2D).
+- `dat.umap`:       a data.frame with UMAP coordinates (2D).
+
+Let's have a look at the t-SNE plot:
+
+```{r example1}
+ggplot(dat.tsne, aes_string(x = "V1", y = "V2")) + labs(x = "t-SNE1", y = "t-SNE2") + geom_point()
+```
+
+There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to find genes with biased expression patterns in this 2D plot.
+
+# Application of `singleCellHaystack` in default mode
+
+First, load the package, and set a random seed to ensure replicability.
+
+```{r example2}
+library(singleCellHaystack)
+set.seed(1)
+
+```
+Next, run `haystack` on the t-SNE coordinates. These are 2D coordinates, so we set 'method' to '2D'. We also give the detection values as input to 'detection'. This example dataset is relatively small, containing 1,981 cells, so running 'haystack' should take just 1 to 3 minutes to finish.
+
+```{r example3}
+res.tsne <- haystack(x = dat.tsne, detection = dat.detection, method = "2D")
+```
+
+Let's have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the `plot_gene_haystack` function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.
+
+```{r example4}
+show_result_haystack(res.haystack = res.tsne, n = 5)
+# plotting detection of this gene
+plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = dat.detection)
+# plotting log expression of this gene
+plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = log10(dat.expression)) 
+```
+
+Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
+
+```{r example5}
+# get the top 1000 biased genes in the result
+res.top <- show_result_haystack(res.haystack = res.tsne, n = 1000)
+# cluster biased genes by their expression pattern in the 2D plot
+genes.top <- row.names(res.top)
+res.hc <- hclust_haystack(x = dat.tsne, genes = genes.top, detection = dat.detection)
+```
+
+`hclust_haystack` returns as result a `hclust` tree, which we can cut into clusters using the `cutree` function. Here, we arbitrarily set the number of clusters to 5.
+
+```{r example6}
+res.hc.clusters <- cutree(res.hc, k=5)
+table(res.hc.clusters)
+``` 
+
+Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.
+
+Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
+
+```{r example7, fig.height = 9, fig.width = 8, fig.align='center'}
+pl <- lapply(1:5, function(cluster) {
+  gene.set <- names(res.hc.clusters)[res.hc.clusters==cluster]
+  plot.title <- paste0("Cluster ", cluster)
+  p <- plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
+  p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
+})
+plot_grid(plotlist = pl, ncol = 2)
+```
+
+
+```{r example8}
+res.hc.clusters["Clec4a2"] # the most biased gene is in cluster 2
+```
+The most biased genes, Clec4a2, was clustered into cluster 2. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 2. The pattern of cluster 5 (containing 24 genes) is rather different from all other clusters.

@@ -85,7 +85,7 @@ From these plots, we can see that Trim10 is expressed almost exclusively in the 
 
 This explains why the advanced mode of `singleCellHaystack` judges Trim10 to be the most significantly biased.
 
-Compare the pattern of Trim10 with that of Alox5ap, the most biased gene in the default mode (see [here](articles/example_tsne2D_default.html)). Alox5ap is strongly biased, but is detected in cells that have in general many detected genes.
+Compare the pattern of Trim10 with that of the most biased gene in the default mode (see [here](articles/example_tsne2D_default.html)). The most biased gene found in the "default" mode is strongly biased, but is detected in cells that have in general many detected genes.
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
 

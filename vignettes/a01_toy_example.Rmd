@@ -1,10 +1,10 @@
 ---
-title: "Introduction to singleCellHaystack"
+title: "Application on toy example"
 author: "Alexis Vandenbon"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to singleCellHaystack}
+  %\VignetteIndexEntry{Application on toy example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -21,27 +21,8 @@ knitr::opts_chunk$set(
 dat.tsne <- singleCellHaystack::dat.tsne
 dat.expression <- singleCellHaystack::dat.expression
 ```
-# singleCellHaystack
 
-`singleCellHaystack` is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). `singleCellHaystack` can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional spaces or 2D representations.
-
-Our manuscript about `singleCellHaystack` is now availabe on [bioRxiv](https://www.biorxiv.org/content/10.1101/557967v3).
-
-## Installation
-
-<!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
-
-<!-- ``` r -->
-<!-- install.packages("singleCellHaystack") -->
-<!-- ``` -->
-
-You can install the `singleCellHaystack` from the GitHub repository as follows:
-
-``` r
-remotes::install_github("alexisvdb/singleCellHaystack")
-```
-
-## Example usage
+## Example usage on a small toy dataset
 
 A small toy dataset is included in the package. The toy dataset includes:
 
@@ -108,10 +89,10 @@ km.clusters <- km$cluster
 #hc.clusters <- cutree(hc,k = 5)
 ```
 
-... and visualize the average pattern of the genes in cluster 3 (for example).
+... and visualize the average pattern of the genes in cluster 1 (for example).
 
 ```{r example5}
 # visualize cluster distributions
 plot_gene_set_haystack(dat.tsne, detection = dat.detection, 
-                        genes=names(km.clusters[km.clusters==3]), point.size=2)
+                        genes=names(km.clusters[km.clusters==1]), point.size=2)
 ```
