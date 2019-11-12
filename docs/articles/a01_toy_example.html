@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Introduction to singleCellHaystack • singleCellHaystack</title>
+<title>Application on toy example • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to singleCellHaystack">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Application on toy example">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
       </span>
     </div>
 
@@ -53,13 +53,19 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/a01_introduction.html">Introduction to singleCellHaystack</a>
+      <a href="../articles/a01_toy_example.html">Application on toy example</a>
     </li>
     <li>
-      <a href="../articles/a02_example_tsne2D_default.html">Application of singleCellHaystack on 2D t-SNE coordinates</a>
+      <a href="../articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a03_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/a03_example_highD_advanced.html">Application of 'advanced' mode on multi-dimensional coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/a05_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -83,36 +89,21 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Introduction to singleCellHaystack</h1>
+      <h1>Application on toy example</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-08-01</h4>
+            <h4 class="date">2019-11-08</h4>
       
       
-      <div class="hidden name"><code>a01_introduction.Rmd</code></div>
+      <div class="hidden name"><code>a01_toy_example.Rmd</code></div>
 
     </div>
 
     
     
-<div id="singlecellhaystack" class="section level1">
+<div id="application-on-a-toy-dataset" class="section level1">
 <h1 class="hasAnchor">
-<a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h1>
-<p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional spaces or 2D representations.</p>
-<p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v3">bioRxiv</a>.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
-<!-- ``` r -->
-<!-- install.packages("singleCellHaystack") -->
-<!-- ``` -->
-<p>You can install the <code>singleCellHaystack</code> from the GitHub repository as follows:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">remotes<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/remotes/topics/install_github">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</code></pre></div>
-</div>
-<div id="example-usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-usage" class="anchor"></a>Example usage</h2>
+<a href="#application-on-a-toy-dataset" class="anchor"></a>Application on a toy dataset</h1>
 <p>A small toy dataset is included in the package. The toy dataset includes:</p>
 <ul>
 <li><p><code>dat.expression</code>: scRNA-seq expression of genes (rows) in cells (columns)</p></li>
@@ -169,8 +160,12 @@ res &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystac
   <span class="dt">high.resolution =</span> <span class="ot">TRUE</span>,
   <span class="dt">point.size =</span> <span class="dv">2</span>
 )</code></pre></div>
-<p><img src="a01_introduction_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a01_toy_example_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>Yes, the pattern of cells in the toy example roughly resembles a haystack; see <a href="https://en.wikipedia.org/wiki/Haystacks_(Monet_series)">the Haystack paintings by Monet</a>.</p>
+</div>
+<div id="clustering-and-visualization" class="section level1">
+<h1 class="hasAnchor">
+<a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot</span>
 sorted.table &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res, <span class="dt">p.value.threshold =</span> <span class="fl">1e-10</span>)
@@ -183,12 +178,11 @@ km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
 <span class="co"># alternatively: hierarchical clustering</span>
 <span class="co">#hc &lt;- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)</span>
 <span class="co">#hc.clusters &lt;- cutree(hc,k = 5)</span></code></pre></div>
-<p>… and visualize the average pattern of the genes in cluster 3 (for example).</p>
+<p>… and visualize the average pattern of the genes in cluster 1 (for example).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualize cluster distributions</span>
 <span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(dat.tsne, <span class="dt">detection =</span> dat.detection, 
-                        <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">3</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</code></pre></div>
-<p><img src="a01_introduction_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
-</div>
+                        <span class="dt">genes=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(km.clusters[km.clusters<span class="op">==</span><span class="dv">1</span>]), <span class="dt">point.size=</span><span class="dv">2</span>)</code></pre></div>
+<p><img src="a01_toy_example_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
   </div>
 
@@ -197,12 +191,8 @@ km.clusters &lt;-<span class="st"> </span>km<span class="op">$</span>cluster
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li>
-<a href="#singlecellhaystack">singleCellHaystack</a><ul class="nav nav-pills nav-stacked">
-<li><a href="#installation">Installation</a></li>
-      <li><a href="#example-usage">Example usage</a></li>
-      </ul>
-</li>
+<li><a href="#application-on-a-toy-dataset">Application on a toy dataset</a></li>
+      <li><a href="#clustering-and-visualization">Clustering and visualization</a></li>
       </ul>
 </div>
       </div>

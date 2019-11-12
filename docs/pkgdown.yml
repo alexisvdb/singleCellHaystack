@@ -2,9 +2,11 @@ pandoc: 1.19.2.1
 pkgdown: 1.3.0
 pkgdown_sha: ~
 articles:
-  a01_introduction: a01_introduction.html
-  a02_example_tsne2D_default: a02_example_tsne2D_default.html
-  a03_example_tsne2D_advanced: a03_example_tsne2D_advanced.html
+  a01_toy_example: a01_toy_example.html
+  a02_example_highD_default: a02_example_highD_default.html
+  a03_example_highD_advanced: a03_example_highD_advanced.html
+  a04_example_tsne2D_default: a04_example_tsne2D_default.html
+  a05_example_tsne2D_advanced: a05_example_tsne2D_advanced.html
 urls:
   reference: https://alexisvdb.github.io/singleCellHaystack//reference
   article: https://alexisvdb.github.io/singleCellHaystack//articles

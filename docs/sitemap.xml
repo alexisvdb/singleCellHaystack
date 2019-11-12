@@ -94,12 +94,18 @@
     <loc>https://alexisvdb.github.io/singleCellHaystack//reference/write_haystack.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a01_introduction.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a01_toy_example.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a02_example_tsne2D_default.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a02_example_highD_default.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a03_example_tsne2D_advanced.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a03_example_highD_advanced.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a04_example_tsne2D_default.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/a05_example_tsne2D_advanced.html</loc>
   </url>
 </urlset>

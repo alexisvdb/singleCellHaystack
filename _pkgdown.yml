@@ -56,6 +56,7 @@ reference:
   - get_grid_points
   - get_log_p_D_KL
   - get_parameters_haystack
+  - get_reference
   - kde2d_faster
 
 navbar:
@@ -75,12 +76,16 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: Introduction to singleCellHaystack
-        href: articles/introduction.html
-      - text: Application of singleCellHaystack on 2D t-SNE coordinates
-        href: articles/example_tsne2D_default.html
-      - text: Application of advanced mode on 2D t-SNE coordinates
-        href: articles/example_tsne2d_advanced.html
+      - text: Application on toy example
+        href: articles/a01_toy_example.html
+      - text: Application on multi-dimensional coordinates
+        href: articles/a02_example_highD_default.html
+      - text: Application of the advanced mode on multi-dimensional coordinates
+        href: articles/a03_example_highD_advanced.html
+      - text: Application on 2D t-SNE coordinates
+        href: articles/a04_example_tsne2D_default.html
+      - text: Application of the advanced mode on 2D t-SNE coordinates
+        href: articles/a05_example_tsne2D_advanced.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack

@@ -47,7 +47,7 @@ Let's have a look at the t-SNE plot, colouring cells be the number of genes dete
 
 ```{r example1}
 general.detection <- apply(dat.detection, 2, sum)
-ggplot(dat.tsne, aes_string(x = "V1", y = "V2", colour = general.detection)) + labs(x = "t-SNE1", y = "t-SNE2") + 
+ggplot(dat.tsne, aes(x = V1, y = V2, colour = general.detection)) + labs(x = "t-SNE1", y = "t-SNE2") + 
 geom_point(size=2) + scale_color_gradient(low="yellow", high="red") + labs(color = "Det. genes")
 ```
 There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.
@@ -56,7 +56,7 @@ Moreover, the cells in the bottom right have in general fewer detected genes. If
 
 We can use `singleCellHaystack` to find genes with biased expression patterns in this 2D plot, taking into account general gene expression trends, using the option `use.advanced.sampling`.
 
-# Application of `singleCellHaystack` in advanced mode
+# Running `haystack` with `use.advanced.sampling`
 
 First, load the package, and set a random seed to ensure replicability.
 
@@ -85,7 +85,9 @@ From these plots, we can see that Trim10 is expressed almost exclusively in the 
 
 This explains why the advanced mode of `singleCellHaystack` judges Trim10 to be the most significantly biased.
 
-Compare the pattern of Trim10 with that of Alox5ap, the most biased gene in the default mode (see [here](articles/example_tsne2D_default.html)). Alox5ap is strongly biased, but is detected in cells that have in general many detected genes.
+Compare the pattern of Trim10 with that of the most biased gene in the default mode (see [here](articles/example_tsne2D_default.html)). The most biased gene found in the "default" mode is strongly biased, but is detected in cells that have in general many detected genes.
+
+# Clustering and visualization
 
 Next, let's take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
 
