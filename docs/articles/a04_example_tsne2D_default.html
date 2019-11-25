@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Application on 2D t-SNE coordinates • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Application on 2D t-SNE coordinates">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -59,13 +60,13 @@
       <a href="../articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a03_example_highD_advanced.html">Application of 'advanced' mode on multi-dimensional coordinates</a>
+      <a href="../articles/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
       <a href="../articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/a05_example_tsne2D_advanced.html">Application of 'advanced' mode on 2D t-SNE coordinates</a>
+      <a href="../articles/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -86,13 +87,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Application on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-11-08</h4>
+            <h4 class="date">2019-11-25</h4>
       
       
       <div class="hidden name"><code>a04_example_tsne2D_default.Rmd</code></div>
@@ -104,9 +106,9 @@
 <div id="preparing-the-input-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
-<p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://www.rdocumentation.org/packages/base/topics/load">load()</a></code> function. You can also download the individual data files separately.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/load">load</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/connections">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/ls">ls</a></span>()
+<p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
+<span class="kw"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()
 <span class="co">#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      </span>
 <span class="co">#&gt; [5] "dat.umap"</span></code></pre></div>
 <p>This data should include the following objects:</p>
@@ -131,15 +133,15 @@
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-2d-coordinates" class="anchor"></a>Running <code>haystack</code> on 2D coordinates</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(singleCellHaystack)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(singleCellHaystack)
 <span class="co">#&gt; </span>
-<span class="co">#&gt;  次のパッケージを付け加えます: 'singleCellHaystack'</span>
-<span class="co">#&gt;  以下のオブジェクトは '.GlobalEnv' によってマスクされています: </span>
+<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
+<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;      dat.expression, dat.tsne</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Random">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
+<span class="co">#&gt;     dat.expression, dat.tsne</span>
+<span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
 <p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne &lt;-<span class="st"> </span><span class="kw">haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span>
@@ -179,7 +181,7 @@
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
 <span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></code></pre></div>
 <p>Let’s have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">show_result_haystack</span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)
 <span class="co">#&gt;              D_KL log.p.vals T.counts</span>
 <span class="co">#&gt; Clec4a2 0.7561418  -65.39972      947</span>
 <span class="co">#&gt; Lyz1    0.8561399  -64.83459     1183</span>
@@ -187,10 +189,10 @@
 <span class="co">#&gt; Cybb    0.8090982  -63.60491     1172</span>
 <span class="co">#&gt; S100a10 0.7155384  -62.71029     1094</span>
 <span class="co"># plotting detection of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
+<span class="kw">plot_gene_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
-<span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log10</a></span>(dat.expression)) </code></pre></div>
+<span class="kw">plot_gene_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(dat.expression)) </code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
@@ -198,22 +200,22 @@
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
-res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)
+res.top &lt;-<span class="st"> </span><span class="kw">show_result_haystack</span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)
 <span class="co"># cluster biased genes by their expression pattern in the 2D plot</span>
-genes.top &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/row.names">row.names</a></span>(res.top)
-res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclust_haystack.html">hclust_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> genes.top, <span class="dt">detection =</span> dat.detection)</code></pre></div>
+genes.top &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(res.top)
+res.hc &lt;-<span class="st"> </span><span class="kw">hclust_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> genes.top, <span class="dt">detection =</span> dat.detection)</code></pre></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/cutree">cutree</a></span>(res.hc, <span class="dt">k=</span><span class="dv">5</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/table">table</a></span>(res.hc.clusters)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(res.hc, <span class="dt">k=</span><span class="dv">5</span>)
+<span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(res.hc.clusters)
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
 <span class="co">#&gt; 434 384 112  46  24</span></code></pre></div>
 <p>Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pl &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/lapply">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="cf">function</span>(cluster) {
-  gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]
-  plot.title &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste0</a></span>(<span class="st">"Cluster "</span>, cluster)
-  p &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> gene.set, <span class="dt">detection =</span> dat.detection)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pl &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="cf">function</span>(cluster) {
+  gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]
+  plot.title &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, cluster)
+  p &lt;-<span class="st"> </span><span class="kw">plot_gene_set_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> gene.set, <span class="dt">detection =</span> dat.detection)
   p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))
 })
 <span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> pl, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
@@ -226,6 +228,7 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -240,17 +243,20 @@ res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclu
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Alexis Vandenbon, Diego Diez.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

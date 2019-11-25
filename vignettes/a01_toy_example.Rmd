@@ -31,7 +31,7 @@ A small toy dataset is included in the package. The toy dataset includes:
 - `dat.tsne`:       a 2D representation of the cell in dat.expression
 
 
-First, apply `haystack` (the main function of the package) on the toy dataset.
+First, apply `haystack` (the main function of the package) on the toy dataset. This should take just several seconds on a typical desktop computer.
 
 ```{r example1}
 library(singleCellHaystack)
