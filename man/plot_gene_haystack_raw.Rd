@@ -4,8 +4,16 @@
 \alias{plot_gene_haystack_raw}
 \title{Visualizing the detection/expression of a gene in a 2D plot}
 \usage{
-plot_gene_haystack_raw(x, y, gene, expression, detection = NULL,
-  high.resolution = FALSE, point.size = 1, order.by.signal = FALSE)
+plot_gene_haystack_raw(
+  x,
+  y,
+  gene,
+  expression,
+  detection = NULL,
+  high.resolution = FALSE,
+  point.size = 1,
+  order.by.signal = FALSE
+)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}

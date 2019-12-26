@@ -29,7 +29,7 @@ get_dist_two_sets = function(set1,set2){
 #' @param classes A logical vector. Values are T is the gene is expressed in a cell, F is not.
 #' @param density.contributions A matrix of density contributions of each cell (rows) to each center point (columns).
 #' @param reference.prob A reference distribution to calculate the divergence against.
-#' @param pseudo A pseudocount, used to avoid log(0) problems. Should not be needed, so default is 0.
+#' @param pseudo A pseudocount, used to avoid log(0) problems.
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo = 0){
@@ -50,7 +50,8 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
       return(0)
     } else {
       P <- apply(density.contributions[cl.subset, , drop = FALSE], 2, sum)
-      P <- P/sum(P)
+      P <- P + pseudo
+      P <- P / sum(P)
       D_KL <- sum(P * log(P/Q))
       D_KLs[c] <- D_KL
     }
@@ -164,7 +165,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   if(!is.numeric(grid.points))
     stop("The value of 'grid.points' must be a numeric")
   if(grid.points >= ncol(detection))
-    stop("The number of grid.points appears to be very high; higher than the number of cells. Please check your input.")
+    stop("The number of grid points appears to be very high (higher than the number of cells). You can set the number of grid points using the 'grid.points' parameter.")
   if(!is.null(use.advanced.sampling)){
     if(!is.numeric(use.advanced.sampling))
       stop("'use.advanced.sampling' must either be NULL or a numeric vector")
@@ -187,9 +188,9 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
   # warn about extreme values for 'grid.points'
   if(grid.points < 10)
-    warning("The value of 'grid.points' appears to be very low (<10). Please check your input.")
+    warning("The value of 'grid.points' appears to be very low (<10). You can set the number of grid points using the 'grid.points' parameter.")
   if(grid.points > count.cells/10)
-    warning("The value of grid.points appears to be very high (> No. of cells / 10). Please check your input.")
+    warning("The value of 'grid.points' appears to be very high (> No. of cells / 10). You can set the number of grid points using the 'grid.points' parameter.")
 
 
   # scale data if needed
@@ -238,8 +239,9 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   } else {
     Q <- apply(density.contributions*use.advanced.sampling,2,sum)
   }
-  # NO NEED FOR PSEUDOCOUNT HERE??
-  Q <- Q/sum(Q) # normalize to sum to 1
+  pseudo <- 1e-300 # quantile(Q[Q>0],0.01)
+  Q <- Q + pseudo
+  Q <- Q / sum(Q) # normalize to sum to 1
 
 
 
@@ -255,10 +257,10 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   D_KL.observed <- rep(0,count.genes)
   class.types = c(FALSE, TRUE)
   for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q)
+    D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
 
     if(i%%1000==0)
-      message(paste0("### ... ",i," values out of ",count.genes," done"))
+      message(paste0("### ... ",i," features out of ",count.genes," done"))
   }
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X
@@ -333,7 +335,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL_highD(classes=classes,
-                                             density.contributions = density.contributions, reference.prob = Q)
+                                             density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
       }
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
@@ -350,7 +352,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       for(r in 1:randomization.count){
         # using default sampling
         D_KL.randomized[r] <- get_D_KL_highD(classes=sample(x = vector.to.randomize),
-                                             density.contributions = density.contributions, reference.prob = Q)
+                                             density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
 
       }
       all.D_KL.randomized[i,] <- D_KL.randomized

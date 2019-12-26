@@ -4,8 +4,7 @@
 \alias{get_log_p_D_KL}
 \title{Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.}
 \usage{
-get_log_p_D_KL(T.counts, D_KL.observed, D_KL.randomized,
-  output.dir = NULL)
+get_log_p_D_KL(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL)
 }
 \arguments{
 \item{T.counts}{The number of cells in which a gene is detected.}

@@ -4,8 +4,14 @@
 \alias{hclust_haystack_highD}
 \title{Function for hierarchical clustering of genes according to their distribution in a higher-dimensional space.}
 \usage{
-hclust_haystack_highD(x, detection, genes, method = "ward.D",
-  grid.coordinates = NULL, scale = TRUE)
+hclust_haystack_highD(
+  x,
+  detection,
+  genes,
+  method = "ward.D",
+  grid.coordinates = NULL,
+  scale = TRUE
+)
 }
 \arguments{
 \item{x}{Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.}

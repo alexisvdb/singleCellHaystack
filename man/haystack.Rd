@@ -10,21 +10,45 @@
 \usage{
 haystack(x, ...)
 
-\method{haystack}{matrix}(x, dim1 = 1, dim2 = 2, detection,
-  method = "highD", use.advanced.sampling = NULL,
-  dir.randomization = NULL, scale = TRUE, grid.points = 100,
-  grid.method = "centroid", ...)
+\method{haystack}{matrix}(
+  x,
+  dim1 = 1,
+  dim2 = 2,
+  detection,
+  method = "highD",
+  use.advanced.sampling = NULL,
+  dir.randomization = NULL,
+  scale = TRUE,
+  grid.points = 100,
+  grid.method = "centroid",
+  ...
+)
 
-\method{haystack}{data.frame}(x, dim1 = 1, dim2 = 2, detection,
-  method = "highD", use.advanced.sampling = NULL,
-  dir.randomization = NULL, scale = TRUE, grid.points = 100,
-  grid.method = "centroid", ...)
+\method{haystack}{data.frame}(
+  x,
+  dim1 = 1,
+  dim2 = 2,
+  detection,
+  method = "highD",
+  use.advanced.sampling = NULL,
+  dir.randomization = NULL,
+  scale = TRUE,
+  grid.points = 100,
+  grid.method = "centroid",
+  ...
+)
 
-\method{haystack}{Seurat}(x, assay = "RNA", slot = "data",
-  coord = "tsne", cutoff = 1, ...)
+\method{haystack}{Seurat}(
+  x,
+  assay = "RNA",
+  slot = "data",
+  coord = "tsne",
+  cutoff = 1,
+  method = NULL,
+  ...
+)
 
-\method{haystack}{SingleCellExperiment}(x, assay = "counts",
-  coord = "TSNE", cutoff = 1, ...)
+\method{haystack}{SingleCellExperiment}(x, assay = "counts", coord = "TSNE", cutoff = 1, method = NULL, ...)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}

@@ -93,7 +93,7 @@ res.hc.clusters <- cutree(res.hc, k=5)
 table(res.hc.clusters)
 ``` 
 
-Cluster 1 contains 433 genes, and the smallest cluster (cluster 5) contains just 18 genes.
+While some clusters contain hunderds of genes, others are quite small.
 
 Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
 
@@ -111,4 +111,4 @@ plot_grid(plotlist = pl, ncol = 2)
 ```{r example8}
 res.hc.clusters["Smc2"] # the most biased gene is in cluster 3
 ```
-The most biased genes, Smc2, was clustered into cluster 3. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 3. The pattern of cluster 5 (containing 18 genes) is rather different from all other clusters.
+The most biased genes, Smc2, was clustered into cluster 3. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that cluster. The pattern of cluster 5 (containing 18 genes) is rather different from all other clusters.

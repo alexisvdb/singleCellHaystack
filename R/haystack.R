@@ -343,7 +343,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   for(i in 1:count.genes){
     D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
     if(i%%1000==0)
-      message(paste0("### ... ",i," values out of ",count.genes," done"))
+      message(paste0("### ... ",i," features out of ",count.genes," done"))
   }
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X

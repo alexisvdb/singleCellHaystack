@@ -4,8 +4,7 @@
 \alias{show_result_haystack}
 \title{Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.}
 \usage{
-show_result_haystack(res.haystack, n = NA, p.value.threshold = NA,
-  gene = NA)
+show_result_haystack(res.haystack, n = NA, p.value.threshold = NA, gene = NA)
 }
 \arguments{
 \item{res.haystack}{A 'haystack' result variable}

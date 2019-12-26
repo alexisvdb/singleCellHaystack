@@ -4,9 +4,15 @@
 \alias{haystack_highD}
 \title{The main Haystack function, for higher-dimensional spaces.}
 \usage{
-haystack_highD(x, detection, grid.points = 100,
-  use.advanced.sampling = NULL, dir.randomization = NULL,
-  scale = TRUE, grid.method = "centroid")
+haystack_highD(
+  x,
+  detection,
+  grid.points = 100,
+  use.advanced.sampling = NULL,
+  dir.randomization = NULL,
+  scale = TRUE,
+  grid.method = "centroid"
+)
 }
 \arguments{
 \item{x}{Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.}

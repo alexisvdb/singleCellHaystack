@@ -58,19 +58,29 @@ haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "high
 
 #' @rdname haystack
 #' @export
-haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cutoff = 1, ...) {
+haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cutoff = 1, method = NULL, ...) {
   if (!requireNamespace("Seurat", quietly = TRUE)) {
     stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
   y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
   z <- Seurat::Embeddings(x, coord)
-  haystack(as.matrix(z), detection = as.matrix(y) > cutoff, ...)
+
+  if(is.null(method)){
+    if(ncol(z)==2){
+      method <- "2D"
+    } else if(ncol(z)>2){
+      method <- "highD"
+    }
+    message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
+  }
+
+  haystack(as.matrix(z), detection = as.matrix(y) > cutoff, method = method, ...)
 }
 
 #' @rdname haystack
 #' @export
-haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, ...) {
+haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, method = NULL, ...) {
   if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
     stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -85,7 +95,16 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
     stop("No coordinates named ", coord, " found.")
   }
 
-  haystack(as.matrix(z), detection = y > cutoff, ...)
+  if(is.null(method)){
+    if(ncol(z)==2){
+      method <- "2D"
+    } else if(ncol(z)>2){
+      method <- "highD"
+    }
+    message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
+  }
+
+  haystack(as.matrix(z), detection = y > cutoff, method = method, ...)
 }
 
 #' Visualizing the detection/expression of a gene in a 2D plot

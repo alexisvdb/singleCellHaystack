@@ -94,7 +94,7 @@
       <h1>Application on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2019-11-25</h4>
+            <h4 class="date">2019-12-26</h4>
       
       
       <div class="hidden name"><code>a04_example_tsne2D_default.Rmd</code></div>
@@ -107,10 +107,10 @@
 <h1 class="hasAnchor">
 <a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
 <p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
-<span class="kw"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()
-<span class="co">#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      </span>
-<span class="co">#&gt; [5] "dat.umap"</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      </span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co">#&gt; [5] "dat.umap"</span></a></code></pre></div>
 <p>This data should include the following objects:</p>
 <ul>
 <li>
@@ -125,7 +125,7 @@
 <code>dat.umap</code>: a data.frame with UMAP coordinates (2D).</li>
 </ul>
 <p>Let’s have a look at the t-SNE plot:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">ggplot</span>(dat.tsne, <span class="kw">aes</span>(<span class="dt">x =</span> V1, <span class="dt">y =</span> V2)) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">"t-SNE1"</span>, <span class="dt">y =</span> <span class="st">"t-SNE2"</span>) <span class="op">+</span><span class="st"> </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to find genes with biased expression patterns in this 2D plot.</p>
 </div>
@@ -133,96 +133,96 @@
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-2d-coordinates" class="anchor"></a>Running <code>haystack</code> on 2D coordinates</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(singleCellHaystack)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
-<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     dat.expression, dat.tsne</span>
-<span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(singleCellHaystack)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;  次のパッケージを付け加えます: 'singleCellHaystack'</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;  以下のオブジェクトは '.GlobalEnv' によってマスクされています: </span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt;      dat.expression, dat.tsne</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">1</span>)</a></code></pre></div>
 <p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.tsne &lt;-<span class="st"> </span><span class="kw">haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 1000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 2000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 3000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 4000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 5000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 6000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 7000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 8000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 9000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 11000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 12000 values out of 12030 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> starting randomizations...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 20 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 30 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 40 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 50 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 60 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 70 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 80 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 90 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 100 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 110 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 120 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 130 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 140 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 150 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 160 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 170 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 180 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 190 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 200 values out of 200 done</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span>
-<span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">res.tsne &lt;-<span class="st"> </span><span class="kw"><a href="../reference/haystack.html">haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">detection =</span> dat.detection, <span class="dt">method =</span> <span class="st">"2D"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> calling haystack_2D()...</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> setting parameters...</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> calculating Kullback-Leibler divergences...</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 1000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 2000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 3000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 4000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 5000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 6000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 7000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 8000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 9000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 11000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 12000 features out of 12030 done</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> starting randomizations...</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 10 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 20 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 30 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 40 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 50 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 60 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 70 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 80 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 90 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 100 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-28" data-line-number="28"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 110 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 120 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 130 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 140 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-32" data-line-number="32"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 150 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-33" data-line-number="33"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 160 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 170 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 180 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-36" data-line-number="36"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 190 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-37" data-line-number="37"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> ... 200 values out of 200 done</span></a>
+<a class="sourceLine" id="cb4-38" data-line-number="38"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> estimating p-values...</span></a>
+<a class="sourceLine" id="cb4-39" data-line-number="39"><span class="co">#&gt; </span><span class="al">###</span><span class="co"> returning result...</span></a></code></pre></div>
 <p>Let’s have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">show_result_haystack</span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)
-<span class="co">#&gt;              D_KL log.p.vals T.counts</span>
-<span class="co">#&gt; Clec4a2 0.7561418  -65.39972      947</span>
-<span class="co">#&gt; Lyz1    0.8561399  -64.83459     1183</span>
-<span class="co">#&gt; Alox5ap 1.0284127  -64.70018     1354</span>
-<span class="co">#&gt; Cybb    0.8090982  -63.60491     1172</span>
-<span class="co">#&gt; S100a10 0.7155384  -62.71029     1094</span>
-<span class="co"># plotting detection of this gene</span>
-<span class="kw">plot_gene_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> dat.detection)</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;              D_KL log.p.vals T.counts</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; Clec4a2 0.7561418  -65.39972      947</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co">#&gt; Lyz1    0.8561399  -64.83459     1183</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; Alox5ap 1.0284127  -64.70018     1354</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; Cybb    0.8090982  -63.60491     1172</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="co">#&gt; S100a10 0.7155384  -62.71029     1094</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co"># plotting detection of this gene</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> dat.detection)</a></code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># plotting log expression of this gene</span>
-<span class="kw">plot_gene_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(dat.expression)) </code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># plotting log expression of this gene</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">gene =</span> <span class="st">"Clec4a2"</span>, <span class="dt">expression =</span> <span class="kw"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(dat.expression)) </a></code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get the top 1000 biased genes in the result</span>
-res.top &lt;-<span class="st"> </span><span class="kw">show_result_haystack</span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)
-<span class="co"># cluster biased genes by their expression pattern in the 2D plot</span>
-genes.top &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(res.top)
-res.hc &lt;-<span class="st"> </span><span class="kw">hclust_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> genes.top, <span class="dt">detection =</span> dat.detection)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># get the top 1000 biased genes in the result</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">res.top &lt;-<span class="st"> </span><span class="kw"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="dt">res.haystack =</span> res.tsne, <span class="dt">n =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co"># cluster biased genes by their expression pattern in the 2D plot</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">genes.top &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(res.top)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">res.hc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/hclust_haystack.html">hclust_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> genes.top, <span class="dt">detection =</span> dat.detection)</a></code></pre></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(res.hc, <span class="dt">k=</span><span class="dv">5</span>)
-<span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(res.hc.clusters)
-<span class="co">#&gt; res.hc.clusters</span>
-<span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 434 384 112  46  24</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">res.hc.clusters &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(res.hc, <span class="dt">k=</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(res.hc.clusters)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; res.hc.clusters</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#&gt;   1   2   3   4   5 </span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; 434 384 112  46  24</span></a></code></pre></div>
 <p>Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">pl &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="cf">function</span>(cluster) {
-  gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]
-  plot.title &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, cluster)
-  p &lt;-<span class="st"> </span><span class="kw">plot_gene_set_haystack</span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> gene.set, <span class="dt">detection =</span> dat.detection)
-  p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))
-})
-<span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> pl, <span class="dt">ncol =</span> <span class="dv">2</span>)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">pl &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="cf">function</span>(cluster) {</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  gene.set &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(res.hc.clusters)[res.hc.clusters<span class="op">==</span>cluster]</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  plot.title &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, cluster)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  p &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="dt">x =</span> dat.tsne, <span class="dt">genes =</span> gene.set, <span class="dt">detection =</span> dat.detection)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  p <span class="op">+</span><span class="st"> </span><span class="kw">ggtitle</span>(plot.title) <span class="op">+</span><span class="st"> </span><span class="kw">theme</span>(<span class="dt">legend.title =</span> <span class="kw">element_text</span>(<span class="dt">size =</span> <span class="dv">8</span>))</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">})</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="kw">plot_grid</span>(<span class="dt">plotlist =</span> pl, <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.hc.clusters[<span class="st">"Clec4a2"</span>] <span class="co"># the most biased gene is in cluster 2</span>
-<span class="co">#&gt; Clec4a2 </span>
-<span class="co">#&gt;       2</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">res.hc.clusters[<span class="st">"Clec4a2"</span>] <span class="co"># the most biased gene is in cluster 2</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Clec4a2 </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;       2</span></a></code></pre></div>
 <p>The most biased genes, Clec4a2, was clustered into cluster 2. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 2. The pattern of cluster 5 (containing 24 genes) is rather different from all other clusters.</p>
 </div>
   </div>

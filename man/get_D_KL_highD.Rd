@@ -4,8 +4,7 @@
 \alias{get_D_KL_highD}
 \title{Calculates the Kullback-Leibler divergence between distributions for the high-dimensional version of haystack().}
 \usage{
-get_D_KL_highD(classes, density.contributions, reference.prob,
-  pseudo = 0)
+get_D_KL_highD(classes, density.contributions, reference.prob, pseudo = 0)
 }
 \arguments{
 \item{classes}{A logical vector. Values are T is the gene is expressed in a cell, F is not.}
@@ -14,7 +13,7 @@ get_D_KL_highD(classes, density.contributions, reference.prob,
 
 \item{reference.prob}{A reference distribution to calculate the divergence against.}
 
-\item{pseudo}{A pseudocount, used to avoid log(0) problems. Should not be needed, so default is 0.}
+\item{pseudo}{A pseudocount, used to avoid log(0) problems.}
 }
 \value{
 A numerical value, the Kullback-Leibler divergence

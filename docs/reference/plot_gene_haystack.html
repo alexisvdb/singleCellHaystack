@@ -147,12 +147,25 @@
 <span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"counts"</span>, <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"TSNE"</span>, <span class='no'>...</span>)
+<span class='fu'>plot_gene_haystack</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"counts"</span>,
+  <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"TSNE"</span>,
+  <span class='no'>...</span>
+)
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>plot_gene_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>, <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>, <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>plot_gene_haystack</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
+  <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>,
+  <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
+  <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"tsne"</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

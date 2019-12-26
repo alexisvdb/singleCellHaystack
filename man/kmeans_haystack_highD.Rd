@@ -4,8 +4,15 @@
 \alias{kmeans_haystack_highD}
 \title{Function for k-means clustering of genes according to their distribution in a higher-dimensional space.}
 \usage{
-kmeans_haystack_highD(x, detection, genes, grid.coordinates = NULL, k,
-  scale = TRUE, ...)
+kmeans_haystack_highD(
+  x,
+  detection,
+  genes,
+  grid.coordinates = NULL,
+  k,
+  scale = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.}

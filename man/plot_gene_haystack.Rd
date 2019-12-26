@@ -14,11 +14,24 @@ plot_gene_haystack(x, ...)
 
 \method{plot_gene_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
 
-\method{plot_gene_haystack}{SingleCellExperiment}(x, dim1 = 1,
-  dim2 = 2, assay = "counts", coord = "TSNE", ...)
+\method{plot_gene_haystack}{SingleCellExperiment}(
+  x,
+  dim1 = 1,
+  dim2 = 2,
+  assay = "counts",
+  coord = "TSNE",
+  ...
+)
 
-\method{plot_gene_haystack}{Seurat}(x, dim1 = 1, dim2 = 2,
-  assay = "RNA", slot = "data", coord = "tsne", ...)
+\method{plot_gene_haystack}{Seurat}(
+  x,
+  dim1 = 1,
+  dim2 = 2,
+  assay = "RNA",
+  slot = "data",
+  coord = "tsne",
+  ...
+)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}

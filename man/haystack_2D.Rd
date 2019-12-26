@@ -4,8 +4,13 @@
 \alias{haystack_2D}
 \title{The main Haystack function, for 2-dimensional spaces.}
 \usage{
-haystack_2D(x, y, detection, use.advanced.sampling = NULL,
-  dir.randomization = NULL)
+haystack_2D(
+  x,
+  y,
+  detection,
+  use.advanced.sampling = NULL,
+  dir.randomization = NULL
+)
 }
 \arguments{
 \item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
