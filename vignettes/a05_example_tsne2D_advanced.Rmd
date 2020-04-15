@@ -46,7 +46,7 @@ This data should include the following objects:
 Let's have a look at the t-SNE plot, colouring cells be the number of genes detected in each cell:
 
 ```{r example1}
-general.detection <- apply(dat.detection, 2, sum)
+general.detection = apply(dat.detection, 2, sum)
 ggplot(dat.tsne, aes(x = V1, y = V2, colour = general.detection)) + labs(x = "t-SNE1", y = "t-SNE2") + 
 geom_point(size=2) + scale_color_gradient(low="yellow", high="red") + labs(color = "Det. genes")
 ```
@@ -109,10 +109,10 @@ table(res.hc.clusters)
 Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
 
 ```{r example7, fig.height = 9, fig.width = 8, fig.align='center'}
-pl <- lapply(1:5, function(cluster) {
-  gene.set <- names(res.hc.clusters)[res.hc.clusters==cluster]
-  plot.title <- paste0("Cluster ", cluster)
-  p <- plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
+pl = lapply(1:5, function(cluster) {
+  gene.set = names(res.hc.clusters)[res.hc.clusters==cluster]
+  plot.title = paste0("Cluster ", cluster)
+  p = plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
   p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
 })
 plot_grid(plotlist = pl, ncol = 2)

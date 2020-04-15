@@ -97,10 +97,10 @@ Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just
 Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
 
 ```{r example7, fig.height = 9, fig.width = 8, fig.align='center'}
-pl <- lapply(1:5, function(cluster) {
-  gene.set <- names(res.hc.clusters)[res.hc.clusters==cluster]
-  plot.title <- paste0("Cluster ", cluster)
-  p <- plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
+pl = lapply(1:5, function(cluster) {
+  gene.set = names(res.hc.clusters)[res.hc.clusters==cluster]
+  plot.title = paste0("Cluster ", cluster)
+  p = plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
   p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
 })
 plot_grid(plotlist = pl, ncol = 2)

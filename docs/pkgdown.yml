@@ -1,4 +1,4 @@
-pandoc: 2.2.3.2
+pandoc: 1.19.2.1
 pkgdown: 1.5.0
 pkgdown_sha: ~
 articles:
@@ -7,7 +7,7 @@ articles:
   a03_example_highD_advanced: a03_example_highD_advanced.html
   a04_example_tsne2D_default: a04_example_tsne2D_default.html
   a05_example_tsne2D_advanced: a05_example_tsne2D_advanced.html
-last_built: 2020-04-15T11:23Z
+last_built: 2020-04-15T13:01Z
 urls:
   reference: https://alexisvdb.github.io/singleCellHaystack//reference
   article: https://alexisvdb.github.io/singleCellHaystack//articles

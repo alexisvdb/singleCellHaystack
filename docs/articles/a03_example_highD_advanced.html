@@ -112,7 +112,7 @@
 <h1 class="hasAnchor">
 <a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
 <p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r">load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
+<div class="sourceCode"><html><body><pre class="r">load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
 ls()
 #&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      
 #&gt; [5] "dat.umap"</pre></body></html></div>
@@ -130,7 +130,9 @@ ls()
 <code>dat.umap</code>: a data.frame with UMAP coordinates (2D).</li>
 </ul>
 <p>Let’s have a look at the t-SNE plot, colouring cells be the number of genes detected in each cell:</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r">general.detection </pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r">general.detection = apply(dat.detection, 2, sum)
+ggplot(dat.tsne, aes(x = V1, y = V2, colour = general.detection)) + labs(x = "t-SNE1", y = "t-SNE2") + 
+  geom_point(size=2) + scale_color_gradient(low="yellow", high="red") + labs(color = "Det. genes")</pre></body></html></div>
 <p><img src="a03_example_highD_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.</p>
 <p>Moreover, the cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend would be especially surprizing.</p>
 <p>We can use <code>singleCellHaystack</code> to find genes with biased expression patterns, taking into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
@@ -140,7 +142,7 @@ ls()
 <a href="#running-haystack-with-use-advanced-sampling" class="anchor"></a>Running <code>haystack</code> with <code>use.advanced.sampling</code>
 </h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r">library(singleCellHaystack)
+<div class="sourceCode"><html><body><pre class="r">library(singleCellHaystack)
 #&gt; 
 #&gt; Attaching package: 'singleCellHaystack'
 #&gt; The following objects are masked _by_ '.GlobalEnv':
@@ -148,22 +150,22 @@ ls()
 #&gt;     dat.expression, dat.tsne
 set.seed(1)</pre></body></html></div>
 <p>Next, run <code>haystack</code> on the first 10 principal components. Since the space is 10-dimensional, we set ‘method’ to ‘highD’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also give the detection values as input to ‘detection’. <code>use.advanced.sampling</code> is set to the vector of detected genes per cell, <code>general.detection</code>. By doing this, <code>haystack</code> will calculate cell distributions and perform randomizations taking into account the general detection levels.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r">res.pc10.adv  ### calling haystack_highD()...
+<div class="sourceCode"><html><body><pre class="r">res.pc10.adv  ### calling haystack_highD()...
 #&gt; ### scaling input data...
 #&gt; ### deciding grid points...
 #&gt; ### calculating Kullback-Leibler divergences...
-#&gt; ### ... 1000 features out of 12030 done
-#&gt; ### ... 2000 features out of 12030 done
-#&gt; ### ... 3000 features out of 12030 done
-#&gt; ### ... 4000 features out of 12030 done
-#&gt; ### ... 5000 features out of 12030 done
-#&gt; ### ... 6000 features out of 12030 done
-#&gt; ### ... 7000 features out of 12030 done
-#&gt; ### ... 8000 features out of 12030 done
-#&gt; ### ... 9000 features out of 12030 done
-#&gt; ### ... 10000 features out of 12030 done
-#&gt; ### ... 11000 features out of 12030 done
-#&gt; ### ... 12000 features out of 12030 done
+#&gt; ### ... 1000 values out of 12030 done
+#&gt; ### ... 2000 values out of 12030 done
+#&gt; ### ... 3000 values out of 12030 done
+#&gt; ### ... 4000 values out of 12030 done
+#&gt; ### ... 5000 values out of 12030 done
+#&gt; ### ... 6000 values out of 12030 done
+#&gt; ### ... 7000 values out of 12030 done
+#&gt; ### ... 8000 values out of 12030 done
+#&gt; ### ... 9000 values out of 12030 done
+#&gt; ### ... 10000 values out of 12030 done
+#&gt; ### ... 11000 values out of 12030 done
+#&gt; ### ... 12000 values out of 12030 done
 #&gt; ### starting randomizations...
 #&gt; ### ... 10 values out of 200 done
 #&gt; ### ... 20 values out of 200 done
@@ -188,17 +190,17 @@ set.seed(1)</pre></body></html></div>
 #&gt; ### estimating p-values...
 #&gt; ### returning result...</pre></body></html></div>
 <p>Let’s have a look at the most biased genes. The most strongly biased gene is Snca. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r">show_result_haystack(res.haystack = res.pc10.adv, n = 5)
-#&gt;                   D_KL log.p.vals log.p.adj T.counts
-#&gt; Snca          2.303152  -1425.515 -1421.435      474
-#&gt; Gypa          2.248503  -1341.622 -1337.541      448
-#&gt; Hba-a1        2.176333  -1321.308 -1317.228      479
-#&gt; Trim10        2.396674  -1157.922 -1153.841      368
-#&gt; 5730469M10Rik 2.048861  -1151.420 -1147.340      435
+<div class="sourceCode"><html><body><pre class="r">show_result_haystack(res.haystack = res.pc10.adv, n = 5)
+#&gt;                   D_KL log.p.vals T.counts
+#&gt; Snca          2.303152  -1421.435      474
+#&gt; Gypa          2.248503  -1337.541      448
+#&gt; Hba-a1        2.176333  -1317.228      479
+#&gt; Trim10        2.396674  -1153.841      368
+#&gt; 5730469M10Rik 2.048861  -1147.340      435
 # plotting detection of this gene
 plot_gene_haystack(x = dat.tsne, gene = "Snca", expression = dat.detection)</pre></body></html></div>
 <p><img src="a03_example_highD_advanced_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># plotting log expression of this gene</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># plotting log expression of this gene</span>
 <span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Snca"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">dat.expression</span>))</pre></body></html></div>
 <p><img src="a03_example_highD_advanced_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 <p>From the plots we can see that Snca is detected in the lower right groups of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Snca is especially surprizing: it is deteced in cells that express in general few genes.</p>
@@ -209,16 +211,22 @@ plot_gene_haystack(x = dat.tsne, gene = "Snca", expression = dat.detection)</pre
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the input space (first 10 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"># get the top 1000 biased genes in the result
+<div class="sourceCode"><html><body><pre class="r"># get the top 1000 biased genes in the result
 res.top </pre></body></html></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r">res.hc.clusters  res.hc.clusters
+<div class="sourceCode"><html><body><pre class="r">res.hc.clusters  res.hc.clusters
 #&gt;   1   2   3   4   5 
 #&gt; 145 473 196 103  83</pre></body></html></div>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r">pl </pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r">pl = lapply(1:5, function(cluster) {
+  gene.set = names(res.hc.clusters)[res.hc.clusters==cluster]
+  plot.title = paste0("Cluster ", cluster)
+  p = plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
+  p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
+})
+plot_grid(plotlist = pl, ncol = 2)</pre></body></html></div>
 <p><img src="a03_example_highD_advanced_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Snca"</span>] <span class="co"># the most biased gene is in cluster 5</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Snca"</span>] <span class="co"># the most biased gene is in cluster 5</span>
 <span class="co">#&gt; Snca </span>
 <span class="co">#&gt;    5</span></pre></body></html></div>
 <p>The most biased genes, Snca, was clustered into cluster 5. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 5. Cluster 5 genes are on average detected almost exclusively in the bottom right group of cells.</p>

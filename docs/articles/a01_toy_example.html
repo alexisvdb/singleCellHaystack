@@ -112,7 +112,7 @@
 <li><p><code>dat.tsne</code>: a 2D representation of the cell in dat.expression</p></li>
 </ul>
 <p>First, apply <code>haystack</code> (the main function of the package) on the toy dataset. This should take just several seconds on a typical desktop computer.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r">library(singleCellHaystack)
+<div class="sourceCode"><html><body><pre class="r">library(singleCellHaystack)
 set.seed(1234)
 
 # Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)
@@ -135,7 +135,7 @@ res  ### calling haystack_2D()...
 class(res)
 #&gt; [1] "haystack"</pre></body></html></div>
 <p>Let’s have a look at the “most surprising” genes.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"># show top 10 "surprising" genes
+<div class="sourceCode"><html><body><pre class="r"># show top 10 "surprising" genes
 show_result_haystack(res.haystack = res, n=10)
 #&gt;              D_KL log.p.vals log.p.adj T.counts
 #&gt; gene_497 1.599646  -25.55327 -22.85430       86
@@ -152,7 +152,7 @@ show_result_haystack(res.haystack = res, n=10)
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)</pre></body></html></div>
 <p>One of the most non-random genes is “gene_497”. Here we visualize it’s expression in the t-SNE plot.</p>
-<div class="sourceCode" id="cb3"><html><body><pre class="r"># visualize one of the surprizing genes
+<div class="sourceCode"><html><body><pre class="r"># visualize one of the surprizing genes
 plot_gene_haystack(
   dat.tsne,
   expression = dat.expression,
@@ -168,10 +168,10 @@ plot_gene_haystack(
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
+<div class="sourceCode"><html><body><pre class="r"># get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
 sorted.table </pre></body></html></div>
 <p>… and visualize the average pattern of the genes in cluster 1 (for example).</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"># visualize cluster distributions
+<div class="sourceCode"><html><body><pre class="r"># visualize cluster distributions
 plot_gene_set_haystack(dat.tsne, detection = dat.detection, 
                         genes=names(km.clusters[km.clusters==1]), point.size=2)</pre></body></html></div>
 <p><img src="a01_toy_example_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
