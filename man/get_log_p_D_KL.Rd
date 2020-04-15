@@ -16,7 +16,7 @@ get_log_p_D_KL(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL)
 \item{output.dir}{Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.}
 }
 \value{
-A vector of log10 p values, corrected for multiple testing using the Bonferroni correction.
+A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 }
 \description{
 Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.

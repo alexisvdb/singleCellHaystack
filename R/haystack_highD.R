@@ -362,6 +362,10 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
 
+  # bonferroni correction for multiple testing
+  p.adjs <- p.vals + log10(length(p.vals))
+  p.adjs[p.adjs>0] <- 0 # p values should be at most 1; so log10 should be <= 0
+
   if(!is.null(dir.randomization)){
     message("### writing randomized Kullback-Leibler divergences to file...")
     outputfile.randomized.D_KL <- paste0(dir.randomization,"/random.D_KL.csv")
@@ -380,6 +384,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
     results = data.frame(
       D_KL = D_KL.observed,
       log.p.vals = p.vals,
+      log.p.adj = p.adjs,
       T.counts = T.counts,
       row.names = row.names(detection)
     ),

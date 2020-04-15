@@ -37,7 +37,7 @@ haystack.matrix <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", 
              dir.randomization = dir.randomization,
              scale = scale,
              grid.points = grid.points,
-             grid.method = grid.method)
+             grid.method = grid.method, ...)
          },
          "2D" = {
            haystack_2D(
@@ -45,7 +45,7 @@ haystack.matrix <- function(x, dim1 = 1, dim2 = 2, detection, method = "highD", 
              x[, dim2],
              detection = detection,
              use.advanced.sampling = use.advanced.sampling,
-             dir.randomization = dir.randomization)
+             dir.randomization = dir.randomization, ...)
          }
          )
 }
@@ -58,7 +58,7 @@ haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "high
 
 #' @rdname haystack
 #' @export
-haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "tsne", cutoff = 1, method = NULL, ...) {
+haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", cutoff = 1, method = NULL, ...) {
   if (!requireNamespace("Seurat", quietly = TRUE)) {
     stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
   }

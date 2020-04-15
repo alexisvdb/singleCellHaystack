@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="The main Haystack function, for 2-dimensional spaces. — haystack_2D" />
 <meta property="og:description" content="The main Haystack function, for 2-dimensional spaces." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -182,17 +185,17 @@
 
 <span class='co'># running haystack in default mode</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
-<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals T.counts
-#&gt; gene_242 1.360661  -23.55129       96
-#&gt; gene_275 1.345251  -22.87952       95
-#&gt; gene_317 1.386194  -22.79787       94
-#&gt; gene_244 1.238011  -21.75450       95
-#&gt; gene_497 1.599646  -21.40630       86
-#&gt; gene_351 1.408946  -20.87374       89
-#&gt; gene_137 1.349994  -20.33245       89
-#&gt; gene_339 1.414814  -20.20546       87
-#&gt; gene_429 1.071988  -19.42495       94
-#&gt; gene_79  1.929800  -19.35556       68</div><div class='input'><span class='co'># plot one of the genes</span>
+<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
+#&gt; gene_242 1.360661  -26.25026 -23.55129       96
+#&gt; gene_275 1.345251  -25.57849 -22.87952       95
+#&gt; gene_317 1.386194  -25.49684 -22.79787       94
+#&gt; gene_244 1.238011  -24.45347 -21.75450       95
+#&gt; gene_497 1.599646  -24.10527 -21.40630       86
+#&gt; gene_351 1.408946  -23.57271 -20.87374       89
+#&gt; gene_137 1.349994  -23.03142 -20.33245       89
+#&gt; gene_339 1.414814  -22.90443 -20.20546       87
+#&gt; gene_429 1.071988  -22.12392 -19.42495       94
+#&gt; gene_79  1.929800  -22.05453 -19.35556       68</div><div class='input'><span class='co'># plot one of the genes</span>
 <span class='fu'><a href='plot_gene_haystack.html'>plot_gene_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>,
  <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='haystack_2D-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># to running haystack in advanced mode, first get number of genes detected in each cell</span>
@@ -200,26 +203,22 @@
 <span class='co'># give count of detected genes as input to parameter use.advanced.sampling</span>
 <span class='no'>res.adv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
  <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='no'>count.detected</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
-<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res.adv</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals T.counts
-#&gt; gene_497 1.608896  -26.66431       86
-#&gt; gene_351 1.327998  -24.01875       89
-#&gt; gene_317 1.365825  -23.97867       94
-#&gt; gene_61  1.506420  -23.90760       80
-#&gt; gene_137 1.312863  -23.84615       89
-#&gt; gene_339 1.325922  -23.82599       87
-#&gt; gene_62  1.441692  -23.61234       81
-#&gt; gene_242 1.378709  -23.55005       96
-#&gt; gene_275 1.273792  -22.71840       95
-#&gt; gene_244 1.272210  -22.70067       95</div></pre>
+<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res.adv</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
+#&gt; gene_497 1.608896  -29.36328 -26.66431       86
+#&gt; gene_351 1.327998  -26.71772 -24.01875       89
+#&gt; gene_317 1.365825  -26.67764 -23.97867       94
+#&gt; gene_61  1.506420  -26.60657 -23.90760       80
+#&gt; gene_137 1.312863  -26.54512 -23.84615       89
+#&gt; gene_339 1.325922  -26.52496 -23.82599       87
+#&gt; gene_62  1.441692  -26.31131 -23.61234       81
+#&gt; gene_242 1.378709  -26.24902 -23.55005       96
+#&gt; gene_275 1.273792  -25.41737 -22.71840       95
+#&gt; gene_244 1.272210  -25.39964 -22.70067       95</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -230,7 +229,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

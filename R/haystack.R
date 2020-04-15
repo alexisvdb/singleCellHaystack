@@ -146,7 +146,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
 #' @param D_KL.randomized A matrix of Kullback-Leibler divergences of randomized datasets.
 #' @param output.dir Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.
 #'
-#' @return A vector of log10 p values, corrected for multiple testing using the Bonferroni correction.
+#' @return A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL){
 
   t.points <- as.numeric(row.names(D_KL.randomized))
@@ -204,10 +204,6 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   fitted.sd.log2 <- predict(model.sd.log2, data.frame(t.points=T.counts), type="response")
 
   fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.mean.log2, sd = fitted.sd.log2, lower.tail = FALSE, log.p = T)/log(10)
-
-  # bonferroni correction for multiple testing
-  fitted.log.p.vals <- fitted.log.p.vals + log10(length(fitted.log.p.vals))
-  fitted.log.p.vals[fitted.log.p.vals>0] <- 0 # p values should be at most 1; so log10 should be <= 0
 
   fitted.log.p.vals
 }
@@ -444,6 +440,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
 
+  # bonferroni correction for multiple testing
+  p.adjs <- p.vals + log10(length(p.vals))
+  p.adjs[p.adjs>0] <- 0 # p values should be at most 1; so log10 should be <= 0
+
   if(!is.null(dir.randomization)){
     message("### writing randomized Kullback-Leibler divergences to file...")
     outputfile.randomized.D_KL <- paste0(dir.randomization,"/random.D_KL.csv")
@@ -456,6 +456,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     results = data.frame(
       D_KL = D_KL.observed,
       log.p.vals = p.vals,
+      log.p.adj = p.adjs,
       T.counts = T.counts,
       row.names = row.names(detection)
     )

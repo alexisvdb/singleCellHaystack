@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &gt; p.value.threshold &gt; n. — show_result_haystack" />
 <meta property="og:description" content="Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes &amp;gt; p.value.threshold &amp;gt; n." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1</span>
       </span>
     </div>
 
@@ -174,76 +177,76 @@
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 values out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'>
 <span class='co'># below are variations for showing the results in a table</span>
 <span class='co'># 1. list top 10 biased genes</span>
-<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals T.counts
-#&gt; gene_242 1.360661  -20.16854       96
-#&gt; gene_79  1.929800  -19.64425       68
-#&gt; gene_275 1.345251  -19.63955       95
-#&gt; gene_317 1.386194  -19.63668       94
-#&gt; gene_497 1.599646  -19.24491       86
-#&gt; gene_244 1.238011  -18.65685       95
-#&gt; gene_351 1.408946  -18.40704       89
-#&gt; gene_24  1.857497  -18.35954       59
-#&gt; gene_339 1.414814  -18.03468       87
-#&gt; gene_71  1.868822  -18.01217       56</div><div class='input'><span class='co'># 2. list genes with p value below a certain threshold</span>
-<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>p.value.threshold</span><span class='kw'>=</span><span class='fl'>1e-10</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals T.counts
-#&gt; gene_242 1.3606607  -20.16854       96
-#&gt; gene_79  1.9298000  -19.64425       68
-#&gt; gene_275 1.3452514  -19.63955       95
-#&gt; gene_317 1.3861936  -19.63668       94
-#&gt; gene_497 1.5996456  -19.24491       86
-#&gt; gene_244 1.2380108  -18.65685       95
-#&gt; gene_351 1.4089458  -18.40704       89
-#&gt; gene_24  1.8574968  -18.35954       59
-#&gt; gene_339 1.4148142  -18.03468       87
-#&gt; gene_71  1.8688220  -18.01217       56
-#&gt; gene_62  1.5199933  -17.92672       81
-#&gt; gene_137 1.3499940  -17.92402       89
-#&gt; gene_479 1.6972565  -17.53231       61
-#&gt; gene_61  1.4704748  -17.44594       80
-#&gt; gene_57  1.8012672  -17.25770       54
-#&gt; gene_300 1.6001648  -17.14474       64
-#&gt; gene_381 1.6793541  -17.04340       58
-#&gt; gene_78  2.3302373  -16.80313       38
-#&gt; gene_155 1.5347601  -16.75539       65
-#&gt; gene_444 1.4358815  -16.73419       75
-#&gt; gene_429 1.0719883  -16.68479       94
-#&gt; gene_463 2.1619665  -16.68100       41
-#&gt; gene_321 1.5354565  -16.58579       63
-#&gt; gene_400 1.8579716  -16.49781       48
-#&gt; gene_59  1.4605859  -16.28094       66
-#&gt; gene_313 1.2945440  -15.86586       78
-#&gt; gene_112 1.4955762  -15.85458       59
-#&gt; gene_135 1.7259726  -15.85141       49
-#&gt; gene_325 1.2093850  -15.82932       84
-#&gt; gene_291 2.2015170  -15.60750       36
-#&gt; gene_488 3.0647537  -15.36806       22
-#&gt; gene_340 1.4521210  -15.11944       56
-#&gt; gene_213 1.0901441  -14.89204       85
-#&gt; gene_458 0.9508191  -14.84208       92
-#&gt; gene_295 1.7966484  -14.79479       42
-#&gt; gene_424 1.4472784  -14.77613       54
-#&gt; gene_51  1.6407593  -14.02116       43
-#&gt; gene_449 2.4810190  -13.52906       24
-#&gt; gene_99  1.0849556  -13.49871       71
-#&gt; gene_13  1.4534620  -12.06403       40
-#&gt; gene_10  1.3278710  -12.00749       44
-#&gt; gene_136 1.6923133  -11.15721       30
-#&gt; gene_216 1.7300714  -10.84154       28
-#&gt; gene_176 2.0046279  -10.60677       22</div><div class='input'><span class='co'># 3. list a set of specified genes</span>
+<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
+#&gt; gene_242 1.360661  -22.86751 -20.16854       96
+#&gt; gene_79  1.929800  -22.34322 -19.64425       68
+#&gt; gene_275 1.345251  -22.33852 -19.63955       95
+#&gt; gene_317 1.386194  -22.33565 -19.63668       94
+#&gt; gene_497 1.599646  -21.94388 -19.24491       86
+#&gt; gene_244 1.238011  -21.35582 -18.65685       95
+#&gt; gene_351 1.408946  -21.10601 -18.40704       89
+#&gt; gene_24  1.857497  -21.05851 -18.35954       59
+#&gt; gene_339 1.414814  -20.73365 -18.03468       87
+#&gt; gene_71  1.868822  -20.71114 -18.01217       56</div><div class='input'><span class='co'># 2. list genes with p value below a certain threshold</span>
+<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>p.value.threshold</span><span class='kw'>=</span><span class='fl'>1e-10</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals  log.p.adj T.counts
+#&gt; gene_242 1.3606607  -22.86751 -20.168540       96
+#&gt; gene_79  1.9298000  -22.34322 -19.644251       68
+#&gt; gene_275 1.3452514  -22.33852 -19.639546       95
+#&gt; gene_317 1.3861936  -22.33565 -19.636685       94
+#&gt; gene_497 1.5996456  -21.94388 -19.244915       86
+#&gt; gene_244 1.2380108  -21.35582 -18.656846       95
+#&gt; gene_351 1.4089458  -21.10601 -18.407036       89
+#&gt; gene_24  1.8574968  -21.05851 -18.359542       59
+#&gt; gene_339 1.4148142  -20.73365 -18.034676       87
+#&gt; gene_71  1.8688220  -20.71114 -18.012167       56
+#&gt; gene_62  1.5199933  -20.62569 -17.926725       81
+#&gt; gene_137 1.3499940  -20.62299 -17.924020       89
+#&gt; gene_479 1.6972565  -20.23128 -17.532310       61
+#&gt; gene_61  1.4704748  -20.14491 -17.445942       80
+#&gt; gene_57  1.8012672  -19.95667 -17.257699       54
+#&gt; gene_300 1.6001648  -19.84371 -17.144741       64
+#&gt; gene_381 1.6793541  -19.74237 -17.043396       58
+#&gt; gene_78  2.3302373  -19.50210 -16.803135       38
+#&gt; gene_155 1.5347601  -19.45436 -16.755387       65
+#&gt; gene_444 1.4358815  -19.43316 -16.734186       75
+#&gt; gene_429 1.0719883  -19.38376 -16.684795       94
+#&gt; gene_463 2.1619665  -19.37997 -16.680998       41
+#&gt; gene_321 1.5354565  -19.28476 -16.585788       63
+#&gt; gene_400 1.8579716  -19.19678 -16.497814       48
+#&gt; gene_59  1.4605859  -18.97991 -16.280937       66
+#&gt; gene_313 1.2945440  -18.56483 -15.865856       78
+#&gt; gene_112 1.4955762  -18.55355 -15.854584       59
+#&gt; gene_135 1.7259726  -18.55038 -15.851408       49
+#&gt; gene_325 1.2093850  -18.52829 -15.829324       84
+#&gt; gene_291 2.2015170  -18.30647 -15.607500       36
+#&gt; gene_488 3.0647537  -18.06703 -15.368055       22
+#&gt; gene_340 1.4521210  -17.81841 -15.119440       56
+#&gt; gene_213 1.0901441  -17.59101 -14.892037       85
+#&gt; gene_458 0.9508191  -17.54105 -14.842082       92
+#&gt; gene_295 1.7966484  -17.49376 -14.794790       42
+#&gt; gene_424 1.4472784  -17.47510 -14.776132       54
+#&gt; gene_51  1.6407593  -16.72013 -14.021162       43
+#&gt; gene_449 2.4810190  -16.22803 -13.529063       24
+#&gt; gene_99  1.0849556  -16.19768 -13.498709       71
+#&gt; gene_13  1.4534620  -14.76300 -12.064030       40
+#&gt; gene_10  1.3278710  -14.70646 -12.007492       44
+#&gt; gene_136 1.6923133  -13.85618 -11.157209       30
+#&gt; gene_216 1.7300714  -13.54051 -10.841541       28
+#&gt; gene_176 2.0046279  -13.30574 -10.606773       22
+#&gt; gene_156 1.4589040  -12.39352  -9.694550       30
+#&gt; gene_225 1.6076632  -11.42117  -8.722198       23
+#&gt; gene_201 1.2245458  -10.28770  -7.588726       28
+#&gt; gene_234 1.8291523  -10.12013  -7.421157       15</div><div class='input'><span class='co'># 3. list a set of specified genes</span>
 <span class='no'>set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gene_497"</span>,<span class='st'>"gene_386"</span>, <span class='st'>"gene_275"</span>)
-<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='no'>set</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals T.counts
-#&gt; gene_275 1.3452514  -19.63955       95
-#&gt; gene_497 1.5996456  -19.24491       86
-#&gt; gene_386 0.2531526    0.00000       30</div></pre>
+<span class='fu'>show_result_haystack</span>(<span class='kw'>res.haystack</span> <span class='kw'>=</span> <span class='no'>res</span>, <span class='kw'>gene</span> <span class='kw'>=</span> <span class='no'>set</span>)</div><div class='output co'>#&gt;               D_KL log.p.vals log.p.adj T.counts
+#&gt; gene_275 1.3452514 -22.338516 -19.63955       95
+#&gt; gene_497 1.5996456 -21.943885 -19.24491       86
+#&gt; gene_386 0.2531526  -1.512989   0.00000       30</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -254,7 +257,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

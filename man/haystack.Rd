@@ -42,7 +42,7 @@ haystack(x, ...)
   x,
   assay = "RNA",
   slot = "data",
-  coord = "tsne",
+  coord = "pca",
   cutoff = 1,
   method = NULL,
   ...
