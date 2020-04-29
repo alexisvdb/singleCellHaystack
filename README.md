@@ -30,19 +30,6 @@ includes a few example applications showing how to use our package:
   - [Application of the advanced mode on 2D t-SNE
     coordinates](articles/a05_example_tsne2D_advanced.html)
 
-## System Requirements
-
-### Hardware Requirements
-
-`singleCellHaystack` requires only a standard computer with sufficient
-RAM to support running R or RStudio. Memory requirements depend on the
-size of the input dataset.
-
-### Software Requirements
-
-This package has been tested on Windows (Windows 10), macOS (Mojave
-10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).
-
 ## Installation
 
 <!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
@@ -60,6 +47,19 @@ shown below. Typical installation times should be less than 1 minute.
 require(remotes)
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
+
+## System Requirements
+
+### Hardware Requirements
+
+`singleCellHaystack` requires only a standard computer with sufficient
+RAM to support running R or RStudio. Memory requirements depend on the
+size of the input dataset.
+
+### Software Requirements
+
+This package has been tested on Windows (Windows 10), macOS (Mojave
+10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).
 
 `singleCellHaystack` depends on the following packages: splines (3.6.0),
 ggplot2 (3.2.0), reshape2 (1.4.3).
