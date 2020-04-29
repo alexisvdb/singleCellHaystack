@@ -53,6 +53,6 @@ require(remotes)
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
 
-`singleCellHaystack` depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3), and data.table (1.12.2).
+`singleCellHaystack` depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3).
 
 

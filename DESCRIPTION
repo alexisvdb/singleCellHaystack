@@ -16,8 +16,7 @@ Description: `singleCellHaystack` is a package for finding surprising needles
 Imports: 
     splines,
     ggplot2,
-    reshape2,
-    data.table
+    reshape2
 Suggests:
     knitr,
     rmarkdown,
