@@ -100,7 +100,7 @@
 <div id="singlecellhaystack" class="section level2">
 <h2 class="hasAnchor">
 <a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h2>
-<p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g.Â t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional (first principal components) spaces or 2D (t-SNE, UMAP) representations.</p>
+<p><code>singleCellHaystack</code> is a package for finding surprising needles (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq (scRNA-seq) data is often converted to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> can be used for finding genes that are expressed in subsets of cells that are non-randomly distributed in these multi-dimensional (first principal components) spaces or 2D (t-SNE, UMAP) representations.</p>
 <p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v3">bioRxiv</a>.</p>
 </div>
 <div id="documentation-and-demo" class="section level2">
@@ -115,6 +115,17 @@
 <li><a href="articles/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a></li>
 </ul>
 </div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
+<!-- ``` r -->
+<!-- install.packages("singleCellHaystack") -->
+<!-- ``` -->
+<p>You can install the <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
+<div class="sourceCode"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">remotes</span>)
+<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</pre></div>
+</div>
 <div id="system-requirements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#system-requirements" class="anchor"></a>System Requirements</h2>
@@ -127,19 +138,8 @@
 <h3 class="hasAnchor">
 <a href="#software-requirements" class="anchor"></a>Software Requirements</h3>
 <p>This package has been tested on Windows (Windows 10), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).</p>
+<p><code>singleCellHaystack</code> depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3).</p>
 </div>
-</div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
-<!-- ``` r -->
-<!-- install.packages("singleCellHaystack") -->
-<!-- ``` -->
-<p>You can install the <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
-<div class="sourceCode"><pre class="r">require(remotes)
-remotes::install_github("alexisvdb/singleCellHaystack")</pre></div>
-<p><code>singleCellHaystack</code> depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3), and data.table (1.12.2).</p>
 </div>
 
   </div>
@@ -176,7 +176,7 @@ remotes::install_github("alexisvdb/singleCellHaystack")</pre></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

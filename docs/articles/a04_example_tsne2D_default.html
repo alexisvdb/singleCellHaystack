@@ -94,7 +94,7 @@
       <h1 data-toc-skip>Application on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2020-04-15</h4>
+            <h4 class="date">2020-05-12</h4>
       
       
       <div class="hidden name"><code>a04_example_tsne2D_default.Rmd</code></div>
@@ -107,10 +107,10 @@
 <h1 class="hasAnchor">
 <a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
 <p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
-<div class="sourceCode"><html><body><pre class="r">load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
-ls()
-#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      
-#&gt; [5] "dat.umap"</pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
+<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()
+<span class="co">#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      </span>
+<span class="co">#&gt; [5] "dat.umap"</span></pre></body></html></div>
 <p>This data should include the following objects:</p>
 <ul>
 <li>
@@ -133,64 +133,65 @@ ls()
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-2d-coordinates" class="anchor"></a>Running <code>haystack</code> on 2D coordinates</h1>
 <p>First, load the package, and set a random seed to ensure replicability.</p>
-<div class="sourceCode"><html><body><pre class="r">library(singleCellHaystack)
-#&gt; 
-#&gt; Attaching package: 'singleCellHaystack'
-#&gt; The following objects are masked _by_ '.GlobalEnv':
-#&gt; 
-#&gt;     dat.expression, dat.tsne
-set.seed(1)</pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">singleCellHaystack</span>)
+<span class="co">#&gt; </span>
+<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
+<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;     dat.expression, dat.tsne</span>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1</span>)</pre></body></html></div>
 <p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish.</p>
-<div class="sourceCode"><html><body><pre class="r">res.tsne  ### calling haystack_2D()...
-#&gt; ### setting parameters...
-#&gt; ### calculating Kullback-Leibler divergences...
-#&gt; ### ... 1000 values out of 12030 done
-#&gt; ### ... 2000 values out of 12030 done
-#&gt; ### ... 3000 values out of 12030 done
-#&gt; ### ... 4000 values out of 12030 done
-#&gt; ### ... 5000 values out of 12030 done
-#&gt; ### ... 6000 values out of 12030 done
-#&gt; ### ... 7000 values out of 12030 done
-#&gt; ### ... 8000 values out of 12030 done
-#&gt; ### ... 9000 values out of 12030 done
-#&gt; ### ... 10000 values out of 12030 done
-#&gt; ### ... 11000 values out of 12030 done
-#&gt; ### ... 12000 values out of 12030 done
-#&gt; ### starting randomizations...
-#&gt; ### ... 10 values out of 200 done
-#&gt; ### ... 20 values out of 200 done
-#&gt; ### ... 30 values out of 200 done
-#&gt; ### ... 40 values out of 200 done
-#&gt; ### ... 50 values out of 200 done
-#&gt; ### ... 60 values out of 200 done
-#&gt; ### ... 70 values out of 200 done
-#&gt; ### ... 80 values out of 200 done
-#&gt; ### ... 90 values out of 200 done
-#&gt; ### ... 100 values out of 200 done
-#&gt; ### ... 110 values out of 200 done
-#&gt; ### ... 120 values out of 200 done
-#&gt; ### ... 130 values out of 200 done
-#&gt; ### ... 140 values out of 200 done
-#&gt; ### ... 150 values out of 200 done
-#&gt; ### ... 160 values out of 200 done
-#&gt; ### ... 170 values out of 200 done
-#&gt; ### ... 180 values out of 200 done
-#&gt; ### ... 190 values out of 200 done
-#&gt; ### ... 200 values out of 200 done
-#&gt; ### estimating p-values...
-#&gt; ### returning result...</pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">res.tsne</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/haystack.html">haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"2D"</span>)
+<span class="co">#&gt; ### calling haystack_2D()...</span>
+<span class="co">#&gt; ### setting parameters...</span>
+<span class="co">#&gt; ### calculating Kullback-Leibler divergences...</span>
+<span class="co">#&gt; ### ... 1000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 2000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 3000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 4000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 5000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 6000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 7000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 8000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 9000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 10000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 11000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 12000 features out of 12030 done</span>
+<span class="co">#&gt; ### starting randomizations...</span>
+<span class="co">#&gt; ### ... 10 values out of 200 done</span>
+<span class="co">#&gt; ### ... 20 values out of 200 done</span>
+<span class="co">#&gt; ### ... 30 values out of 200 done</span>
+<span class="co">#&gt; ### ... 40 values out of 200 done</span>
+<span class="co">#&gt; ### ... 50 values out of 200 done</span>
+<span class="co">#&gt; ### ... 60 values out of 200 done</span>
+<span class="co">#&gt; ### ... 70 values out of 200 done</span>
+<span class="co">#&gt; ### ... 80 values out of 200 done</span>
+<span class="co">#&gt; ### ... 90 values out of 200 done</span>
+<span class="co">#&gt; ### ... 100 values out of 200 done</span>
+<span class="co">#&gt; ### ... 110 values out of 200 done</span>
+<span class="co">#&gt; ### ... 120 values out of 200 done</span>
+<span class="co">#&gt; ### ... 130 values out of 200 done</span>
+<span class="co">#&gt; ### ... 140 values out of 200 done</span>
+<span class="co">#&gt; ### ... 150 values out of 200 done</span>
+<span class="co">#&gt; ### ... 160 values out of 200 done</span>
+<span class="co">#&gt; ### ... 170 values out of 200 done</span>
+<span class="co">#&gt; ### ... 180 values out of 200 done</span>
+<span class="co">#&gt; ### ... 190 values out of 200 done</span>
+<span class="co">#&gt; ### ... 200 values out of 200 done</span>
+<span class="co">#&gt; ### estimating p-values...</span>
+<span class="co">#&gt; ### returning result...</span></pre></body></html></div>
 <p>Let’s have a look at the most biased genes. The most strongly biased gene is Clec4a2. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Clec4a2 is not detected in the upper right and lower right group of cells.</p>
-<div class="sourceCode"><html><body><pre class="r">show_result_haystack(res.haystack = res.tsne, n = 5)
-#&gt;              D_KL log.p.vals T.counts
-#&gt; Clec4a2 0.7561418  -65.39972      947
-#&gt; Lyz1    0.8561399  -64.83459     1183
-#&gt; Alox5ap 1.0284127  -64.70018     1354
-#&gt; Cybb    0.8090982  -63.60491     1172
-#&gt; S100a10 0.7155384  -62.71029     1094
-# plotting detection of this gene
-plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = dat.detection)</pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.tsne</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>)
+<span class="co">#&gt;              D_KL log.p.vals log.p.adj T.counts</span>
+<span class="co">#&gt; Clec4a2 0.7561418  -69.47999 -65.39972      947</span>
+<span class="co">#&gt; Lyz1    0.8561399  -68.91486 -64.83459     1183</span>
+<span class="co">#&gt; Alox5ap 1.0284127  -68.78045 -64.70018     1354</span>
+<span class="co">#&gt; Cybb    0.8090982  -67.68518 -63.60491     1172</span>
+<span class="co">#&gt; S100a10 0.7155384  -66.79055 -62.71029     1094</span>
+<span class="co"># plotting detection of this gene</span>
+<span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Clec4a2"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="no">dat.detection</span>)</pre></body></html></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># plotting log expression of this gene</span>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># plotting log expression of this gene</span>
 <span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Clec4a2"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">dat.expression</span>))</pre></body></html></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
 </div>
@@ -198,24 +199,29 @@ plot_gene_haystack(x = dat.tsne, gene = "Clec4a2", expression = dat.detection)</
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode"><html><body><pre class="r"># get the top 1000 biased genes in the result
-res.top </pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># get the top 1000 biased genes in the result</span>
+<span class="no">res.top</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.tsne</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">1000</span>)
+<span class="co"># cluster biased genes by their expression pattern in the 2D plot</span>
+<span class="no">genes.top</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="no">res.top</span>)
+<span class="no">res.hc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/hclust_haystack.html">hclust_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">genes</span> <span class="kw">=</span> <span class="no">genes.top</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>)</pre></body></html></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode"><html><body><pre class="r">res.hc.clusters  res.hc.clusters
-#&gt;   1   2   3   4   5 
-#&gt; 434 384 112  46  24</pre></body></html></div>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(<span class="no">res.hc</span>, <span class="kw">k</span><span class="kw">=</span><span class="fl">5</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">res.hc.clusters</span>)
+<span class="co">#&gt; res.hc.clusters</span>
+<span class="co">#&gt;   1   2   3   4   5 </span>
+<span class="co">#&gt; 434 384 112  46  24</span></pre></body></html></div>
 <p>Cluster 1 contains 434 genes, and the smallest cluster (cluster 5) contains just 24 genes.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode"><html><body><pre class="r">pl = lapply(1:5, function(cluster) {
-  gene.set = names(res.hc.clusters)[res.hc.clusters==cluster]
-  plot.title = paste0("Cluster ", cluster)
-  p = plot_gene_set_haystack(x = dat.tsne, genes = gene.set, detection = dat.detection)
-  p + ggtitle(plot.title) + theme(legend.title = element_text(size = 8))
+<div class="sourceCode"><html><body><pre class="r"><span class="no">pl</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">cluster</span>) {
+  <span class="no">gene.set</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">res.hc.clusters</span>)[<span class="no">res.hc.clusters</span><span class="kw">==</span><span class="no">cluster</span>]
+  <span class="no">plot.title</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, <span class="no">cluster</span>)
+  <span class="no">p</span> <span class="kw">=</span> <span class="fu"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">genes</span> <span class="kw">=</span> <span class="no">gene.set</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>)
+  <span class="no">p</span> + <span class="fu">ggtitle</span>(<span class="no">plot.title</span>) + <span class="fu">theme</span>(<span class="kw">legend.title</span> <span class="kw">=</span> <span class="fu">element_text</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">8</span>))
 })
-plot_grid(plotlist = pl, ncol = 2)</pre></body></html></div>
+<span class="fu">plot_grid</span>(<span class="kw">plotlist</span> <span class="kw">=</span> <span class="no">pl</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
 <p><img src="a04_example_tsne2D_default_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Clec4a2"</span>] <span class="co"># the most biased gene is in cluster 2</span>
-<span class="co">#&gt; Clec4a2 </span>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Clec4a2"</span>] <span class="co"># the most biased gene is in cluster 2</span>
+<span class="co">#&gt; Clec4a2 </span>
 <span class="co">#&gt;       2</span></pre></body></html></div>
 <p>The most biased genes, Clec4a2, was clustered into cluster 2. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 2. The pattern of cluster 5 (containing 24 genes) is rather different from all other clusters.</p>
 </div>
@@ -236,7 +242,7 @@ plot_grid(plotlist = pl, ncol = 2)</pre></body></html></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
