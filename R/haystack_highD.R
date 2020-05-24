@@ -260,7 +260,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
     D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
 
     if(i%%1000==0)
-      message(paste0("### ... ",i," features out of ",count.genes," done"))
+      message(paste0("### ... ",i," rows out of ",count.genes," done"))
   }
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X
@@ -323,7 +323,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
     for(i in 1:T.counts.to.select){
       if(i%%10==0)
-        message(paste0("### ... ",i," values out of ",T.counts.to.select," done"))
+        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
 
       T.count <- T.counts.selected[i]
 
@@ -343,7 +343,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
     for(i in 1:T.counts.to.select){
       if(i%%10==0)
-        message(paste0("### ... ",i," values out of ",T.counts.to.select," done"))
+        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
 
       T.count <- T.counts.selected[i]
 
