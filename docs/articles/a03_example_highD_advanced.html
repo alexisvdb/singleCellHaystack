@@ -94,7 +94,7 @@
       <h1 data-toc-skip>Application of ‘advanced’ mode on multi-dimensional coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2020-05-12</h4>
+            <h4 class="date">2020-05-25</h4>
       
       
       <div class="hidden name"><code>a03_example_highD_advanced.Rmd</code></div>
@@ -106,115 +106,140 @@
 <div id="tldr" class="section level1">
 <h1 class="hasAnchor">
 <a href="#tldr" class="anchor"></a>tl;dr</h1>
-<p>You can indicate the general expression levels of cells using input parameter <code>use.advanced.sampling</code>. If you do that,<code>singleCellHaystack</code> takes the general expression levels into account and finds genes that are different from that general expression pattern.</p>
+<p>You can indicate the general expression levels of cells using input parameter <code>use.advanced.sampling</code>. If you do that,<code>singleCellHaystack</code> takes the general expression levels into account and finds genes (DEGs) that are different from that general expression pattern.</p>
 </div>
-<div id="preparing-the-input-data" class="section level1">
+<div id="preparing-input-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
+<a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
 <p>The data used in these examples can be found <a href="https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
 <div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"</span>))
 <span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()
-<span class="co">#&gt; [1] "dat.detection"  "dat.expression" "dat.pca"        "dat.tsne"      </span>
-<span class="co">#&gt; [5] "dat.umap"</span></pre></body></html></div>
+<span class="co">#&gt; [1] "dat.expression" "dat.pca"        "dat.tsne"       "dat.umap"</span></pre></body></html></div>
 <p>This data should include the following objects:</p>
 <ul>
 <li>
 <code>dat.expression</code>: a matrix object with the expression of genes (rows) in each cell (columns).</li>
 <li>
-<code>dat.detection</code>: a logical matrix object with the detection of genes (rows) in each cell (columns). TRUE means detected, FALSE means not detected.</li>
+<code>dat.pca</code>: the output of PCA. This data.frame contains the first 50 pricipal components (PCs).</li>
 <li>
-<code>dat.pca</code>: the output of PCA. This data.frame contains thefirst 50 pricipal components.</li>
+<code>dat.tsne</code>: a data.frame with t-SNE coordinates (2D) based on the first 50 PCs.</li>
 <li>
-<code>dat.tsne</code>: a data.frame with t-SNE coordinates (2D).</li>
-<li>
-<code>dat.umap</code>: a data.frame with UMAP coordinates (2D).</li>
+<code>dat.umap</code>: a data.frame with UMAP coordinates (2D) based on the first 50 PCs.</li>
 </ul>
-<p>Let’s have a look at the t-SNE plot, colouring cells be the number of genes detected in each cell:</p>
+<p>Let’s have a look at this example dataset:</p>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># this data contains 12,030 genes and 1981 cells</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">dat.expression</span>)
+<span class="co">#&gt; [1] 12030  1981</span>
+
+<span class="co"># visualizing the cells in a t-SNE plot:</span>
+<span class="fu">ggplot</span>(<span class="no">dat.tsne</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">V1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">V2</span>)) + <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"t-SNE1"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"t-SNE2"</span>) + <span class="fu">geom_point</span>()</pre></body></html></div>
+<p><img src="a03_example_highD_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><html><body><pre class="r">
+<span class="co"># the t-SNE coordinates are based on the 50 PCs</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">dat.pca</span>) <span class="co"># the PCA data contains 1981 cells and 50 PCs</span>
+<span class="co">#&gt; [1] 1981   50</span></pre></body></html></div>
+<p>There are several groups of cells, although the borders between them are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to predict DEGs without relying on grouping of the cells into arbitrary clusters.</p>
+<p><code>singleCellHaystack</code> has two required input parameters: 1) the coordinates of cells in the input space, and 2) a table showing which genes are detected in which cells. The definition of detection is left to the user. In this example we will use the median normalized read count of each gene as threshold for defining detection. Alternatively, we could also define genes with counts &gt; 0 as being detected, for example.</p>
+<div class="sourceCode"><html><body><pre class="r">
+<span class="no">median.per.gene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">dat.expression</span>,<span class="fl">1</span>,<span class="no">median</span>) <span class="co"># get the median read count per gene</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">median.per.gene</span>) <span class="co"># for many genes the median read count is 0</span>
+<span class="co">#&gt;  Mrpl15  Lypla1  Rb1cc1    Sgk3   Snhg6   Tram1 </span>
+<span class="co">#&gt;   0.000   0.000   0.000   0.000   0.000 136.243</span>
+<span class="no">dat.detection</span> <span class="kw">&lt;-</span> <span class="no">dat.expression</span> <span class="kw">&gt;</span> <span class="no">median.per.gene</span> <span class="co"># use the medians as threshold for defining detection</span>
+<span class="no">dat.detection</span>[<span class="fl">1</span>:<span class="fl">5</span>,<span class="fl">1</span>:<span class="fl">5</span>] <span class="co"># TRUE means detected, FALSE means not detected</span>
+<span class="co">#&gt;        AAACCTGCAGTAACGG.1 AAACGGGAGAAGAAGC.1 AAACGGGAGACCGGAT.1</span>
+<span class="co">#&gt; Mrpl15               TRUE              FALSE              FALSE</span>
+<span class="co">#&gt; Lypla1               TRUE              FALSE              FALSE</span>
+<span class="co">#&gt; Rb1cc1               TRUE              FALSE              FALSE</span>
+<span class="co">#&gt; Sgk3                 TRUE              FALSE              FALSE</span>
+<span class="co">#&gt; Snhg6                TRUE              FALSE              FALSE</span>
+<span class="co">#&gt;        AAACGGGAGCGCTCCA.1 AAACGGGAGGACGAAA.1</span>
+<span class="co">#&gt; Mrpl15              FALSE               TRUE</span>
+<span class="co">#&gt; Lypla1              FALSE               TRUE</span>
+<span class="co">#&gt; Rb1cc1              FALSE              FALSE</span>
+<span class="co">#&gt; Sgk3                FALSE              FALSE</span>
+<span class="co">#&gt; Snhg6                TRUE              FALSE</span></pre></body></html></div>
+<p>Now, that we have defined gene detection, let’s have a look at the t-SNE plot again, colouring cells by the number of genes detected in each cell:</p>
 <div class="sourceCode"><html><body><pre class="r"><span class="no">general.detection</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="no">dat.detection</span>, <span class="fl">2</span>, <span class="no">sum</span>)
 <span class="fu">ggplot</span>(<span class="no">dat.tsne</span>, <span class="fu">aes</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">V1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="no">V2</span>, <span class="kw">colour</span> <span class="kw">=</span> <span class="no">general.detection</span>)) + <span class="fu">labs</span>(<span class="kw">x</span> <span class="kw">=</span> <span class="st">"t-SNE1"</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="st">"t-SNE2"</span>) +
-  <span class="fu">geom_point</span>(<span class="kw">size</span><span class="kw">=</span><span class="fl">2</span>) + <span class="fu">scale_color_gradient</span>(<span class="kw">low</span><span class="kw">=</span><span class="st">"yellow"</span>, <span class="kw">high</span><span class="kw">=</span><span class="st">"red"</span>) + <span class="fu">labs</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="st">"Det. genes"</span>)</pre></body></html></div>
-<p><img src="a03_example_highD_advanced_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"> There are several groups of cells,although the borders between are not clear and several might consist of additional subclusters.</p>
-<p>Moreover, the cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend would be especially surprizing.</p>
-<p>We can use <code>singleCellHaystack</code> to find genes with biased expression patterns, taking into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
+  <span class="fu">geom_point</span>(<span class="kw">size</span><span class="kw">=</span><span class="fl">2</span>) + <span class="fu">scale_color_gradient</span>(<span class="kw">low</span><span class="kw">=</span><span class="st">"dodgerblue"</span>, <span class="kw">high</span><span class="kw">=</span><span class="st">"maroon2"</span>) + <span class="fu">labs</span>(<span class="kw">color</span> <span class="kw">=</span> <span class="st">"Det. genes"</span>)</pre></body></html></div>
+<p><img src="a03_example_highD_advanced_files/figure-html/example3-1.png" width="576" style="display: block; margin: auto;"></p>
+<p>As can be seen in the last plot, cells in the bottom right have in general fewer detected genes. If a gene is detected predominantly in these cells and not in others, this tendency goes against the general trend in expression. Such a trend could be of particular interest.</p>
+<p>We can use <code>singleCellHaystack</code> to predict DEGs without relying on grouping of the cells into arbitrary clusters, taking also into account general gene expression trends, using the option <code>use.advanced.sampling</code>.</p>
 </div>
 <div id="running-haystack-with-use-advanced-sampling" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-haystack-with-use-advanced-sampling" class="anchor"></a>Running <code>haystack</code> with <code>use.advanced.sampling</code>
 </h1>
-<p>First, load the package, and set a random seed to ensure replicability.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">singleCellHaystack</span>)
-<span class="co">#&gt; </span>
-<span class="co">#&gt; Attaching package: 'singleCellHaystack'</span>
-<span class="co">#&gt; The following objects are masked _by_ '.GlobalEnv':</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;     dat.expression, dat.tsne</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1</span>)</pre></body></html></div>
-<p>Next, run <code>haystack</code> on the first 10 principal components. Since the space is 10-dimensional, we set ‘method’ to ‘highD’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also give the detection values as input to ‘detection’. <code>use.advanced.sampling</code> is set to the vector of detected genes per cell, <code>general.detection</code>. By doing this, <code>haystack</code> will calculate cell distributions and perform randomizations taking into account the general detection levels.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">res.pc10.adv</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/haystack.html">haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.pca</span>[,<span class="fl">1</span>:<span class="fl">10</span>], <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"highD"</span>, <span class="kw">use.advanced.sampling</span> <span class="kw">=</span> <span class="no">general.detection</span>)
+<p>First, load the package.</p>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">singleCellHaystack</span>)</pre></body></html></div>
+<p>Next, run <code>haystack</code> on the first 50 principal components. Since the space is 50-dimensional, we set ‘method’ to ‘highD’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also give the detection values as input to ‘detection’. <code>use.advanced.sampling</code> is set to the vector of detected genes per cell, <code>general.detection</code>. By doing this, <code>haystack</code> will calculate cell distributions and perform randomizations taking into account the general detection levels. We also set a random seed to ensure replicability.</p>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
+<span class="no">res.pc50.adv</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/haystack.html">haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.pca</span>[,<span class="fl">1</span>:<span class="fl">50</span>], <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"highD"</span>, <span class="kw">use.advanced.sampling</span> <span class="kw">=</span> <span class="no">general.detection</span>)
 <span class="co">#&gt; ### calling haystack_highD()...</span>
 <span class="co">#&gt; ### scaling input data...</span>
 <span class="co">#&gt; ### deciding grid points...</span>
 <span class="co">#&gt; ### calculating Kullback-Leibler divergences...</span>
-<span class="co">#&gt; ### ... 1000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 2000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 3000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 4000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 5000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 6000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 7000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 8000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 9000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 10000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 11000 features out of 12030 done</span>
-<span class="co">#&gt; ### ... 12000 features out of 12030 done</span>
+<span class="co">#&gt; ### ... 1000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 2000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 3000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 4000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 5000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 6000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 7000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 8000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 9000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 10000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 11000 rows out of 12030 done</span>
+<span class="co">#&gt; ### ... 12000 rows out of 12030 done</span>
 <span class="co">#&gt; ### starting randomizations...</span>
-<span class="co">#&gt; ### ... 10 values out of 200 done</span>
-<span class="co">#&gt; ### ... 20 values out of 200 done</span>
-<span class="co">#&gt; ### ... 30 values out of 200 done</span>
-<span class="co">#&gt; ### ... 40 values out of 200 done</span>
-<span class="co">#&gt; ### ... 50 values out of 200 done</span>
-<span class="co">#&gt; ### ... 60 values out of 200 done</span>
-<span class="co">#&gt; ### ... 70 values out of 200 done</span>
-<span class="co">#&gt; ### ... 80 values out of 200 done</span>
-<span class="co">#&gt; ### ... 90 values out of 200 done</span>
-<span class="co">#&gt; ### ... 100 values out of 200 done</span>
-<span class="co">#&gt; ### ... 110 values out of 200 done</span>
-<span class="co">#&gt; ### ... 120 values out of 200 done</span>
-<span class="co">#&gt; ### ... 130 values out of 200 done</span>
-<span class="co">#&gt; ### ... 140 values out of 200 done</span>
-<span class="co">#&gt; ### ... 150 values out of 200 done</span>
-<span class="co">#&gt; ### ... 160 values out of 200 done</span>
-<span class="co">#&gt; ### ... 170 values out of 200 done</span>
-<span class="co">#&gt; ### ... 180 values out of 200 done</span>
-<span class="co">#&gt; ### ... 190 values out of 200 done</span>
-<span class="co">#&gt; ### ... 200 values out of 200 done</span>
+<span class="co">#&gt; ### ... 10 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 20 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 30 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 40 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 50 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 60 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 70 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 80 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 90 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 100 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 110 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 120 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 130 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 140 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 150 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 160 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 170 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 180 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 190 sets out of 200 done</span>
+<span class="co">#&gt; ### ... 200 sets out of 200 done</span>
 <span class="co">#&gt; ### estimating p-values...</span>
 <span class="co">#&gt; ### returning result...</span></pre></body></html></div>
-<p>Let’s have a look at the most biased genes. The most strongly biased gene is Snca. We can plot the expression an detection of this gene using the <code>plot_gene_haystack</code> function.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.pc10.adv</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>)
-<span class="co">#&gt;                   D_KL log.p.vals log.p.adj T.counts</span>
-<span class="co">#&gt; Snca          2.303152  -1425.515 -1421.435      474</span>
-<span class="co">#&gt; Gypa          2.248503  -1341.622 -1337.541      448</span>
-<span class="co">#&gt; Hba-a1        2.176333  -1321.308 -1317.228      479</span>
-<span class="co">#&gt; Trim10        2.396674  -1157.922 -1153.841      368</span>
-<span class="co">#&gt; 5730469M10Rik 2.048861  -1151.420 -1147.340      435</span>
+<p>Let’s have a look at the most significant DEGs. The gene with the strongest differential expression is Tspo2. We can plot the expression and detection of this gene using the <code>plot_gene_haystack</code> function.</p>
+<div class="sourceCode"><html><body><pre class="r"><span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.pc50.adv</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">5</span>)
+<span class="co">#&gt;                     D_KL log.p.vals log.p.adj T.counts</span>
+<span class="co">#&gt; Tspo2         0.01876159  -3820.223 -3816.143      299</span>
+<span class="co">#&gt; Fam46c        0.01742252  -3735.003 -3730.923      283</span>
+<span class="co">#&gt; 2410076I21Rik 0.01960576  -3677.642 -3673.562      245</span>
+<span class="co">#&gt; Cd36          0.01661617  -3314.317 -3310.237      251</span>
+<span class="co">#&gt; Cdr2          0.01710636  -3142.767 -3138.687      241</span>
 <span class="co"># plotting detection of this gene</span>
-<span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Snca"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="no">dat.detection</span>)</pre></body></html></div>
-<p><img src="a03_example_highD_advanced_files/figure-html/example4-1.png" width="576" style="display: block; margin: auto;"></p>
+<span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Tspo2"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="no">dat.detection</span>)</pre></body></html></div>
+<p><img src="a03_example_highD_advanced_files/figure-html/example6-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><html><body><pre class="r"><span class="co"># plotting log expression of this gene</span>
-<span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Snca"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">dat.expression</span>))</pre></body></html></div>
-<p><img src="a03_example_highD_advanced_files/figure-html/example4-2.png" width="576" style="display: block; margin: auto;"></p>
-<p>From the plots we can see that Snca is detected in the lower right groups of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Snca is especially surprizing: it is deteced in cells that express in general few genes.</p>
-<p>This explains why the advanced mode of <code>singleCellHaystack</code> judges Snca to be the most significantly biased.</p>
-<p>Compare the pattern of Snca with that of the most biased gene in the default mode (see <a href="articles/examplehighD_default.html">here</a>). The most biased gene found in the “default” mode is strongly biased, but is detected in cells that have in general many detected genes.</p>
+<span class="fu"><a href="../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">gene</span> <span class="kw">=</span> <span class="st">"Tspo2"</span>, <span class="kw">expression</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="no">dat.expression</span>))</pre></body></html></div>
+<p><img src="a03_example_highD_advanced_files/figure-html/example6-2.png" width="576" style="display: block; margin: auto;"></p>
+<p>From the plots we can see that Tspo2 is detected in the lower right groups of cells. As seen above, these cells have in general fewer detected genes, so the pattern of Tspo2 is especially surprizing: it is deteced in cells that express in general few genes.</p>
+<p>This explains why the advanced mode of <code>singleCellHaystack</code> judges Tspo2 to be the most significant DEG.</p>
+<p>The expression distribution of Tspo2 is similar to that of Trim10, the top DEG predicted in the default mode (see <a href="articles/examplehighD_default.html">here</a>). Indeed Trim10 ranked among the top DEGs here too (it ranks 7th). On the other hand, other top DEGs of the “default” mode are detected in cells that have in general many detected genes. Hence, they are not among the top DEGs in the “advanced” mode.</p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
-<p>Next, let’s take the top 1000 biased genes, and cluster them by their expression pattern in the input space (first 10 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="co"># get the top 1000 biased genes in the result</span>
-<span class="no">res.top</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.pc10.adv</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">1000</span>)
-<span class="co"># cluster biased genes by their expression pattern in the 2D plot</span>
+<p>Next, let’s take the top 1000 DEGs, and cluster them by their expression pattern in the input space (first 50 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
+<div class="sourceCode"><html><body><pre class="r"><span class="co"># get the top 1000 DEGs in the result</span>
+<span class="no">res.top</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res.haystack</span> <span class="kw">=</span> <span class="no">res.pc50.adv</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fl">1000</span>)
+<span class="co"># cluster DEGs by their expression pattern in the 2D plot</span>
 <span class="no">genes.top</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="no">res.top</span>)
 <span class="no">res.hc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/hclust_haystack.html">hclust_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">genes</span> <span class="kw">=</span> <span class="no">genes.top</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>)</pre></body></html></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
@@ -222,20 +247,20 @@
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="no">res.hc.clusters</span>)
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 145 473 196 103  83</span></pre></body></html></div>
+<span class="co">#&gt; 158  86 222 365 169</span></pre></body></html></div>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">pl</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">cluster</span>) {
-  <span class="no">gene.set</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">res.hc.clusters</span>)[<span class="no">res.hc.clusters</span><span class="kw">==</span><span class="no">cluster</span>]
-  <span class="no">plot.title</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, <span class="no">cluster</span>)
-  <span class="no">p</span> <span class="kw">=</span> <span class="fu"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">genes</span> <span class="kw">=</span> <span class="no">gene.set</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>)
+<div class="sourceCode"><html><body><pre class="r"><span class="no">pl</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">5</span>, <span class="kw">function</span>(<span class="no">cluster</span>) {
+  <span class="no">gene.set</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">res.hc.clusters</span>)[<span class="no">res.hc.clusters</span><span class="kw">==</span><span class="no">cluster</span>]
+  <span class="no">plot.title</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, <span class="no">cluster</span>)
+  <span class="no">p</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">dat.tsne</span>, <span class="kw">genes</span> <span class="kw">=</span> <span class="no">gene.set</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="no">dat.detection</span>)
   <span class="no">p</span> + <span class="fu">ggtitle</span>(<span class="no">plot.title</span>) + <span class="fu">theme</span>(<span class="kw">legend.title</span> <span class="kw">=</span> <span class="fu">element_text</span>(<span class="kw">size</span> <span class="kw">=</span> <span class="fl">8</span>))
 })
 <span class="fu">plot_grid</span>(<span class="kw">plotlist</span> <span class="kw">=</span> <span class="no">pl</span>, <span class="kw">ncol</span> <span class="kw">=</span> <span class="fl">2</span>)</pre></body></html></div>
-<p><img src="a03_example_highD_advanced_files/figure-html/example7-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Snca"</span>] <span class="co"># the most biased gene is in cluster 5</span>
-<span class="co">#&gt; Snca </span>
-<span class="co">#&gt;    5</span></pre></body></html></div>
-<p>The most biased genes, Snca, was clustered into cluster 5. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 5. Cluster 5 genes are on average detected almost exclusively in the bottom right group of cells.</p>
+<p><img src="a03_example_highD_advanced_files/figure-html/example9-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode"><html><body><pre class="r"><span class="no">res.hc.clusters</span>[<span class="st">"Tspo2"</span>] <span class="co"># the top DEG is in cluster 5</span>
+<span class="co">#&gt; Tspo2 </span>
+<span class="co">#&gt;     5</span></pre></body></html></div>
+<p>The most significant DEG, Tspo2, was clustered into cluster 5. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 5. Cluster 5 genes are on average detected almost exclusively in the bottom right group of cells.</p>
 </div>
   </div>
 

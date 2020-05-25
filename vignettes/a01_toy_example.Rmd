@@ -26,38 +26,43 @@ dat.expression <- singleCellHaystack::dat.expression
 
 A small toy dataset is included in the package. The toy dataset includes:
 
-- `dat.expression`: scRNA-seq expression of genes (rows) in cells (columns)
+- `dat.expression`: a toy scRNA-seq dataset with genes (rows) and cells (columns)
 
-- `dat.tsne`:       a 2D representation of the cell in dat.expression
+- `dat.tsne`:       2D coordinates of the cells in a t-SNE splot
 
 
-First, apply `haystack` (the main function of the package) on the toy dataset. This should take just several seconds on a typical desktop computer.
+First, let's apply `haystack` (the main function of the package) on the toy dataset. This should take just several seconds on a typical desktop computer.
 
 ```{r example1}
 library(singleCellHaystack)
 set.seed(1234)
 
 # Turn the expression data into detection (gene detected = TRUE, not detected = FALSE)
+# let's define detection as having more than 1 read
 dat.detection <- dat.expression > 1
 
 # run the main 'haystack' analysis
+# inputs are:
+# 1) the coordinates of the cells in the input space (here: dat.tsne)
+# 2) the detection data (dat.detection)
+# 3) the method used ("2D" since we are using a 2D input space here)
 res <- haystack(dat.tsne, detection = dat.detection, method = "2D")
 
 # the returned results 'res' is of class 'haystack'
 class(res)
 ```
 
-Let's have a look at the "most surprising" genes.
+Let's have a look at the most significant differentially expressed genes (DEGs).
 
 ```{r example2}
-# show top 10 "surprising" genes
+# show top 10 DEGs
 show_result_haystack(res.haystack = res, n=10)
 
 # alternatively: use a p-value threshold
 #show_result_haystack(res.haystack = res, p.value.threshold = 1e-10)
 ```
 
-One of the most non-random genes is "gene_497". Here we visualize it's expression in the t-SNE plot.
+One of the most significant DEGs is "gene_497". Here we visualize its expression in the t-SNE plot. As you can see, this DEG is expressed only in cells in the upper-left corner of the plot. 
 
 ```{r example3}
 # visualize one of the surprizing genes
@@ -71,11 +76,11 @@ plot_gene_haystack(
 )
 ```
 
-Yes, the pattern of cells in the toy example roughly resembles a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
+Yes, the coordinates of the cells in this toy example t-SNE space roughly resemble a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
 
 # Clustering and visualization
 
-You are not limited to single genes. Here, we pick up a set of non-random genes, and group them by their expression pattern in the plot into 5 clusters.
+You are not limited to single genes. Here, we pick up a set of DEGs, and group them by their expression pattern in the plot into 5 clusters.
 
 ```{r example4}
 # get the top most significant genes, and cluster them by their distribution pattern in the 2D plot
@@ -99,3 +104,4 @@ plot_gene_set_haystack(dat.tsne, detection = dat.detection,
                         genes=names(km.clusters[km.clusters==1]), point.size=2)
 ```
 
+From this plot we can see that genes in cluster 1 are mainly expressed in cells in the lower right part of the plot.
