@@ -4,14 +4,15 @@
 \name{singleCellHaystack-package}
 \alias{singleCellHaystack}
 \alias{singleCellHaystack-package}
-\title{singleCellHaystack: Finding surprising needles (=genes) in haystacks (=single cell transcriptome data)}
+\title{singleCellHaystack: Finding needles (=differentially expressed genes) in haystacks (=single cell data)}
 \description{
-`singleCellHaystack` is a package for finding surprising needles
-    (=genes) in haystacks (=single cell transcriptome data). Single-cell RNA-seq
-    (scRNA-seq) data is often converted to fewer dimensions using Principal 
-    Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE 
-    or UMAP plots). `singleCellHaystack` can be used for finding genes that are 
-    expressed in subsets of cells that are non-randomly distributed in these 
+`singleCellHaystack` is a package for predicting differentially expressed 
+    genes (DEGs) in single cell transcriptome data. It does so without relying on 
+    clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) 
+    data is often processed to fewer dimensions using Principal Component Analysis 
+    (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). 
+    `singleCellHaystack` uses Kullback-Leibler Divergence to find genes that are 
+    expressed in subsets of cells that are non-randomly positioned in a these 
     multi-dimensional spaces or 2D representations.
 }
 \author{
