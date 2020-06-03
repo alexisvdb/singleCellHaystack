@@ -24,10 +24,10 @@ Our manuscript about `singleCellHaystack` is now availabe on [bioRxiv](https://w
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/) includes a few example applications showing how to use our package:
 
 - [Application on toy example](articles/a01_toy_example.html)
-- [Application on multi-dimensional coordinates](articles/a02_example_highD_default.html)
-- [Application of the advanced mode on multi-dimensional coordinates](articles/a03_example_highD_advanced.html)
-- [Application on 2D t-SNE coordinates](articles/a04_example_tsne2D_default.html)
-- [Application of the advanced mode on 2D t-SNE coordinates](articles/a05_example_tsne2D_advanced.html)
+- [Application on multi-dimensional coordinates](articles/examples/a02_example_highD_default.html)
+- [Application of the advanced mode on multi-dimensional coordinates](articles/examples/a03_example_highD_advanced.html)
+- [Application on 2D t-SNE coordinates](articles/examples/a04_example_tsne2D_default.html)
+- [Application of the advanced mode on 2D t-SNE coordinates](articles/examples/a05_example_tsne2D_advanced.html)
 
 
 ## Installation

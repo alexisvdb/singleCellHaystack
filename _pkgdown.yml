@@ -79,13 +79,13 @@ navbar:
       - text: Application on toy example
         href: articles/a01_toy_example.html
       - text: Application on multi-dimensional coordinates
-        href: articles/a02_example_highD_default.html
+        href: articles/examples/a02_example_highD_default.html
       - text: Application of the advanced mode on multi-dimensional coordinates
-        href: articles/a03_example_highD_advanced.html
+        href: articles/examples/a03_example_highD_advanced.html
       - text: Application on 2D t-SNE coordinates
-        href: articles/a04_example_tsne2D_default.html
+        href: articles/examples/a04_example_tsne2D_default.html
       - text: Application of the advanced mode on 2D t-SNE coordinates
-        href: articles/a05_example_tsne2D_advanced.html
+        href: articles/examples/a05_example_tsne2D_advanced.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
