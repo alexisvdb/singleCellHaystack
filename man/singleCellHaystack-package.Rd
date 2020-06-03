@@ -16,11 +16,11 @@ The `singleCellHaystack` package is used for predicting differentially expressed
     multi-dimensional spaces or 2D representations.
 }
 \author{
-\strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com}
+\strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com} (\href{https://orcid.org/0000-0003-2180-5732}{ORCID})
 
 Authors:
 \itemize{
-  \item Diego Diez \email{diego10ruiz@gmail.com}
+  \item Diego Diez \email{diego10ruiz@gmail.com} (\href{https://orcid.org/0000-0002-2325-4893}{ORCID})
 }
 
 }

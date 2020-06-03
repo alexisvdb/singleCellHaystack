@@ -3,8 +3,10 @@ Type: Package
 Title: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)
 Version: 0.3.1
 Authors@R: c(
-    person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre")),
-    person("Diego", "Diez", email = "diego10ruiz@gmail.com", role = c("aut"))
+    person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre"),
+        comment = c(ORCID = "0000-0003-2180-5732")),
+    person("Diego", "Diez", email = "diego10ruiz@gmail.com", role = c("aut"),
+        comment = c(ORCID = "0000-0002-2325-4893"))
     )
 Description: The `singleCellHaystack` package is used for predicting differentially expressed 
     genes (DEGs) in single cell transcriptome data. It does so without relying on 
