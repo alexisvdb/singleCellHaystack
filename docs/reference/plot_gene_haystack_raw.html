@@ -98,16 +98,16 @@
       <a href="../articles/a01_toy_example.html">Application on toy example</a>
     </li>
     <li>
-      <a href="../articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
+      <a href="../articles/examples/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
+      <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -201,16 +201,16 @@
 <span class='co'># running haystack in default mode</span>
 <span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
 <span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
-#&gt; gene_497 1.599646  -26.02321 -23.32424       86
-#&gt; gene_62  1.519993  -24.62909 -21.93012       81
-#&gt; gene_339 1.414814  -24.34658 -21.64761       87
-#&gt; gene_351 1.408946  -24.09010 -21.39113       89
-#&gt; gene_61  1.470475  -23.92114 -21.22217       80
-#&gt; gene_137 1.349994  -23.53743 -20.83846       89
-#&gt; gene_79  1.929800  -22.74152 -20.04255       68
-#&gt; gene_317 1.386194  -22.35317 -19.65420       94
-#&gt; gene_325 1.209385  -22.17923 -19.48026       84
-#&gt; gene_444 1.435882  -21.92877 -19.22980       75</div><div class='input'>
+#&gt; gene_497 1.599646  -28.37244 -25.67347       86
+#&gt; gene_62  1.519993  -26.63437 -23.93540       81
+#&gt; gene_339 1.414814  -26.42590 -23.72693       87
+#&gt; gene_351 1.408946  -25.73660 -23.03763       89
+#&gt; gene_61  1.470475  -25.70384 -23.00487       80
+#&gt; gene_137 1.349994  -25.14460 -22.44563       89
+#&gt; gene_325 1.209385  -24.23292 -21.53395       84
+#&gt; gene_313 1.294544  -22.92619 -20.22722       78
+#&gt; gene_213 1.090144  -22.90608 -20.20711       85
+#&gt; gene_444 1.435882  -22.52774 -19.82877       75</div><div class='input'>
 <span class='co'># various was of plotting gene expression patterns</span>
 <span class='fu'><a href='plot_gene_haystack.html'>plot_gene_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>,
  <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_haystack_raw-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='plot_gene_haystack.html'>plot_gene_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>,

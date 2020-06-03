@@ -98,16 +98,16 @@
       <a href="../articles/a01_toy_example.html">Application on toy example</a>
     </li>
     <li>
-      <a href="../articles/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
+      <a href="../articles/examples/a02_example_highD_default.html">Application on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
+      <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
     </li>
     <li>
-      <a href="../articles/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -198,22 +198,7 @@
 #&gt; gene_79  1.929800  -22.05453 -19.35556       68</div><div class='input'><span class='co'># plot one of the genes</span>
 <span class='fu'><a href='plot_gene_haystack.html'>plot_gene_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>expression</span><span class='kw'>=</span><span class='no'>dat.expression</span>, <span class='kw'>gene</span><span class='kw'>=</span><span class='st'>"gene_242"</span>,
  <span class='kw'>detection</span> <span class='kw'>=</span> <span class='no'>dat.detection</span>, <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='haystack_2D-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># to running haystack in advanced mode, first get number of genes detected in each cell</span>
-<span class='no'>count.detected</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='no'>dat.detection</span>,<span class='fl'>2</span>,<span class='no'>sum</span>)
-<span class='co'># give count of detected genes as input to parameter use.advanced.sampling</span>
-<span class='no'>res.adv</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
- <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='no'>count.detected</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
-<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res.adv</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
-#&gt; gene_497 1.608896  -29.36328 -26.66431       86
-#&gt; gene_351 1.327998  -26.71772 -24.01875       89
-#&gt; gene_317 1.365825  -26.67764 -23.97867       94
-#&gt; gene_61  1.506420  -26.60657 -23.90760       80
-#&gt; gene_137 1.312863  -26.54512 -23.84615       89
-#&gt; gene_339 1.325922  -26.52496 -23.82599       87
-#&gt; gene_62  1.441692  -26.31131 -23.61234       81
-#&gt; gene_242 1.378709  -26.24902 -23.55005       96
-#&gt; gene_275 1.273792  -25.41737 -22.71840       95
-#&gt; gene_244 1.272210  -25.39964 -22.70067       95</div></pre>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
