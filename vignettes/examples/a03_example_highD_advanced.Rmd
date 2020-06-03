@@ -110,7 +110,7 @@ From the plots we can see that Tspo2 is detected in the lower right groups of ce
 
 This explains why the advanced mode of `singleCellHaystack` judges Tspo2 to be the most significant DEG.
 
-The expression distribution of Tspo2 is similar to that of Trim10, the top DEG predicted in the default mode (see [here](articles/examples/a02_example_highD_default.html)). Indeed Trim10 ranked among the top DEGs here too (it ranks 7th). On the other hand, other top DEGs of the "default" mode are detected in cells that have in general many detected genes. Hence, they are not among the top DEGs in the "advanced" mode.
+The expression distribution of Tspo2 is similar to that of Trim10, the top DEG predicted in the default mode (see [here](a02_example_highD_default.html)). Indeed Trim10 ranked among the top DEGs here too (it ranks 7th). On the other hand, other top DEGs of the "default" mode are detected in cells that have in general many detected genes. Hence, they are not among the top DEGs in the "advanced" mode.
 
 # Clustering and visualization
 
