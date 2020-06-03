@@ -3,6 +3,7 @@
 ^data-raw$
 ^LICENSE\.md$
 ^README\.Rmd$
+^README\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^pkgdown$
