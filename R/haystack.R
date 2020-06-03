@@ -252,10 +252,6 @@ get_reference <- function(param, use.advanced.sampling = NULL) {
 #' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 #' # list top 10 biased genes
 #' show_result_haystack(res, n =10)
-#' # plot one of the genes
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
-#'  detection = dat.detection, high.resolution = TRUE)
-#'
 haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
   message("### calling haystack_2D()...")
 
