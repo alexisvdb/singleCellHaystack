@@ -3,6 +3,12 @@
 
 ## singleCellHaystack
 
+<!-- badges: start -->
+
+[![R build
+status](https://github.com/alexisvdb/singleCellHaystack/workflows/R-CMD-check/badge.svg)](https://github.com/alexisvdb/singleCellHaystack/actions)
+<!-- badges: end -->
+
 `singleCellHaystack` is a package for predicting differentially
 expressed genes (DEGs) in single cell transcriptome data. It does so
 without relying on clustering of cells into arbitrary clusters\!
