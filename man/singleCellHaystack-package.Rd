@@ -4,7 +4,7 @@
 \name{singleCellHaystack-package}
 \alias{singleCellHaystack}
 \alias{singleCellHaystack-package}
-\title{singleCellHaystack: Finding needles (=differentially expressed genes) in haystacks (=single cell data)}
+\title{singleCellHaystack: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)}
 \description{
 `singleCellHaystack` is a package for predicting differentially expressed 
     genes (DEGs) in single cell transcriptome data. It does so without relying on 

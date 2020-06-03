@@ -15,6 +15,9 @@
 #' @export
 #'
 #' @examples
+#' # using the toy example of the singleCellHaystack package
+#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
+#' dat.detection <- dat.expression > 1
 #' # various was of plotting gene expression patterns
 #' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
 #'  detection = dat.detection, high.resolution = TRUE)
@@ -131,7 +134,9 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
 #' # define a set of genes that we want to visualize
 #' # this might be a set of differnentially expressed genes
 #' # predicted by haystack and clustered together by hclust_haystack
-#' gene_set <- c("gene_9", "gene_59", "gene_112", "gene_137", "gene_155", "gene_216", "gene_234", "gene_275", "gene_291", "gene_317", "gene_339", "gene_340", "gene_351", "gene_400", "gene_424", "gene_479")
+#' gene_set <- c("gene_9", "gene_59", "gene_112", "gene_137", "gene_155",
+#'   "gene_216", "gene_234", "gene_275", "gene_291", "gene_317",
+#'   "gene_339", "gene_340", "gene_351", "gene_400", "gene_424", "gene_479")
 #'
 #' # visualize the expression pattern of the set of genes
 #' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=gene_set)

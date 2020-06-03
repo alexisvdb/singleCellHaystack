@@ -38,8 +38,4 @@ dat.detection <- dat.expression > 1
 res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
 # list top 10 biased genes
 show_result_haystack(res, n =10)
-# plot one of the genes
-plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
- detection = dat.detection, high.resolution = TRUE)
-
 }

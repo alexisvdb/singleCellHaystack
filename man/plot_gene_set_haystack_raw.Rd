@@ -40,28 +40,13 @@ Visualizing the detection/expression of a set of genes in a 2D plot
 # define a logical matrix with detection of each gene (rows) in each cell (columns)
 dat.detection <- dat.expression > 1
 
-# running haystack in default mode
-res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
+# define a set of genes that we want to visualize
+# this might be a set of differnentially expressed genes
+# predicted by haystack and clustered together by hclust_haystack
+gene_set <- c("gene_9", "gene_59", "gene_112", "gene_137", "gene_155",
+  "gene_216", "gene_234", "gene_275", "gene_291", "gene_317",
+  "gene_339", "gene_340", "gene_351", "gene_400", "gene_424", "gene_479")
 
-# get biased genes, store in variable gene.subset
-sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
-gene.subset <- row.names(sorted.table)
-
-# hierarchical clustering, and cutting into 5 clusters
-hc <- hclust_haystack(dat.tsne, detection=dat.detection,
- genes=gene.subset)
-hc.clusters <- cutree(hc,k = 5)
-
-# visualization of average pattern of cluster 1
-plot_gene_set_haystack(dat.tsne, detection=dat.detection,
- genes=names(hc.clusters[hc.clusters==1]))
-
-# tweak size of points in plot sing 'point.size'
-plot_gene_set_haystack(dat.tsne, detection=dat.detection,
- genes=names(hc.clusters[hc.clusters==1]), point.size=.1)
-
-# sort cells in the plot so cells with high average signal come on top
-plot_gene_set_haystack(dat.tsne, detection=dat.detection,
- genes=names(hc.clusters[hc.clusters==1]), point.size=2,
- order.by.signal=TRUE)
+# visualize the expression pattern of the set of genes
+plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=gene_set)
 }

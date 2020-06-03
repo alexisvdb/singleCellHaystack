@@ -40,7 +40,4 @@ gene.subset <- row.names(sorted.table)
 # k-means clustering into 5 clusters
 km <- kmeans_haystack(dat.tsne, detection=dat.detection, genes=gene.subset, k=5)
 km.clusters <- km$cluster
-
-# visualizing average pattern of cluster 1
-plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(km.clusters[km.clusters==1]))
 }

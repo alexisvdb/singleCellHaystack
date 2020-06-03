@@ -38,7 +38,4 @@ gene.subset <- row.names(sorted.table)
 # hierarchical clustering, and cutting into 5 clusters
 hc <- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)
 hc.clusters <- cutree(hc,k = 5)
-
-# visualizing average pattern of cluster 1
-plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=names(hc.clusters[hc.clusters==1]))
 }
