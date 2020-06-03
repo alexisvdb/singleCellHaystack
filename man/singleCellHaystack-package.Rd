@@ -6,7 +6,7 @@
 \alias{singleCellHaystack-package}
 \title{singleCellHaystack: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)}
 \description{
-`singleCellHaystack` is a package for predicting differentially expressed 
+The `singleCellHaystack` package is used for predicting differentially expressed 
     genes (DEGs) in single cell transcriptome data. It does so without relying on 
     clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) 
     data is often processed to fewer dimensions using Principal Component Analysis 

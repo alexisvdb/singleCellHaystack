@@ -6,7 +6,7 @@ Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre")),
     person("Diego", "Diez", email = "diego10ruiz@gmail.com", role = c("aut"))
     )
-Description: `singleCellHaystack` is a package for predicting differentially expressed 
+Description: The `singleCellHaystack` package is used for predicting differentially expressed 
     genes (DEGs) in single cell transcriptome data. It does so without relying on 
     clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) 
     data is often processed to fewer dimensions using Principal Component Analysis 
