@@ -10,7 +10,7 @@ The `singleCellHaystack` package is used for predicting differentially expressed
     genes (DEGs) in single cell transcriptome data. It does so without relying on 
     clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) 
     data is often processed to fewer dimensions using Principal Component Analysis 
-    (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). 
+    (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). 
     `singleCellHaystack` uses Kullback-Leibler Divergence to find genes that are 
     expressed in subsets of cells that are non-randomly positioned in a these 
     multi-dimensional spaces or 2D representations.
