@@ -1,0 +1,60 @@
+---
+title: "Analysis of spatial transcriptomics with singleCellHaystack"
+author: "Diego Diez"
+date: '2020-05-21'
+output: html_notebook
+---
+
+
+```{r setup, message=FALSE}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = 'center')
+library(Seurat, lib = "~/lib/r-site")
+library(SeuratData)
+library(singleCellHaystack)
+
+set.seed(1)
+```
+
+
+# Load data
+
+```{r}
+anterior1 <- LoadData("stxBrain", type = "anterior1")
+anterior1
+```
+
+
+# Haystack
+
+```{r}
+counts <- GetAssayData(anterior1, slot = "counts")
+sel.ok <- Matrix::rowSums(counts > 1) > 10
+
+anterior1 <- anterior1[sel.ok, ]
+anterior1
+```
+
+
+```{r}
+SpatialFeaturePlot(anterior1, features = "nCount_Spatial")
+```
+
+
+```{r}
+coord <- GetTissueCoordinates(anterior1, "anterior1")
+counts <- GetAssayData(anterior1, slot = "data")
+
+res <- haystack_2D(coord$imagecol, coord$imagerow, detection = as.matrix(counts > 1))
+```
+
+
+```{r}
+sum <- show_result_haystack(res)
+head(sum, n = 20)
+```
+
+
+```{r fig.width=8, fig.height=6}
+SpatialFeaturePlot(anterior1, features = c("nCount_Spatial", rownames(sum)[1:5]))
+```
+

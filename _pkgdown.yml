@@ -86,6 +86,8 @@ navbar:
         href: articles/examples/a04_example_tsne2D_default.html
       - text: Application of the advanced mode on 2D t-SNE coordinates
         href: articles/examples/a05_example_tsne2D_advanced.html
+      - text: Application to spatial transcriptomics
+        href: articles/examples/a06_example_spatial_transcriptomics.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
