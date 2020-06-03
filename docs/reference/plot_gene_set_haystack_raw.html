@@ -109,6 +109,9 @@
     <li>
       <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
+    <li>
+      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -193,27 +196,15 @@
 <span class='co'># define a logical matrix with detection of each gene (rows) in each cell (columns)</span>
 <span class='no'>dat.detection</span> <span class='kw'>&lt;-</span> <span class='no'>dat.expression</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>
 
-<span class='co'># running haystack in default mode</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### starting randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### ... 10 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 20 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 30 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 40 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### ... 50 sets out of 58 done</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'>
-<span class='co'># get biased genes, store in variable gene.subset</span>
-<span class='no'>sorted.table</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>p.value.threshold</span> <span class='kw'>=</span> <span class='fl'>1e-5</span>)
-<span class='no'>gene.subset</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/row.names.html'>row.names</a></span>(<span class='no'>sorted.table</span>)
+<span class='co'># define a set of genes that we want to visualize</span>
+<span class='co'># this might be a set of differnentially expressed genes</span>
+<span class='co'># predicted by haystack and clustered together by hclust_haystack</span>
+<span class='no'>gene_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gene_9"</span>, <span class='st'>"gene_59"</span>, <span class='st'>"gene_112"</span>, <span class='st'>"gene_137"</span>, <span class='st'>"gene_155"</span>,
+  <span class='st'>"gene_216"</span>, <span class='st'>"gene_234"</span>, <span class='st'>"gene_275"</span>, <span class='st'>"gene_291"</span>, <span class='st'>"gene_317"</span>,
+  <span class='st'>"gene_339"</span>, <span class='st'>"gene_340"</span>, <span class='st'>"gene_351"</span>, <span class='st'>"gene_400"</span>, <span class='st'>"gene_424"</span>, <span class='st'>"gene_479"</span>)
 
-<span class='co'># hierarchical clustering, and cutting into 5 clusters</span>
-<span class='no'>hc</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='hclust_haystack.html'>hclust_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
- <span class='kw'>genes</span><span class='kw'>=</span><span class='no'>gene.subset</span>)
-<span class='no'>hc.clusters</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/cutree.html'>cutree</a></span>(<span class='no'>hc</span>,<span class='kw'>k</span> <span class='kw'>=</span> <span class='fl'>5</span>)
-
-<span class='co'># visualization of average pattern of cluster 1</span>
-<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
- <span class='kw'>genes</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>hc.clusters</span>[<span class='no'>hc.clusters</span><span class='kw'>==</span><span class='fl'>1</span>]))</div><div class='img'><img src='plot_gene_set_haystack_raw-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># tweak size of points in plot sing 'point.size'</span>
-<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
- <span class='kw'>genes</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>hc.clusters</span>[<span class='no'>hc.clusters</span><span class='kw'>==</span><span class='fl'>1</span>]), <span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>.1</span>)</div><div class='img'><img src='plot_gene_set_haystack_raw-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># sort cells in the plot so cells with high average signal come on top</span>
-<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>,
- <span class='kw'>genes</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>hc.clusters</span>[<span class='no'>hc.clusters</span><span class='kw'>==</span><span class='fl'>1</span>]), <span class='kw'>point.size</span><span class='kw'>=</span><span class='fl'>2</span>,
- <span class='kw'>order.by.signal</span><span class='kw'>=</span><span class='fl'>TRUE</span>)</div><div class='img'><img src='plot_gene_set_haystack_raw-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='co'># visualize the expression pattern of the set of genes</span>
+<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='no'>gene_set</span>)</div><div class='img'><img src='plot_gene_set_haystack_raw-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

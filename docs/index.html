@@ -5,18 +5,18 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finding needles (=differentially expressed genes) in haystacks (=single cell data) • singleCellHaystack</title>
+<title>Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data) • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Finding needles (=differentially expressed genes) in haystacks (=single cell data)">
-<meta property="og:description" content="`singleCellHaystack` is a package for predicting differentially expressed 
+<script src="pkgdown.js"></script><meta property="og:title" content="Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)">
+<meta property="og:description" content="The `singleCellHaystack` package is used for predicting differentially expressed 
     genes (DEGs) in single cell transcriptome data. It does so without relying on 
     clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) 
     data is often processed to fewer dimensions using Principal Component Analysis 
-    (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). 
+    (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). 
     `singleCellHaystack` uses Kullback-Leibler Divergence to find genes that are 
     expressed in subsets of cells that are non-randomly positioned in a these 
     multi-dimensional spaces or 2D representations. ">
@@ -75,6 +75,9 @@
     <li>
       <a href="articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
+    <li>
+      <a href="articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -101,7 +104,9 @@
 <div id="singlecellhaystack" class="section level2">
 <h2 class="hasAnchor">
 <a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h2>
-<p><code>singleCellHaystack</code> is a package for predicting differentially expressed genes (DEGs) in single cell transcriptome data. It does so without relying on clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimentional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations.</p>
+<!-- badges: start -->
+
+<p><code>singleCellHaystack</code> is a package for predicting differentially expressed genes (DEGs) in single cell transcriptome data. It does so without relying on clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations.</p>
 <p>Our manuscript about <code>singleCellHaystack</code> is now availabe on <a href="https://www.biorxiv.org/content/10.1101/557967v3">bioRxiv</a>.</p>
 </div>
 <div id="documentation-and-demo" class="section level2">
@@ -114,6 +119,7 @@
 <li><a href="articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a></li>
 <li><a href="articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a></li>
 <li><a href="articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a></li>
+<li><a href="articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a></li>
 </ul>
 </div>
 <div id="installation" class="section level2">
@@ -163,12 +169,18 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Alexis Vandenbon <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Diego Diez <br><small class="roles"> Author </small>  </li>
+<li>Alexis Vandenbon <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2180-5732" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Diego Diez <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2325-4893" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
 </ul>
 </div>
 
-  </div>
+  <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/alexisvdb/singleCellHaystack/actions"><img src="https://github.com/alexisvdb/singleCellHaystack/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+</ul>
+</div>
+</div>
 </div>
 
 

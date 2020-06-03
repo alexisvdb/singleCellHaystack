@@ -109,6 +109,9 @@
     <li>
       <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
+    <li>
+      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -189,10 +192,7 @@
 
 <span class='co'># k-means clustering into 5 clusters</span>
 <span class='no'>km</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='kmeans_haystack.html'>kmeans_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='no'>gene.subset</span>, <span class='kw'>k</span><span class='kw'>=</span><span class='fl'>5</span>)
-<span class='no'>km.clusters</span> <span class='kw'>&lt;-</span> <span class='no'>km</span>$<span class='no'>cluster</span>
-
-<span class='co'># visualizing average pattern of cluster 1</span>
-<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>km.clusters</span>[<span class='no'>km.clusters</span><span class='kw'>==</span><span class='fl'>1</span>]))</div><div class='img'><img src='kmeans_haystack_raw-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='no'>km.clusters</span> <span class='kw'>&lt;-</span> <span class='no'>km</span>$<span class='no'>cluster</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
