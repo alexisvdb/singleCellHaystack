@@ -1,6 +1,6 @@
 Package: singleCellHaystack
 Type: Package
-Title: Finding needles (=differentially expressed genes) in haystacks (=single cell data)
+Title: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)
 Version: 0.3.1
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre")),
