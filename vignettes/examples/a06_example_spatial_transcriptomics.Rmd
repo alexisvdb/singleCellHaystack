@@ -1,13 +1,21 @@
 ---
 title: "Analysis of spatial transcriptomics with singleCellHaystack"
 author: "Diego Diez"
-date: '2020-05-21'
-output: html_notebook
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis of spatial transcriptomics with singleCellHaystack}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 
-```{r setup, message=FALSE}
-knitr::opts_chunk$set(warning = FALSE, message = FALSE, fig.align = 'center')
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	fig.align = "center",
+	message = FALSE,
+	warning = TRUE
+)
 library(Seurat, lib = "~/lib/r-site")
 library(SeuratData)
 library(singleCellHaystack)
@@ -15,8 +23,20 @@ library(singleCellHaystack)
 set.seed(1)
 ```
 
+We can apply `singleCellHaystack` to spatial transcriptomics data as well. Here we use the development version of [Seurat](https://github.com/satijalab/seurat) and the spatial transcriptomics data available in the [SeuratData](https://github.com/satijalab/seurat-data) package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette [here](https://satijalab.org/seurat/v3.1/spatial_vignette.html).
 
-# Load data
+
+# Preparing input data
+
+```{r eval=FALSE}
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+
+set.seed(1)
+```
+
+We focus on the anterior1 slice.
 
 ```{r}
 anterior1 <- LoadData("stxBrain", type = "anterior1")
@@ -24,7 +44,7 @@ anterior1
 ```
 
 
-# Haystack
+We filter genes with less 10 cells with non-zero counts. This reduces the computational time by eliminating very lowly expressed genes.
 
 ```{r}
 counts <- GetAssayData(anterior1, slot = "counts")
@@ -34,11 +54,21 @@ anterior1 <- anterior1[sel.ok, ]
 anterior1
 ```
 
+We can plot the total number of counts per bead, superimposed on the image of the brain.
 
 ```{r}
 SpatialFeaturePlot(anterior1, features = "nCount_Spatial")
 ```
 
+We normalize the data we use log normalization.
+
+```{r}
+anterior1 <- NormalizeData(anterior1)
+```
+
+# Running `haystack` on the spatial coordinates
+
+At the moment there is no direct interface to apply `haystack` on spatial transcriptomics in Seurat. Once this version of Seurat is released we will add it. For now, we can obtain the two pieces of information required. One is the normalized counts and the other is the spatial coordinates. Then we pass to `haystack_2D` the coordinates of the beads and the detection matrix. Here we use a naive approach an define detected genes as those having non-zero counts.
 
 ```{r}
 coord <- GetTissueCoordinates(anterior1, "anterior1")
@@ -47,14 +77,16 @@ counts <- GetAssayData(anterior1, slot = "data")
 res <- haystack_2D(coord$imagecol, coord$imagerow, detection = as.matrix(counts > 1))
 ```
 
+We can check the top genes with spatial biased distribution.
 
 ```{r}
 sum <- show_result_haystack(res)
 head(sum, n = 20)
 ```
 
+And we can visualize the expression of the 6 top-scoring genes in the spatial plot.
 
 ```{r fig.width=8, fig.height=6}
-SpatialFeaturePlot(anterior1, features = c("nCount_Spatial", rownames(sum)[1:5]))
+SpatialFeaturePlot(anterior1, features = rownames(sum)[1:6])
 ```
 
