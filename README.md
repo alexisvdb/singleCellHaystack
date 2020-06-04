@@ -27,17 +27,18 @@ Our manuscript about `singleCellHaystack` is now availabe on
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/)
 includes a few example applications showing how to use our package:
 
-  - [Application on toy example](articles/a01_toy_example.html)
+  - [Application on toy
+    example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
   - [Application on multi-dimensional
-    coordinates](articles/examples/a02_example_highD_default.html)
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
   - [Application of the advanced mode on multi-dimensional
-    coordinates](articles/examples/a03_example_highD_advanced.html)
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
   - [Application on 2D t-SNE
-    coordinates](articles/examples/a04_example_tsne2D_default.html)
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_tsne2D_default.html)
   - [Application of the advanced mode on 2D t-SNE
-    coordinates](articles/examples/a05_example_tsne2D_advanced.html)
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_example_tsne2D_advanced.html)
   - [Application to spatial
-    transcriptomics](articles/examples/a06_example_spatial_transcriptomics.html)
+    transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_spatial_transcriptomics.html)
 
 ## Installation
 
