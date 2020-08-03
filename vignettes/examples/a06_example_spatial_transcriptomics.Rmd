@@ -16,14 +16,14 @@ knitr::opts_chunk$set(
 	message = FALSE,
 	warning = TRUE
 )
-library(Seurat, lib = "~/lib/r-site")
+library(Seurat)
 library(SeuratData)
 library(singleCellHaystack)
 
 set.seed(1)
 ```
 
-We can apply `singleCellHaystack` to spatial transcriptomics data as well. Here we use the development version of [Seurat](https://github.com/satijalab/seurat) and the spatial transcriptomics data available in the [SeuratData](https://github.com/satijalab/seurat-data) package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette [here](https://satijalab.org/seurat/v3.1/spatial_vignette.html).
+We can apply `singleCellHaystack` to spatial transcriptomics data as well. Here we use [Seurat](https://github.com/satijalab/seurat) (v3.2 or higher) and the spatial transcriptomics data available in the [SeuratData](https://github.com/satijalab/seurat-data) package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette [here](https://satijalab.org/seurat/v3.2/spatial_vignette.html).
 
 
 # Preparing input data
