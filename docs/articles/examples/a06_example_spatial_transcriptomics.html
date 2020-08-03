@@ -91,13 +91,13 @@
 
       
 
-      </header><script src="a06_example_spatial_transcriptomics_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="a06_example_spatial_transcriptomics_files/header-attrs-2.3/header-attrs.js"></script><script src="a06_example_spatial_transcriptomics_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysis of spatial transcriptomics with singleCellHaystack</h1>
                         <h4 class="author">Diego Diez</h4>
             
-            <h4 class="date">2020-06-05</h4>
+            <h4 class="date">2020-08-03</h4>
       
       
       <div class="hidden name"><code>a06_example_spatial_transcriptomics.Rmd</code></div>
@@ -106,7 +106,7 @@
 
     
     
-<p>We can apply <code>singleCellHaystack</code> to spatial transcriptomics data as well. Here we use the development version of <a href="https://github.com/satijalab/seurat">Seurat</a> and the spatial transcriptomics data available in the <a href="https://github.com/satijalab/seurat-data">SeuratData</a> package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette <a href="https://satijalab.org/seurat/v3.1/spatial_vignette.html">here</a>.</p>
+<p>We can apply <code>singleCellHaystack</code> to spatial transcriptomics data as well. Here we use <a href="https://github.com/satijalab/seurat">Seurat</a> (v3.2 or higher) and the spatial transcriptomics data available in the <a href="https://github.com/satijalab/seurat-data">SeuratData</a> package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette <a href="https://satijalab.org/seurat/v3.2/spatial_vignette.html">here</a>.</p>
 <div id="preparing-input-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
@@ -131,7 +131,7 @@
 ## 12382 features across 2696 samples within 1 assay 
 ## Active assay: Spatial (12382 features, 0 variable features)</code></pre>
 <p>We can plot the total number of counts per bead, superimposed on the image of the brain.</p>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu">SpatialFeaturePlot</span>(<span class="no">anterior1</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="st">"nCount_Spatial"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SpatialPlot.html">SpatialFeaturePlot</a></span>(<span class="no">anterior1</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="st">"nCount_Spatial"</span>)</pre></body></html></div>
 <p><img src="a06_example_spatial_transcriptomics_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>We normalize the data we use log normalization.</p>
 <div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="no">anterior1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/NormalizeData.html">NormalizeData</a></span>(<span class="no">anterior1</span>)</pre></body></html></div>
@@ -140,7 +140,7 @@
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-the-spatial-coordinates" class="anchor"></a>Running <code>haystack</code> on the spatial coordinates</h1>
 <p>At the moment there is no direct interface to apply <code>haystack</code> on spatial transcriptomics in Seurat. Once this version of Seurat is released we will add it. For now, we can obtain the two pieces of information required. One is the normalized counts and the other is the spatial coordinates. Then we pass to <code>haystack_2D</code> the coordinates of the beads and the detection matrix. Here we use a naive approach an define detected genes as those having non-zero counts.</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">coord</span> <span class="kw">&lt;-</span> <span class="fu">GetTissueCoordinates</span>(<span class="no">anterior1</span>, <span class="st">"anterior1"</span>)
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="no">coord</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/GetTissueCoordinates.html">GetTissueCoordinates</a></span>(<span class="no">anterior1</span>, <span class="st">"anterior1"</span>)
 <span class="no">counts</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/GetAssayData.html">GetAssayData</a></span>(<span class="no">anterior1</span>, <span class="kw">slot</span> <span class="kw">=</span> <span class="st">"data"</span>)
 
 <span class="no">res</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../../reference/haystack_2D.html">haystack_2D</a></span>(<span class="no">coord</span>$<span class="no">imagecol</span>, <span class="no">coord</span>$<span class="no">imagerow</span>, <span class="kw">detection</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">counts</span> <span class="kw">&gt;</span> <span class="fl">1</span>))</pre></body></html></div>
@@ -169,7 +169,7 @@
 ## Hpca          0.5644309  -89.47208  -85.37929     1823
 ## Rasd2         0.7424966  -89.11496  -85.02217      659</code></pre>
 <p>And we can visualize the expression of the 6 top-scoring genes in the spatial plot.</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu">SpatialFeaturePlot</span>(<span class="no">anterior1</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">sum</span>)[<span class="fl">1</span>:<span class="fl">6</span>])</pre></body></html></div>
+<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SpatialPlot.html">SpatialFeaturePlot</a></span>(<span class="no">anterior1</span>, <span class="kw">features</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">sum</span>)[<span class="fl">1</span>:<span class="fl">6</span>])</pre></body></html></div>
 <p><img src="a06_example_spatial_transcriptomics_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
   </div>
