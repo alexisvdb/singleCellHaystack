@@ -18,6 +18,8 @@ Description: Identification of differentially expressed genes (DEGs) is a key st
     For the theoretical background of 'singleCellHaystack' we refer to 
     Vandenbon and Diez (2019) <doi:10.1101/557967>.
 Imports: 
+    methods,
+    Matrix,
     splines,
     ggplot2,
     reshape2
