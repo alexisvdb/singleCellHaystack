@@ -45,15 +45,15 @@ includes a few example applications showing how to use our package:
 
 ## Installation
 
-You can install the released version of singleCellHaystack from
+You can install the released version of `singleCellHaystack` from
 [CRAN](https://CRAN.R-project.org/package=singleCellHaystack) with:
 
 ``` r
 install.packages("singleCellHaystack")
 ```
 
-You can also install the `singleCellHaystack` from the GitHub repository
-as shown below. Typical installation times should be less than 1 minute.
+You can also install `singleCellHaystack` from the GitHub repository as
+shown below. Typical installation times should be less than 1 minute.
 
 ``` r
 require(remotes)
