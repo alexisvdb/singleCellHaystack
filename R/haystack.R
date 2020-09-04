@@ -114,7 +114,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
 
   # calculating the Kullback-Leibler divergence of the distribution
   # of cells expressin and not expressing gene X vs reference distribution Q
-  D_KLs <- c()
+  D_KLs <- rep(NA,length(class.types))
   for(c in 1:length(class.types)){
     cl <- class.types[c]
     cl.subset <- classes==cl
@@ -262,8 +262,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     stop("'y' must be a numeric vector")
   if(length(x) != length(y))
     stop("'x' and 'y' must have the same length")
-  if(!is.matrix(detection))
-    stop("'detection' must be a matrix")
+  if(!is.matrix(detection) && ! inherits(detection, "dgCMatrix") && ! inherits(detection, "dgRMatrix"))
+    stop("'detection' must be a matrix, dgCMatrix, or dgRMatrix")
   if(ncol(detection) != length(x))
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!is.null(use.advanced.sampling)){
@@ -284,6 +284,13 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   if(!is.null(dir.randomization)){
     if(!dir.exists(dir.randomization))
       dir.create(dir.randomization)
+  }
+
+  # if detection is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(detection, "dgCMatrix")){
+    message("### converting detection data from dgCMatrix to dgRMatrix...")
+    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+    detection <- as( as(detection, "matrix"), "dgRMatrix")
   }
 
   count.cells <- ncol(detection)
@@ -324,11 +331,19 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # normalize to sum to 1
   # get D_KL (or relative entropy) of this P vs reference Q
   message("### calculating Kullback-Leibler divergences...")
-  D_KL.observed <- c()
-  for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
-    if(i%%1000==0)
-      message(paste0("### ... ",i," rows out of ",count.genes," done"))
+  D_KL.observed <- rep(0,count.genes)
+  if(is.matrix(detection)){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      if(i%%1000==0)
+        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+    }
+  } else if(class(detection)[1] == "dgRMatrix"){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL(classes=extract_row_dgRMatrix(detection,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      if(i%%1000==0)
+        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+    }
   }
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X
@@ -340,7 +355,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 
 
   # Randomized D_KL values depend on the number of "F" and "T" cases
-  # Thereofre, for all observed numbers of "T" cases (from 0 to 100%):
+  # Therefore, for all observed numbers of "T" cases (from 0 to 100%):
   # - do x randomizations and get teir D_KL
   # - get mean and SD per fraction,
   # - use those to estimate p values
@@ -458,7 +473,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix or dgRMatrix showing which gens (rows) are detected in which cells (columns)
 #' @param rows.subset Indices of the rows of 'detection' for which to get the densities. Default: all.
 #' @param high.resolution Logical: should high resolution be used? Default is FALSE.
 #'
@@ -471,17 +486,31 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities <- array(data=NA, dim=c(length(rows.subset),parameters$grid.points))
 
   cl <- T # we are only looking at the T points here
-  for(i in 1:length(rows.subset)){
-    r <- rows.subset[i]
-    x.subset <- detection[r,]==cl
-    y.subset <- detection[r,]==cl
-    density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
-                            dens.y=parameters$dens.y[,y.subset])
 
-    densities[i,,] <- density / sum(density)
-
+  # detection could be a matrix class object now,
+  # or a dgRMatrix object
+  # if detection is a dgCMatrix object at this point, something is wrong
+  if(is.matrix(detection)){
+    for(i in 1:length(rows.subset)){
+      r <- rows.subset[i]
+      x.subset <- detection[r,]==cl
+      y.subset <- detection[r,]==cl
+      density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
+                              dens.y=parameters$dens.y[,y.subset])
+      densities[i,,] <- density / sum(density)
+    }
+  } else if(inherits(detection, "dgRMatrix")){
+    for(i in 1:length(rows.subset)){
+      r <- rows.subset[i]
+      x.subset <- extract_row_dgRMatrix(detection,r)==cl
+      y.subset <- extract_row_dgRMatrix(detection,r)==cl
+      density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
+                              dens.y=parameters$dens.y[,y.subset])
+      densities[i,,] <- density / sum(density)
+    }
+  } else {
+    stop("'detection' must be a matrix or dgRMatrix")
   }
-
   # set dimension names to genes, and grid points of x and y axes
   dimnames(densities) <- list(rownames(detection)[rows.subset],
                          seq(parameters$limits[1],parameters$limits[2],length.out = parameters$grid.points[1]), # x grid
@@ -546,4 +575,28 @@ show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=N
   n.to.select <- ifelse(is.na(n), nrow(result), min(n, nrow(result)))
   o <- order(result$log.p.vals)
   result[o[1:n.to.select],]
+}
+
+#' Returns a row of a sparse matrix of class dgRMatrix. Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)
+#'
+#' @param m a sparse matrix of class dgRMatrix
+#' @param i the index of the row to return
+#'
+#' @return A row (vector) of the sparse matrix
+#' @export
+#'
+#' @examples
+#'
+#' # make a toy dgRMatrix
+#' m <- matrix(rpois(12,1), nrow=4)
+#' m <- as(m, "dgRMatrix")
+#' # get first row of this dgRMatrix
+#' extract_row_dgRMatrix(m, 1)
+extract_row_dgRMatrix <- function(m, i=1) {
+  r <- numeric(ncol(m))   ## set up zero vector for results
+  ## suggested by @OttToomet, handles empty rows
+  inds <- seq(from=m@p[i]+1,
+              to=m@p[i+1], length.out=max(0, m@p[i+1] - m@p[i]))
+  r[m@j[inds]+1] <- m@x[inds]     ## set values
+  return(r)
 }

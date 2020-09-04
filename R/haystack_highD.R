@@ -158,8 +158,8 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
     stop("'x' must be a numeric matrix")
   if(ncol(x) < 2)
     stop("'x' must have at least 2 columns")
-  if(!is.matrix(detection))
-    stop("'detection' must be a matrix")
+  if(!is.matrix(detection) && ! inherits(detection, "dgCMatrix") && ! inherits(detection, "dgRMatrix"))
+    stop("'detection' must be a matrix, dgCMatrix, or dgRMatrix")
   if(ncol(detection) != nrow(x))
     stop("The number of columns in 'detection' must be the same as the rows in 'x'")
   if(!is.numeric(grid.points))
@@ -176,6 +176,13 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
     stop("The value of 'scale' must be either TRUE or FALSE")
   if(grid.method!="centroid" & grid.method!="seeding")
     stop("The value of 'grid.method' must be either 'centroid' or 'seeding'")
+
+  # if detection is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(detection, "dgCMatrix")){
+    message("### converting detection data from dgCMatrix to dgRMatrix...")
+    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  }
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
@@ -256,11 +263,18 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
   class.types = c(FALSE, TRUE)
-  for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
-
-    if(i%%1000==0)
-      message(paste0("### ... ",i," rows out of ",count.genes," done"))
+  if(is.matrix(detection)){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
+      if(i%%1000==0)
+        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+    }
+  } else if(class(detection)[1] == "dgRMatrix"){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL_highD(classes=extract_row_dgRMatrix(detection,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
+      if(i%%1000==0)
+        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+    }
   }
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X

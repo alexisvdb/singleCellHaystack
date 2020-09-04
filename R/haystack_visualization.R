@@ -30,6 +30,7 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
     expression <- as.matrix(expression)
   }
 
+
   # check input
   if(!is.numeric(x))
     stop("'x' must be a numeric vector")
@@ -40,8 +41,8 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   if(ncol(expression) != length(x))
     stop("The number of columns in 'expression' must be the same as the length of 'x'")
   if(!is.null(detection)){
-    if(!is.logical(detection))
-      stop("'detection' must be either a logical matrix or NULL")
+    if(!is.matrix(detection) && ! inherits(detection, "dgCMatrix") && ! inherits(detection, "dgRMatrix"))
+      stop("'detection' must be a matrix, dgCMatrix, or dgRMatrix")
     if(any(dim(detection)!=dim(expression)))
       stop("'detection' must be of the same dimensions as 'expression', or should be NULL")
   }
@@ -57,6 +58,19 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
     stop("'point.size' must have a numeric value")
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
+
+  # if detection is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(detection, "dgCMatrix")){
+    message("### converting detection data from dgCMatrix to dgRMatrix...")
+    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  }
+  # if expression is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgCMatrix")){
+    message("### converting expression data from dgCMatrix to dgRMatrix...")
+    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+    expression <- as( as(expression, "matrix"), "dgRMatrix")
+  }
 
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index
@@ -85,7 +99,11 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   dat.plot <- data.frame(
     x     = x,
     y     = y,
-    value = unlist(expression[gene,])
+    value = if(inherits(expression, "dgRMatrix")){
+              extract_row_dgRMatrix(expression, gene.index)
+            } else {
+              unlist(expression[gene.index,])
+            }
   )
 
   # if needed order by signal
@@ -163,6 +181,13 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
     stop("'point.size' must have a numeric value")
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
+
+  # if detection is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(detection, "dgCMatrix")){
+    message("### converting detection data from dgCMatrix to dgRMatrix...")
+    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  }
 
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index

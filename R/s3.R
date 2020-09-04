@@ -14,7 +14,7 @@
 #' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
 #' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.
 #' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".
-#' @param ... further paramters passed down to methods.
+#' @param ... further parameters passed down to methods.
 #'
 #' @return An object of class "haystack"
 #' @export
@@ -115,7 +115,7 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
 #' @param assay name of assay data for Seurat method.
 #' @param slot name of slot for assay data for Seurat method.
 #' @param coord name of coordinates slot for specific methods.
-#' @param ... further paramters passed to plot_gene_haystack_raw().
+#' @param ... further parameters passed to plot_gene_haystack_raw().
 #'
 #' @export
 #'
@@ -171,7 +171,7 @@ plot_gene_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot
 #' @param assay name of assay data for Seurat method.
 #' @param slot name of slot for assay data for Seurat method.
 #' @param coord name of coordinates slot for specific methods.
-#' @param ... further paramters passed to plot_gene_haystack_raw().
+#' @param ... further parameters passed to plot_gene_haystack_raw().
 #'
 #' @export
 #'
@@ -225,7 +225,7 @@ plot_gene_set_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", 
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
 #' @param dim2 column index or name of matrix for y-axis coordinates.
-#' @param ... further paramters passed down to methods.
+#' @param ... further parameters passed down to methods.
 #'
 #' @export
 #'
@@ -250,7 +250,7 @@ hclust_haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, ...) {
 #' @param x a matrix or other object from which coordinates of cells can be extracted.
 #' @param dim1 column index or name of matrix for x-axis coordinates.
 #' @param dim2 column index or name of matrix for y-axis coordinates.
-#' @param ... further paramters passed down to methods.
+#' @param ... further parameters passed down to methods.
 #'
 #' @export
 #'
