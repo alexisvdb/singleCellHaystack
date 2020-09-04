@@ -31,8 +31,9 @@ Our manuscript describing `singleCellHaystack` has been published in [Nature Com
 
 If you use `singleCellHaystack` in your research please cite our work using:
 
-```{r comment=""}
-citation("singleCellHaystack")
+```{r echo=FALSE, results='asis', comment=""}
+cit <- citation("singleCellHaystack")
+print(cit, style = "text")
 ```
 
 

@@ -32,22 +32,9 @@ Our manuscript describing `singleCellHaystack` has been published in
 If you use `singleCellHaystack` in your research please cite our work
 using:
 
-``` r
-citation("singleCellHaystack")
-
-  Alexis Vandenbon and Diego Diez (2020): A clustering-independent
-  method for finding differentially expressed genes in single-cell
-  transcriptome data. Nature Communications
-
-A BibTeX entry for LaTeX users is
-
-  @Article{,
-    title = {A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.},
-    author = {Alexis Vandenbon and Diego Diez},
-    year = {2020},
-    journal = {Nature Communications},
-  }
-```
+Vandenbon A, Diez D (2020). “A clustering-independent method for finding
+differentially expressed genes in single-cell transcriptome data.”
+*Nature Communications*.
 
 ## Documentation and Demo
 
