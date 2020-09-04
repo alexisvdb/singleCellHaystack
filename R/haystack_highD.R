@@ -178,10 +178,9 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
     stop("The value of 'grid.method' must be either 'centroid' or 'seeding'")
 
   # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   count.cells <- ncol(detection)

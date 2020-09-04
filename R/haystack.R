@@ -287,9 +287,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   }
 
   # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from dgCMatrix to lgRMatrix")
     detection <- as(detection, "RsparseMatrix")
   }
 
