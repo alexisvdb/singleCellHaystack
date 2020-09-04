@@ -1,8 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-singleCellHaystack
-------------------
+## singleCellHaystack
 
 <!-- badges: start -->
 
@@ -15,7 +14,7 @@ Downloads](https://cranlogs.r-pkg.org/badges/singleCellHaystack)](https://cran.r
 
 `singleCellHaystack` is a package for predicting differentially
 expressed genes (DEGs) in single cell transcriptome data. It does so
-without relying on clustering of cells into arbitrary clusters!
+without relying on clustering of cells into arbitrary clusters\!
 Single-cell RNA-seq (scRNA-seq) data is often processed to fewer
 dimensions using Principal Component Analysis (PCA) and represented in
 2-dimensional plots (e.g. t-SNE or UMAP plots). `singleCellHaystack`
@@ -23,44 +22,46 @@ uses Kullback-Leibler Divergence to find genes that are expressed in
 subsets of cells that are non-randomly positioned in a these
 multi-dimensional spaces or 2D representations.
 
-Our manuscript about `singleCellHaystack` is now availabe on
-[bioRxiv](https://www.biorxiv.org/content/10.1101/557967v3).
+Our manuscript about `singleCellHaystack` has been published in Nature
+Communications ([link](https://doi.org/10.1038/s41467-020-17900-3)).
 
-Documentation and Demo
-----------------------
+## Documentation and Demo
 
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/)
 includes a few example applications showing how to use our package:
 
--   [Application on toy
+  - [Application on toy
     example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
--   [Application on multi-dimensional
+  - [Application on multi-dimensional
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
--   [Application of the advanced mode on multi-dimensional
+  - [Application of the advanced mode on multi-dimensional
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
--   [Application on 2D t-SNE
+  - [Application on 2D t-SNE
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_tsne2D_default.html)
--   [Application of the advanced mode on 2D t-SNE
+  - [Application of the advanced mode on 2D t-SNE
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_example_tsne2D_advanced.html)
--   [Application to spatial
+  - [Application to spatial
     transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_spatial_transcriptomics.html)
 
-Installation
-------------
+## Installation
 
 <!-- You can install the released version of singleCellHaystack from [CRAN](https://CRAN.R-project.org) with: -->
+
 <!-- ``` r -->
+
 <!-- install.packages("singleCellHaystack") -->
+
 <!-- ``` -->
 
 You can install the `singleCellHaystack` from the GitHub repository as
 shown below. Typical installation times should be less than 1 minute.
 
-    require(remotes)
-    remotes::install_github("alexisvdb/singleCellHaystack")
+``` r
+require(remotes)
+remotes::install_github("alexisvdb/singleCellHaystack")
+```
 
-System Requirements
--------------------
+## System Requirements
 
 ### Hardware Requirements
 
