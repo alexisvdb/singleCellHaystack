@@ -10,6 +10,8 @@ status](https://github.com/alexisvdb/singleCellHaystack/workflows/R-CMD-check/ba
 [![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
 [![CRAN
 Downloads](https://cranlogs.r-pkg.org/badges/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
+[![CRAN
+Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
 <!-- badges: end -->
 
 `singleCellHaystack` is a package for predicting differentially
