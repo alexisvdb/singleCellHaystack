@@ -262,8 +262,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     stop("'y' must be a numeric vector")
   if(length(x) != length(y))
     stop("'x' and 'y' must have the same length")
-  if(!is.matrix(detection) && ! inherits(detection, "dgCMatrix") && ! inherits(detection, "dgRMatrix"))
-    stop("'detection' must be a matrix, dgCMatrix, or dgRMatrix")
+  if(!is.matrix(detection) && ! inherits(detection, "lgCMatrix") && ! inherits(detection, "lgRMatrix"))
+    stop("'detection' must be a matrix, lgCMatrix, or lgRMatrix")
   if(ncol(detection) != length(x))
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!is.null(use.advanced.sampling)){
