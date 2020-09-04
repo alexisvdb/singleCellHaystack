@@ -91,13 +91,13 @@
 
       
 
-      </header><script src="a06_example_spatial_transcriptomics_files/header-attrs-2.3/header-attrs.js"></script><div class="row">
+      </header><script src="a06_example_spatial_transcriptomics_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysis of spatial transcriptomics with singleCellHaystack</h1>
                         <h4 class="author">Diego Diez</h4>
             
-            <h4 class="date">2020-08-20</h4>
+            <h4 class="date">2020-09-04</h4>
       
       
       <div class="hidden name"><code>a06_example_spatial_transcriptomics.Rmd</code></div>
@@ -116,7 +116,11 @@
 
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1</span>)</pre></body></html></div>
 <p>We focus on the anterior1 slice.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">anterior1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/LoadData.html">LoadData</a></span>(<span class="st">"stxBrain"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"anterior1"</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw">if</span> (!<span class="st">"stxBrain"</span> <span class="kw">%in%</span> <span class="kw pkg">SeuratData</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/InstalledData.html">InstalledData</a></span>()<span class="kw">[[</span><span class="st">"Dataset"</span>]]) {
+  <span class="kw pkg">SeuratData</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/InstallData.html">InstallData</a></span>(<span class="st">"stxBrain"</span>)
+}
+
+<span class="no">anterior1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/LoadData.html">LoadData</a></span>(<span class="st">"stxBrain"</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"anterior1"</span>)
 <span class="no">anterior1</span></pre></body></html></div>
 <pre><code>## An object of class Seurat 
 ## 31053 features across 2696 samples within 1 assay 

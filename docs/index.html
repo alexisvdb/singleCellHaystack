@@ -108,7 +108,26 @@
 <!-- badges: start -->
 
 <p><code>singleCellHaystack</code> is a package for predicting differentially expressed genes (DEGs) in single cell transcriptome data. It does so without relying on clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations.</p>
-<p>Our manuscript about <code>singleCellHaystack</code> has been published in Nature Communications (<a href="https://doi.org/10.1038/s41467-020-17900-3">link</a>).</p>
+</div>
+<div id="citation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#citation" class="anchor"></a>Citation</h2>
+<p>Our manuscript describing <code>singleCellHaystack</code> has been published in <a href="https://doi.org/10.1038/s41467-020-17900-3">Nature Communications</a>.</p>
+<p>If you use <code>singleCellHaystack</code> in your research please cite our work using:</p>
+<div class="sourceCode" id="cb1"><pre class="r">citation("singleCellHaystack")
+
+  Alexis Vandenbon and Diego Diez (2020): A clustering-independent
+  method for finding differentially expressed genes in single-cell
+  transcriptome data. Nature Communications
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.},
+    author = {Alexis Vandenbon and Diego Diez},
+    year = {2020},
+    journal = {Nature Communications},
+  }</pre></div>
 </div>
 <div id="documentation-and-demo" class="section level2">
 <h2 class="hasAnchor">
@@ -127,9 +146,9 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack">CRAN</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"singleCellHaystack"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"singleCellHaystack"</span>)</pre></div>
 <p>You can also install <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">remotes</span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="no">remotes</span>)
 <span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)</pre></div>
 </div>
 <div id="system-requirements" class="section level2">
@@ -187,6 +206,7 @@
 <li><a href="https://github.com/alexisvdb/singleCellHaystack/actions"><img src="https://github.com/alexisvdb/singleCellHaystack/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 <li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://www.r-pkg.org/badges/version/singleCellHaystack" alt="CRAN_Status_Badge"></a></li>
 <li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://cranlogs.r-pkg.org/badges/singleCellHaystack" alt="CRAN Downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack" alt="CRAN Downloads"></a></li>
 </ul>
 </div>
 </div>
