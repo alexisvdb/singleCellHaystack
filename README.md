@@ -24,8 +24,30 @@ uses Kullback-Leibler Divergence to find genes that are expressed in
 subsets of cells that are non-randomly positioned in a these
 multi-dimensional spaces or 2D representations.
 
-Our manuscript about `singleCellHaystack` has been published in Nature
-Communications ([link](https://doi.org/10.1038/s41467-020-17900-3)).
+## Citation
+
+Our manuscript describing `singleCellHaystack` has been published in
+[Nature Communications](https://doi.org/10.1038/s41467-020-17900-3).
+
+If you use `singleCellHaystack` in your research please cite our work
+using:
+
+``` r
+citation("singleCellHaystack")
+
+  Alexis Vandenbon and Diego Diez (2020): A clustering-independent
+  method for finding differentially expressed genes in single-cell
+  transcriptome data. Nature Communications
+
+A BibTeX entry for LaTeX users is
+
+  @Article{,
+    title = {A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.},
+    author = {Alexis Vandenbon and Diego Diez},
+    year = {2020},
+    journal = {Nature Communications},
+  }
+```
 
 ## Documentation and Demo
 
