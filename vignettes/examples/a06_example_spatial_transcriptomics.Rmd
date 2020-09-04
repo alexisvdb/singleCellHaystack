@@ -39,6 +39,10 @@ set.seed(1)
 We focus on the anterior1 slice.
 
 ```{r}
+if (!"stxBrain" %in% SeuratData::InstalledData()[["Dataset"]]) {
+  SeuratData::InstallData("stxBrain")
+}
+
 anterior1 <- LoadData("stxBrain", type = "anterior1")
 anterior1
 ```

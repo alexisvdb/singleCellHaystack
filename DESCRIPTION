@@ -27,6 +27,7 @@ Suggests:
     SummarizedExperiment,
     SingleCellExperiment,
     Seurat,
+    SeuratData,
     Rtsne,
     cowplot,
     testthat
