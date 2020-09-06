@@ -34,7 +34,8 @@ using:
 
 Vandenbon A, Diez D (2020). “A clustering-independent method for finding
 differentially expressed genes in single-cell transcriptome data.”
-*Nature Communications*.
+*Nature Communications*, *11*(1), 4318. doi: 10.1038/s41467-020-17900-3
+(URL: <https://doi.org/10.1038/s41467-020-17900-3>).
 
 ## Documentation and Demo
 
