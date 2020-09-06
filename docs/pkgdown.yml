@@ -8,7 +8,7 @@ articles:
   a04_example_tsne2D_default: examples/a04_example_tsne2D_default.html
   a05_example_tsne2D_advanced: examples/a05_example_tsne2D_advanced.html
   a06_example_spatial_transcriptomics: examples/a06_example_spatial_transcriptomics.html
-last_built: 2020-09-04T11:06Z
+last_built: 2020-09-06T07:41Z
 urls:
   reference: https://alexisvdb.github.io/singleCellHaystack//reference
   article: https://alexisvdb.github.io/singleCellHaystack//articles
