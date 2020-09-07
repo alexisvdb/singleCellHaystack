@@ -41,8 +41,8 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   if(ncol(expression) != length(x))
     stop("The number of columns in 'expression' must be the same as the length of 'x'")
   if(!is.null(detection)){
-    if(!is.matrix(detection) && ! inherits(detection, "dgCMatrix") && ! inherits(detection, "dgRMatrix"))
-      stop("'detection' must be a matrix, dgCMatrix, or dgRMatrix")
+    if(!is.matrix(detection) && ! inherits(detection, "lgCMatrix") && ! inherits(detection, "lgRMatrix"))
+      stop("'detection' must be a matrix, lgCMatrix, or lgRMatrix")
     if(any(dim(detection)!=dim(expression)))
       stop("'detection' must be of the same dimensions as 'expression', or should be NULL")
   }
@@ -59,17 +59,27 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
   # if expression is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(expression, "dgCMatrix")){
-    message("### converting expression data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    expression <- as( as(expression, "matrix"), "dgRMatrix")
+  if(inherits(expression, "dgCMatrix") ){
+    message("### converting expression data from dgCMatrix to dgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
+  # expression could also be logical
+  # if expression is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(expression, "lgCMatrix") ){
+    message("### converting expression data from lgCMatrix to lgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
+  # expression could also be a dgeMatrix
+  # if expression is a dgeMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgeMatrix") ){
+    message("### converting expression data from dgeMatrix to lgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
   }
 
   # set index of gene if it is a character
@@ -99,8 +109,10 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   dat.plot <- data.frame(
     x     = x,
     y     = y,
-    value = if(inherits(expression, "dgRMatrix")){
+    value = if(inherits(expression, "dgRMatrix")){ # for numeric sparse case
               extract_row_dgRMatrix(expression, gene.index)
+            } else if(inherits(expression, "lgRMatrix")){ # for logical sparse case
+              extract_row_lgRMatrix(expression, gene.index)
             } else {
               unlist(expression[gene.index,])
             }
@@ -182,11 +194,10 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   # set index of gene if it is a character

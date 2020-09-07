@@ -177,7 +177,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   if(grid.method!="centroid" & grid.method!="seeding")
     stop("The value of 'grid.method' must be either 'centroid' or 'seeding'")
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
   if(inherits(detection, "lgCMatrix")){
     message("### converting detection data from lgCMatrix to lgRMatrix")
     detection <- as(detection, "RsparseMatrix")
@@ -268,9 +268,9 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       if(i%%1000==0)
         message(paste0("### ... ",i," rows out of ",count.genes," done"))
     }
-  } else if(class(detection)[1] == "dgRMatrix"){
+  } else if(inherits(detection, "lgRMatrix")){
     for(i in 1:count.genes){
-      D_KL.observed[i] <- get_D_KL_highD(classes=extract_row_dgRMatrix(detection,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
+      D_KL.observed[i] <- get_D_KL_highD(classes=extract_row_lgRMatrix(detection,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
       if(i%%1000==0)
         message(paste0("### ... ",i," rows out of ",count.genes," done"))
     }

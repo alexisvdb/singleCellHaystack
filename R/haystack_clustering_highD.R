@@ -48,11 +48,10 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
     grid.coordinates <- (grid.coordinates - rep(x.scale.center,each=nrow(grid.coordinates))) / rep(x.scale.scale,each=nrow(grid.coordinates))
   }
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   # get densities
@@ -76,13 +75,13 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
     }
-  } else if( inherits(detection, "dgRMatrix") ){
+  } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[as.logical(extract_row_dgRMatrix(detection,gene_index)),],2,sum)
+      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
     }
   } else {
-    stop("'detection' must be a matrix or dgRMatrix")
+    stop("'detection' must be a matrix or lgRMatrix")
   }
 
   #heatmap(dist.to.grid.norm, Rowv=NA, Colv=NA, scale="none")
@@ -149,11 +148,10 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
     grid.coordinates <- (grid.coordinates - rep(x.scale.center,each=nrow(grid.coordinates))) / rep(x.scale.scale,each=nrow(grid.coordinates))
   }
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   # get densities
@@ -177,13 +175,13 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
     }
-  } else if( inherits(detection, "dgRMatrix") ){
+  } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[as.logical(extract_row_dgRMatrix(detection,gene_index)),],2,sum)
+      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
     }
   } else {
-    stop("'detection' must be a matrix or dgRMatrix")
+    stop("'detection' must be a matrix or lgRMatrix")
   }
 
   km <- kmeans(x=densities, centers=k, ...)

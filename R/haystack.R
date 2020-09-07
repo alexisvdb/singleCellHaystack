@@ -278,6 +278,11 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     warning("The number of cells seems very low (",length(x),"). Check your input.")
   if(nrow(detection) < 100)
     warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
+  }
 
 
   # make dir if needed
@@ -286,11 +291,6 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       dir.create(dir.randomization)
   }
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "lgCMatrix")){
-    message("### converting detection data from dgCMatrix to lgRMatrix")
-    detection <- as(detection, "RsparseMatrix")
-  }
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
@@ -337,9 +337,9 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       if(i%%1000==0)
         message(paste0("### ... ",i," rows out of ",count.genes," done"))
     }
-  } else if(class(detection)[1] == "dgRMatrix"){
+  } else if(inherits(detection, "lgRMatrix")){
     for(i in 1:count.genes){
-      D_KL.observed[i] <- get_D_KL(classes=extract_row_dgRMatrix(detection,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      D_KL.observed[i] <- get_D_KL(classes=extract_row_lgRMatrix(detection,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
       if(i%%1000==0)
         message(paste0("### ... ",i," rows out of ",count.genes," done"))
     }
@@ -487,8 +487,8 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   cl <- T # we are only looking at the T points here
 
   # detection could be a matrix class object now,
-  # or a dgRMatrix object
-  # if detection is a dgCMatrix object at this point, something is wrong
+  # or a lgRMatrix object
+  # if detection is a lgCMatrix object at this point, something is wrong
   if(is.matrix(detection)){
     for(i in 1:length(rows.subset)){
       r <- rows.subset[i]
@@ -498,17 +498,17 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
                               dens.y=parameters$dens.y[,y.subset])
       densities[i,,] <- density / sum(density)
     }
-  } else if(inherits(detection, "dgRMatrix")){
+  } else if(inherits(detection, "lgRMatrix")){
     for(i in 1:length(rows.subset)){
       r <- rows.subset[i]
-      x.subset <- extract_row_dgRMatrix(detection,r)==cl
-      y.subset <- extract_row_dgRMatrix(detection,r)==cl
+      x.subset <- extract_row_lgRMatrix(detection,r)==cl
+      y.subset <- extract_row_lgRMatrix(detection,r)==cl
       density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
                               dens.y=parameters$dens.y[,y.subset])
       densities[i,,] <- density / sum(density)
     }
   } else {
-    stop("'detection' must be a matrix or dgRMatrix")
+    stop("'detection' must be a matrix or lgRMatrix")
   }
   # set dimension names to genes, and grid points of x and y axes
   dimnames(densities) <- list(rownames(detection)[rows.subset],
@@ -576,26 +576,47 @@ show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=N
   result[o[1:n.to.select],]
 }
 
-#' Returns a row of a sparse matrix of class dgRMatrix. Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)
+#' Returns a row of a sparse matrix of class lgRMatrix Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)
 #'
-#' @param m a sparse matrix of class dgRMatrix
+#' @param m a sparse matrix of class lgRMatrix
 #' @param i the index of the row to return
 #'
-#' @return A row (vector) of the sparse matrix
-#' @export
+#' @return A row (logical vector) of the sparse matrix
 #'
 #' @examples
 #'
-#' # make a toy dgRMatrix
-#' m <- matrix(rpois(12,1), nrow=4)
-#' m <- as(m, "dgRMatrix")
-#' # get first row of this dgRMatrix
-#' extract_row_dgRMatrix(m, 1)
-extract_row_dgRMatrix <- function(m, i=1) {
-  r <- numeric(ncol(m))   ## set up zero vector for results
-  ## suggested by @OttToomet, handles empty rows
+#' # make a toy lgRMatrix
+#' m <- matrix(rpois(12,1), nrow=4) > 0
+#' m <- as(m, "RsparseMatrix")
+#' # get first row of this lgRMatrix
+#' extract_row_lgRMatrix(m, 1)
+extract_row_lgRMatrix <- function(m, i=1) {
+  r <- logical(ncol(m))   ## set up vector with FALSE values for results
   inds <- seq(from=m@p[i]+1,
               to=m@p[i+1], length.out=max(0, m@p[i+1] - m@p[i]))
   r[m@j[inds]+1] <- m@x[inds]     ## set values
   return(r)
 }
+
+#' Returns a row of a sparse matrix of class dgRMatrix Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)
+#'
+#' @param m a sparse matrix of class dgRMatrix
+#' @param i the index of the row to return
+#'
+#' @return A row (numerical vector) of the sparse matrix
+#'
+#' @examples
+#'
+#' # make a toy dgRMatrix
+#' m <- matrix(rpois(12,1), nrow=4)
+#' m <- as(m, "RsparseMatrix")
+#' # get first row of this dgRMatrix
+#' extract_row_dgRMatrix(m, 1)
+extract_row_dgRMatrix <- function(m, i=1) {
+  r <- numeric(ncol(m))   ## set up vector with zero values for results
+  inds <- seq(from=m@p[i]+1,
+              to=m@p[i+1], length.out=max(0, m@p[i+1] - m@p[i]))
+  r[m@j[inds]+1] <- m@x[inds]     ## set values
+  return(r)
+}
+

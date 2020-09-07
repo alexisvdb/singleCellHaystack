@@ -43,11 +43,10 @@ hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
   if(sum(is.element(genes, rownames(detection)))==0)
     stop("None of the values in 'genes' are present in row names of 'detection'")
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   # get densities (not in high resolution)
@@ -112,11 +111,10 @@ kmeans_haystack_raw = function(x, y, detection, genes, k, ...){
   if(missing(k) | !is.numeric(k) | k < 1)
     stop("Value of 'k' should be an integer larger than 1")
 
-  # if detection is a dgCMatrix, convert it to a dgRMatrix
-  if(inherits(detection, "dgCMatrix")){
-    message("### converting detection data from dgCMatrix to dgRMatrix...")
-    # unfortunately it seems impossible to cast from dgC to dgR in directly?
-    detection <- as( as(detection, "matrix"), "dgRMatrix")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
   }
 
   # get densities (not in high resolution)
