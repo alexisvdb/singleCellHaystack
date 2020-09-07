@@ -24,10 +24,10 @@ library(cowplot)
 
 
 # Preparing the input data
-The data used in these examples can be found [here](https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/). We recommend downloading the .rda file and loading it using the `load()` function. You can also download the individual data files separately.
+The data used in these examples can be found [here](https://figshare.com/articles/dataset/Example_dataset_for_singleCellHaystack_GitHub_vignettes/12923489). We recommend downloading the .rda file and loading it using the `load()` function. You can also download the individual data files separately.
 
 ```{r example0, message=FALSE, warning=FALSE, paged.print=FALSE}
-load(url("https://genomics.virus.kyoto-u.ac.jp/alexisvdb/singleCellHaystack/tabula_muris_marrow_P7_2.rda"))
+load(url("https://ndownloader.figshare.com/files/24593213"))
 ls()
 ```
 
