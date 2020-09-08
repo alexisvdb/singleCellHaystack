@@ -75,7 +75,7 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", cuto
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
-  haystack(as.matrix(z), detection = as.matrix(y) > cutoff, method = method, ...)
+  haystack(z, detection = y > cutoff, method = method, ...)
 }
 
 #' @rdname haystack
@@ -104,7 +104,7 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
-  haystack(as.matrix(z), detection = y > cutoff, method = method, ...)
+  haystack(z, detection = y > cutoff, method = method, ...)
 }
 
 #' Visualizing the detection/expression of a gene in a 2D plot
