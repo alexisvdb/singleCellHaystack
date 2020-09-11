@@ -5,4 +5,5 @@
 #' @importFrom grDevices pdf dev.off
 #' @importFrom utils read.csv write.csv
 #' @importFrom splines bs
+#' @importFrom utils setTxtProgressBar txtProgressBar
 "_PACKAGE"
