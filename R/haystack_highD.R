@@ -77,7 +77,10 @@ get_grid_points = function(input, method="centroid", grid.points = 100){
 
   if(method=="centroid"){
     # perform k-means clustering and get the centroids (centers) of each cluser
-    res.kmeans <- kmeans(input, centers=grid.points, iter.max = 10, nstart = 10)
+    # suppressing "did not converge" warnings, because convergence is not really important here
+    suppressWarnings(
+      res.kmeans <- kmeans(input, centers=grid.points, iter.max = 10, nstart = 10)
+    )
     grid.coord <- res.kmeans$centers
 
   } else if(method=="seeding"){
