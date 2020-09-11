@@ -276,6 +276,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # warn about unusual input sizes
   if(length(x) < 50)
     warning("The number of cells seems very low (",length(x),"). Check your input.")
+  if(length(x) > 10000)
+    message("You are running haystack_2D on a large number of cells (",length(x),"). Use method 'highD' for shorter runtimes.")
   if(nrow(detection) < 100)
     warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
   # if detection is a lgCMatrix, convert it to a lgRMatrix
