@@ -333,7 +333,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # get D_KL (or relative entropy) of this P vs reference Q
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
-  pb <- txtProgressBar(min = 0, max = count.genes, style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = count.genes, style = 3, file = stderr()) # progress bar
   if(is.matrix(detection)){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
@@ -402,7 +402,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   all.D_KL.randomized <- matrix(NA,nrow=T.counts.to.select,ncol=randomization.count,
                                 dimnames=list(T.counts.selected,1:randomization.count))
 
-  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3, file = stderr()) # progress bar
 
   # taking if - else statements outside of the for loop
   if(!is.null(use.advanced.sampling)){

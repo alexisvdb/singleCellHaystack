@@ -72,7 +72,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
   row.names(densities) <- detection.rownames[row.index.subset]
 
   message("### collecting density data...")
-  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3, file = stderr()) # progress bar
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
@@ -178,7 +178,7 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
   row.names(densities) <- detection.rownames[row.index.subset]
 
   message("### collecting density data...")
-  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3, file = stderr()) # progress bar
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]

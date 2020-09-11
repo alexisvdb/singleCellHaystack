@@ -265,7 +265,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
   class.types = c(FALSE, TRUE)
-  pb <- txtProgressBar(min = 0, max = count.genes, style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = count.genes, style = 3, file = stderr()) # progress bar
   if(is.matrix(detection)){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
@@ -333,7 +333,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   all.D_KL.randomized <- matrix(NA,nrow=T.counts.to.select,ncol=randomization.count,
                                 dimnames=list(T.counts.selected,1:randomization.count))
 
-  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3) # progress bar
+  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3, file = stderr()) # progress bar
 
   # taking if - else statements outside of the for loop
   if(!is.null(use.advanced.sampling)){
