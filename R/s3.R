@@ -6,6 +6,7 @@
 #' @param assay name of assay data for Seurat method.
 #' @param slot name of slot for assay data for Seurat method.
 #' @param coord name of coordinates slot for specific methods.
+#' @param dims dimensions from coord to use. By default, all.
 #' @param cutoff cutoff for detection.
 #' @param method choose between highD (default) and 2D haystack.
 #' @param detection A logical matrix showing which genes (rows) are detected in which cells (columns)
@@ -58,13 +59,17 @@ haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "high
 
 #' @rdname haystack
 #' @export
-haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", cutoff = 1, method = NULL, ...) {
+haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims = NULL, cutoff = 1, method = NULL, ...) {
   if (!requireNamespace("Seurat", quietly = TRUE)) {
     stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
   y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
   z <- Seurat::Embeddings(x, coord)
+
+  if (! is.null(dims)) {
+    z <- z[, dims, drop = FALSE]
+  }
 
   if(is.null(method)){
     if(ncol(z)==2){
@@ -80,7 +85,7 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", cuto
 
 #' @rdname haystack
 #' @export
-haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", cutoff = 1, method = NULL, ...) {
+haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", dims = NULL, cutoff = 1, method = NULL, ...) {
   if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
     stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -91,8 +96,13 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", c
 
   y <- SummarizedExperiment::assay(x, assay)
   z <- SingleCellExperiment::reducedDim(x, coord)
+
   if(is.null(z)) {
     stop("No coordinates named ", coord, " found.")
+  }
+
+  if (! is.null(dims)) {
+    z <- z[, dims, drop = FALSE]
   }
 
   if(is.null(method)){
