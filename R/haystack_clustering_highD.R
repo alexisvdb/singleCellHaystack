@@ -70,19 +70,25 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 
   densities <- matrix(NA, nrow=length(row.index.subset), ncol=ncol(density.contributions))
   row.names(densities) <- detection.rownames[row.index.subset]
+
+  message("### collecting density data...")
+  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3) # progress bar
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
+      setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
+      setTxtProgressBar(pb, g) # progress bar
     }
   } else {
     stop("'detection' must be a matrix or lgRMatrix")
   }
+  close(pb) # progress bar
 
   #heatmap(dist.to.grid.norm, Rowv=NA, Colv=NA, scale="none")
   #heatmap(densities, Rowv=NA, Colv=NA, scale="none")
@@ -170,19 +176,25 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
 
   densities <- matrix(NA, nrow=length(row.index.subset), ncol=ncol(density.contributions))
   row.names(densities) <- detection.rownames[row.index.subset]
+
+  message("### collecting density data...")
+  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3) # progress bar
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
+      setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
       densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
+      setTxtProgressBar(pb, g) # progress bar
     }
   } else {
     stop("'detection' must be a matrix or lgRMatrix")
   }
+  close(pb) # progress bar
 
   km <- kmeans(x=densities, centers=k, ...)
   km

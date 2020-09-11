@@ -186,7 +186,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
 
-  # warn about unusal input sizes
+  # warn about unusual input sizes
   if(nrow(x) < 50)
     warning("The number of cells seems very low (",nrow(x),"). Check your input.")
   if(nrow(detection) < 100)
@@ -262,19 +262,19 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
   class.types = c(FALSE, TRUE)
+  pb <- txtProgressBar(min = 0, max = count.genes, style = 3) # progress bar
   if(is.matrix(detection)){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL_highD(classes=detection[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
-      if(i%%1000==0)
-        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+      setTxtProgressBar(pb, i) # progress bar
     }
   } else if(inherits(detection, "lgRMatrix")){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL_highD(classes=extract_row_lgRMatrix(detection,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
-      if(i%%1000==0)
-        message(paste0("### ... ",i," rows out of ",count.genes," done"))
+      setTxtProgressBar(pb, i) # progress bar
     }
   }
+  close(pb) # progress bar
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X
 
@@ -285,12 +285,12 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
 
   # Randomized D_KL values depend on the number of "F" and "T" cases
-  # Thereofre, for all observed numbers of "T" cases (from 0 to 100%):
-  # - do x randomizations and get teir D_KL
+  # Therefore, for all observed numbers of "T" cases (from 0 to 100%):
+  # - do x randomizations and get their D_KL
   # - get mean and SD per fraction,
   # - use those to estimate p values
 
-  message("### starting randomizations...")
+  message("### performing randomizations...")
   T.counts <- apply(detection,1,sum)
   T.counts.unique <- sort(unique(T.counts))
   T.counts.unique.no <- length(T.counts.unique)
@@ -330,13 +330,14 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   all.D_KL.randomized <- matrix(NA,nrow=T.counts.to.select,ncol=randomization.count,
                                 dimnames=list(T.counts.selected,1:randomization.count))
 
+  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3) # progress bar
+
   # taking if - else statements outside of the for loop
   if(!is.null(use.advanced.sampling)){
     sampling.probs <- use.advanced.sampling
 
     for(i in 1:T.counts.to.select){
-      if(i%%10==0)
-        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
+      setTxtProgressBar(pb, i) # progress bar
 
       T.count <- T.counts.selected[i]
 
@@ -355,8 +356,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   } else {
 
     for(i in 1:T.counts.to.select){
-      if(i%%10==0)
-        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
+      setTxtProgressBar(pb, i) # progress bar
 
       T.count <- T.counts.selected[i]
 
@@ -371,6 +371,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
   }# end if else
+  close(pb) # progress bar
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
