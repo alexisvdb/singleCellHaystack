@@ -294,7 +294,7 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   # - use those to estimate p values
 
   message("### performing randomizations...")
-  T.counts <- apply(detection,1,sum)
+  T.counts <- Matrix::rowSums(detection)
   T.counts.unique <- sort(unique(T.counts))
   T.counts.unique.no <- length(T.counts.unique)
   p.vals <- rep(NA,nrow(detection))

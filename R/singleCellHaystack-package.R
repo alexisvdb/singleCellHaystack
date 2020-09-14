@@ -6,4 +6,5 @@
 #' @importFrom utils read.csv write.csv
 #' @importFrom splines bs
 #' @importFrom utils setTxtProgressBar txtProgressBar
+#' @importFrom Matrix rowSums colMeans
 "_PACKAGE"

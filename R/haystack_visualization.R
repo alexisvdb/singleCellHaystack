@@ -225,7 +225,7 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
   if(length(gene.indices)==1){
     mean.detection <- apply(t(detection[gene.indices,]),2,mean)
   } else {
-    mean.detection <- apply(detection[gene.indices,],2,mean)
+    mean.detection <- Matrix::colMeans(detection[gene.indices,])
   }
 
 
