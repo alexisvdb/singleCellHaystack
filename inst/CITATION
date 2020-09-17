@@ -1,0 +1,14 @@
+citEntry(entry="article",
+         title = "A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.",
+         author = personList( as.person("Alexis Vandenbon"),
+                              as.person("Diego Diez")),
+         year = 2020,
+         number = 1,
+         volume = 11,
+         pages = 4318,
+         doi = "10.1038/s41467-020-17900-3",
+         journal = "Nature Communications",
+         textVersion =
+         paste("Alexis Vandenbon and Diego Diez (2020):",
+               "A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.",
+               "Nature Communications" ) )
