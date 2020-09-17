@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Application on multi-dimensional coordinates • singleCellHaystack</title>
+<title>Application on 2D t-SNE coordinates • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../../bootstrap-toc.css">
 <script src="../../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../../pkgdown.css" rel="stylesheet">
-<script src="../../pkgdown.js"></script><meta property="og:title" content="Application on multi-dimensional coordinates">
+<script src="../../pkgdown.js"></script><meta property="og:title" content="Application on 2D t-SNE coordinates">
 <meta property="og:description" content="singleCellHaystack">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -94,25 +94,24 @@
 
       
 
-      </header><script src="a02_example_highD_default_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="a06_example_tsne2D_default_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Application on multi-dimensional coordinates</h1>
+      <h1 data-toc-skip>Application on 2D t-SNE coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
             <h4 class="date">2020-09-17</h4>
       
       
-      <div class="hidden name"><code>a02_example_highD_default.Rmd</code></div>
+      <div class="hidden name"><code>a06_example_tsne2D_default.Rmd</code></div>
 
     </div>
 
     
     
-<p>In this article, we show the application of <code>singleCellHaystack</code> on high-dimensional coordinates. Our method takes the coordinates of the cells in a &gt;2-dimensional space (e.g. the first few principal components, etc), and predicts differentially expressed genes (DEGs) in that space. It does so by looking at the “expression distribution” of a gene (i.e. the distribution in the input space of cells that express a gene).</p>
-<div id="preparing-input-data" class="section level1">
+<div id="preparing-the-input-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
+<a href="#preparing-the-input-data" class="anchor"></a>Preparing the input data</h1>
 <p>The data used in these examples can be found <a href="https://figshare.com/articles/dataset/Example_dataset_for_singleCellHaystack_GitHub_vignettes/12923489">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://ndownloader.figshare.com/files/24593213"</span>))
@@ -124,11 +123,11 @@
 <li>
 <code>dat.expression</code>: a matrix object with the expression of genes (rows) in each cell (columns).</li>
 <li>
-<code>dat.pca</code>: the output of PCA. This data.frame contains the first 50 pricipal components (PCs).</li>
+<code>dat.pca</code>: the output of PCA. This data.frame contains thefirst 50 pricipal components.</li>
 <li>
-<code>dat.tsne</code>: a data.frame with t-SNE coordinates (2D) based on the first 50 PCs.</li>
+<code>dat.tsne</code>: a data.frame with t-SNE coordinates (2D).</li>
 <li>
-<code>dat.umap</code>: a data.frame with UMAP coordinates (2D) based on the first 50 PCs.</li>
+<code>dat.umap</code>: a data.frame with UMAP coordinates (2D).</li>
 </ul>
 <p>Let’s have a look at this example dataset:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
@@ -139,7 +138,7 @@
 <span class="co"># visualizing the cells in a t-SNE plot:</span>
 <span class="fu">ggplot</span>(<span class="kw">dat.tsne</span>, <span class="fu">aes</span>(x = <span class="kw">V1</span>, y = <span class="kw">V2</span>)) <span class="op">+</span> <span class="fu">labs</span>(x = <span class="st">"t-SNE1"</span>, y = <span class="st">"t-SNE2"</span>) <span class="op">+</span> <span class="fu">geom_point</span>()
 </pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a06_example_tsne2D_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb3"><pre class="downlit">
 
 <span class="co"># the t-SNE coordinates are based on the 50 PCs</span>
@@ -149,7 +148,6 @@
 <p>There are several groups of cells, although the borders between them are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to predict DEGs without relying on grouping of the cells into arbitrary clusters.</p>
 <p><code>singleCellHaystack</code> has two required input parameters: 1) the coordinates of cells in the input space, and 2) a table showing which genes are detected in which cells. The definition of detection is left to the user. In this example we will use the median normalized read count of each gene as threshold for defining detection. Alternatively, we could also define genes with counts &gt; 0 as being detected, for example.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit">
-
 <span class="kw">median.per.gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw">dat.expression</span>,<span class="fl">1</span>,<span class="kw">median</span>) <span class="co"># get the median read count per gene</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">median.per.gene</span>) <span class="co"># for many genes the median read count is 0</span>
 <span class="co">#&gt;  Mrpl15  Lypla1  Rb1cc1    Sgk3   Snhg6   Tram1 </span>
@@ -170,78 +168,65 @@
 <span class="co">#&gt; Snhg6                TRUE              FALSE</span>
 </pre></div>
 </div>
-<div id="running-haystack-on-multi-dimensional-coordinates" class="section level1">
+<div id="running-haystack-on-2d-coordinates" class="section level1">
 <h1 class="hasAnchor">
-<a href="#running-haystack-on-multi-dimensional-coordinates" class="anchor"></a>Running <code>haystack</code> on multi-dimensional coordinates</h1>
+<a href="#running-haystack-on-2d-coordinates" class="anchor"></a>Running <code>haystack</code> on 2D coordinates</h1>
 <p>First, load the package.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">singleCellHaystack</span>)
 </pre></div>
-<p>Next, run <code>haystack</code> on the first 50 principal components. Since the space is 50-dimensional, we set ‘method’ to ‘highD’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also set a random seed to ensure replicability.</p>
+<p>Next, run <code>haystack</code> on the t-SNE coordinates. These are 2D coordinates, so we set ‘method’ to ‘2D’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also set a random seed to ensure replicability.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-<span class="kw">res.pc50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span>(x = <span class="kw">dat.pca</span>[,<span class="fl">1</span><span class="op">:</span><span class="fl">50</span>], detection = <span class="kw">dat.detection</span>, method = <span class="st">"highD"</span>)
-<span class="co">#&gt; ### calling haystack_highD()...</span>
-<span class="co">#&gt; ### scaling input data...</span>
-<span class="co">#&gt; ### deciding grid points...</span>
+<span class="kw">res.tsne</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span>(x = <span class="kw">dat.tsne</span>, detection = <span class="kw">dat.detection</span>, method = <span class="st">"2D"</span>)
+<span class="co">#&gt; ### calling haystack_2D()...</span>
+<span class="co">#&gt; ### setting parameters...</span>
 <span class="co">#&gt; ### calculating Kullback-Leibler divergences...</span>
 <span class="co">#&gt; ### performing randomizations...</span>
 <span class="co">#&gt; ### estimating p-values...</span>
 <span class="co">#&gt; ### returning result...</span>
 </pre></div>
-<p>Let’s have a look at the most significant DEGs. The gene with the strongest differential expression is Trim10. We can plot the expression and detection of this gene using the <code>plot_gene_haystack</code> function. From the t-SNE plots we can see that Trim10 is detected in the bottom right group of cells. In contrast, the expression of Eef1a1 is higher in cells of the top-right and bottom-left groups of cells.</p>
+<p>Let’s have a look at the most significant DEGs. The gene with the strongest differential expression is Lyz1. We can plot the expression and detection of this gene using the <code>plot_gene_haystack</code> function. From the plots we can see that Lyz1 is not detected in the upper right and lower right groups of cells.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.pc50</span>, n = <span class="fl">5</span>)
-<span class="co">#&gt;               D_KL log.p.vals log.p.adj T.counts</span>
-<span class="co">#&gt; Trim10 0.011895191  -76.33235 -72.25208      368</span>
-<span class="co">#&gt; Snca   0.009586202  -75.75859 -71.67832      474</span>
-<span class="co">#&gt; Rpl10  0.004980578  -75.04406 -70.96380      990</span>
-<span class="co">#&gt; Eef1a1 0.004977941  -75.02834 -70.94807      990</span>
-<span class="co">#&gt; Rps11  0.004972334  -74.99488 -70.91462      990</span>
-
-<span class="co"># plotting detection of Trim10</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Trim10"</span>, expression = <span class="kw">dat.detection</span>)
+<span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.tsne</span>, n = <span class="fl">5</span>)
+<span class="co">#&gt;             D_KL log.p.vals log.p.adj T.counts</span>
+<span class="co">#&gt; Lyz1   0.9899380  -71.85654 -67.77627      990</span>
+<span class="co">#&gt; Lyz2   0.9870778  -71.77112 -67.69085      990</span>
+<span class="co">#&gt; Rps11  0.9763735  -71.44969 -67.36942      990</span>
+<span class="co">#&gt; Rpl10  0.9718911  -71.31427 -67.23400      990</span>
+<span class="co">#&gt; Eef1a1 0.9718311  -71.31245 -67.23218      990</span>
+<span class="co"># plotting detection of this gene</span>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Lyz1"</span>, expression = <span class="kw">dat.detection</span>)
 </pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a06_example_tsne2D_default_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="co"># plotting log expression of Trim10</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Trim10"</span>, expression = <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="kw">dat.expression</span>))
+<span class="co"># plotting log expression of this gene</span>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Lyz1"</span>, expression = <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="kw">dat.expression</span>)) 
 </pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example5-2.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-
-<span class="co"># plotting detection of Eef1a1</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Eef1a1"</span>, expression = <span class="kw">dat.detection</span>)
-</pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example5-3.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co"># plotting log expression of Eef1a1</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Eef1a1"</span>, expression = <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="kw">dat.expression</span>))
-</pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example5-4.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="a06_example_tsne2D_default_files/figure-html/example5-2.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
-<p>Next, let’s take the top 1000 DEGs, and cluster them by their expression pattern in the input space (first 50 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
+<p>Next, let’s take the top 1000 DEGs, and cluster them by their expression pattern in the 2D t-SNE coordinates. Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># get the top 1000 DEGs in the result</span>
-<span class="kw">res.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.pc50</span>, n = <span class="fl">1000</span>)
+<span class="kw">res.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.tsne</span>, n = <span class="fl">1000</span>)
 <span class="co"># cluster DEGs by their expression pattern in the 2D plot</span>
 <span class="kw">genes.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">res.top</span>)
 <span class="kw">res.hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/hclust_haystack.html">hclust_haystack</a></span>(x = <span class="kw">dat.tsne</span>, genes = <span class="kw">genes.top</span>, detection = <span class="kw">dat.detection</span>)
 </pre></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
+<div class="sourceCode" id="cb10"><pre class="downlit">
 <span class="kw">res.hc.clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(<span class="kw">res.hc</span>, k=<span class="fl">5</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">res.hc.clusters</span>)
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 332 198 341 103  26</span>
+<span class="co">#&gt; 233 362 215 163  27</span>
 </pre></div>
 <p>While some clusters contain hunderds of genes, others are quite small.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
+<div class="sourceCode" id="cb11"><pre class="downlit">
 <span class="kw">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu">function</span>(<span class="kw">cluster</span>) {
   <span class="kw">gene.set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">res.hc.clusters</span>)[<span class="kw">res.hc.clusters</span><span class="op">==</span><span class="kw">cluster</span>]
   <span class="kw">plot.title</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, <span class="kw">cluster</span>)
@@ -250,13 +235,13 @@
 })
 <span class="fu">plot_grid</span>(plotlist = <span class="kw">pl</span>, ncol = <span class="fl">2</span>)
 </pre></div>
-<p><img src="a02_example_highD_default_files/figure-html/example8-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">res.hc.clusters</span>[<span class="st">"Trim10"</span>] <span class="co"># the top DEG is in cluster 5</span>
-<span class="co">#&gt; Trim10 </span>
-<span class="co">#&gt;      5</span>
+<p><img src="a06_example_tsne2D_default_files/figure-html/example8-1.png" width="768" style="display: block; margin: auto;"></p>
+<div class="sourceCode" id="cb12"><pre class="downlit">
+<span class="kw">res.hc.clusters</span>[<span class="st">"Lyz1"</span>] <span class="co"># the most significant DEG is in cluster 3</span>
+<span class="co">#&gt; Lyz1 </span>
+<span class="co">#&gt;    3</span>
 </pre></div>
-<p>The most significant DEG, Trim10, was clustered into cluster 5. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that cluster.</p>
+<p>The most significant DEG, Lyz1, was clustered into cluster 3. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that of cluster 3. The pattern of cluster 5 (containing just a few genes) is rather different from all other clusters.</p>
 </div>
   </div>
 

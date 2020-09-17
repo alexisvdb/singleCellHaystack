@@ -19,16 +19,16 @@
     <loc>https://alexisvdb.github.io/singleCellHaystack//reference/extract_row_lgRMatrix.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_density.html</loc>
-  </url>
-  <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_dist_two_sets.html</loc>
-  </url>
-  <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_D_KL.html</loc>
   </url>
   <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_D_KL_highD.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_density.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_dist_two_sets.html</loc>
   </url>
   <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack//reference/get_euclidean_distance.html</loc>

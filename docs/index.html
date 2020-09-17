@@ -117,7 +117,9 @@
 <a href="#citation" class="anchor"></a>Citation</h2>
 <p>Our manuscript describing <code>singleCellHaystack</code> has been published in <a href="https://doi.org/10.1038/s41467-020-17900-3">Nature Communications</a>.</p>
 <p>If you use <code>singleCellHaystack</code> in your research please cite our work using:</p>
-<p>Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” <em>Nature Communications</em>, <em>11</em>(1), 4318. doi: 10.1038/s41467-020-17900-3 (URL: <a href="https://doi.org/10.1038/s41467-020-17900-3" class="uri">https://doi.org/10.1038/s41467-020-17900-3</a>).</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>Warning <span class="cf">in</span> <span class="kw">citation</span>(<span class="st">"singleCellHaystack"</span>)<span class="op">:</span><span class="st"> </span>no date field <span class="cf">in</span> DESCRIPTION file of</span>
+<span id="cb1-2"><a href="#cb1-2"></a>package <span class="st">'singleCellHaystack'</span></span></code></pre></div>
+<p>Vandenbon A, Diez D (2020). <em>singleCellHaystack: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)</em>. R package version 0.3.2.99.</p>
 </div>
 <div id="documentation-and-demo" class="section level2">
 <h2 class="hasAnchor">
@@ -127,20 +129,21 @@
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html">Application on toy example</a></li>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html">Application on multi-dimensional coordinates</a></li>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a></li>
 </ul>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>You can install the released version of <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack">CRAN</a> with:</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb2"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"singleCellHaystack"</span>)
 </pre></div>
 <p>You can also install <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
-<div class="sourceCode"><pre class="downlit">
+<div class="sourceCode" id="cb3"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">require</a></span>(<span class="kw"><a href="https://remotes.r-lib.org">remotes</a></span>)
 <span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"alexisvdb/singleCellHaystack"</span>)
 </pre></div>
