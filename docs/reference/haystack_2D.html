@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -104,13 +104,16 @@
       <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+      <a href="../articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -145,11 +148,11 @@
     </div>
 
     <pre class="usage"><span class='fu'>haystack_2D</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='no'>detection</span>,
-  <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>y</span>,
+  <span class='kw'>detection</span>,
+  use.advanced.sampling = <span class='kw'>NULL</span>,
+  dir.randomization = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -184,11 +187,13 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># using the toy example of the singleCellHaystack package</span>
 <span class='co'># define a logical matrix with detection of each gene (rows) in each cell (columns)</span>
-<span class='no'>dat.detection</span> <span class='kw'>&lt;-</span> <span class='no'>dat.expression</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>
+<span class='kw'>dat.detection</span> <span class='op'>&lt;-</span> <span class='kw'>dat.expression</span> <span class='op'>&gt;</span> <span class='fl'>1</span>
 
 <span class='co'># running haystack in default mode</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### performing randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
-<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>n</span> <span class='kw'>=</span><span class='fl'>10</span>)</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
+<span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='kw'>dat.tsne</span>, detection=<span class='kw'>dat.detection</span>, method = <span class='st'>"2D"</span>)
+</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### performing randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'><span class='co'># list top 10 biased genes</span>
+<span class='fu'><a href='show_result_haystack.html'>show_result_haystack</a></span>(<span class='kw'>res</span>, n =<span class='fl'>10</span>)
+</div><div class='output co'>#&gt;              D_KL log.p.vals log.p.adj T.counts
 #&gt; gene_242 1.360661  -26.25026 -23.55129       96
 #&gt; gene_275 1.345251  -25.57849 -22.87952       95
 #&gt; gene_317 1.386194  -25.49684 -22.79787       94
@@ -214,7 +219,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

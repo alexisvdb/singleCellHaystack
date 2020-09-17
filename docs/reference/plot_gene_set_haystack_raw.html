@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -104,13 +104,16 @@
       <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+      <a href="../articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -145,13 +148,13 @@
     </div>
 
     <pre class="usage"><span class='fu'>plot_gene_set_haystack_raw</span>(
-  <span class='no'>x</span>,
-  <span class='no'>y</span>,
-  <span class='kw'>genes</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
-  <span class='no'>detection</span>,
-  <span class='kw'>high.resolution</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>point.size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>order.by.signal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>y</span>,
+  genes = <span class='fl'>NA</span>,
+  <span class='kw'>detection</span>,
+  high.resolution = <span class='fl'>TRUE</span>,
+  point.size = <span class='fl'>1</span>,
+  order.by.signal = <span class='fl'>FALSE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -194,17 +197,18 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># using the toy example of the singleCellHaystack package</span>
 <span class='co'># define a logical matrix with detection of each gene (rows) in each cell (columns)</span>
-<span class='no'>dat.detection</span> <span class='kw'>&lt;-</span> <span class='no'>dat.expression</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>
+<span class='kw'>dat.detection</span> <span class='op'>&lt;-</span> <span class='kw'>dat.expression</span> <span class='op'>&gt;</span> <span class='fl'>1</span>
 
 <span class='co'># define a set of genes that we want to visualize</span>
 <span class='co'># this might be a set of differnentially expressed genes</span>
 <span class='co'># predicted by haystack and clustered together by hclust_haystack</span>
-<span class='no'>gene_set</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gene_9"</span>, <span class='st'>"gene_59"</span>, <span class='st'>"gene_112"</span>, <span class='st'>"gene_137"</span>, <span class='st'>"gene_155"</span>,
+<span class='kw'>gene_set</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"gene_9"</span>, <span class='st'>"gene_59"</span>, <span class='st'>"gene_112"</span>, <span class='st'>"gene_137"</span>, <span class='st'>"gene_155"</span>,
   <span class='st'>"gene_216"</span>, <span class='st'>"gene_234"</span>, <span class='st'>"gene_275"</span>, <span class='st'>"gene_291"</span>, <span class='st'>"gene_317"</span>,
   <span class='st'>"gene_339"</span>, <span class='st'>"gene_340"</span>, <span class='st'>"gene_351"</span>, <span class='st'>"gene_400"</span>, <span class='st'>"gene_424"</span>, <span class='st'>"gene_479"</span>)
 
 <span class='co'># visualize the expression pattern of the set of genes</span>
-<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>genes</span><span class='kw'>=</span><span class='no'>gene_set</span>)</div><div class='img'><img src='plot_gene_set_haystack_raw-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='plot_gene_set_haystack.html'>plot_gene_set_haystack</a></span>(<span class='kw'>dat.tsne</span>, detection=<span class='kw'>dat.detection</span>, genes=<span class='kw'>gene_set</span>)
+</div><div class='img'><img src='plot_gene_set_haystack_raw-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -220,7 +224,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

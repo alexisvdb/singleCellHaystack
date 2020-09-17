@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -104,13 +104,16 @@
       <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+      <a href="../articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -144,51 +147,60 @@
     <p>The main Haystack function</p>
     </div>
 
-    <pre class="usage"><span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>haystack</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
 
 <span class='co'># S3 method for matrix</span>
 <span class='fu'>haystack</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='no'>detection</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>,
-  <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  dim1 = <span class='fl'>1</span>,
+  dim2 = <span class='fl'>2</span>,
+  <span class='kw'>detection</span>,
+  method = <span class='st'>"highD"</span>,
+  use.advanced.sampling = <span class='kw'>NULL</span>,
+  dir.randomization = <span class='kw'>NULL</span>,
+  scale = <span class='fl'>TRUE</span>,
+  grid.points = <span class='fl'>100</span>,
+  grid.method = <span class='st'>"centroid"</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for data.frame</span>
 <span class='fu'>haystack</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>,
-  <span class='no'>detection</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"highD"</span>,
-  <span class='kw'>use.advanced.sampling</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>dir.randomization</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>grid.points</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>grid.method</span> <span class='kw'>=</span> <span class='st'>"centroid"</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  dim1 = <span class='fl'>1</span>,
+  dim2 = <span class='fl'>2</span>,
+  <span class='kw'>detection</span>,
+  method = <span class='st'>"highD"</span>,
+  use.advanced.sampling = <span class='kw'>NULL</span>,
+  dir.randomization = <span class='kw'>NULL</span>,
+  scale = <span class='fl'>TRUE</span>,
+  grid.points = <span class='fl'>100</span>,
+  grid.method = <span class='st'>"centroid"</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for Seurat</span>
 <span class='fu'>haystack</span>(
-  <span class='no'>x</span>,
-  <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"RNA"</span>,
-  <span class='kw'>slot</span> <span class='kw'>=</span> <span class='st'>"data"</span>,
-  <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"pca"</span>,
-  <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>...</span>
+  <span class='kw'>x</span>,
+  assay = <span class='st'>"RNA"</span>,
+  slot = <span class='st'>"data"</span>,
+  coord = <span class='st'>"pca"</span>,
+  dims = <span class='kw'>NULL</span>,
+  cutoff = <span class='fl'>1</span>,
+  method = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
 )
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>haystack</span>(<span class='no'>x</span>, <span class='kw'>assay</span> <span class='kw'>=</span> <span class='st'>"counts"</span>, <span class='kw'>coord</span> <span class='kw'>=</span> <span class='st'>"TSNE"</span>, <span class='kw'>cutoff</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'>haystack</span>(
+  <span class='kw'>x</span>,
+  assay = <span class='st'>"counts"</span>,
+  coord = <span class='st'>"TSNE"</span>,
+  dims = <span class='kw'>NULL</span>,
+  cutoff = <span class='fl'>1</span>,
+  method = <span class='kw'>NULL</span>,
+  <span class='kw'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -250,6 +262,10 @@
       <td><p>name of coordinates slot for specific methods.</p></td>
     </tr>
     <tr>
+      <th>dims</th>
+      <td><p>dimensions from coord to use. By default, all.</p></td>
+    </tr>
+    <tr>
       <th>cutoff</th>
       <td><p>cutoff for detection.</p></td>
     </tr>
@@ -274,7 +290,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

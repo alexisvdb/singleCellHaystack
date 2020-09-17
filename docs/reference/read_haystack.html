@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -104,13 +104,16 @@
       <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+      <a href="../articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -144,7 +147,7 @@
     <p>Function to read haystack results from file.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>read_haystack</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='fu'>read_haystack</span>(<span class='kw'>file</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,17 +165,19 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># using the toy example of the singleCellHaystack package</span>
 <span class='co'># define a logical matrix with detection of each gene (rows) in each cell (columns)</span>
-<span class='no'>dat.detection</span> <span class='kw'>&lt;-</span> <span class='no'>dat.expression</span> <span class='kw'>&gt;</span> <span class='fl'>1</span>
+<span class='kw'>dat.detection</span> <span class='op'>&lt;-</span> <span class='kw'>dat.expression</span> <span class='op'>&gt;</span> <span class='fl'>1</span>
 
 <span class='co'># running haystack in default mode</span>
-<span class='no'>res</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='no'>dat.tsne</span>, <span class='kw'>detection</span><span class='kw'>=</span><span class='no'>dat.detection</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"2D"</span>)</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### performing randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'>
-<span class='no'>outfile</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"output.csv"</span>)
+<span class='kw'>res</span> <span class='op'>&lt;-</span> <span class='fu'><a href='haystack.html'>haystack</a></span>(<span class='kw'>dat.tsne</span>, detection=<span class='kw'>dat.detection</span>, method = <span class='st'>"2D"</span>)
+</div><div class='output co'>#&gt; <span class='message'>### calling haystack_2D()...</span></div><div class='output co'>#&gt; <span class='message'>### setting parameters...</span></div><div class='output co'>#&gt; <span class='message'>### calculating Kullback-Leibler divergences...</span></div><div class='output co'>#&gt; <span class='message'>### performing randomizations...</span></div><div class='output co'>#&gt; <span class='message'>### estimating p-values...</span></div><div class='output co'>#&gt; <span class='message'>### returning result...</span></div><div class='input'>
+<span class='kw'>outfile</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='st'>"output.csv"</span>)
 
 <span class='co'># write result to file outfile.csv</span>
-<span class='fu'><a href='write_haystack.html'>write_haystack</a></span>(<span class='no'>res</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>outfile</span>)
+<span class='fu'><a href='write_haystack.html'>write_haystack</a></span>(<span class='kw'>res</span>, file = <span class='kw'>outfile</span>)
 
 <span class='co'># read in result from file</span>
-<span class='no'>res.copy</span> <span class='kw'>&lt;-</span> <span class='fu'>read_haystack</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>outfile</span>)</div></pre>
+<span class='kw'>res.copy</span> <span class='op'>&lt;-</span> <span class='fu'>read_haystack</span>(file = <span class='kw'>outfile</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -188,7 +193,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
       </span>
     </div>
 
@@ -104,13 +104,16 @@
       <a href="../articles/examples/a03_example_highD_advanced.html">Application of the advanced mode on multi-dimensional coordinates</a>
     </li>
     <li>
-      <a href="../articles/examples/a04_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a04_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
     </li>
     <li>
-      <a href="../articles/examples/a05_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
+      <a href="../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../articles/examples/a06_example_spatial_transcriptomics.html">Application to spatial transcriptomics</a>
+      <a href="../articles/examples/a06_example_tsne2D_default.html">Application on 2D t-SNE coordinates</a>
+    </li>
+    <li>
+      <a href="../articles/examples/a07_example_tsne2D_advanced.html">Application of the advanced mode on 2D t-SNE coordinates</a>
     </li>
   </ul>
 </li>
@@ -145,12 +148,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>hclust_haystack_highD</span>(
-  <span class='no'>x</span>,
-  <span class='no'>detection</span>,
-  <span class='no'>genes</span>,
-  <span class='kw'>method</span> <span class='kw'>=</span> <span class='st'>"ward.D"</span>,
-  <span class='kw'>grid.coordinates</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>x</span>,
+  <span class='kw'>detection</span>,
+  <span class='kw'>genes</span>,
+  method = <span class='st'>"ward.D"</span>,
+  grid.coordinates = <span class='kw'>NULL</span>,
+  scale = <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,7 +190,7 @@
     <p>An object of class hclust, describing a hierarchical clustering tree.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># to be added
+    <pre class="examples"><div class='input'><span class='co'># to be added</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -204,7 +207,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -109,12 +109,15 @@
     <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a03_example_highD_advanced.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a04_example_tsne2D_default.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a04_example_spatial_transcriptomics.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a05_example_tsne2D_advanced.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a05_moca_100k.html</loc>
   </url>
   <url>
-    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a06_example_spatial_transcriptomics.html</loc>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a06_example_tsne2D_default.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack//articles/examples/a07_example_tsne2D_advanced.html</loc>
   </url>
 </urlset>
