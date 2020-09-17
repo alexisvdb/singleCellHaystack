@@ -78,19 +78,19 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: Application on toy example
+      - text: Toy example
         href: articles/a01_toy_example.html
-      - text: Application on multi-dimensional coordinates
+      - text: Multi-dimensional coordinates
         href: articles/examples/a02_example_highD_default.html
-      - text: Application of the advanced mode on multi-dimensional coordinates
+      - text: Advanced mode on multi-dimensional coordinates
         href: articles/examples/a03_example_highD_advanced.html
-      - text: Application to spatial transcriptomics
+      - text: Spatial transcriptomics
         href: articles/examples/a04_example_spatial_transcriptomics.html
-      - text: Application to MOCA 100k cells
+      - text: MOCA 100k cells
         href: articles/examples/a05_moca_100k.html
-      - text: Application on 2D t-SNE coordinates
+      - text: 2D t-SNE coordinates
         href: articles/examples/a06_example_tsne2D_default.html
-      - text: Application of the advanced mode on 2D t-SNE coordinates
+      - text: Advanced mode on 2D t-SNE coordinates
         href: articles/examples/a07_example_tsne2D_advanced.html
   right:
   - icon: fa-github fa-lg
