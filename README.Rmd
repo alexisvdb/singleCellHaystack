@@ -40,13 +40,13 @@ print(cit, style = "text")
 ## Documentation and Demo
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/) includes a few example applications showing how to use our package:
 
-- [Application on toy example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
-- [Application on multi-dimensional coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
-- [Application of the advanced mode on multi-dimensional coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
-- [Application to spatial transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
-- [Application to MOCA 100k cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
-- [Application on 2D t-SNE coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
-- [Application of the advanced mode on 2D t-SNE coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
+- [Toy example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
+- [Multi-dimensional coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
+- [Advanced mode on multi-dimensional coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
+- [Spatial transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
+- [MOCA 100k cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
+- [2D t-SNE coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
+- [Advanced mode on 2D t-SNE coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
 
 
 ## Installation
