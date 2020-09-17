@@ -30,6 +30,7 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
     expression <- as.matrix(expression)
   }
 
+
   # check input
   if(!is.numeric(x))
     stop("'x' must be a numeric vector")
@@ -40,8 +41,8 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   if(ncol(expression) != length(x))
     stop("The number of columns in 'expression' must be the same as the length of 'x'")
   if(!is.null(detection)){
-    if(!is.logical(detection))
-      stop("'detection' must be either a logical matrix or NULL")
+    if(!is.matrix(detection) && ! inherits(detection, "lgCMatrix") && ! inherits(detection, "lgRMatrix"))
+      stop("'detection' must be a matrix, lgCMatrix, or lgRMatrix")
     if(any(dim(detection)!=dim(expression)))
       stop("'detection' must be of the same dimensions as 'expression', or should be NULL")
   }
@@ -57,6 +58,29 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
     stop("'point.size' must have a numeric value")
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
+
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
+  }
+  # if expression is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgCMatrix") ){
+    message("### converting expression data from dgCMatrix to dgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
+  # expression could also be logical
+  # if expression is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(expression, "lgCMatrix") ){
+    message("### converting expression data from lgCMatrix to lgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
+  # expression could also be a dgeMatrix
+  # if expression is a dgeMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgeMatrix") ){
+    message("### converting expression data from dgeMatrix to lgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
 
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index
@@ -85,7 +109,13 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
   dat.plot <- data.frame(
     x     = x,
     y     = y,
-    value = unlist(expression[gene,])
+    value = if(inherits(expression, "dgRMatrix")){ # for numeric sparse case
+              extract_row_dgRMatrix(expression, gene.index)
+            } else if(inherits(expression, "lgRMatrix")){ # for logical sparse case
+              extract_row_lgRMatrix(expression, gene.index)
+            } else {
+              unlist(expression[gene.index,])
+            }
   )
 
   # if needed order by signal
@@ -164,6 +194,12 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
   if(!is.logical(order.by.signal))
     stop("Value of 'order.by.signal' should be logical (TRUE or FALSE")
 
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
+  }
+
   # set index of gene if it is a character
   # else, if it is an integer, use its value as an index
   if(all(is.na(genes))){
@@ -189,7 +225,7 @@ plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution
   if(length(gene.indices)==1){
     mean.detection <- apply(t(detection[gene.indices,]),2,mean)
   } else {
-    mean.detection <- apply(detection[gene.indices,],2,mean)
+    mean.detection <- Matrix::colMeans(detection[gene.indices,])
   }
 
 

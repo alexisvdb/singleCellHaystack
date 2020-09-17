@@ -1,7 +1,7 @@
 Package: singleCellHaystack
 Type: Package
 Title: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)
-Version: 0.3.2
+Version: 0.3.2.99
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0003-2180-5732")),
@@ -18,6 +18,8 @@ Description: Identification of differentially expressed genes (DEGs) is a key st
     For the theoretical background of 'singleCellHaystack' we refer to 
     Vandenbon and Diez (Nature Communications, 2020) <https://doi.org/10.1038/s41467-020-17900-3>.
 Imports: 
+    methods,
+    Matrix,
     splines,
     ggplot2,
     reshape2

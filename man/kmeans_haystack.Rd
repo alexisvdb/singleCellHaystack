@@ -15,7 +15,7 @@ kmeans_haystack(x, ...)
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
 
-\item{...}{further paramters passed down to methods.}
+\item{...}{further parameters passed down to methods.}
 
 \item{dim1}{column index or name of matrix for x-axis coordinates.}
 

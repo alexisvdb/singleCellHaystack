@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space — hclust_haystack • singleCellHaystack</title>
+<title>Returns a row of a sparse matrix of class dgRMatrix.
+Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/) — extract_row_dgRMatrix • singleCellHaystack</title>
 
 
 <!-- jquery -->
@@ -39,8 +40,10 @@
 
 
 
-<meta property="og:title" content="Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space — hclust_haystack" />
-<meta property="og:description" content="Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space" />
+<meta property="og:title" content="Returns a row of a sparse matrix of class dgRMatrix.
+Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/) — extract_row_dgRMatrix" />
+<meta property="og:description" content="Returns a row of a sparse matrix of class dgRMatrix.
+Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)" />
 
 
 
@@ -135,44 +138,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space</h1>
+    <h1>Returns a row of a sparse matrix of class dgRMatrix.
+Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)</h1>
     
-    <div class="hidden name"><code>hclust_haystack.Rd</code></div>
+    <div class="hidden name"><code>extract_row_dgRMatrix.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space</p>
+    <p>Returns a row of a sparse matrix of class dgRMatrix.
+Function made by Ben Bolker and Ott Toomet (see https://stackoverflow.com/questions/47997184/)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hclust_haystack</span>(<span class='no'>x</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for matrix</span>
-<span class='fu'>hclust_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)
-
-<span class='co'># S3 method for data.frame</span>
-<span class='fu'>hclust_haystack</span>(<span class='no'>x</span>, <span class='kw'>dim1</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>dim2</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>extract_row_dgRMatrix</span>(<span class='no'>m</span>, <span class='kw'>i</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>a matrix or other object from which coordinates of cells can be extracted.</p></td>
+      <th>m</th>
+      <td><p>a sparse matrix of class dgRMatrix</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>further parameters passed down to methods.</p></td>
-    </tr>
-    <tr>
-      <th>dim1</th>
-      <td><p>column index or name of matrix for x-axis coordinates.</p></td>
-    </tr>
-    <tr>
-      <th>dim2</th>
-      <td><p>column index or name of matrix for y-axis coordinates.</p></td>
+      <th>i</th>
+      <td><p>the index of the row to return</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A row (numerical vector) of the sparse matrix</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

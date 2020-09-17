@@ -114,7 +114,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
 
   # calculating the Kullback-Leibler divergence of the distribution
   # of cells expressin and not expressing gene X vs reference distribution Q
-  D_KLs <- c()
+  D_KLs <- rep(NA,length(class.types))
   for(c in 1:length(class.types)){
     cl <- class.types[c]
     cl.subset <- classes==cl
@@ -262,8 +262,8 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     stop("'y' must be a numeric vector")
   if(length(x) != length(y))
     stop("'x' and 'y' must have the same length")
-  if(!is.matrix(detection))
-    stop("'detection' must be a matrix")
+  if(!is.matrix(detection) && ! inherits(detection, "lgCMatrix") && ! inherits(detection, "lgRMatrix"))
+    stop("'detection' must be a matrix, lgCMatrix, or lgRMatrix")
   if(ncol(detection) != length(x))
     stop("The number of columns in 'detection' must be the same as the length of 'x'")
   if(!is.null(use.advanced.sampling)){
@@ -273,11 +273,18 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       stop("The length of 'use.advanced.sampling' must be the same as that of 'x'")
   }
 
-  # warn about unusal input sizes
+  # warn about unusual input sizes
   if(length(x) < 50)
     warning("The number of cells seems very low (",length(x),"). Check your input.")
+  if(length(x) > 10000)
+    message("You are running haystack_2D on a large number of cells (",length(x),"). Use method 'highD' for shorter runtimes.")
   if(nrow(detection) < 100)
     warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
+  # if detection is a lgCMatrix, convert it to a lgRMatrix
+  if(inherits(detection, "lgCMatrix")){
+    message("### converting detection data from lgCMatrix to lgRMatrix")
+    detection <- as(detection, "RsparseMatrix")
+  }
 
 
   # make dir if needed
@@ -285,6 +292,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
     if(!dir.exists(dir.randomization))
       dir.create(dir.randomization)
   }
+
 
   count.cells <- ncol(detection)
   count.genes <- nrow(detection)
@@ -324,12 +332,21 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   # normalize to sum to 1
   # get D_KL (or relative entropy) of this P vs reference Q
   message("### calculating Kullback-Leibler divergences...")
-  D_KL.observed <- c()
-  for(i in 1:count.genes){
-    D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
-    if(i%%1000==0)
-      message(paste0("### ... ",i," rows out of ",count.genes," done"))
+  D_KL.observed <- rep(0,count.genes)
+  pb <- txtProgressBar(min = 0, max = count.genes, style = 3, file = stderr()) # progress bar
+  if(is.matrix(detection)){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL(classes=detection[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      setTxtProgressBar(pb, i) # progress bar
+    }
+  } else if(inherits(detection, "lgRMatrix")){
+    for(i in 1:count.genes){
+      D_KL.observed[i] <- get_D_KL(classes=extract_row_lgRMatrix(detection,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      setTxtProgressBar(pb, i) # progress bar
+    }
   }
+  close(pb) # progress bar
+
   # return the sum of D_KL for "F" and "T"
   # store this value for each gene X
 
@@ -340,13 +357,13 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 
 
   # Randomized D_KL values depend on the number of "F" and "T" cases
-  # Thereofre, for all observed numbers of "T" cases (from 0 to 100%):
-  # - do x randomizations and get teir D_KL
+  # Therefore, for all observed numbers of "T" cases (from 0 to 100%):
+  # - do x randomizations and get their D_KL
   # - get mean and SD per fraction,
   # - use those to estimate p values
 
-  message("### starting randomizations...")
-  T.counts <- apply(detection,1,sum)
+  message("### performing randomizations...")
+  T.counts <- Matrix::rowSums(detection)
   T.counts.unique <- sort(unique(T.counts))
   T.counts.unique.no <- length(T.counts.unique)
   p.vals <- rep(NA,nrow(detection))
@@ -385,13 +402,14 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   all.D_KL.randomized <- matrix(NA,nrow=T.counts.to.select,ncol=randomization.count,
                                 dimnames=list(T.counts.selected,1:randomization.count))
 
+  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3, file = stderr()) # progress bar
+
   # taking if - else statements outside of the for loop
   if(!is.null(use.advanced.sampling)){
     sampling.probs <- use.advanced.sampling
 
     for(i in 1:T.counts.to.select){
-      if(i%%10==0)
-        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
+      setTxtProgressBar(pb, i) # progress bar
 
       T.count <- T.counts.selected[i]
 
@@ -410,8 +428,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
   } else {
 
     for(i in 1:T.counts.to.select){
-      if(i%%10==0)
-        message(paste0("### ... ",i," sets out of ",T.counts.to.select," done"))
+      setTxtProgressBar(pb, i) # progress bar
 
       T.count <- T.counts.selected[i]
 
@@ -425,6 +442,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
   }# end if else
+  close(pb) # progress bar
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
@@ -458,7 +476,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
-#' @param detection A logical matrix showing which gens (rows) are detected in which cells (columns)
+#' @param detection A logical matrix or dgRMatrix showing which gens (rows) are detected in which cells (columns)
 #' @param rows.subset Indices of the rows of 'detection' for which to get the densities. Default: all.
 #' @param high.resolution Logical: should high resolution be used? Default is FALSE.
 #'
@@ -471,17 +489,31 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities <- array(data=NA, dim=c(length(rows.subset),parameters$grid.points))
 
   cl <- T # we are only looking at the T points here
-  for(i in 1:length(rows.subset)){
-    r <- rows.subset[i]
-    x.subset <- detection[r,]==cl
-    y.subset <- detection[r,]==cl
-    density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
-                            dens.y=parameters$dens.y[,y.subset])
 
-    densities[i,,] <- density / sum(density)
-
+  # detection could be a matrix class object now,
+  # or a lgRMatrix object
+  # if detection is a lgCMatrix object at this point, something is wrong
+  if(is.matrix(detection)){
+    for(i in 1:length(rows.subset)){
+      r <- rows.subset[i]
+      x.subset <- detection[r,]==cl
+      y.subset <- detection[r,]==cl
+      density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
+                              dens.y=parameters$dens.y[,y.subset])
+      densities[i,,] <- density / sum(density)
+    }
+  } else if(inherits(detection, "lgRMatrix")){
+    for(i in 1:length(rows.subset)){
+      r <- rows.subset[i]
+      x.subset <- extract_row_lgRMatrix(detection,r)==cl
+      y.subset <- extract_row_lgRMatrix(detection,r)==cl
+      density <- kde2d_faster(dens.x=parameters$dens.x[,x.subset],
+                              dens.y=parameters$dens.y[,y.subset])
+      densities[i,,] <- density / sum(density)
+    }
+  } else {
+    stop("'detection' must be a matrix or lgRMatrix")
   }
-
   # set dimension names to genes, and grid points of x and y axes
   dimnames(densities) <- list(rownames(detection)[rows.subset],
                          seq(parameters$limits[1],parameters$limits[2],length.out = parameters$grid.points[1]), # x grid
@@ -547,3 +579,6 @@ show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=N
   o <- order(result$log.p.vals)
   result[o[1:n.to.select],]
 }
+
+
+

@@ -36,7 +36,7 @@ plot_gene_set_haystack(x, ...)
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
 
-\item{...}{further paramters passed to plot_gene_haystack_raw().}
+\item{...}{further parameters passed to plot_gene_haystack_raw().}
 
 \item{dim1}{column index or name of matrix for x-axis coordinates.}
 

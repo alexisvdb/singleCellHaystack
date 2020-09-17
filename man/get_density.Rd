@@ -17,7 +17,7 @@ get_density(
 
 \item{y}{y-axis coordinates of cells in a 2D representation}
 
-\item{detection}{A logical matrix showing which gens (rows) are detected in which cells (columns)}
+\item{detection}{A logical matrix or dgRMatrix showing which gens (rows) are detected in which cells (columns)}
 
 \item{rows.subset}{Indices of the rows of 'detection' for which to get the densities. Default: all.}
 

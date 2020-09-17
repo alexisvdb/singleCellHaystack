@@ -48,6 +48,8 @@ reference:
 - title: Background functions
   contents:
   - default_bandwidth.nrd
+  - extract_row_dgRMatrix
+  - extract_row_lgRMatrix
   - get_D_KL
   - get_D_KL_highD
   - get_density

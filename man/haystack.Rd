@@ -43,17 +43,26 @@ haystack(x, ...)
   assay = "RNA",
   slot = "data",
   coord = "pca",
+  dims = NULL,
   cutoff = 1,
   method = NULL,
   ...
 )
 
-\method{haystack}{SingleCellExperiment}(x, assay = "counts", coord = "TSNE", cutoff = 1, method = NULL, ...)
+\method{haystack}{SingleCellExperiment}(
+  x,
+  assay = "counts",
+  coord = "TSNE",
+  dims = NULL,
+  cutoff = 1,
+  method = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
 
-\item{...}{further paramters passed down to methods.}
+\item{...}{further parameters passed down to methods.}
 
 \item{dim1}{column index or name of matrix for x-axis coordinates.}
 
@@ -78,6 +87,8 @@ haystack(x, ...)
 \item{slot}{name of slot for assay data for Seurat method.}
 
 \item{coord}{name of coordinates slot for specific methods.}
+
+\item{dims}{dimensions from coord to use. By default, all.}
 
 \item{cutoff}{cutoff for detection.}
 }
