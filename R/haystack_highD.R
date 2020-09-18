@@ -203,12 +203,12 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
   # advanced sampling is slow on large datasets. Recommend using wrswoR
   if(!is.null(use.advanced.sampling)){
-    if(!require(wrswoR)){
-      use.wrswoR <- FALSE
-      message("### You are running advanced sampling. Installing the package \"wrswoR\" might result in much shorter runtimes.")
-    } else {
+    if(requireNamespace("wrswoR", quietly = TRUE)){
       use.wrswoR <- TRUE
       message("### Using package wrswoR to speed up random sampling")
+    } else {
+      use.wrswoR <- FALSE
+      message("### You are running advanced sampling. Installing the package \"wrswoR\" might result in much shorter runtimes.")
     }
   }
 
