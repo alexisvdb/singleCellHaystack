@@ -14,7 +14,7 @@ Identification of differentially expressed genes (DEGs) is a key step in single-
     uses Kullback-Leibler divergence to find genes that are expressed in subsets of cells 
     that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. 
     For the theoretical background of 'singleCellHaystack' we refer to 
-    Vandenbon and Diez (Nature Communications, 2020) <https://doi.org/10.1038/s41467-020-17900-3>.
+    Vandenbon and Diez (Nature Communications, 2020) <doi:10.1038/s41467-020-17900-3>.
 }
 \author{
 \strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com} (\href{https://orcid.org/0000-0003-2180-5732}{ORCID})
