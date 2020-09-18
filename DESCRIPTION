@@ -32,7 +32,8 @@ Suggests:
     SeuratData,
     Rtsne,
     cowplot,
-    testthat
+    testthat,
+    wrswoR
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
