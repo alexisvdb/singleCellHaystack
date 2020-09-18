@@ -29,7 +29,7 @@ Suggests:
     SummarizedExperiment,
     SingleCellExperiment,
     Seurat,
-    SeuratData,
+    SeuratData (>= 0.2.1),
     Rtsne,
     cowplot,
     testthat
@@ -38,3 +38,5 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 VignetteBuilder: knitr
+Remotes:  
+    satijalab/seurat-data
