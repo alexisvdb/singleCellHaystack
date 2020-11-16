@@ -273,19 +273,32 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       stop("The length of 'use.advanced.sampling' must be the same as that of 'x'")
   }
 
+  count.cells <- ncol(detection)
+  count.genes <- nrow(detection)
+
   # warn about unusual input sizes
-  if(length(x) < 50)
-    warning("The number of cells seems very low (",length(x),"). Check your input.")
-  if(length(x) > 10000)
-    message("You are running haystack_2D on a large number of cells (",length(x),"). Use method 'highD' for shorter runtimes.")
-  if(nrow(detection) < 100)
-    warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
+  if(count.cells < 50)
+    warning("The number of cells seems very low (",count.cells,"). Check your input.")
+  if(count.cells > 10000)
+    message("You are running haystack_2D on a large number of cells (",count.cells,"). Use method 'highD' for shorter runtimes.")
+  if(count.genes < 100)
+    warning("The number of genes seems very low (",count.genes,"). Check your input.")
   # if detection is a lgCMatrix, convert it to a lgRMatrix
   if(inherits(detection, "lgCMatrix")){
     message("### converting detection data from lgCMatrix to lgRMatrix")
     detection <- as(detection, "RsparseMatrix")
   }
 
+  # advanced sampling is slow on large datasets. Recommend using wrswoR
+  if(!is.null(use.advanced.sampling)){
+    if(requireNamespace("wrswoR", quietly = TRUE)){
+      use.wrswoR <- TRUE
+      message("### Using package wrswoR to speed up random sampling")
+    } else {
+      use.wrswoR <- FALSE
+      message("### You are running advanced sampling. Installing the package \"wrswoR\" might result in much shorter runtimes.")
+    }
+  }
 
   # make dir if needed
   if(!is.null(dir.randomization)){
@@ -293,9 +306,6 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       dir.create(dir.randomization)
   }
 
-
-  count.cells <- ncol(detection)
-  count.genes <- nrow(detection)
 
 
   ### get reference probabilities "Q"
@@ -417,7 +427,11 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       for(r in 1:randomization.count){
         # using sampling according to the number of genes expressed in each cell
         # pick cells according to the number of genes they express
-        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
+        if(use.wrswoR){
+          samp <- wrswoR::sample_int_expj(count.cells, size=T.count, prob=sampling.probs)
+        } else {
+          samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
+        }
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL(classes=classes,

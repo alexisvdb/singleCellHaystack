@@ -1,7 +1,7 @@
 Package: singleCellHaystack
 Type: Package
 Title: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)
-Version: 0.3.3
+Version: 0.3.3.1
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0003-2180-5732")),
@@ -32,7 +32,8 @@ Suggests:
     SeuratData (>= 0.2.1),
     Rtsne,
     cowplot,
-    testthat
+    testthat,
+    wrswoR
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

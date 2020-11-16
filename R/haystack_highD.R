@@ -201,8 +201,18 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
   if(grid.points > count.cells/10)
     warning("The value of 'grid.points' appears to be very high (> No. of cells / 10). You can set the number of grid points using the 'grid.points' parameter.")
 
+  # advanced sampling is slow on large datasets. Recommend using wrswoR
+  if(!is.null(use.advanced.sampling)){
+    if(requireNamespace("wrswoR", quietly = TRUE)){
+      use.wrswoR <- TRUE
+      message("### Using package wrswoR to speed up random sampling")
+    } else {
+      use.wrswoR <- FALSE
+      message("### You are running advanced sampling. Installing the package \"wrswoR\" might result in much shorter runtimes.")
+    }
+  }
 
-  # scale data if needed
+    # scale data if needed
   if(scale){
     message("### scaling input data...")
     x <- scale(x)
@@ -348,7 +358,11 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       for(r in 1:randomization.count){
         # using sampling according to the number of genes expressed in each cell
         # pick cells according to the number of genes they express
-        samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
+        if(use.wrswoR){
+          samp <- wrswoR::sample_int_expj(count.cells, size=T.count, prob=sampling.probs)
+        } else {
+          samp <- sample(x=count.cells, prob=sampling.probs, size=T.count, replace = FALSE)
+        }
         # turn into T or F
         classes <- is.element(1:count.cells,samp)
         D_KL.randomized[r] <- get_D_KL_highD(classes=classes,
