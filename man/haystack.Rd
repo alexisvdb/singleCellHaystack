@@ -46,6 +46,7 @@ haystack(x, ...)
   dims = NULL,
   cutoff = 1,
   method = NULL,
+  use.advanced.sampling = NULL,
   ...
 )
 
@@ -56,6 +57,7 @@ haystack(x, ...)
   dims = NULL,
   cutoff = 1,
   method = NULL,
+  use.advanced.sampling = NULL,
   ...
 )
 }

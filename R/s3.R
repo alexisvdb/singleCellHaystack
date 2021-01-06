@@ -59,7 +59,7 @@ haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "high
 
 #' @rdname haystack
 #' @export
-haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims = NULL, cutoff = 1, method = NULL, ...) {
+haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims = NULL, cutoff = 1, method = NULL, use.advanced.sampling = NULL, ...) {
   if (!requireNamespace("Seurat", quietly = TRUE)) {
     stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -80,12 +80,16 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
-  haystack(z, detection = y > cutoff, method = method, ...)
+  if (use.advanced.sampling) {
+    use.advanced.sampling = colSums(y)
+  }
+
+  haystack(z, detection = y > cutoff, method = method, use.advanced.sampling = use.advanced.sampling, ...)
 }
 
 #' @rdname haystack
 #' @export
-haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", dims = NULL, cutoff = 1, method = NULL, ...) {
+haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", dims = NULL, cutoff = 1, method = NULL, use.advanced.sampling = NULL, ...) {
   if (!requireNamespace("SummarizedExperiment", quietly = TRUE)) {
     stop("Package \"SummarizedExperiment\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -114,7 +118,11 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", d
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
-  haystack(z, detection = y > cutoff, method = method, ...)
+  if (use.advanced.sampling) {
+    use.advanced.sampling = colSums(y)
+  }
+
+  haystack(z, detection = y > cutoff, method = method, use.advanced.sampling = use.advanced.sampling, ...)
 }
 
 #' Visualizing the detection/expression of a gene in a 2D plot
