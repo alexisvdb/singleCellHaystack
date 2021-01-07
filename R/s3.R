@@ -80,11 +80,13 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
+  y <- y > cutoff
+
   if (use.advanced.sampling) {
     use.advanced.sampling = colSums(y)
   }
 
-  haystack(z, detection = y > cutoff, method = method, use.advanced.sampling = use.advanced.sampling, ...)
+  haystack(z, detection = y, method = method, use.advanced.sampling = use.advanced.sampling, ...)
 }
 
 #' @rdname haystack
@@ -118,11 +120,13 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", d
     message("### Input coordinates have ",ncol(z)," dimensions, so method set to \"",method,"\"")
   }
 
+  y <- y > cutoff
+
   if (use.advanced.sampling) {
     use.advanced.sampling = colSums(y)
   }
 
-  haystack(z, detection = y > cutoff, method = method, use.advanced.sampling = use.advanced.sampling, ...)
+  haystack(z, detection = y, method = method, use.advanced.sampling = use.advanced.sampling, ...)
 }
 
 #' Visualizing the detection/expression of a gene in a 2D plot
