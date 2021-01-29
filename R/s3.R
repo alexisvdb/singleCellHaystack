@@ -82,7 +82,7 @@ haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims
 
   y <- y > cutoff
 
-  if (use.advanced.sampling) {
+  if (isTRUE(use.advanced.sampling)) {
     use.advanced.sampling = colSums(y)
   }
 
@@ -122,7 +122,7 @@ haystack.SingleCellExperiment <- function(x, assay = "counts", coord = "TSNE", d
 
   y <- y > cutoff
 
-  if (use.advanced.sampling) {
+  if (isTRUE(use.advanced.sampling)) {
     use.advanced.sampling = colSums(y)
   }
 
