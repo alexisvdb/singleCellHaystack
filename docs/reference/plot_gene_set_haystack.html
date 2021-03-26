@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -117,11 +117,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../news/index.html">Changelog</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -147,34 +150,34 @@
     <p>Visualizing the detection/expression of a set of genes in a 2D plot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plot_gene_set_haystack</span>(<span class='kw'>x</span>, <span class='kw'>...</span>)
+    <pre class="usage"><span class='fu'>plot_gene_set_haystack</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for matrix</span>
-<span class='fu'>plot_gene_set_haystack</span>(<span class='kw'>x</span>, dim1 = <span class='fl'>1</span>, dim2 = <span class='fl'>2</span>, <span class='kw'>...</span>)
+<span class='fu'>plot_gene_set_haystack</span><span class='op'>(</span><span class='va'>x</span>, dim1 <span class='op'>=</span> <span class='fl'>1</span>, dim2 <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for data.frame</span>
-<span class='fu'>plot_gene_set_haystack</span>(<span class='kw'>x</span>, dim1 = <span class='fl'>1</span>, dim2 = <span class='fl'>2</span>, <span class='kw'>...</span>)
+<span class='fu'>plot_gene_set_haystack</span><span class='op'>(</span><span class='va'>x</span>, dim1 <span class='op'>=</span> <span class='fl'>1</span>, dim2 <span class='op'>=</span> <span class='fl'>2</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for SingleCellExperiment</span>
-<span class='fu'>plot_gene_set_haystack</span>(
-  <span class='kw'>x</span>,
-  dim1 = <span class='fl'>1</span>,
-  dim2 = <span class='fl'>2</span>,
-  assay = <span class='st'>"counts"</span>,
-  coord = <span class='st'>"TSNE"</span>,
-  <span class='kw'>...</span>
-)
+<span class='fu'>plot_gene_set_haystack</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  dim1 <span class='op'>=</span> <span class='fl'>1</span>,
+  dim2 <span class='op'>=</span> <span class='fl'>2</span>,
+  assay <span class='op'>=</span> <span class='st'>"counts"</span>,
+  coord <span class='op'>=</span> <span class='st'>"TSNE"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span>
 
 <span class='co'># S3 method for Seurat</span>
-<span class='fu'>plot_gene_set_haystack</span>(
-  <span class='kw'>x</span>,
-  dim1 = <span class='fl'>1</span>,
-  dim2 = <span class='fl'>2</span>,
-  assay = <span class='st'>"RNA"</span>,
-  slot = <span class='st'>"data"</span>,
-  coord = <span class='st'>"tsne"</span>,
-  <span class='kw'>...</span>
-)</pre>
+<span class='fu'>plot_gene_set_haystack</span><span class='op'>(</span>
+  <span class='va'>x</span>,
+  dim1 <span class='op'>=</span> <span class='fl'>1</span>,
+  dim2 <span class='op'>=</span> <span class='fl'>2</span>,
+  assay <span class='op'>=</span> <span class='st'>"RNA"</span>,
+  slot <span class='op'>=</span> <span class='st'>"data"</span>,
+  coord <span class='op'>=</span> <span class='st'>"tsne"</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

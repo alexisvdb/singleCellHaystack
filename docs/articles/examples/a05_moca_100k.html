@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,11 +76,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +97,7 @@
 
       
 
-      </header><script src="a05_moca_100k_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="a05_moca_100k_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Application on MOCA 100k</h1>
@@ -113,42 +116,37 @@
 <h1 class="hasAnchor">
 <a href="#load-data" class="anchor"></a>Load data</h1>
 <p>Here we apply <code>haystack</code> to 100k cells from the Mouse Organogenesis Cell Atlas (MOCA). The sparse matrix data was downloaded from the <a href="https://oncoscape.v3.sttrcancer.org/atlas.gs.washington.edu.mouse.rna/landing">MOCA website</a>. The data was converted into a Seurat object and processed following the <a href="https://satijalab.org/seurat/v3.2/pbmc3k_tutorial.html">standard pipeline</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/krlmlr/here">here</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://satijalab.org/seurat">Seurat</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">singleCellHaystack</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://github.com/ddiez/scmisc">scmisc</a></span>)
-</pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">x</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span>(<span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span>(<span class="st">"data-raw/moca_100k.rds"</span>))
-<span class="kw">x</span>
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddiez/scmisc">scmisc</a></span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw/moca_100k.rds"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">x</span></code></pre></div>
 <pre><code>## An object of class Seurat 
 ## 16811 features across 100000 samples within 1 assay 
 ## Active assay: RNA (16811 features, 2000 variable features)
 ##  2 dimensional reductions calculated: pca, umap</code></pre>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/DimPlot.html">DimPlot</a></span>(<span class="kw">x</span>, label = <span class="fl">TRUE</span>) <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SeuratTheme.html">NoLegend</a></span>() <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SeuratTheme.html">NoAxes</a></span>()
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">x</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoLegend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoAxes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figure/plot_dim-1.png" title="plot of chunk plot_dim" alt="plot of chunk plot_dim" style="display: block; margin: auto;"></p>
 </div>
 <div id="haystack" class="section level1">
 <h1 class="hasAnchor">
 <a href="#haystack" class="anchor"></a>Haystack</h1>
 <p>We run <code>haystack</code> using the method <em>highD</em> with the default threshold for detection, which is more than 1.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span>({
-  <span class="kw">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span>(<span class="kw">x</span>, method = <span class="st">"highD"</span>)
-})
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="op">{</span>
+  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"highD"</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
 <pre><code>##     user   system  elapsed 
 ## 2397.740  480.219 2878.232</code></pre>
 <p>It takes 48 minutes to complete in a standard personal computer. Here we show the top 10 genes selected by <code>haystack</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res</span>, n = <span class="fl">10</span>)
-<span class="kw">top</span>
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
+<span class="va">top</span></code></pre></div>
 <pre><code>##               D_KL log.p.vals log.p.adj T.counts
 ## Ppp1r1c 0.17135507  -176.2468 -172.0212     1041
 ## Itih2   0.17876325  -172.0384 -167.8128      634
@@ -161,9 +159,8 @@
 ## Abcc2   0.23483323  -150.4938 -146.2682      359
 ## Cdh19   0.09594113  -149.7875 -145.5619      903</code></pre>
 <p>And here we plot the expression of the top 4 genes.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/FeaturePlot.html">FeaturePlot</a></span>(<span class="kw">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">top</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>], order = <span class="fl">TRUE</span>) <span class="op">&amp;</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SeuratTheme.html">NoAxes</a></span>()
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">top</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, order <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoAxes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="figure/plot_results-1.png" title="plot of chunk plot_results" alt="plot of chunk plot_results" style="display: block; margin: auto;"></p>
 </div>
   </div>

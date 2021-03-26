@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,11 +76,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +97,13 @@
 
       
 
-      </header><script src="a04_example_spatial_transcriptomics_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="a04_example_spatial_transcriptomics_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Analysis of spatial transcriptomics with singleCellHaystack</h1>
                         <h4 class="author">Diego Diez</h4>
             
-            <h4 class="date">2020-09-17</h4>
+            <h4 class="date">2021-03-26</h4>
       
       
       <div class="hidden name"><code>a04_example_spatial_transcriptomics.Rmd</code></div>
@@ -113,61 +116,54 @@
 <div id="preparing-input-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://satijalab.org/seurat">Seurat</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://www.satijalab.org/seurat">SeuratData</a></span>)
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">singleCellHaystack</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.satijalab.org/seurat">SeuratData</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span>
 
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1</span>)
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
 <p>We focus on the anterior1 slice.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co">if</span> (<span class="op">!</span><span class="st">"stxBrain"</span> <span class="op">%in%</span> <span class="kw">SeuratData</span>::<span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/InstalledData.html">InstalledData</a></span>()[[<span class="st">"Dataset"</span>]]) {
-  <span class="kw">SeuratData</span>::<span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/InstallData.html">InstallData</a></span>(<span class="st">"stxBrain"</span>)
-}
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"stxBrain"</span> <span class="op">%in%</span> <span class="fu">SeuratData</span><span class="fu">::</span><span class="fu"><a href="http://www.satijalab.org/seurat/reference/InstalledData.html">InstalledData</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Dataset"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu">SeuratData</span><span class="fu">::</span><span class="fu"><a href="http://www.satijalab.org/seurat/reference/InstallData.html">InstallData</a></span><span class="op">(</span><span class="st">"stxBrain"</span><span class="op">)</span>
+<span class="op">}</span>
 
-<span class="kw">anterior1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SeuratData/man/LoadData.html">LoadData</a></span>(<span class="st">"stxBrain"</span>, type = <span class="st">"anterior1"</span>)
-<span class="kw">anterior1</span>
-</pre></div>
+<span class="va">anterior1</span> <span class="op">&lt;-</span> <span class="fu"><a href="http://www.satijalab.org/seurat/reference/LoadData.html">LoadData</a></span><span class="op">(</span><span class="st">"stxBrain"</span>, type <span class="op">=</span> <span class="st">"anterior1"</span><span class="op">)</span>
+<span class="va">anterior1</span></code></pre></div>
 <pre><code>## An object of class Seurat 
 ## 31053 features across 2696 samples within 1 assay 
 ## Active assay: Spatial (31053 features, 0 variable features)</code></pre>
 <p>We filter genes with less 10 cells with non-zero counts. This reduces the computational time by eliminating very lowly expressed genes.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/GetAssayData.html">GetAssayData</a></span>(<span class="kw">anterior1</span>, slot = <span class="st">"counts"</span>)
-<span class="kw">sel.ok</span> <span class="op">&lt;-</span> <span class="kw">Matrix</span>::<span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">rowSums</a></span>(<span class="kw">counts</span> <span class="op">&gt;</span> <span class="fl">1</span>) <span class="op">&gt;</span> <span class="fl">10</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">anterior1</span>, slot <span class="op">=</span> <span class="st">"counts"</span><span class="op">)</span>
+<span class="va">sel.ok</span> <span class="op">&lt;-</span> <span class="fu">Matrix</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/Matrix/man/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">10</span>
 
-<span class="kw">anterior1</span> <span class="op">&lt;-</span> <span class="kw">anterior1</span>[<span class="kw">sel.ok</span>, ]
-<span class="kw">anterior1</span>
-</pre></div>
+<span class="va">anterior1</span> <span class="op">&lt;-</span> <span class="va">anterior1</span><span class="op">[</span><span class="va">sel.ok</span>, <span class="op">]</span>
+<span class="va">anterior1</span></code></pre></div>
 <pre><code>## An object of class Seurat 
 ## 12382 features across 2696 samples within 1 assay 
 ## Active assay: Spatial (12382 features, 0 variable features)</code></pre>
 <p>We can plot the total number of counts per bead, superimposed on the image of the brain.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SpatialPlot.html">SpatialFeaturePlot</a></span>(<span class="kw">anterior1</span>, features = <span class="st">"nCount_Spatial"</span>)
-</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/SpatialPlot.html">SpatialFeaturePlot</a></span><span class="op">(</span><span class="va">anterior1</span>, features <span class="op">=</span> <span class="st">"nCount_Spatial"</span><span class="op">)</span></code></pre></div>
 <p><img src="a04_example_spatial_transcriptomics_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 <p>We normalize the data we use log normalization.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="kw">anterior1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/NormalizeData.html">NormalizeData</a></span>(<span class="kw">anterior1</span>)
-</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">anterior1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">anterior1</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="running-haystack-on-the-spatial-coordinates" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-the-spatial-coordinates" class="anchor"></a>Running <code>haystack</code> on the spatial coordinates</h1>
 <p>At the moment there is no direct interface to apply <code>haystack</code> on spatial transcriptomics in Seurat. Once this version of Seurat is released we will add it. For now, we can obtain the two pieces of information required. One is the normalized counts and the other is the spatial coordinates. Then we pass to <code>haystack_2D</code> the coordinates of the beads and the detection matrix. Here we use a naive approach an define detected genes as those having non-zero counts.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="kw">coord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/GetTissueCoordinates.html">GetTissueCoordinates</a></span>(<span class="kw">anterior1</span>, <span class="st">"anterior1"</span>)
-<span class="kw">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/GetAssayData.html">GetAssayData</a></span>(<span class="kw">anterior1</span>, slot = <span class="st">"data"</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">coord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/GetTissueCoordinates.html">GetTissueCoordinates</a></span><span class="op">(</span><span class="va">anterior1</span>, <span class="st">"anterior1"</span><span class="op">)</span>
+<span class="va">counts</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/AssayData.html">GetAssayData</a></span><span class="op">(</span><span class="va">anterior1</span>, slot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span>
 
-<span class="kw">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack_2D.html">haystack_2D</a></span>(<span class="kw">coord</span><span class="op">$</span><span class="kw">imagecol</span>, <span class="kw">coord</span><span class="op">$</span><span class="kw">imagerow</span>, detection = <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">counts</span> <span class="op">&gt;</span> <span class="fl">1</span>))
-</pre></div>
+<span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack_2D.html">haystack_2D</a></span><span class="op">(</span><span class="va">coord</span><span class="op">$</span><span class="va">imagecol</span>, <span class="va">coord</span><span class="op">$</span><span class="va">imagerow</span>, detection <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span><span class="op">(</span><span class="va">counts</span> <span class="op">&gt;</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We can check the top genes with spatial biased distribution.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="kw">sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(<span class="kw">res</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">sum</span>, n = <span class="fl">20</span>)
-</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">sum</span>, n <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></code></pre></div>
 <pre><code>##                    D_KL log.p.vals  log.p.adj T.counts
 ## Slc17a7       0.7824319 -109.11039 -105.01760     1747
 ## Gpr88         0.9001888 -102.42973  -98.33694      748
@@ -190,9 +186,8 @@
 ## Hpca          0.5644309  -89.47208  -85.37929     1823
 ## Rasd2         0.7424966  -89.11496  -85.02217      659</code></pre>
 <p>And we can visualize the expression of the 6 top-scoring genes in the spatial plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/pkg/Seurat/man/SpatialPlot.html">SpatialFeaturePlot</a></span>(<span class="kw">anterior1</span>, features = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">sum</span>)[<span class="fl">1</span><span class="op">:</span><span class="fl">6</span>])
-</pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/SpatialPlot.html">SpatialFeaturePlot</a></span><span class="op">(</span><span class="va">anterior1</span>, features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p><img src="a04_example_spatial_transcriptomics_files/figure-html/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;"></p>
 </div>
   </div>

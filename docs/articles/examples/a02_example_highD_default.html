@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
       </span>
     </div>
 
@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -76,11 +76,14 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="../../news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fas fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -94,13 +97,13 @@
 
       
 
-      </header><script src="a02_example_highD_default_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="a02_example_highD_default_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Application on multi-dimensional coordinates</h1>
                         <h4 class="author">Alexis Vandenbon</h4>
             
-            <h4 class="date">2020-09-17</h4>
+            <h4 class="date">2021-03-26</h4>
       
       
       <div class="hidden name"><code>a02_example_highD_default.Rmd</code></div>
@@ -114,11 +117,10 @@
 <h1 class="hasAnchor">
 <a href="#preparing-input-data" class="anchor"></a>Preparing input data</h1>
 <p>The data used in these examples can be found <a href="https://figshare.com/articles/dataset/Example_dataset_for_singleCellHaystack_GitHub_vignettes/12923489">here</a>. We recommend downloading the .rda file and loading it using the <code><a href="https://rdrr.io/r/base/load.html">load()</a></code> function. You can also download the individual data files separately.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span>(<span class="st">"https://ndownloader.figshare.com/files/24593213"</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span>()
-<span class="co">#&gt; [1] "dat.expression" "dat.pca"        "dat.tsne"       "dat.umap"</span>
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/load.html">load</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html">url</a></span><span class="op">(</span><span class="st">"https://ndownloader.figshare.com/files/24593213"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ls.html">ls</a></span><span class="op">(</span><span class="op">)</span>
+<span class="co">#&gt; [1] "dat.expression" "dat.pca"        "dat.tsne"       "dat.umap"</span></code></pre></div>
 <p>This data should include the following objects:</p>
 <ul>
 <li>
@@ -131,31 +133,29 @@
 <code>dat.umap</code>: a data.frame with UMAP coordinates (2D) based on the first 50 PCs.</li>
 </ul>
 <p>Let’s have a look at this example dataset:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># this data contains 12,030 genes and 1981 cells</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">dat.expression</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># this data contains 12,030 genes and 1981 cells</span>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dat.expression</span><span class="op">)</span>
 <span class="co">#&gt; [1] 12030  1981</span>
 
 <span class="co"># visualizing the cells in a t-SNE plot:</span>
-<span class="fu">ggplot</span>(<span class="kw">dat.tsne</span>, <span class="fu">aes</span>(x = <span class="kw">V1</span>, y = <span class="kw">V2</span>)) <span class="op">+</span> <span class="fu">labs</span>(x = <span class="st">"t-SNE1"</span>, y = <span class="st">"t-SNE2"</span>) <span class="op">+</span> <span class="fu">geom_point</span>()
-</pre></div>
+<span class="fu">ggplot</span><span class="op">(</span><span class="va">dat.tsne</span>, <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">V1</span>, y <span class="op">=</span> <span class="va">V2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"t-SNE1"</span>, y <span class="op">=</span> <span class="st">"t-SNE2"</span><span class="op">)</span> <span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example1-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># the t-SNE coordinates are based on the 50 PCs</span>
-<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">dat.pca</span>) <span class="co"># the PCA data contains 1981 cells and 50 PCs</span>
-<span class="co">#&gt; [1] 1981   50</span>
-</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">dat.pca</span><span class="op">)</span> <span class="co"># the PCA data contains 1981 cells and 50 PCs</span>
+<span class="co">#&gt; [1] 1981   50</span></code></pre></div>
 <p>There are several groups of cells, although the borders between them are not clear and several might consist of additional subclusters. We can use <code>singleCellHaystack</code> to predict DEGs without relying on grouping of the cells into arbitrary clusters.</p>
 <p><code>singleCellHaystack</code> has two required input parameters: 1) the coordinates of cells in the input space, and 2) a table showing which genes are detected in which cells. The definition of detection is left to the user. In this example we will use the median normalized read count of each gene as threshold for defining detection. Alternatively, we could also define genes with counts &gt; 0 as being detected, for example.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-
-<span class="kw">median.per.gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw">dat.expression</span>,<span class="fl">1</span>,<span class="kw">median</span>) <span class="co"># get the median read count per gene</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">median.per.gene</span>) <span class="co"># for many genes the median read count is 0</span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">median.per.gene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dat.expression</span>,<span class="fl">1</span>,<span class="va">median</span><span class="op">)</span> <span class="co"># get the median read count per gene</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">median.per.gene</span><span class="op">)</span> <span class="co"># for many genes the median read count is 0</span>
 <span class="co">#&gt;  Mrpl15  Lypla1  Rb1cc1    Sgk3   Snhg6   Tram1 </span>
 <span class="co">#&gt;   0.000   0.000   0.000   0.000   0.000 136.243</span>
-<span class="kw">dat.detection</span> <span class="op">&lt;-</span> <span class="kw">dat.expression</span> <span class="op">&gt;</span> <span class="kw">median.per.gene</span> <span class="co"># use the medians as threshold for defining detection</span>
-<span class="kw">dat.detection</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>] <span class="co"># TRUE means detected, FALSE means not detected</span>
+<span class="va">dat.detection</span> <span class="op">&lt;-</span> <span class="va">dat.expression</span> <span class="op">&gt;</span> <span class="va">median.per.gene</span> <span class="co"># use the medians as threshold for defining detection</span>
+<span class="va">dat.detection</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span> <span class="co"># TRUE means detected, FALSE means not detected</span>
 <span class="co">#&gt;        AAACCTGCAGTAACGG.1 AAACGGGAGAAGAAGC.1 AAACGGGAGACCGGAT.1</span>
 <span class="co">#&gt; Mrpl15               TRUE              FALSE              FALSE</span>
 <span class="co">#&gt; Lypla1               TRUE              FALSE              FALSE</span>
@@ -167,31 +167,28 @@
 <span class="co">#&gt; Lypla1              FALSE               TRUE</span>
 <span class="co">#&gt; Rb1cc1              FALSE              FALSE</span>
 <span class="co">#&gt; Sgk3                FALSE              FALSE</span>
-<span class="co">#&gt; Snhg6                TRUE              FALSE</span>
-</pre></div>
+<span class="co">#&gt; Snhg6                TRUE              FALSE</span></code></pre></div>
 </div>
 <div id="running-haystack-on-multi-dimensional-coordinates" class="section level1">
 <h1 class="hasAnchor">
 <a href="#running-haystack-on-multi-dimensional-coordinates" class="anchor"></a>Running <code>haystack</code> on multi-dimensional coordinates</h1>
 <p>First, load the package.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw">singleCellHaystack</span>)
-</pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span></code></pre></div>
 <p>Next, run <code>haystack</code> on the first 50 principal components. Since the space is 50-dimensional, we set ‘method’ to ‘highD’. We also give the detection values as input to ‘detection’. This example dataset is relatively small, containing 1,981 cells, so running ‘haystack’ should take just 1 to 3 minutes to finish. We also set a random seed to ensure replicability.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">123</span>)
-<span class="kw">res.pc50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span>(x = <span class="kw">dat.pca</span>[,<span class="fl">1</span><span class="op">:</span><span class="fl">50</span>], detection = <span class="kw">dat.detection</span>, method = <span class="st">"highD"</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span>
+<span class="va">res.pc50</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.pca</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">]</span>, detection <span class="op">=</span> <span class="va">dat.detection</span>, method <span class="op">=</span> <span class="st">"highD"</span><span class="op">)</span>
 <span class="co">#&gt; ### calling haystack_highD()...</span>
 <span class="co">#&gt; ### scaling input data...</span>
 <span class="co">#&gt; ### deciding grid points...</span>
 <span class="co">#&gt; ### calculating Kullback-Leibler divergences...</span>
 <span class="co">#&gt; ### performing randomizations...</span>
 <span class="co">#&gt; ### estimating p-values...</span>
-<span class="co">#&gt; ### returning result...</span>
-</pre></div>
+<span class="co">#&gt; ### returning result...</span></code></pre></div>
 <p>Let’s have a look at the most significant DEGs. The gene with the strongest differential expression is Trim10. We can plot the expression and detection of this gene using the <code>plot_gene_haystack</code> function. From the t-SNE plots we can see that Trim10 is detected in the bottom right group of cells. In contrast, the expression of Eef1a1 is higher in cells of the top-right and bottom-left groups of cells.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.pc50</span>, n = <span class="fl">5</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span>res.haystack <span class="op">=</span> <span class="va">res.pc50</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt;               D_KL log.p.vals log.p.adj T.counts</span>
 <span class="co">#&gt; Trim10 0.011895191  -76.33235 -72.25208      368</span>
 <span class="co">#&gt; Snca   0.009586202  -75.75859 -71.67832      474</span>
@@ -200,62 +197,54 @@
 <span class="co">#&gt; Rps11  0.004972334  -74.99488 -70.91462      990</span>
 
 <span class="co"># plotting detection of Trim10</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Trim10"</span>, expression = <span class="kw">dat.detection</span>)
-</pre></div>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, gene <span class="op">=</span> <span class="st">"Trim10"</span>, expression <span class="op">=</span> <span class="va">dat.detection</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example5-1.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb8"><pre class="downlit">
-<span class="co"># plotting log expression of Trim10</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Trim10"</span>, expression = <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="kw">dat.expression</span>))
-</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># plotting log expression of Trim10</span>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, gene <span class="op">=</span> <span class="st">"Trim10"</span>, expression <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">dat.expression</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example5-2.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
 <span class="co"># plotting detection of Eef1a1</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Eef1a1"</span>, expression = <span class="kw">dat.detection</span>)
-</pre></div>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, gene <span class="op">=</span> <span class="st">"Eef1a1"</span>, expression <span class="op">=</span> <span class="va">dat.detection</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example5-3.png" width="576" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb10"><pre class="downlit">
-<span class="co"># plotting log expression of Eef1a1</span>
-<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span>(x = <span class="kw">dat.tsne</span>, gene = <span class="st">"Eef1a1"</span>, expression = <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span>(<span class="kw">dat.expression</span>))
-</pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># plotting log expression of Eef1a1</span>
+<span class="fu"><a href="../../reference/plot_gene_haystack.html">plot_gene_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, gene <span class="op">=</span> <span class="st">"Eef1a1"</span>, expression <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log10</a></span><span class="op">(</span><span class="va">dat.expression</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example5-4.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 <div id="clustering-and-visualization" class="section level1">
 <h1 class="hasAnchor">
 <a href="#clustering-and-visualization" class="anchor"></a>Clustering and visualization</h1>
 <p>Next, let’s take the top 1000 DEGs, and cluster them by their expression pattern in the input space (first 50 PCs). Here we use <code>hclust_haystack</code>, which uses hierarchical clustering. Alternatively, we could use <code>kmeans_haystack</code> for k-means clustering.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="co"># get the top 1000 DEGs in the result</span>
-<span class="kw">res.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span>(res.haystack = <span class="kw">res.pc50</span>, n = <span class="fl">1000</span>)
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># get the top 1000 DEGs in the result</span>
+<span class="va">res.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span>res.haystack <span class="op">=</span> <span class="va">res.pc50</span>, n <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>
 <span class="co"># cluster DEGs by their expression pattern in the 2D plot</span>
-<span class="kw">genes.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span>(<span class="kw">res.top</span>)
-<span class="kw">res.hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/hclust_haystack.html">hclust_haystack</a></span>(x = <span class="kw">dat.tsne</span>, genes = <span class="kw">genes.top</span>, detection = <span class="kw">dat.detection</span>)
-</pre></div>
+<span class="va">genes.top</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/row.names.html">row.names</a></span><span class="op">(</span><span class="va">res.top</span><span class="op">)</span>
+<span class="va">res.hc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/hclust_haystack.html">hclust_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, genes <span class="op">=</span> <span class="va">genes.top</span>, detection <span class="op">=</span> <span class="va">dat.detection</span><span class="op">)</span></code></pre></div>
 <p><code>hclust_haystack</code> returns as result a <code>hclust</code> tree, which we can cut into clusters using the <code>cutree</code> function. Here, we arbitrarily set the number of clusters to 5.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="kw">res.hc.clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span>(<span class="kw">res.hc</span>, k=<span class="fl">5</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span>(<span class="kw">res.hc.clusters</span>)
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">res.hc.clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/cutree.html">cutree</a></span><span class="op">(</span><span class="va">res.hc</span>, k<span class="op">=</span><span class="fl">5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">res.hc.clusters</span><span class="op">)</span>
 <span class="co">#&gt; res.hc.clusters</span>
 <span class="co">#&gt;   1   2   3   4   5 </span>
-<span class="co">#&gt; 332 198 341 103  26</span>
-</pre></div>
+<span class="co">#&gt; 332 198 341 103  26</span></code></pre></div>
 <p>While some clusters contain hunderds of genes, others are quite small.</p>
 <p>Let’s run through the 5 clusters and plot their averaged detection pattern using <code>plot_gene_set_haystack</code>, which is similar to <code>plot_gene_haystack</code> but uses a set of genes as input instead of just 1 gene.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="fu">function</span>(<span class="kw">cluster</span>) {
-  <span class="kw">gene.set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">res.hc.clusters</span>)[<span class="kw">res.hc.clusters</span><span class="op">==</span><span class="kw">cluster</span>]
-  <span class="kw">plot.title</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="st">"Cluster "</span>, <span class="kw">cluster</span>)
-  <span class="kw">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span>(x = <span class="kw">dat.tsne</span>, genes = <span class="kw">gene.set</span>, detection = <span class="kw">dat.detection</span>)
-  <span class="kw">p</span> <span class="op">+</span> <span class="fu">ggtitle</span>(<span class="kw">plot.title</span>) <span class="op">+</span> <span class="fu">theme</span>(legend.title = <span class="fu">element_text</span>(size = <span class="fl">8</span>))
-})
-<span class="fu">plot_grid</span>(plotlist = <span class="kw">pl</span>, ncol = <span class="fl">2</span>)
-</pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="kw">function</span><span class="op">(</span><span class="va">cluster</span><span class="op">)</span> <span class="op">{</span>
+  <span class="va">gene.set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">res.hc.clusters</span><span class="op">)</span><span class="op">[</span><span class="va">res.hc.clusters</span><span class="op">==</span><span class="va">cluster</span><span class="op">]</span>
+  <span class="va">plot.title</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Cluster "</span>, <span class="va">cluster</span><span class="op">)</span>
+  <span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/plot_gene_set_haystack.html">plot_gene_set_haystack</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">dat.tsne</span>, genes <span class="op">=</span> <span class="va">gene.set</span>, detection <span class="op">=</span> <span class="va">dat.detection</span><span class="op">)</span>
+  <span class="va">p</span> <span class="op">+</span> <span class="fu">ggtitle</span><span class="op">(</span><span class="va">plot.title</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>legend.title <span class="op">=</span> <span class="fu">element_text</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">8</span><span class="op">)</span><span class="op">)</span>
+<span class="op">}</span><span class="op">)</span>
+<span class="fu">plot_grid</span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">pl</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <p><img src="a02_example_highD_default_files/figure-html/example8-1.png" width="768" style="display: block; margin: auto;"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="kw">res.hc.clusters</span>[<span class="st">"Trim10"</span>] <span class="co"># the top DEG is in cluster 5</span>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">res.hc.clusters</span><span class="op">[</span><span class="st">"Trim10"</span><span class="op">]</span> <span class="co"># the top DEG is in cluster 5</span>
 <span class="co">#&gt; Trim10 </span>
-<span class="co">#&gt;      5</span>
-</pre></div>
+<span class="co">#&gt;      5</span></code></pre></div>
 <p>The most significant DEG, Trim10, was clustered into cluster 5. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that cluster.</p>
 </div>
   </div>
