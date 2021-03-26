@@ -16,7 +16,7 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](ht
 
 `singleCellHaystack` is a package for predicting differentially
 expressed genes (DEGs) in single cell transcriptome data. It does so
-without relying on clustering of cells into arbitrary clusters\!
+without relying on clustering of cells into arbitrary clusters!
 Single-cell RNA-seq (scRNA-seq) data is often processed to fewer
 dimensions using Principal Component Analysis (PCA) and represented in
 2-dimensional plots (e.g. t-SNE or UMAP plots). `singleCellHaystack`
@@ -42,19 +42,19 @@ differentially expressed genes in single-cell transcriptome data.”
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/)
 includes a few example applications showing how to use our package:
 
-  - [Toy
+-   [Toy
     example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
-  - [Multi-dimensional
+-   [Multi-dimensional
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
-  - [Advanced mode on multi-dimensional
+-   [Advanced mode on multi-dimensional
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
-  - [Spatial
+-   [Spatial
     transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
-  - [MOCA 100k
+-   [MOCA 100k
     cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
-  - [2D t-SNE
+-   [2D t-SNE
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
-  - [Advanced mode on 2D t-SNE
+-   [Advanced mode on 2D t-SNE
     coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
 
 ## Installation
