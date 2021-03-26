@@ -28,7 +28,7 @@ Suggests:
     rmarkdown,
     SummarizedExperiment,
     SingleCellExperiment,
-    Seurat,
+    SeuratObject,
     SeuratData (>= 0.2.1),
     Rtsne,
     cowplot,

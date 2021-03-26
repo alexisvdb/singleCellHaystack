@@ -60,12 +60,12 @@ haystack.data.frame <- function(x, dim1 = 1, dim2 = 2, detection, method = "high
 #' @rdname haystack
 #' @export
 haystack.Seurat <- function(x, assay = "RNA", slot = "data", coord = "pca", dims = NULL, cutoff = 1, method = NULL, use.advanced.sampling = NULL, ...) {
-  if (!requireNamespace("Seurat", quietly = TRUE)) {
-    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
+    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
-  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
-  z <- Seurat::Embeddings(x, coord)
+  y <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
+  z <- SeuratObject::Embeddings(x, coord)
 
   if (! is.null(dims)) {
     z <- z[, dims, drop = FALSE]
@@ -176,12 +176,12 @@ plot_gene_haystack.SingleCellExperiment <- function(x, dim1 = 1, dim2 = 2, assay
 #' @rdname plot_gene_haystack
 #' @export
 plot_gene_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot = "data", coord = "tsne", ...) {
-  if (!requireNamespace("Seurat", quietly = TRUE)) {
-    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
+    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
-  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
-  z <- Seurat::Embeddings(x, coord)
+  y <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
+  z <- SeuratObject::Embeddings(x, coord)
   plot_gene_haystack_raw(z[, dim1], z[, dim2], expression = y, ...)
 }
 
@@ -232,12 +232,12 @@ plot_gene_set_haystack.SingleCellExperiment <- function(x, dim1 = 1, dim2 = 2, a
 #' @rdname plot_gene_set_haystack
 #' @export
 plot_gene_set_haystack.Seurat <- function(x, dim1 = 1, dim2 = 2, assay = "RNA", slot = "data", coord = "tsne", ...) {
-  if (!requireNamespace("Seurat", quietly = TRUE)) {
-    stop("Package \"Seurat\" needed for this function to work. Please install it.", call. = FALSE)
+  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
+    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
-  y <- Seurat::GetAssayData(x, slot = slot, assay = assay)
-  z <- Seurat::Embeddings(x, coord)
+  y <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
+  z <- SeuratObject::Embeddings(x, coord)
   plot_gene_set_haystack_raw(z[, dim1], z[, dim2], detection = y > 1, ...)
 }
 
