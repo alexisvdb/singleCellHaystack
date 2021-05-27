@@ -65,7 +65,6 @@ jobs:
           remotes::install_cran("rcmdcheck")
           remotes::install_cran("BiocManager")
           BiocManager::install(remotes::dev_package_deps(dependencies = TRUE)[["package"]])
-          remotes::install_github("satijalab/seurat-data")
         shell: Rscript {0}
 
       - name: Check
