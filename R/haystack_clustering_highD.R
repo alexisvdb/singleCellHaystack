@@ -76,13 +76,13 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
+      densities[g,] <- apply(density.contributions[detection[gene_index,],,drop=FALSE],2,sum)
       setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
+      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE],2,sum)
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
@@ -182,13 +182,13 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[detection[gene_index,],],2,sum)
+      densities[g,] <- apply(density.contributions[detection[gene_index,],,drop=FALSE],2,sum)
       setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),],2,sum)
+      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE],2,sum)
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
