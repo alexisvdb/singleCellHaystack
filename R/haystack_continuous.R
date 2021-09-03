@@ -62,7 +62,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   if(nrow(x) < 50)
     warning("The number of cells seems very low (",nrow(x),"). Check your input.")
   if(nrow(expression) < 100)
-    warning("The number of genes seems very low (",nrow(detection),"). Check your input.")
+    warning("The number of genes seems very low (",nrow(expression),"). Check your input.")
 
   # warn about extreme values for 'grid.points'
   if(grid.points < 10)
