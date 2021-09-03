@@ -1,13 +1,22 @@
-# x = as.matrix(dat.pca[,1:50])
-# expression = dat.expression
-# grid.points = 100
-# use.advanced.sampling=NULL
-# dir.randomization = NULL
-# scale=TRUE
-# grid.method="centroid"
-# randomization.count = 100
-# weights.advanced.Q = sum.detection
-# set.seed(1)
+
+#' The main Haystack function, for higher-dimensional spaces and continuous expression levels.
+#'
+#' @param x Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.
+#' @param expression a matrix with expression data of genes (rows) in cells (columns)
+#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.
+#' @param weights.advanced.Q (Default: NULL) Optional weights of cells for calculating a weighted distribution of expression.
+#' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
+#' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
+#' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".
+#' @param randomization.count Number of randomizations to use. Default: 100
+#' @param n.genes.to.randomize Number of genes to use in randomizations. Default: 100
+#'
+#' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
+#' @export
+#'
+#' @examples
+#' # I need to add some examples.
+#' # A toy example will be added too.
 haystack_continuous_highD = function(x, expression, grid.points = 100, weights.advanced.Q=NULL, dir.randomization = NULL, scale=TRUE, grid.method="centroid", randomization.count = 100, n.genes.to.randomize = 100){
   message("### calling haystack_continuous_highD()...")
   message("### Using ",randomization.count," randomizations...")
@@ -69,8 +78,6 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     if(!dir.exists(dir.randomization))
       dir.create(dir.randomization)
   }
-
-
 
   ### get reference probabilities "Q"
   # using all points, set grid.points
@@ -205,18 +212,21 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
 
 
-# weights = expression[i,]
-# density.contributions = density.contributions
-# reference.prob = Q
-# pseudo = pseudo
-# weights <- log10(dat.expression[1,]+1)
+#' Calculates the Kullback-Leibler divergence between distributions for the high-dimensional continuous version of haystack.
+#'
+#' @param weights A numerical vector with expression values of a gene.
+#' @param density.contributions A matrix of density contributions of each cell (rows) to each center point (columns).
+#' @param reference.prob A reference distribution to calculate the divergence against.
+#' @param pseudo A pseudocount, used to avoid log(0) problems.
+#'
+#' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_continuous_highD = function(weights, density.contributions, reference.prob, pseudo = 0){
 
   # the reference distribution Q of cells in the space
   Q <- reference.prob
 
   # calculating the Kullback-Leibler divergence of the distribution
-  # of cells expressing and not expressing gene X vs reference distribution Q
+  # of expression vs reference distribution Q
   P <- apply(density.contributions*weights, 2, sum)
   P <- P + pseudo
   P <- P / sum(P)
@@ -225,8 +235,15 @@ get_D_KL_continuous_highD = function(weights, density.contributions, reference.p
   D_KL
 }
 
-# I rewrote a lot for this one
-# there is no fitting of splites at the moment
+#' Estimates the significance of the observed Kullback-Leibler divergence by comparing to randomizations for the continuous version of haystack.
+#'
+#' @param D_KL.observed A vector of observed Kullback-Leibler divergences.
+#' @param D_KL.randomized A matrix of Kullback-Leibler divergences of randomized datasets.
+#' @param all.coeffVar Coefficients of variation of all genes. Used for fitting the Kullback-Leibler divergences.
+#' @param train.coeffVar Coefficients of variation of genes that will be used for fitting the Kullback-Leibler divergences.
+#' @param output.dir Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.
+#'
+#' @return A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVar, train.coeffVar, output.dir = NULL){
 
   # prepare data for fitting
