@@ -170,7 +170,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   # to store randomization results
   all.D_KL.randomized <- matrix(NA,nrow=n.genes.to.randomize, ncol=randomization.count)
 
-  pb <- txtProgressBar(min = 0, max = T.counts.to.select, style = 3, file = stderr()) # progress bar
+  pb <- txtProgressBar(min = 0, max = n.genes.to.randomize, style = 3, file = stderr()) # progress bar
 
   for(i in 1:n.genes.to.randomize){
     setTxtProgressBar(pb, i) # progress bar
