@@ -29,8 +29,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     stop("'x' must be a numeric matrix")
   if(ncol(x) < 2)
     stop("'x' must have at least 2 columns")
-  if(!is.matrix(expression) && ! inherits(expression, "lgCMatrix") && ! inherits(expression, "lgRMatrix"))
-    stop("'expression' must be a matrix, lgCMatrix, or lgRMatrix")
+  if(!is.matrix(expression) && ! inherits(expression, "dgCMatrix") && ! inherits(expression, "dgRMatrix"))
+    stop("'expression' must be a matrix, dgCMatrix, or dgRMatrix")
   if(ncol(expression) != nrow(x))
     stop("The number of columns in 'expression' must be the same as the rows in 'x'")
   if(!is.numeric(grid.points))
@@ -44,9 +44,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       stop("The length of 'weights.advanced.Q' must be the same as the number of rows in 'x'")
   }
 
-  # if expression is a lgCMatrix, convert it to a lgRMatrix
-  if(inherits(expression, "lgCMatrix")){
-    message("### converting expression data from lgCMatrix to lgRMatrix")
+  # if expression is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgCMatrix")){
+    message("### converting expression data from dgCMatrix to dgRMatrix")
     expression <- as(expression, "RsparseMatrix")
   }
 
@@ -136,9 +136,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       D_KL.observed[i] <- get_D_KL_continuous_highD(weights=expression[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
       setTxtProgressBar(pb, i) # progress bar
     }
-  } else if(inherits(expression, "lgRMatrix")){
+  } else if(inherits(expression, "dgRMatrix")){
     for(i in 1:count.genes){
-      D_KL.observed[i] <- get_D_KL_continuous_highD(weights=extract_row_lgRMatrix(expression,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
+      D_KL.observed[i] <- get_D_KL_continuous_highD(weights=extract_row_dgRMatrix(expression,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
       setTxtProgressBar(pb, i) # progress bar
     }
   }
