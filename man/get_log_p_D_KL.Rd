@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{get_log_p_D_KL}
 \alias{get_log_p_D_KL}
-\title{Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.}
+\title{Estimates the significance of the observed Kullback-Leibler divergence by comparing to randomizations.}
 \usage{
 get_log_p_D_KL(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL)
 }
@@ -19,5 +19,5 @@ get_log_p_D_KL(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL)
 A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 }
 \description{
-Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.
+Estimates the significance of the observed Kullback-Leibler divergence by comparing to randomizations.
 }
