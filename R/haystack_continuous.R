@@ -70,19 +70,6 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   if(grid.points > count.cells/10)
     warning("The value of 'grid.points' appears to be very high (> No. of cells / 10). You can set the number of grid points using the 'grid.points' parameter.")
 
-  #### NOT SURE IF NEEDED - REMOVE IF NO ####
-  # advanced sampling is slow on large datasets. Recommend using wrswoR
-  if(!is.null(use.advanced.sampling)){
-    if(requireNamespace("wrswoR", quietly = TRUE)){
-      use.wrswoR <- TRUE
-      message("### Using package wrswoR to speed up random sampling")
-    } else {
-      use.wrswoR <- FALSE
-      message("### You are running advanced sampling. Installing the package \"wrswoR\" might result in much shorter runtimes.")
-    }
-  }
-  #### END NOT SURE IF NEEDED
-
   # scale data if needed
   if(scale){
     message("### scaling input data...")
