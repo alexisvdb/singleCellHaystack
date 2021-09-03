@@ -139,7 +139,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
   sum(D_KLs)
 }
 
-#' Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.
+#' Estimates the significance of the observed Kullback-Leibler divergence by comparing to randomizations.
 #'
 #' @param T.counts The number of cells in which a gene is detected.
 #' @param D_KL.observed A vector of observed Kullback-Leibler divergences.
