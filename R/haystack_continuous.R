@@ -249,8 +249,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' # A toy example will be added too.
 haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100){
   message("### calling haystack_continuous_2D()...")
-  #message("### Using ",randomization.count," randomizations...")
-  #message("### Using ",n.genes.to.randomize," genes to randomize...")
+  message("### Using ",randomization.count," randomizations...")
+  message("### Using ",n.genes.to.randomize," genes to randomize...")
 
   # check input
   if(!is.numeric(x))
