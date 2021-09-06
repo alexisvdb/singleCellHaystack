@@ -3,7 +3,7 @@
 #'
 #' @param x Coordinates of cells in a 2D or higher-dimensional space. Rows represent cells, columns the dimensions of the space.
 #' @param expression a matrix with expression data of genes (rows) in cells (columns)
-#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.
+#' @param grid.points An integer specifying the number of centers (grid points) to be used for estimating the density distributions of cells. Default is set to 100.
 #' @param weights.advanced.Q (Default: NULL) Optional weights of cells for calculating a weighted distribution of expression.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
@@ -380,7 +380,7 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
 
     }
     all.D_KL.randomized[i,] <- D_KL.randomized
-  }# end for all T counts to select
+  }# end for all gene to randomize
   close(pb) # progress bar
 
 
