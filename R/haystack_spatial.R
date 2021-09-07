@@ -274,7 +274,7 @@ haystack_continuous_highD2 = function(x, expression, grid.points = 100, weights.
   message("### deciding grid points...")
   if(grid.method == "input"){
     grid.coord <- x
-  } els {
+  } else {
     grid.coord <- get_grid_points(input=x, method=grid.method, grid.points=grid.points)
 
     # add another warning for the case that the number of grid.points was changed
