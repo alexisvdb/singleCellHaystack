@@ -18,7 +18,7 @@ default_bandwidth.nrd = function(x){
   1.06 * min(sqrt(var(x)), h) * length(x) ^ (-1 / 5)
 }
 
-#' Function that decides most of the parameters that will be during the "Haystack" analysis.
+#' Function that decides most of the parameters that will used be during the "Haystack" analysis.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
