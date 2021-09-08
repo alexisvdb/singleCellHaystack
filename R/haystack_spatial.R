@@ -194,14 +194,6 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
 
 }
 
-#' Function that decides most of the parameters that will be during the "Haystack" analysis.
-#'
-#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
-#' @param y y-axis coordinates of cells in a 2D representation
-#' @param high.resolution Logical: should high resolution be used? Default is FALSE.
-#'
-#' @return A list containing various parameters to use in the analysis.
-
 #' Decides the pairwise density contributions between cells or spots, which will be used during the "Haystack" analysis.
 #'
 #' @param coordinates Coordinates of cells in spatial transcriptomics data.

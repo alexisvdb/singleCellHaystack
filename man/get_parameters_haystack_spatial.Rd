@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack_spatial.R
 \name{get_parameters_haystack_spatial}
 \alias{get_parameters_haystack_spatial}
-\title{Function that decides most of the parameters that will be during the "Haystack" analysis.}
+\title{Decides the pairwise density contributions between cells or spots, which will be used during the "Haystack" analysis.}
 \usage{
 get_parameters_haystack_spatial(coordinates, bandwidth.multiplier = 1)
 }
@@ -10,19 +10,10 @@ get_parameters_haystack_spatial(coordinates, bandwidth.multiplier = 1)
 \item{coordinates}{Coordinates of cells in spatial transcriptomics data.}
 
 \item{bandwidth.multiplier}{A parameter to adjust the bandwitdh used for estimating the density contributions. Default = 1.}
-
-\item{x}{x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)}
-
-\item{y}{y-axis coordinates of cells in a 2D representation}
-
-\item{high.resolution}{Logical: should high resolution be used? Default is FALSE.}
 }
 \value{
-A list containing various parameters to use in the analysis.
-Decides the pairwise density contributions between cells or spots, which will be used during the "Haystack" analysis.
-
 Pairwise density contributions between all pairs of cell or spots.
 }
 \description{
-Function that decides most of the parameters that will be during the "Haystack" analysis.
+Decides the pairwise density contributions between cells or spots, which will be used during the "Haystack" analysis.
 }
