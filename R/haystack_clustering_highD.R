@@ -76,13 +76,13 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[detection[gene_index,],,drop=FALSE],2,sum)
+      densities[g,] <- colSums(density.contributions[detection[gene_index,],,drop=FALSE])
       setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE],2,sum)
+      densities[g,] <- colSums(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE])
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
@@ -94,7 +94,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
   #heatmap(densities, Rowv=NA, Colv=NA, scale="none")
 
   # rescale to sum to 1. This is to avoid R thinking sd=0 in the case where an entire row has very low values
-  densities <- densities / apply(densities,1,sum)
+  densities <- densities / rowSums(densities)
 
   dist <- as.dist(1 - cor(t(densities),method = "spearman")) # dist(densities)
   hc <- hclust(dist, method=method)
@@ -182,13 +182,13 @@ kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k
   if(is.matrix(detection)){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[detection[gene_index,],,drop=FALSE],2,sum)
+      densities[g,] <- colSums(density.contributions[detection[gene_index,],,drop=FALSE])
       setTxtProgressBar(pb, g) # progress bar
     }
   } else if( inherits(detection, "lgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- apply(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE],2,sum)
+      densities[g,] <- colSums(density.contributions[extract_row_lgRMatrix(detection,gene_index),,drop=FALSE])
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {

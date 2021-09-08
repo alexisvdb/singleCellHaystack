@@ -110,9 +110,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
 
   if(is.null(weights.advanced.Q)){
-    Q <- apply(density.contributions,2,sum)
+    Q <- colSums(density.contributions)
   } else {
-    Q <- apply(density.contributions*weights.advanced.Q,2,sum)
+    Q <- colSums(density.contributions*weights.advanced.Q)
   }
   pseudo <- 1e-300 # quantile(Q[Q>0],0.01)
   Q <- Q + pseudo
@@ -435,7 +435,7 @@ get_D_KL_continuous_highD = function(weights, density.contributions, reference.p
 
   # calculating the Kullback-Leibler divergence of the distribution
   # of expression vs reference distribution Q
-  P <- apply(density.contributions*weights, 2, sum)
+  P <- colSums(density.contributions*weights)
   P <- P + pseudo
   P <- P / sum(P)
   D_KL <- sum(P * log(P/Q))
