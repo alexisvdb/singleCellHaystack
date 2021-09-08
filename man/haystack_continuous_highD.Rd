@@ -21,7 +21,7 @@ haystack_continuous_highD(
 
 \item{expression}{a matrix with expression data of genes (rows) in cells (columns)}
 
-\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.}
+\item{grid.points}{An integer specifying the number of centers (grid points) to be used for estimating the density distributions of cells. Default is set to 100.}
 
 \item{weights.advanced.Q}{(Default: NULL) Optional weights of cells for calculating a weighted distribution of expression.}
 
