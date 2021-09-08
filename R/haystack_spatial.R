@@ -25,10 +25,10 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
     warning("Input coordinates appear to have ",ncol(coordinates)," dimensions. Spatial transcriptomics data typically has 2 or at most 3.")
     warning("Please make sure that running the haystack function for spatial transcriptomics data makes sense for your data.")
   }
-  if(!is.numeric(coordinates))
-    stop("'coordinates' must be a numeric matrix")
-  if(!is.matrix(coordinates))
-    stop("'coordinates' must be a numeric matrix")
+  if(!is.numeric(coordinates) && !all(apply(coordinates, 2, is.numeric)))
+    stop("'coordinates' must be a numeric matrix or data.frame")
+  if(!is.matrix(coordinates) && !is.data.frame(coordinates))
+    stop("'coordinates' must be a numeric matrix or data.frame")
   if(!is.matrix(expression) && ! inherits(expression, "dgCMatrix") && ! inherits(expression, "dgRMatrix"))
     stop("'expression' must be a matrix, dgCMatrix, or dgRMatrix")
   if(ncol(expression) != nrow(coordinates))
@@ -72,23 +72,10 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
   # based on those, get "Q"
   # add pseudocount to densities to avoid Inf problems
   # normalize to sum to 1
+
   message("### getting pairwise density contributions...")
-  bandwidth.multiplier = 1 # might become an input parameter allowing the user to change the resolution?
-  # get pairwise distances between spots
-  pairwise.dists <- as.matrix(dist(coordinates))
-
-  # set bandwidth
-  tmp <- pairwise.dists
-  tmp[tmp == 0] <- NA
-  min.dists <- apply(tmp, 1, function(x) min(x, na.rm = TRUE))
-  bandwidth <- median(min.dists) * bandwidth.multiplier
-
-  # getting the distances (in units of bandwidths) between all cells and all grid points
-  pairwise.dists.norm <- pairwise.dists / min.dists
-
-  # densities based on a simplified Gaussian
-  pairwise.densities <- exp(-0.5 * pairwise.dists.norm*pairwise.dists.norm)
-
+  # I found that putting this in a function is faster than putting it here
+  pairwise.densities <- get_parameters_haystack_spatial(coordinates = coordinates, bandwidth.multiplier = 1)
 
   # should be done using the default value for use.advanced.sampling = NULL
   # ref is a list that contains Q and the pseudo count that was used
@@ -206,6 +193,42 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
   res
 
 }
+
+#' Function that decides most of the parameters that will be during the "Haystack" analysis.
+#'
+#' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
+#' @param y y-axis coordinates of cells in a 2D representation
+#' @param high.resolution Logical: should high resolution be used? Default is FALSE.
+#'
+#' @return A list containing various parameters to use in the analysis.
+
+#' Decides the pairwise density contributions between cells or spots, which will be used during the "Haystack" analysis.
+#'
+#' @param coordinates Coordinates of cells in spatial transcriptomics data.
+#' @param bandwidth.multiplier A parameter to adjust the bandwitdh used for estimating the density contributions. Default = 1.
+#'
+#' @return Pairwise density contributions between all pairs of cell or spots.
+get_parameters_haystack_spatial = function(coordinates, bandwidth.multiplier = 1){
+
+  # get pairwise distances between spots
+  pairwise.dists <- as.matrix(dist(coordinates))
+
+  # set bandwidth
+  tmp <- pairwise.dists
+  tmp[tmp == 0] <- NA
+  min.dists <- apply(tmp, 1, function(x) min(x, na.rm = TRUE))
+  bandwidth <- median(min.dists) * bandwidth.multiplier
+
+  # getting the distances (in units of bandwidths) between all cells and all grid points
+  pairwise.dists.norm <- pairwise.dists / min.dists
+
+  # densities based on a simplified Gaussian
+  pairwise.densities <- exp(-0.5 * pairwise.dists.norm*pairwise.dists.norm)
+
+  pairwise.densities
+}
+
+
 
 
 #' Get reference distribution for spatial transcriptomics data
