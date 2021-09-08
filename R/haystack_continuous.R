@@ -23,10 +23,10 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   message("### Using ",n.genes.to.randomize," genes to randomize...")
 
   # check input
-  if(!is.numeric(x))
-    stop("'x' must be a numeric matrix")
-  if(!is.matrix(x))
-    stop("'x' must be a numeric matrix")
+  if(!is.numeric(x) && !all(apply(x, 2, is.numeric)))
+    stop("'x' must be a numeric matrix or data.frame")
+  if(!is.matrix(x) && !is.data.frame(x))
+    stop("'x' must be a numeric matrix or data.frame")
   if(ncol(x) < 2)
     stop("'x' must have at least 2 columns")
   if(!is.matrix(expression) && ! inherits(expression, "dgCMatrix") && ! inherits(expression, "dgRMatrix"))
