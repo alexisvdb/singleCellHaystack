@@ -21,9 +21,10 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
   message("### Using ",n.genes.to.randomize," genes to randomize...")
 
   # check input
-  if(ncol(coordinates)>3)
+  if(ncol(coordinates)>3){
     warning("Input coordinates appear to have ",ncol(coordinates)," dimensions. Spatial transcriptomics data typically has 2 or at most 3.")
     warning("Please make sure that running the haystack function for spatial transcriptomics data makes sense for your data.")
+  }
   if(!is.numeric(coordinates))
     stop("'coordinates' must be a numeric matrix")
   if(!is.matrix(coordinates))
