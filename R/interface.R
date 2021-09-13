@@ -1,4 +1,18 @@
 
+#' Title
+#'
+#' @param coordinates typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates
+#' @param expression matrix or data.frame with continuous expression values of genes in cells/spots
+#' @param detection matrix or data.frame with binary (TRUE or FALSE) detection values of genes in cells/spots
+#' @param type highD, 2D, or spatial, depending on the type of input coordinates
+#' @param ... other parameters to pass on to the haystack functions
+#'
+#' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
+#' @export
+#'
+#' @examples
+#' # I need to add some examples.
+#' # A toy example will be added too.
 haystack_interface = function(coordinates, expression = NULL, detection = NULL,
                               type = NULL,...){
   # I think we can change the name of this function to just "haystack" or "singleCellHaystack"
