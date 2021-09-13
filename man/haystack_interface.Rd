@@ -2,7 +2,11 @@
 % Please edit documentation in R/interface.R
 \name{haystack_interface}
 \alias{haystack_interface}
+<<<<<<< HEAD
 \title{Interface to various Haystack functions.}
+=======
+\title{Title}
+>>>>>>> 2782eb24f1dc64e0d7865b60a55a4b24ae78569c
 \usage{
 haystack_interface(
   coordinates,
@@ -27,7 +31,11 @@ haystack_interface(
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 }
 \description{
+<<<<<<< HEAD
 Interface to various Haystack functions.
+=======
+Title
+>>>>>>> 2782eb24f1dc64e0d7865b60a55a4b24ae78569c
 }
 \examples{
 # I need to add some examples.

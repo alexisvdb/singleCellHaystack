@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 #' Interface to various Haystack functions.
+=======
+#' Title
+>>>>>>> 2782eb24f1dc64e0d7865b60a55a4b24ae78569c
 #'
 #' @param coordinates typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates
 #' @param expression matrix or data.frame with continuous expression values of genes in cells/spots
