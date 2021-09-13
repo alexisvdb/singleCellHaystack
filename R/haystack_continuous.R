@@ -330,9 +330,9 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
       D_KL.observed[i] <- get_D_KL_continuous_2D(weights=expression[i,], parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
       setTxtProgressBar(pb, i) # progress bar
     }
-  } else if(inherits(expression, "lgRMatrix")){
+  } else if(inherits(expression, "dgRMatrix")){
     for(i in 1:count.genes){
-      D_KL.observed[i] <- get_D_KL_continuous_2D(weights=extract_row_lgRMatrix(expression,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
+      D_KL.observed[i] <- get_D_KL_continuous_2D(weights=extract_row_dgRMatrix(expression,i), parameters=parameters, reference.prob=ref$Q, pseudo=ref$pseudo)
       setTxtProgressBar(pb, i) # progress bar
     }
   }
