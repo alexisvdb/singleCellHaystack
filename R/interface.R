@@ -14,7 +14,14 @@
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_interface = function(coordinates, expression = NULL, detection = NULL,
-                              type = NULL,...){
+                              type = NULL, ...) {
+  UseMethod("haystack_interface")
+}
+
+#' @rdname haystack_interface
+#' @export
+haystack_interface.matrix = function(coordinates, expression = NULL, detection = NULL,
+                              type = NULL, ...){
   # I think we can change the name of this function to just "haystack" or "singleCellHaystack"
   # we might have to do something about the s3.R function "haystack" in that case, to avoid confusion
 

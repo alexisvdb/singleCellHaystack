@@ -2,9 +2,18 @@
 % Please edit documentation in R/interface.R
 \name{haystack_interface}
 \alias{haystack_interface}
+\alias{haystack_interface.matrix}
 \title{Interface to various Haystack functions.}
 \usage{
 haystack_interface(
+  coordinates,
+  expression = NULL,
+  detection = NULL,
+  type = NULL,
+  ...
+)
+
+\method{haystack_interface}{matrix}(
   coordinates,
   expression = NULL,
   detection = NULL,
