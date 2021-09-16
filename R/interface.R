@@ -82,3 +82,19 @@ haystack_interface.matrix = function(coordinates = NULL, expression = NULL, type
   }
 }
 
+#' @rdname haystack_interface
+#' @export
+haystack_interface.Seurat = function(x = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
+  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
+    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (is.null(assay)) {
+    assay <- SeuratObject::DefaultAssay(x)
+  }
+  expression <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
+  coordinates <- SeuratObject::Embeddings(x, reduction)
+
+  haystack_interface(coordinates = coordinates, expression = expression, type = type, ...)
+}
+

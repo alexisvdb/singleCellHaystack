@@ -3,11 +3,21 @@
 \name{haystack_interface}
 \alias{haystack_interface}
 \alias{haystack_interface.matrix}
+\alias{haystack_interface.Seurat}
 \title{Interface to various Haystack functions.}
 \usage{
 haystack_interface(coordinates, expression, type, ...)
 
 \method{haystack_interface}{matrix}(coordinates = NULL, expression = NULL, type = NULL, ...)
+
+\method{haystack_interface}{Seurat}(
+  x = NULL,
+  reduction = "pca",
+  assay = NULL,
+  slot = "data",
+  type = NULL,
+  ...
+)
 }
 \arguments{
 \item{coordinates}{typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates.}
