@@ -5,32 +5,18 @@
 \alias{haystack_interface.matrix}
 \title{Interface to various Haystack functions.}
 \usage{
-haystack_interface(
-  coordinates,
-  expression = NULL,
-  detection = NULL,
-  type = NULL,
-  ...
-)
+haystack_interface(coordinates, expression, type, ...)
 
-\method{haystack_interface}{matrix}(
-  coordinates,
-  expression = NULL,
-  detection = NULL,
-  type = NULL,
-  ...
-)
+\method{haystack_interface}{matrix}(coordinates = NULL, expression = NULL, type = NULL, ...)
 }
 \arguments{
-\item{coordinates}{typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates}
+\item{coordinates}{typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates.}
 
-\item{expression}{matrix or data.frame with continuous expression values of genes in cells/spots}
+\item{expression}{matrix or data.frame with continuous expression values, or binary (TRUE/FALSE) detection values of genes in cells/spots.}
 
-\item{detection}{matrix or data.frame with binary (TRUE or FALSE) detection values of genes in cells/spots}
+\item{type}{highD, 2D, or spatial, depending on the type of input coordinates.}
 
-\item{type}{highD, 2D, or spatial, depending on the type of input coordinates}
-
-\item{...}{other parameters to pass on to the haystack functions}
+\item{...}{other parameters to pass on to the haystack functions.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
