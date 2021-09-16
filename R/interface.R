@@ -38,7 +38,7 @@ haystack_interface.matrix = function(coordinates = NULL, expression = NULL, type
             "    - type       : highD, 2D, or spatial, depending on the type of input coordinates\n\n")
   } else {
     # binary
-    if (mode(expression) == "logical") {
+    if (is.logical(expression)) {
       if (type == "highD") {
         # highD binary
         message("### calling haystack version highD binary...")
@@ -60,7 +60,7 @@ haystack_interface.matrix = function(coordinates = NULL, expression = NULL, type
     }
 
     # continuous
-    if (mode(expression) == "numeric") {
+    if (is.numeric(expression) || is(expression, "Matrix")) {
       if (type == "highD") {
         # highD continuous
         message("### calling haystack version highD continuous...")
