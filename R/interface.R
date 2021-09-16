@@ -17,21 +17,39 @@
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_interface = function(object, ...) {
-  UseMethod("haystack_interface")
-}
-
-#' @rdname haystack_interface
-#' @export
-haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = NULL, ...){
   # I think we can change the name of this function to just "haystack" or "singleCellHaystack"
   # we might have to do something about the s3.R function "haystack" in that case, to avoid confusion
 
   # might add several checks on the input here?
   # in that case, we can remove redundant, general checks from all the functions
   # and keep only specific checks inside the individual functions
+  UseMethod("haystack_interface")
+}
 
-  expression <- object
+#' @rdname haystack_interface
+#' @export
+haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = NULL, ...){
+  haystack_interface_raw(expression = object, coordinates = coordinates, type = type, ...)
+}
 
+#' @rdname haystack_interface
+#' @export
+haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
+  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
+    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
+  }
+
+  if (is.null(assay)) {
+    assay <- SeuratObject::DefaultAssay(object)
+  }
+  expression <- SeuratObject::GetAssayData(object, slot = slot, assay = assay)
+  coordinates <- SeuratObject::Embeddings(object, reduction)
+
+  haystack_interface_raw(expression = expression, coordinates = coordinates, type = type, ...)
+}
+
+
+haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type = NULL, ...) {
   if (is.null(coordinates) || is.null(expression) || is.null(type)) {
     message("### usage:\n\n",
             "    haystack_interface(coordinates, [expression or detection data], type)\n\n",
@@ -88,19 +106,4 @@ haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = N
   }
 }
 
-#' @rdname haystack_interface
-#' @export
-haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
-  if (!requireNamespace("SeuratObject", quietly = TRUE)) {
-    stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
-  }
-
-  if (is.null(assay)) {
-    assay <- SeuratObject::DefaultAssay(object)
-  }
-  expression <- SeuratObject::GetAssayData(object, slot = slot, assay = assay)
-  coordinates <- SeuratObject::Embeddings(object, reduction)
-
-  haystack_interface(coordinates = coordinates, expression = expression, type = type, ...)
-}
 
