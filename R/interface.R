@@ -66,13 +66,13 @@ haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type =
       if (type == "highD") {
         # highD binary
         message("### calling haystack version highD binary...")
-        haystack_highD(x = coordinates, detection = expression, ...)
+        res <- haystack_highD(x = coordinates, detection = expression, ...)
       }
 
       if (type == "2D") {
         # 2D binary
         message("### calling haystack version 2D binary...")
-        haystack_2D(x = coordinates[, 1], y = coordinates[, 2], detection = expression, ...)
+        res <- haystack_2D(x = coordinates[, 1], y = coordinates[, 2], detection = expression, ...)
       }
 
       if(type == "spatial") {
@@ -88,22 +88,24 @@ haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type =
       if (type == "highD") {
         # highD continuous
         message("### calling haystack version highD continuous...")
-        haystack_continuous_highD(x = coordinates, expression = expression, ...)
+        res <- haystack_continuous_highD(x = coordinates, expression = expression, ...)
       }
 
       if (type == "2D") {
         # 2D continuous
         message("### calling haystack version 2D continuous...")
-        haystack_continuous_2D(x = coordinates[, 1], y = coordinates[, 2], expression = expression, ...)
+        res <- haystack_continuous_2D(x = coordinates[, 1], y = coordinates[, 2], expression = expression, ...)
       }
 
       if(type == "spatial") {
         # spatial continuous
         message("### calling haystack version spatial continuous...")
-        haystack_continuous_spatial(coordinates = coordinates, expression = expression, ...)
+        res <- haystack_continuous_spatial(coordinates = coordinates, expression = expression, ...)
       }
     }
   }
+
+  res
 }
 
 
