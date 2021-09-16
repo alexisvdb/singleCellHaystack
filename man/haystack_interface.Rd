@@ -6,12 +6,12 @@
 \alias{haystack_interface.Seurat}
 \title{Interface to various Haystack functions.}
 \usage{
-haystack_interface(coordinates, expression, type, ...)
+haystack_interface(object, ...)
 
-\method{haystack_interface}{matrix}(coordinates = NULL, expression = NULL, type = NULL, ...)
+\method{haystack_interface}{matrix}(object = NULL, coordinates = NULL, type = NULL, ...)
 
 \method{haystack_interface}{Seurat}(
-  x = NULL,
+  object = NULL,
   reduction = "pca",
   assay = NULL,
   slot = "data",
@@ -20,13 +20,19 @@ haystack_interface(coordinates, expression, type, ...)
 )
 }
 \arguments{
-\item{coordinates}{typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates.}
+\item{object}{a matrix with expression values for genes in cells/spots, or a logical matrix indicating detection values, or a Seurat/SingleCellexperiment object containing expression values.}
 
-\item{expression}{matrix or data.frame with continuous expression values, or binary (TRUE/FALSE) detection values of genes in cells/spots.}
+\item{...}{other parameters to pass on to the haystack functions.}
+
+\item{coordinates}{a matrix with coordinates of cells in PCA space (>=2 PCs) or other type of embedding (tSNE/UMAP), or 2D/3D spatial coordinates.}
 
 \item{type}{highD, 2D, or spatial, depending on the type of input coordinates.}
 
-\item{...}{other parameters to pass on to the haystack functions.}
+\item{reduction}{name for the embeddings to be used when using Seurat or SingleCellExperiment objects.}
+
+\item{assay}{name of the assay to be used when using Seurat or SingleCellExperiment objects.}
+
+\item{slot}{name of the slot to be used when using Seurat objects.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.

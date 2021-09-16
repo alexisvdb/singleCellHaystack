@@ -1,10 +1,14 @@
 
 #' Interface to various Haystack functions.
 #'
-#' @param coordinates typically >2D coordinates of cells in the PC space (2D is also fine), or 2D/3D spatial coordinates.
-#' @param expression matrix or data.frame with continuous expression values, or binary (TRUE/FALSE) detection values of genes in cells/spots.
+#' @param object a matrix with expression values for genes in cells/spots, or a logical matrix indicating detection values, or a Seurat/SingleCellexperiment object containing expression values.
+#' @param coordinates a matrix with coordinates of cells in PCA space (>=2 PCs) or other type of embedding (tSNE/UMAP), or 2D/3D spatial coordinates.
 #' @param type highD, 2D, or spatial, depending on the type of input coordinates.
 #' @param ... other parameters to pass on to the haystack functions.
+#'
+#' @param reduction name for the embeddings to be used when using Seurat or SingleCellExperiment objects.
+#' @param assay name of the assay to be used when using Seurat or SingleCellExperiment objects.
+#' @param slot name of the slot to be used when using Seurat objects.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -12,19 +16,21 @@
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_interface = function(coordinates, expression, type, ...) {
+haystack_interface = function(object, ...) {
   UseMethod("haystack_interface")
 }
 
 #' @rdname haystack_interface
 #' @export
-haystack_interface.matrix = function(coordinates = NULL, expression = NULL, type = NULL, ...){
+haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = NULL, ...){
   # I think we can change the name of this function to just "haystack" or "singleCellHaystack"
   # we might have to do something about the s3.R function "haystack" in that case, to avoid confusion
 
   # might add several checks on the input here?
   # in that case, we can remove redundant, general checks from all the functions
   # and keep only specific checks inside the individual functions
+
+  expression <- object
 
   if (is.null(coordinates) || is.null(expression) || is.null(type)) {
     message("### usage:\n\n",
@@ -84,16 +90,16 @@ haystack_interface.matrix = function(coordinates = NULL, expression = NULL, type
 
 #' @rdname haystack_interface
 #' @export
-haystack_interface.Seurat = function(x = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
+haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
   if (!requireNamespace("SeuratObject", quietly = TRUE)) {
     stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
 
   if (is.null(assay)) {
-    assay <- SeuratObject::DefaultAssay(x)
+    assay <- SeuratObject::DefaultAssay(object)
   }
-  expression <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
-  coordinates <- SeuratObject::Embeddings(x, reduction)
+  expression <- SeuratObject::GetAssayData(object, slot = slot, assay = assay)
+  coordinates <- SeuratObject::Embeddings(object, reduction)
 
   haystack_interface(coordinates = coordinates, expression = expression, type = type, ...)
 }
