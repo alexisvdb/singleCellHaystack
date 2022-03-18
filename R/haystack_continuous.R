@@ -17,7 +17,10 @@
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_continuous_highD = function(x, expression, grid.points = 100, weights.advanced.Q=NULL, dir.randomization = NULL, scale=TRUE, grid.method="centroid", randomization.count = 100, n.genes.to.randomize = 100){
+haystack_continuous_highD = function(x, expression, grid.points = 100, weights.advanced.Q=NULL,
+                                     dir.randomization = NULL, scale=TRUE, grid.method="centroid",
+                                     randomization.count = 100, n.genes.to.randomize = 100,
+                                     selection.method.genes.to.randomize = "heavytails"){
   message("### calling haystack_continuous_highD()...")
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
@@ -154,13 +157,25 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   # process expression data
   expr.mean <- apply(expression,1,mean) + 1e-300
+  if(min(expr.mean) < 0)
+    stop("Some features have an average signal < 0. Expect average signal >= 0.")
   expr.sd   <- apply(expression,1,sd) + 1e-300
   coeffVar  <- expr.sd/expr.mean # coefficient of variation
 
   message("### performing randomizations...")
 
   o <- order(coeffVar)
-  genes.to.randomize <- o[floor(seq(1,count.genes, length.out = n.genes.to.randomize))]
+  # Option "uniform"   : evenly spread ("uniform")
+  # Option "heavytails": top 10 and bottom 10, otherwise evenly spread
+  if(selection.method.genes.to.randomize=="uniform"){
+    genes.to.randomize <- o[floor(seq(1,count.genes, length.out = n.genes.to.randomize))]
+  } else if(selection.method.genes.to.randomize=="heavytails"){
+    genes.to.randomize <- c(o[1:9],
+                            as.integer(seq(10,count.genes-9,length.out = n.genes.to.randomize-18)),
+                            o[length(o)-(8:0)]
+    )
+  }
+
 
   # - do x randomizations and get their D_KL values
   # - get mean and SD of D_KL values,
@@ -182,7 +197,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       D_KL.randomized[r] <- get_D_KL_continuous_highD(
         weights=sample(x=vector.to.randomize),
         density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo
-        )
+      )
 
     }
     all.D_KL.randomized[i,] <- D_KL.randomized
@@ -495,28 +510,12 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
 
   # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
   # first, for the mean D_KL
-  x <- log(train.coeffVar)
-  y <- D_KL.log.mean
-  degree <- 3 # my simulations show that degree 3 works better than 1 or 2
-  df <- 6 # my simulations show that this works best for n = 100. If n is higher, then df = 7 or 8 might become slightly better
-
-  # set boundary knots to be slightly outside range of predictor values
-  range.x <- range(x)
-  r.x <- range.x[2]-range.x[1]
-  boundary.knots <- c(range.x[1] - 0.01*r.x, range.x[2] + 0.01*r.x)
-
-  model <- lm(y ~ bs(x, df=df,Boundary.knots=boundary.knots, degree=degree))
+  message("### picking model for mean D_KL...")
+  plot.file <- NULL
+  if(!is.null(output.dir))
+    plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_meanLogD_KL.pdf")
+  model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.mean, plot.file = plot.file)
   #summary(model)
-
-  if(!is.null(output.dir)){
-    outfile <- paste0(output.dir,"/fit_logCoeffVar_vs_meanLogD_KL_df",df,"_degree",degree,".pdf")
-    pdf(outfile)
-    x.seq <- seq(range.x[1],range.x[2],length.out=1000)
-    fitted.y <- predict(model, data.frame(x=x.seq), type="response")
-    plot(x, y)
-    points(x.seq,fitted.y,col="red", type="l")
-    dev.off()
-  }
 
   # fitted values for all cases
   fitted.D_KL_log.mean <- predict(model, data.frame(x=log(all.coeffVar)), type="response")
@@ -524,31 +523,15 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
 
   # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
   # second, for the SD of the D_KL
-  x <- train.coeffVar # not log in this case!
-  y <- D_KL.log.sd
-  degree <- 3 # my simulations show that degree 3 works better than 1 or 2
-  df <- 5 # my simulations show that 5 or 6 works best for n = 100. If n is higher, then df = 7 or 8 might become slightly better
-
-  # set boundary knots to be slightly outside range of predictor values
-  range.x <- range(x)
-  r.x <- range.x[2]-range.x[1]
-  boundary.knots <- c(range.x[1] - 0.01*r.x, range.x[2] + 0.01*r.x)
-
-  model <- lm(y ~ bs(x, df=df,Boundary.knots=boundary.knots, degree=degree))
+  message("### picking model for stdev D_KL...")
+  plot.file <- NULL
+  if(!is.null(output.dir))
+    plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_SdLogD_KL.pdf")
+  model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.sd, plot.file = plot.file)
   #summary(model)
 
-  if(!is.null(output.dir)){
-    outfile <- paste0(output.dir,"/fit_CoeffVar_vs_SdLogD_KL_df",df,"_degree",degree,".pdf")
-    pdf(outfile)
-    x.seq <- seq(range.x[1],range.x[2],length.out=1000)
-    fitted.y <- predict(model, data.frame(x=x.seq), type="response")
-    plot(x, y)
-    points(x.seq,fitted.y,col="red", type="l")
-    dev.off()
-  }
-
   # fitted values for all cases
-  fitted.D_KL_log.sd <- predict(model, data.frame(x=all.coeffVar), type="response")
+  fitted.D_KL_log.sd <- predict(model, data.frame(x=log(all.coeffVar)), type="response")
 
 
   # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
@@ -556,4 +539,78 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.D_KL_log.mean, sd = fitted.D_KL_log.sd, lower.tail = FALSE, log.p = T)/log(10)
 
   fitted.log.p.vals
+}
+
+
+get_model_cv = function(x, y, plot.file = NULL){
+  # prepare cross validation
+  n_cv <- 10 # 10 fold
+  sets <- sample(rep(1:n_cv, length.out = length(x))) # I am using sample() to really randomize them
+
+  # set boundary knots to be slightly outside range of predictor values
+  range.x <- range(x)
+  r.x <- range.x[2]-range.x[1]
+  boundary.knots <- c(range.x[1] - 0.01*r.x, range.x[2] + 0.01*r.x)
+
+  degrees <- 1:5
+  dfs <- 1:10
+
+  best_rmsd   <- Inf
+  best_degree <- NA
+  best_df     <- NA
+  for(degree in degrees){
+    for(df in dfs){
+
+      # check if df is suitable
+      # see: https://github.com/SurajGupta/r-source/blob/master/src/library/splines/R/splines.R
+      ord <- 1L + (degree <- as.integer(degree))
+      intercept <- FALSE
+      nIknots <- df - ord + (1L - intercept)
+      if(nIknots < 0L){
+        # message("degree: ",degree, " - df: ",df," - df too small; skip")
+        next
+      }
+
+      rmsds <- rep(NA, n_cv)
+      for(s in 1:n_cv){
+        x.train <- x[sets!=s]
+        y.train <- y[sets!=s]
+        x.test  <- x[sets==s]
+        y.test  <- y[sets==s]
+
+        model <- lm(y.train ~ bs(x.train, df=df,Boundary.knots=boundary.knots, degree=degree))
+
+        y.pred <- predict(model, data.frame(x.train=x.test), type="response")
+        rmsds[s] <- sqrt(mean((y.pred - y.test)^2))
+      }
+      rmsd <- mean(rmsds)
+
+      # message(degree," ",df," ",rmsd)
+
+      # update if better solution
+      if(rmsd < best_rmsd){
+        best_rmsd <- rmsd
+        best_degree <- degree
+        best_df <- df
+      }
+    }# for dfs
+  }# for degrees
+
+  message("### best RMSD  : ",round(best_rmsd,3))
+  message("### best degree: ",best_degree)
+  message("### best df    : ",best_df)
+
+  model <- lm(y ~ bs(x, df=best_df,Boundary.knots=boundary.knots, degree=best_degree))
+
+  if(!is.null(plot.file)){
+    x.seq <- seq(range.x[1],range.x[2],length.out=1000)
+    fitted.y <- predict(model, data.frame(x=x.seq), type="response")
+    range.y <- range(range(y), range(fitted.y))
+    pdf(plot.file)
+    plot(x, y, ylim = range.y)
+    points(x.seq,fitted.y,col="red", type="l")
+    dev.off()
+  }
+
+  model
 }
