@@ -171,6 +171,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.mean.log.D_KL_df",df.mean,".pdf")
+    message("### writing plot to ", outfile)
     pdf(outfile)
     plot(t.points, dat.mean.log2)
     points(t.seq,fitted.mean.log2,col="red", type="l")
@@ -192,6 +193,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.sd.log.D_KL_df",df.sd,".pdf")
+    message("### writing plot to ", outfile)
     pdf(outfile)
     plot(t.points, dat.sd.log2)
     points(t.seq,fitted.sd.log2,col="red", type="l")

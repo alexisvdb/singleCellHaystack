@@ -194,7 +194,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   p.vals <- get_log_p_D_KL_continuous(D_KL.observed = D_KL.observed,
                                       D_KL.randomized = all.D_KL.randomized,
                                       all.coeffVar = coeffVar,
-                                      train.coeffVar = coeffVar[genes.to.randomize])
+                                      train.coeffVar = coeffVar[genes.to.randomize],
+                                      output.dir = dir.randomization)
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -388,7 +389,8 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
   p.vals <- get_log_p_D_KL_continuous(D_KL.observed = D_KL.observed,
                                       D_KL.randomized = all.D_KL.randomized,
                                       all.coeffVar = coeffVar,
-                                      train.coeffVar = coeffVar[genes.to.randomize])
+                                      train.coeffVar = coeffVar[genes.to.randomize],
+                                      output.dir = dir.randomization)
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
