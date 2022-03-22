@@ -211,6 +211,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize],
                                       output.dir = dir.randomization)
+  info <- p.vals$info
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -237,7 +239,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       log.p.adj = p.adjs,
       row.names = row.names(expression)
     ),
-    grid.coordinates = grid.coord #,
+    grid.coordinates = grid.coord,
+    method="continuous_highD",
+    randomization = info #,
     #all.D_KL.randomized = all.D_KL.randomized
   )
   class(res) <- "haystack"
@@ -406,6 +410,8 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize],
                                       output.dir = dir.randomization)
+  info <- p.vals$info
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -425,7 +431,8 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
       log.p.vals = p.vals,
       log.p.adj = p.adjs,
       row.names = row.names(expression)
-    )
+    ),
+    randomization = info
   )
   class(res) <- "haystack"
   res
@@ -515,6 +522,10 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   if(!is.null(output.dir))
     plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_meanLogD_KL.pdf")
   model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.mean, plot.file = plot.file)
+  info <- list()
+  info$features <- rownames(D_KL.randomized)
+  info$mean <- model$info
+  model <- model$model
   #summary(model)
 
   # fitted values for all cases
@@ -528,6 +539,8 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   if(!is.null(output.dir))
     plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_SdLogD_KL.pdf")
   model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.sd, plot.file = plot.file)
+  info$sd <- model$info
+  model <- model$model
   #summary(model)
 
   # fitted values for all cases
@@ -538,7 +551,7 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   # estimate p values
   fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.D_KL_log.mean, sd = fitted.D_KL_log.sd, lower.tail = FALSE, log.p = T)/log(10)
 
-  fitted.log.p.vals
+  list(fitted=fitted.log.p.vals, info=info)
 }
 
 
@@ -612,5 +625,10 @@ get_model_cv = function(x, y, plot.file = NULL){
     dev.off()
   }
 
-  model
+  info <- list(
+    observed=data.frame(feature=names(x), x=x, y=y),
+    fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y)
+  )
+
+  list(model=model, info=info)
 }

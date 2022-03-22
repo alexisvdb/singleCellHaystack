@@ -168,6 +168,10 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
                                       D_KL.randomized = all.D_KL.randomized,
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize])
+  info <- p.vals$info
+  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
+  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -187,7 +191,9 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
       log.p.vals = p.vals,
       log.p.adj = p.adjs,
       row.names = row.names(expression)
-    )
+    ),
+    method="continuous_spatial",
+    randomization = info
   )
   class(res) <- "haystack"
   res

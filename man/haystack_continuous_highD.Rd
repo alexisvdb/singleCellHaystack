@@ -13,7 +13,8 @@ haystack_continuous_highD(
   scale = TRUE,
   grid.method = "centroid",
   randomization.count = 100,
-  n.genes.to.randomize = 100
+  n.genes.to.randomize = 100,
+  selection.method.genes.to.randomize = "heavytails"
 )
 }
 \arguments{
