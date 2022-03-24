@@ -169,8 +169,8 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize])
   info <- p.vals$info
-  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
-  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  info$mean$observed$feature <- rownames(expression[genes.to.randomize, ])
+  info$sd$observed$feature <- rownames(expression[genes.to.randomize, ])
   p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
