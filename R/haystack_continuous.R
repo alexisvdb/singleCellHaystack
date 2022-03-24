@@ -23,6 +23,12 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                      randomization.count = 100, n.genes.to.randomize = 100,
                                      selection.method.genes.to.randomize = "heavytails"){
   message("### calling haystack_continuous_highD()...")
+
+  sd <- apply(expression, 1, sd)
+  sd.n <- sum(sd == 0)
+  message("### Filtering ", sd.n," genes with zero variance...")
+  expression <- expression[!sd == 0, ]
+
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
 
