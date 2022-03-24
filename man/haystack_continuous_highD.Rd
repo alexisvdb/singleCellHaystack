@@ -35,6 +35,8 @@ haystack_continuous_highD(
 \item{randomization.count}{Number of randomizations to use. Default: 100}
 
 \item{n.genes.to.randomize}{Number of genes to use in randomizations. Default: 100}
+
+\item{selection.method.genes.to.randomize}{Method used to select genes for randomization.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
