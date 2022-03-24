@@ -18,5 +18,9 @@ plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
 
   ggplot(d$observed, aes(.data[["x"]], .data[["y"]])) +
     geom_point() +
-    geom_line(color="red", data=d$fitted)
+    geom_line(color="red", data=d$fitted) +
+    labs(
+      x = "points",
+      y = type,
+      title=paste0(x$info$method, ": fitted values for ", type))
 }
