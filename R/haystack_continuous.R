@@ -10,6 +10,7 @@
 #' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".
 #' @param randomization.count Number of randomizations to use. Default: 100
 #' @param n.genes.to.randomize Number of genes to use in randomizations. Default: 100
+#' @param selection.method.genes.to.randomize Method used to select genes for randomization.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
