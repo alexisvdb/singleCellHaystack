@@ -14,7 +14,7 @@ plot_rand_fit <- function(x, type=c("mean", "sd")) {
 plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
   type <- match.arg(type)
 
-  d <- x$randomization[[type]]
+  d <- x$info$randomization[[type]]
 
   ggplot(d$observed, aes(.data[["x"]], .data[["y"]])) +
     geom_point() +

@@ -423,9 +423,11 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       T.counts = T.counts,
       row.names = row.names(detection)
     ),
-    method="binary_highD",
-    grid.coordinates = grid.coord,
-    randomization = info
+    info = list(
+      method="binary_highD",
+      randomization = info,
+      grid.coordinates = grid.coord
+    )
   )
   class(res) <- "haystack"
   res

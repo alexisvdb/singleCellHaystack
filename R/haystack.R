@@ -496,8 +496,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       T.counts = T.counts,
       row.names = row.names(detection)
     ),
-    method="binary_2D",
-    randomization = info
+    info = list(
+      method="binary_2D",
+      randomization = info
+    )
   )
   class(res) <- "haystack"
   res

@@ -18,7 +18,7 @@ x <- haystack_continuous_spatial(coordinates = coordinates, expression = counts,
 test_that("haystack spatial works", {
   expect_type(x, "list")
   expect_equal(class(x), "haystack")
-  expect_equal(names(x), "results")
+  expect_equal(names(x), c("results", "info"))
   expect_equal(class(x$results), "data.frame")
   expect_equal(dim(x$results), c(100, 3))
   expect_equal(x$results["gene_10", "D_KL"], 0.6793742, tolerance = 1e-6)

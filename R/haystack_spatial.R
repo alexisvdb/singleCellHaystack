@@ -192,8 +192,10 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
       log.p.adj = p.adjs,
       row.names = row.names(expression)
     ),
-    method="continuous_spatial",
-    randomization = info
+    info = list(
+      method="continuous_spatial",
+      randomization = info
+    )
   )
   class(res) <- "haystack"
   res

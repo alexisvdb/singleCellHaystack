@@ -240,9 +240,12 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       log.p.adj = p.adjs,
       row.names = row.names(expression)
     ),
-    grid.coordinates = grid.coord,
-    method="continuous_highD",
-    randomization = info #,
+    info = list(
+      method="continuous_highD",
+      randomization = info,
+      grid.coordinates = grid.coord
+    )
+     #,
     #all.D_KL.randomized = all.D_KL.randomized
   )
   class(res) <- "haystack"
@@ -433,7 +436,10 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
       log.p.adj = p.adjs,
       row.names = row.names(expression)
     ),
-    randomization = info
+    info = list(
+      method = "continuous_2D",
+      randomization = info
+    )
   )
   class(res) <- "haystack"
   res
@@ -616,20 +622,21 @@ get_model_cv = function(x, y, plot.file = NULL){
 
   model <- lm(y ~ bs(x, df=best_df,Boundary.knots=boundary.knots, degree=best_degree))
 
+  x.seq <- seq(range.x[1],range.x[2],length.out=1000)
+  fitted.y <- predict(model, data.frame(x=x.seq), type="response")
+
+  info <- list(
+    observed=data.frame(feature=names(x), x=x, y=y),
+    fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y)
+  )
+
   if(!is.null(plot.file)){
-    x.seq <- seq(range.x[1],range.x[2],length.out=1000)
-    fitted.y <- predict(model, data.frame(x=x.seq), type="response")
     range.y <- range(range(y), range(fitted.y))
     pdf(plot.file)
     plot(x, y, ylim = range.y)
     points(x.seq,fitted.y,col="red", type="l")
     dev.off()
   }
-
-  info <- list(
-    observed=data.frame(feature=names(x), x=x, y=y),
-    fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y)
-  )
 
   list(model=model, info=info)
 }
