@@ -16,6 +16,7 @@ haystack_interface(object, ...)
   assay = NULL,
   slot = "data",
   type = NULL,
+  dims = NULL,
   ...
 )
 }
@@ -33,6 +34,8 @@ haystack_interface(object, ...)
 \item{assay}{name of the assay to be used when using Seurat or SingleCellExperiment objects.}
 
 \item{slot}{name of the slot to be used when using Seurat objects.}
+
+\item{dims}{dimensions to use.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.

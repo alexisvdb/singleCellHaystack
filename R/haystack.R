@@ -169,6 +169,11 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   t.seq <- seq(t.range[1],t.range[2],length.out=1000)
   fitted.mean.log2 <- predict(model.mean.log2, data.frame(t.points=t.seq), type="response")
 
+  info <- list()
+  info$mean <- list()
+  info$mean$observed <- data.frame(feature=t.points, x=t.points, y=dat.mean.log2)
+  info$mean$fitted <- data.frame(x=t.seq, y=fitted.mean.log2)
+
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.mean.log.D_KL_df",df.mean,".pdf")
     message("### writing plot to ", outfile)
@@ -191,6 +196,10 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   fitted.sd.log2 <- predict(model.sd.log2, data.frame(t.points=t.seq), type="response")
 
+  info$sd <- list()
+  info$sd$observed <- data.frame(feature=t.points, x=t.points, y=dat.sd.log2)
+  info$sd$fitted <- data.frame(x=t.seq, y=fitted.sd.log2)
+
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.sd.log.D_KL_df",df.sd,".pdf")
     message("### writing plot to ", outfile)
@@ -207,7 +216,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.mean.log2, sd = fitted.sd.log2, lower.tail = FALSE, log.p = T)/log(10)
 
-  fitted.log.p.vals
+  list(fitted=fitted.log.p.vals, info=info)
 }
 
 
@@ -462,6 +471,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
+  info <- p.vals$info
+  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
+  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -482,6 +495,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       log.p.adj = p.adjs,
       T.counts = T.counts,
       row.names = row.names(detection)
+    ),
+    info = list(
+      method="binary_2D",
+      randomization = info
     )
   )
   class(res) <- "haystack"

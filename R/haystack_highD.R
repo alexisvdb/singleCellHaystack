@@ -392,6 +392,10 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
+  info <- p.vals$info
+  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
+  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -419,7 +423,11 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       T.counts = T.counts,
       row.names = row.names(detection)
     ),
-    grid.coordinates = grid.coord
+    info = list(
+      method="binary_highD",
+      randomization = info,
+      grid.coordinates = grid.coord
+    )
   )
   class(res) <- "haystack"
   res

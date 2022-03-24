@@ -9,6 +9,7 @@
 #' @param reduction name for the embeddings to be used when using Seurat or SingleCellExperiment objects.
 #' @param assay name of the assay to be used when using Seurat or SingleCellExperiment objects.
 #' @param slot name of the slot to be used when using Seurat objects.
+#' @param dims dimensions to use.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -34,7 +35,7 @@ haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = N
 
 #' @rdname haystack_interface
 #' @export
-haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, ...) {
+haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, dims = NULL, ...) {
   if (!requireNamespace("SeuratObject", quietly = TRUE)) {
     stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -43,7 +44,11 @@ haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = N
     assay <- SeuratObject::DefaultAssay(object)
   }
   expression <- SeuratObject::GetAssayData(object, slot = slot, assay = assay)
-  coordinates <- SeuratObject::Embeddings(object, reduction)
+
+  if (is.null(dims)) {
+    dims <- seq_len(ncol(coordinates))
+  }
+  coordinates <- SeuratObject::Embeddings(object, reduction)[, dims]
 
   haystack_interface_raw(expression = expression, coordinates = coordinates, type = type, ...)
 }
