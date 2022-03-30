@@ -45,10 +45,10 @@ haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = N
   }
   expression <- SeuratObject::GetAssayData(object, slot = slot, assay = assay)
 
-  if (is.null(dims)) {
-    dims <- seq_len(ncol(coordinates))
+  coordinates <- SeuratObject::Embeddings(object, reduction)
+  if (!is.null(dims)) {
+    coordinates <- coordinates[, dims]
   }
-  coordinates <- SeuratObject::Embeddings(object, reduction)[, dims]
 
   haystack_interface_raw(expression = expression, coordinates = coordinates, type = type, ...)
 }
