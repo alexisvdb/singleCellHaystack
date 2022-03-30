@@ -54,7 +54,7 @@ haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = N
 }
 
 
-haystack_interface_raw <- function(expression, coordinates, type, ...) {
+haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type = NULL, ...) {
   if (is.null(coordinates) || is.null(expression) || is.null(type)) {
     message("### usage:\n\n",
             "    haystack_interface(coordinates, [expression or detection data], type)\n\n",
@@ -65,6 +65,7 @@ haystack_interface_raw <- function(expression, coordinates, type, ...) {
             "    - detection  : matrix or data.frame with binary (TRUE or FALSE) detection values \n",
             "                   of genes in cells/spots\n",
             "    - type       : highD, 2D, or spatial, depending on the type of input coordinates\n\n")
+    return(NULL)
   } else {
     # binary
     if (is.logical(expression)) {
