@@ -54,7 +54,7 @@ haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = N
 }
 
 
-haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type = NULL, ...) {
+haystack_interface_raw <- function(expression, coordinates, type, ...) {
   if (is.null(coordinates) || is.null(expression) || is.null(type)) {
     message("### usage:\n\n",
             "    haystack_interface(coordinates, [expression or detection data], type)\n\n",
