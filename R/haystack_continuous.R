@@ -632,6 +632,8 @@ get_model_cv = function(x, y, plot.file = NULL){
   fitted.y <- predict(model, data.frame(x=x.seq), type="response")
 
   info <- list(
+    cv.parameters=list(degrees=degrees, dfs=dfs),
+    cv.selected=list(degree=best_degree, df=best_df, rmsd=best_rmsd),
     observed=data.frame(feature=names(x), x=x, y=y),
     fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y)
   )
