@@ -16,11 +16,16 @@ plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
 
   d <- x$info$randomization[[type]]
 
+  degree <- d$cv.selected["degree"]
+  df <- d$cv.selected["df"]
+  rmsd <- format(d$cv.selected["rmsd"], digits=2)
+
   ggplot(d$observed, aes(.data[["x"]], .data[["y"]])) +
     geom_point() +
     geom_line(color="red", data=d$fitted) +
     labs(
       x = "points",
       y = type,
-      title=paste0(x$info$method, ": fitted values for ", type))
+      title=paste0(x$info$method, ": fitted values for ", type),
+      subtitle=paste0("degree: ", degree, ", df: ", df, ", rmsd: ", rmsd))
 }
