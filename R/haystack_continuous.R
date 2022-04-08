@@ -148,7 +148,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     }
   } else if(inherits(expression, "dgRMatrix")){
     for(i in 1:count.genes){
-      D_KL.observed[i] <- get_D_KL_continuous_highD(weights=extract_row_dgRMatrix(expression,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
+      D_KL.observed[i] <- get_D_KL_continuous_highD_SPARSE(weights_list=extract_row_dgRMatrix_as_sparse(expression,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
       setTxtProgressBar(pb, i) # progress bar
     }
   }
@@ -194,21 +194,41 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   pb <- txtProgressBar(min = 0, max = n.genes.to.randomize, style = 3, file = stderr()) # progress bar
 
-  for(i in 1:n.genes.to.randomize){
-    setTxtProgressBar(pb, i) # progress bar
 
-    D_KL.randomized <- rep(NA,randomization.count)
-    vector.to.randomize <- expression[genes.to.randomize[i],]
-    for(r in 1:randomization.count){
-      # using default sampling
-      D_KL.randomized[r] <- get_D_KL_continuous_highD(
-        weights=sample(x=vector.to.randomize),
-        density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo
-      )
+  if(is.matrix(expression)){
+    for(i in 1:n.genes.to.randomize){
+      setTxtProgressBar(pb, i) # progress bar
 
-    }
-    all.D_KL.randomized[i,] <- D_KL.randomized
-  }# end for all T counts to select
+      D_KL.randomized <- rep(NA,randomization.count)
+      vector.to.randomize <- expression[genes.to.randomize[i],]
+      for(r in 1:randomization.count){
+        # using default sampling
+        D_KL.randomized[r] <- get_D_KL_continuous_highD(
+          weights=sample(x=vector.to.randomize),
+          density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo
+        )
+
+      }
+      all.D_KL.randomized[i,] <- D_KL.randomized
+    }# end for all T counts to select
+  } else if(inherits(expression, "dgRMatrix")){
+    for(i in 1:n.genes.to.randomize){
+      setTxtProgressBar(pb, i) # progress bar
+
+      D_KL.randomized <- rep(NA,randomization.count)
+      weights.list.to.randomize <- extract_row_dgRMatrix_as_sparse(expression,genes.to.randomize[i])
+      non.zero.n <- length(weights.list.to.randomize$ind)
+      for(r in 1:randomization.count){
+        # using default sampling
+        weights.list.to.randomize$ind <- sample(x = count.cells, size = non.zero.n)
+        D_KL.randomized[r] <- get_D_KL_continuous_highD_SPARSE(
+          weights=weights.list.to.randomize,
+          density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo
+        )
+      }
+      all.D_KL.randomized[i,] <- D_KL.randomized
+    }# end for all T counts to select
+  }
   close(pb) # progress bar
 
 
@@ -647,4 +667,24 @@ get_model_cv = function(x, y, plot.file = NULL){
   }
 
   list(model=model, info=info)
+}
+
+
+
+get_D_KL_continuous_highD_SPARSE = function(weights_list, density.contributions, reference.prob, pseudo = 0){
+
+  val = weights_list$val
+  ind = weights_list$ind
+
+  # the reference distribution Q of cells in the space
+  Q <- reference.prob
+
+  # calculating the Kullback-Leibler divergence of the distribution
+  # of expression vs reference distribution Q
+  P <- colSums(density.contributions[ind,,drop=FALSE]*val)
+  P <- P + pseudo
+  P <- P / sum(P)
+  D_KL <- sum(P * log(P/Q))
+
+  D_KL
 }
