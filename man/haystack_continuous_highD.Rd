@@ -14,7 +14,8 @@ haystack_continuous_highD(
   grid.method = "centroid",
   randomization.count = 100,
   n.genes.to.randomize = 100,
-  selection.method.genes.to.randomize = "heavytails"
+  selection.method.genes.to.randomize = "heavytails",
+  grid.coord = NULL
 )
 }
 \arguments{
@@ -37,6 +38,8 @@ haystack_continuous_highD(
 \item{n.genes.to.randomize}{Number of genes to use in randomizations. Default: 100}
 
 \item{selection.method.genes.to.randomize}{Method used to select genes for randomization.}
+
+\item{grid.coord}{matrix of grid coordinates.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
