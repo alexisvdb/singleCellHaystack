@@ -29,10 +29,13 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   message("### Calculating row-wise mean and SD... ")
   # process expression data
-  expr.mean <- apply(expression,1,mean) + 1e-300
+  #expr.mean <- apply(expression,1,mean) + 1e-300
+  expr.mean <- sparseMatrixStats::rowMeans2(expression) + 1e-300
+  names(expr.mean) <- rownames(expression) # only needed for the info returned by get_model_cv.
   if(min(expr.mean) < 0)
     stop("Some features have an average signal < 0. Expect average signal >= 0.")
-  expr.sd <- apply(expression,1,sd) + 1e-300
+  #expr.sd <- apply(expression,1,sd) + 1e-300
+  expr.sd <- sparseMatrixStats::rowSds(expression) + 1e-300
   sel.bad <- expr.sd == 0
 
   message("### Filtering ", sum(sel.bad)," genes with zero variance...")
