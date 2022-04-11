@@ -24,10 +24,21 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                      selection.method.genes.to.randomize = "heavytails"){
   message("### calling haystack_continuous_highD()...")
 
-  sd <- apply(expression, 1, sd)
-  sd.n <- sum(sd == 0)
-  message("### Filtering ", sd.n," genes with zero variance...")
-  expression <- expression[!sd == 0, ]
+  if (!is.null(grid.coord))
+    grid.points <- nrow(grid.coord)
+
+  message("### Calculating row-wise mean and SD... ")
+  # process expression data
+  expr.mean <- apply(expression,1,mean) + 1e-300
+  if(min(expr.mean) < 0)
+    stop("Some features have an average signal < 0. Expect average signal >= 0.")
+  expr.sd <- apply(expression,1,sd) + 1e-300
+  sel.bad <- expr.sd == 0
+
+  message("### Filtering ", sum(sel.bad)," genes with zero variance...")
+  expression <- expression[!sel.bad, ]
+  expr.mean <- expr.mean[!sel.bad]
+  expr.sd <- expr.sd[!sel.bad]
 
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
@@ -162,11 +173,6 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   # we need the Coefficient of Variation (coeffVar) ---> from the input data (expression)
   # we need the D_KL values of (a small set of) randomized genes ---> do randomizations
 
-  # process expression data
-  expr.mean <- apply(expression,1,mean) + 1e-300
-  if(min(expr.mean) < 0)
-    stop("Some features have an average signal < 0. Expect average signal >= 0.")
-  expr.sd   <- apply(expression,1,sd) + 1e-300
   coeffVar  <- expr.sd/expr.mean # coefficient of variation
 
   message("### performing randomizations...")
