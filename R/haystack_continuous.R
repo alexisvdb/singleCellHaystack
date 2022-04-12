@@ -236,7 +236,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
         # using default sampling
         weights.list.to.randomize$ind <- sample(x = count.cells, size = non.zero.n)
         D_KL.randomized[r] <- get_D_KL_continuous_highD_SPARSE(
-          weights=weights.list.to.randomize,
+          weights_list=weights.list.to.randomize,
           density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo
         )
       }
