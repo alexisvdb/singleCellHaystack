@@ -32,7 +32,8 @@ Suggests:
     Rtsne,
     cowplot,
     testthat,
-    wrswoR
+    wrswoR,
+    sparseMatrixStats
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

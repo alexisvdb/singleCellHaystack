@@ -28,20 +28,39 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   if (!is.null(grid.coord))
     grid.points <- nrow(grid.coord)
 
-  message("### Calculating row-wise mean and SD... ")
-  # process expression data
-  #expr.mean <- apply(expression,1,mean)
-  expr.mean <- Matrix::rowMeans(expression)
-  if(min(expr.mean) < 0)
-    stop("Some features have an average signal < 0. Expect average signal >= 0.")
-  #expr.sd <- apply(expression,1,sd)
-  expr.sd <- sparseMatrixStats::rowSds(expression)
-  sel.bad <- expr.sd == 0
+  # Check for sparseMatrixStats package.
+  if(requireNamespace("sparseMatrixStats", quietly = TRUE)){
+    message("### Using package sparseMatrixStats to speed up statistics in sparse matrices.")
+    useSMS <- TRUE
+  } else {
+    message("### Package sparseMatrixStats not found. Install for speed improvements.")
+    useSMS <- FALSE
+  }
 
-  message("### Filtering ", sum(sel.bad)," genes with zero variance...")
+  message("### Calculating row-wise mean and SD... ")
+  if (useSMS) {
+    #expr.mean <- sparseMatrixStats::rowMeans2(expression)
+    #names(expr.mean) <- rownames(expression)
+    expr.mean <- Matrix::rowMeans(expression)
+  }
+  else {
+    #expr.mean <- apply(expression,1,mean)
+    expr.mean <- Matrix::rowMeans(expression) # Maybe this is best as default?
+  }
+
+  if (min(expr.mean) < 0)
+    stop("Some features have an average signal < 0. Expect average signal >= 0.")
+
+  if (useSMS)
+    expr.sd <- sparseMatrixStats::rowSds(expression)
+  else
+    expr.sd <- apply(expression,1,sd)
+
+  sel.bad <- expr.sd == 0
   expression <- expression[!sel.bad, ]
   expr.mean <- expr.mean[!sel.bad]
   expr.sd <- expr.sd[!sel.bad]
+  message("### Filtered ", sum(sel.bad)," genes with zero variance...")
 
   expr.mean <- expr.mean + 1e-300
   expr.sd <- expr.sd + 1e-300
