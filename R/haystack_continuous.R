@@ -696,7 +696,7 @@ get_model_cv = function(x, y, plot.file = NULL){
     cv.parameters=list(degrees=degrees, dfs=dfs),
     cv.selected=list(degree=best_degree, df=best_df, rmsd=best_rmsd),
     observed=data.frame(feature=names(x), x=x, y=y),
-    fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y)
+    fitted=data.frame(feature=1:length(x.seq), x=x.seq, y=fitted.y)
   )
 
   if(!is.null(plot.file)){
