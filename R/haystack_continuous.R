@@ -100,7 +100,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   count.genes <- nrow(expression)
   if(n.genes.to.randomize > count.genes){
     warning("Number of genes to randomize (",n.genes.to.randomize,") is higher than the number of genes in the data.")
-    warning("Seeting number of genes to randomize to ",count.genes)
+    warning("Setting number of genes to randomize to ",count.genes)
     n.genes.to.randomize <- count.genes
   }
 
@@ -204,16 +204,16 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   message("### performing randomizations...")
 
+  # use all genes if the total number of genes is less than n.genes.to.randomize
   o <- order(coeffVar)
   # Option "uniform"   : evenly spread ("uniform")
   # Option "heavytails": top 10 and bottom 10, otherwise evenly spread
   if(selection.method.genes.to.randomize=="uniform"){
     genes.to.randomize <- o[floor(seq(1,count.genes, length.out = n.genes.to.randomize))]
   } else if(selection.method.genes.to.randomize=="heavytails"){
-    genes.to.randomize <- c(o[1:9],
+    genes.to.randomize <- o[c(1:9,
                             as.integer(seq(10,count.genes-9,length.out = n.genes.to.randomize-18)),
-                            o[length(o)-(8:0)]
-    )
+                            length(o)-(8:0))]
   }
 
 
@@ -363,7 +363,7 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
   count.genes <- nrow(expression)
   if(n.genes.to.randomize > count.genes){
     warning("Number of genes to randomize (",n.genes.to.randomize,") is higher than the number of genes in the data.")
-    warning("Seeting number of genes to randomize to ",count.genes)
+    warning("Setting number of genes to randomize to ",count.genes)
     n.genes.to.randomize <- count.genes
   }
 
@@ -437,7 +437,15 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
   message("### performing randomizations...")
 
   o <- order(coeffVar)
-  genes.to.randomize <- o[floor(seq(1,count.genes, length.out = n.genes.to.randomize))]
+  # Option "uniform"   : evenly spread ("uniform")
+  # Option "heavytails": top 10 and bottom 10, otherwise evenly spread
+  if(selection.method.genes.to.randomize=="uniform"){
+    genes.to.randomize <- o[floor(seq(1,count.genes, length.out = n.genes.to.randomize))]
+  } else if(selection.method.genes.to.randomize=="heavytails"){
+    genes.to.randomize <- o[c(1:9,
+                              as.integer(seq(10,count.genes-9,length.out = n.genes.to.randomize-18)),
+                              length(o)-(8:0))]
+  }
 
   # - do x randomizations and get their D_KL values
   # - get mean and SD of D_KL values,
