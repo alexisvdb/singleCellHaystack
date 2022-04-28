@@ -323,6 +323,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #' @param randomization.count Number of randomizations to use. Default: 100
 #' @param n.genes.to.randomize Number of genes to use in randomizations. Default: 100
+#' @param selection.method.genes.to.randomize Method used to select genes for randomization.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -330,7 +331,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100){
+haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100, selection.method.genes.to.randomize = "heavytails"){
   message("### calling haystack_continuous_2D()...")
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
