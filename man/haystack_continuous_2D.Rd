@@ -12,7 +12,8 @@ haystack_continuous_2D(
   dir.randomization = NULL,
   randomization.count = 100,
   n.genes.to.randomize = 100,
-  selection.method.genes.to.randomize = "heavytails"
+  selection.method.genes.to.randomize = "heavytails",
+  spline.method = "ns"
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ haystack_continuous_2D(
 \item{n.genes.to.randomize}{Number of genes to use in randomizations. Default: 100}
 
 \item{selection.method.genes.to.randomize}{Method used to select genes for randomization.}
+
+\item{spline.method}{Method to use for fitting splines "ns" (default): natural splines, "bs": B-splines.}
 }
 \value{
 An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.

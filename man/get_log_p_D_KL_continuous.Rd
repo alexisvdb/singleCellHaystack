@@ -9,7 +9,8 @@ get_log_p_D_KL_continuous(
   D_KL.randomized,
   all.coeffVar,
   train.coeffVar,
-  output.dir = NULL
+  output.dir = NULL,
+  spline.method = "ns"
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ get_log_p_D_KL_continuous(
 \item{train.coeffVar}{Coefficients of variation of genes that will be used for fitting the Kullback-Leibler divergences.}
 
 \item{output.dir}{Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.}
+
+\item{spline.method}{Method to use for fitting splines "ns" (default): natural splines, "bs": B-splines.}
 }
 \value{
 A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
