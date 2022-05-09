@@ -12,6 +12,7 @@
 #' @param n.genes.to.randomize Number of genes to use in randomizations. Default: 100
 #' @param selection.method.genes.to.randomize Method used to select genes for randomization.
 #' @param grid.coord matrix of grid coordinates.
+#' @param spline.method Method to use for fitting splines "ns" (default): natural splines, "bs": B-splines.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -22,7 +23,8 @@
 haystack_continuous_highD = function(x, expression, grid.points = 100, weights.advanced.Q=NULL,
                                      dir.randomization = NULL, scale=TRUE, grid.method="centroid",
                                      randomization.count = 100, n.genes.to.randomize = 100,
-                                     selection.method.genes.to.randomize = "heavytails", grid.coord=NULL){
+                                     selection.method.genes.to.randomize = "heavytails", grid.coord=NULL,
+                                     spline.method="ns"){
   message("### calling haystack_continuous_highD()...")
 
   if (!is.null(grid.coord))
@@ -89,6 +91,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     if(length(weights.advanced.Q) != nrow(x))
       stop("The length of 'weights.advanced.Q' must be the same as the number of rows in 'x'")
   }
+  if(spline.method!="ns" & spline.method!="bs")
+    stop("'spline.method' should be either 'ns' or 'bs'")
 
   # if expression is a dgCMatrix, convert it to a dgRMatrix
   if(inherits(expression, "dgCMatrix")){
@@ -270,7 +274,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                       D_KL.randomized = all.D_KL.randomized,
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize],
-                                      output.dir = dir.randomization)
+                                      output.dir = dir.randomization,
+                                      spline.method = spline.method)
   info <- p.vals$info
   p.vals <- p.vals$fitted
 
@@ -324,6 +329,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' @param randomization.count Number of randomizations to use. Default: 100
 #' @param n.genes.to.randomize Number of genes to use in randomizations. Default: 100
 #' @param selection.method.genes.to.randomize Method used to select genes for randomization.
+#' @param spline.method Method to use for fitting splines "ns" (default): natural splines, "bs": B-splines.
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
 #' @export
@@ -331,7 +337,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' @examples
 #' # I need to add some examples.
 #' # A toy example will be added too.
-haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100, selection.method.genes.to.randomize = "heavytails"){
+haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100, selection.method.genes.to.randomize = "heavytails", spline.method = "ns"){
   message("### calling haystack_continuous_2D()...")
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
@@ -353,6 +359,8 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
     if(length(weights.advanced.Q) != nrow(x))
       stop("The length of 'weights.advanced.Q' must be the same as the number of rows in 'x'")
   }
+  if(spline.method!="ns" & spline.method!="bs")
+    stop("'spline.method' should be either 'ns' or 'bs'")
 
   # if expression is a dgCMatrix, convert it to a dgRMatrix
   if(inherits(expression, "dgCMatrix")){
@@ -481,7 +489,8 @@ haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, d
                                       D_KL.randomized = all.D_KL.randomized,
                                       all.coeffVar = coeffVar,
                                       train.coeffVar = coeffVar[genes.to.randomize],
-                                      output.dir = dir.randomization)
+                                      output.dir = dir.randomization,
+                                      spline.method = spline.method)
   info <- p.vals$info
   p.vals <- p.vals$fitted
 
@@ -580,9 +589,10 @@ get_D_KL_continuous_2D = function(weights, parameters, reference.prob, pseudo){
 #' @param all.coeffVar Coefficients of variation of all genes. Used for fitting the Kullback-Leibler divergences.
 #' @param train.coeffVar Coefficients of variation of genes that will be used for fitting the Kullback-Leibler divergences.
 #' @param output.dir Optional parameter. Default is NULL. If not NULL, some files will be written to this directory.
+#' @param spline.method Method to use for fitting splines "ns" (default): natural splines, "bs": B-splines.
 #'
 #' @return A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
-get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVar, train.coeffVar, output.dir = NULL){
+get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVar, train.coeffVar, output.dir = NULL, spline.method="ns"){
 
   # prepare data for fitting
   log2.D_KL <- log2(D_KL.randomized)
@@ -596,7 +606,12 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   plot.file <- NULL
   if(!is.null(output.dir))
     plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_meanLogD_KL.pdf")
-  model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.mean, plot.file = plot.file)
+  if(spline.method=="ns"){
+    model <- get_model_cv_ns(x = log(train.coeffVar), y = D_KL.log.mean, plot.file = plot.file)
+  } else if(spline.method=="bs"){
+    model <- get_model_cv_bs(x = log(train.coeffVar), y = D_KL.log.mean, plot.file = plot.file)
+  }
+
   info <- list()
   info$features <- rownames(D_KL.randomized)
   info$mean <- model$info
@@ -613,7 +628,11 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
   plot.file <- NULL
   if(!is.null(output.dir))
     plot.file <- paste0(output.dir,"/fit_logCoeffVar_vs_SdLogD_KL.pdf")
-  model <- get_model_cv(x = log(train.coeffVar), y = D_KL.log.sd, plot.file = plot.file)
+  if(spline.method=="ns"){
+    model <- get_model_cv_ns(x = log(train.coeffVar), y = D_KL.log.sd, plot.file = plot.file)
+  } else if(spline.method=="bs"){
+    model <- get_model_cv_bs(x = log(train.coeffVar), y = D_KL.log.sd, plot.file = plot.file)
+  }
   info$sd <- model$info
   model <- model$model
   #summary(model)
@@ -630,7 +649,76 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
 }
 
 
-get_model_cv = function(x, y, plot.file = NULL){
+get_model_cv_ns = function(x, y, plot.file = NULL){
+  message("### using natural splines")
+  # prepare cross validation
+  n_cv <- 10 # 10 fold
+  sets <- sample(rep(1:n_cv, length.out = length(x))) # I am using sample() to really randomize them
+
+  # set boundary knots to be slightly outside range of predictor values
+  range.x <- range(x)
+  r.x <- range.x[2]-range.x[1]
+  boundary.knots <- c(range.x[1] - 0.01*r.x, range.x[2] + 0.01*r.x)
+
+  dfs <- 1:10
+
+  best_rmsd   <- Inf
+  best_df     <- NA
+  for(df in dfs){
+
+    rmsds <- rep(NA, n_cv)
+    for(s in 1:n_cv){
+      x.train <- x[sets!=s]
+      y.train <- y[sets!=s]
+      x.test  <- x[sets==s]
+      y.test  <- y[sets==s]
+
+      model <- lm(y.train ~ ns(x.train, df=df,Boundary.knots=boundary.knots))
+
+      y.pred <- predict(model, data.frame(x.train=x.test), type="response")
+      rmsds[s] <- sqrt(mean((y.pred - y.test)^2))
+    }
+    rmsd <- mean(rmsds)
+
+    # message(degree," ",df," ",rmsd)
+
+    # update if better solution
+    if(rmsd < best_rmsd){
+      best_rmsd <- rmsd
+      best_df <- df
+    }
+  }# for dfs
+
+
+  message("### best RMSD  : ",round(best_rmsd,3))
+  message("### best df    : ",best_df)
+
+  model <- lm(y ~ ns(x, df=best_df,Boundary.knots=boundary.knots))
+
+  x.seq <- seq(range.x[1],range.x[2],length.out=1000)
+  fitted.y <- predict(model, data.frame(x=x.seq), type="response")
+
+  info <- list(
+    cv.parameters=list(dfs=dfs),
+    cv.selected=list(df=best_df, rmsd=best_rmsd),
+    observed=data.frame(feature=names(x), x=x, y=y),
+    fitted=data.frame(feature=names(x), x=x.seq, y=fitted.y),
+    spline.method = "ns"
+  )
+
+  if(!is.null(plot.file)){
+    range.y <- range(range(y), range(fitted.y))
+    pdf(plot.file)
+    plot(x, y, ylim = range.y)
+    points(x.seq,fitted.y,col="red", type="l")
+    dev.off()
+  }
+
+  list(model=model, info=info)
+}
+
+get_model_cv_bs = function(x, y, plot.file = NULL){
+  message("### using B-splines")
   # prepare cross validation
   n_cv <- 10 # 10 fold
   sets <- sample(rep(1:n_cv, length.out = length(x))) # I am using sample() to really randomize them
@@ -697,7 +785,8 @@ get_model_cv = function(x, y, plot.file = NULL){
     cv.parameters=list(degrees=degrees, dfs=dfs),
     cv.selected=list(degree=best_degree, df=best_df, rmsd=best_rmsd),
     observed=data.frame(feature=names(x), x=x, y=y),
-    fitted=data.frame(feature=1:length(x.seq), x=x.seq, y=fitted.y)
+    fitted=data.frame(feature=1:length(x.seq), x=x.seq, y=fitted.y),
+    spline.method = "bs"
   )
 
   if(!is.null(plot.file)){
@@ -730,3 +819,5 @@ get_D_KL_continuous_highD_SPARSE = function(weights_list, density.contributions,
 
   D_KL
 }
+
+
