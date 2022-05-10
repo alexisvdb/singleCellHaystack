@@ -956,6 +956,72 @@ kmeans_haystack_continuous = function(x, expression, genes, grid.coordinates = N
   km
 }
 
+louvain_haystack_continuous = function(x, expression, genes, grid.coordinates = NULL, resolution=1, scale = TRUE, ...){
+
+  # many checks on input
+  # see haystack_continuous_highD and also
+  # see the kmeans_haystack_highD function
+
+  # scale data if needed
+  if(scale){
+    x <- scale(x)
+    # save the mean and stdev of the scaling
+    x.scale.center <- attr(x = x, which = "scaled:center")
+    x.scale.scale <- attr(x = x, which = "scaled:scale")
+    grid.coordinates <- (grid.coordinates - rep(x.scale.center,each=nrow(grid.coordinates))) / rep(x.scale.scale,each=nrow(grid.coordinates))
+  }
+
+  # if expression is a dgCMatrix, convert it to a dgRMatrix
+  if(inherits(expression, "dgCMatrix")){
+    message("### converting expression data from dgCMatrix to dgRMatrix")
+    expression <- as(expression, "RsparseMatrix")
+  }
+
+  # get densities
+  expression.rownames <- rownames(expression)
+  row.index.subset <- which(is.element(expression.rownames, genes))
+
+  dist.to.grid <- get_dist_two_sets(x,grid.coordinates)
+
+  # process the distances to a suitable density contribution
+  # first, set bandwidth
+  # bandwidth <- sqrt(sum((apply(x, 2, default_bandwidth.nrd)) ^ 2))
+  bandwidth <- median(apply(dist.to.grid,1,min))
+  dist.to.grid.norm <- dist.to.grid / bandwidth
+  density.contributions <-
+    exp(-dist.to.grid.norm * dist.to.grid.norm / 2)
+
+  densities <- matrix(NA, nrow=length(row.index.subset), ncol=ncol(density.contributions))
+  row.names(densities) <- expression.rownames[row.index.subset]
+
+  message("### collecting density data...")
+  pb <- txtProgressBar(min = 0, max = length(row.index.subset), style = 3, file = stderr()) # progress bar
+  if(is.matrix(expression)){
+    for(g in 1:length(row.index.subset)){
+      gene_index <- row.index.subset[g]
+      densities[g,] <- colSums(density.contributions*expression[gene_index,])
+      setTxtProgressBar(pb, g) # progress bar
+    }
+  } else if( inherits(expression, "dgRMatrix") ){
+    for(g in 1:length(row.index.subset)){
+      gene_index <- row.index.subset[g]
+      densities[g,] <- colSums(density.contributions*extract_row_lgRMatrix(expression,gene_index))
+      setTxtProgressBar(pb, g) # progress bar
+    }
+  } else {
+    stop("'expression' must be a matrix or dgRMatrix")
+  }
+  close(pb) # progress bar
+
+  # rescale to sum to 1. This is to avoid R thinking sd=0 in the case where an entire row has very low values
+  densities <- densities / rowSums(densities)
+
+  #heatmap(dist.to.grid.norm, Rowv=NA, Colv=NA, scale="none")
+  #heatmap(densities, Rowv=NA, Colv=NA, scale="none")
+
+  igraph::cluster_louvain(bluster::makeSNNGraph(densities), resolution=resolution)
+}
+
 
 
 
