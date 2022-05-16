@@ -13,6 +13,8 @@ kde2d_faster = function (dens.x, dens.y){
 #'
 #' @return A suitable bandwith.
 default_bandwidth.nrd = function(x){
+  # note: might be deprecated
+
   r <- quantile(x, c(0.25, 0.75))
   h <- (r[2] - r[1]) / 1.34
   1.06 * min(sqrt(var(x)), h) * length(x) ^ (-1 / 5)
@@ -26,6 +28,7 @@ default_bandwidth.nrd = function(x){
 #'
 #' @return A list containing various parameters to use in the analysis.
 get_parameters_haystack = function(x, y, high.resolution = FALSE){
+  # note: might be deprecated
 
   # the bandwidths used for the kernel function
   bandwidth.x <- default_bandwidth.nrd(x)
@@ -106,6 +109,7 @@ get_parameters_haystack = function(x, y, high.resolution = FALSE){
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL = function(classes, parameters, reference.prob, pseudo){
+  # note: might be deprecated
 
   class.types = c(FALSE, TRUE)
 
@@ -148,6 +152,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
 #'
 #' @return A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL){
+  # note: might be deprecated
 
   t.points <- as.numeric(row.names(D_KL.randomized))
   dat.mean.log2 <- apply(log2(D_KL.randomized),1,mean)
@@ -228,6 +233,8 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #' @return A list with two components, Q for the reference distribution and pseudo.
 #'
 get_reference <- function(param, use.advanced.sampling = NULL) {
+  # note: might be deprecated
+
   if (is.null(use.advanced.sampling)) {
     density <- kde2d_faster(param$dens.x, param$dens.y)
     pseudo <- quantile(density[density > 0], 0.01)
@@ -264,6 +271,7 @@ get_reference <- function(param, use.advanced.sampling = NULL) {
 #' # list top 10 biased genes
 #' show_result_haystack(res, n =10)
 haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
   message("### calling haystack_2D()...")
 
   # check input
@@ -515,6 +523,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
 get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution = FALSE){
+  # note: might be deprecated
 
   # set the parameters for getting the densities
   parameters <- get_parameters_haystack(x,y,high.resolution)

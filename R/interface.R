@@ -18,6 +18,8 @@
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_interface = function(object, ...) {
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   # I think we can change the name of this function to just "haystack" or "singleCellHaystack"
   # we might have to do something about the s3.R function "haystack" in that case, to avoid confusion
 
@@ -30,12 +32,16 @@ haystack_interface = function(object, ...) {
 #' @rdname haystack_interface
 #' @export
 haystack_interface.matrix = function(object = NULL, coordinates = NULL, type = NULL, ...){
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   haystack_interface_raw(expression = object, coordinates = coordinates, type = type, ...)
 }
 
 #' @rdname haystack_interface
 #' @export
 haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = NULL, slot = "data", type = NULL, dims = NULL, ...) {
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   if (!requireNamespace("SeuratObject", quietly = TRUE)) {
     stop("Package \"SeuratObject\" needed for this function to work. Please install it.", call. = FALSE)
   }
@@ -55,6 +61,8 @@ haystack_interface.Seurat = function(object = NULL, reduction = "pca", assay = N
 
 
 haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type = NULL, ...) {
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   if (is.null(coordinates) || is.null(expression) || is.null(type)) {
     message("### usage:\n\n",
             "    haystack_interface(coordinates, [expression or detection data], type)\n\n",

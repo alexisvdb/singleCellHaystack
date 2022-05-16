@@ -24,6 +24,7 @@
 #' # read in result from file
 #' res.copy <- read_haystack(file = outfile)
 write_haystack = function (res.haystack, file){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(missing(res.haystack))
@@ -65,6 +66,7 @@ write_haystack = function (res.haystack, file){
 #' # read in result from file
 #' res.copy <- read_haystack(file = outfile)
 read_haystack = function (file){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(missing(file))

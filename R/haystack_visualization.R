@@ -24,6 +24,7 @@
 #' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
 #'  detection = dat.detection, high.resolution = TRUE, point.size = .1)
 plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high.resolution = FALSE, point.size = 1, order.by.signal = FALSE){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   if(is.data.frame(expression)){
     warning("'expression' is a matrix, should be a matrix. Converting to matrix.")
@@ -171,6 +172,7 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
 #' # visualize the expression pattern of the set of genes
 #' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=gene_set)
 plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution = TRUE, point.size=1, order.by.signal = FALSE){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))

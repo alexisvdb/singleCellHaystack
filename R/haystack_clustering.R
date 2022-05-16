@@ -28,6 +28,7 @@
 #' hc <- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)
 #' hc.clusters <- cutree(hc,k = 5)
 hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))
@@ -94,6 +95,7 @@ hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
 #' km <- kmeans_haystack(dat.tsne, detection=dat.detection, genes=gene.subset, k=5)
 #' km.clusters <- km$cluster
 kmeans_haystack_raw = function(x, y, detection, genes, k, ...){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))

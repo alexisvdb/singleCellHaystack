@@ -15,6 +15,7 @@
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_continuous_spatial = function(coordinates, expression, weights.advanced.Q=NULL, dir.randomization = NULL, scale=FALSE, randomization.count = 100, n.genes.to.randomize = 100){
+  stop("This function should not be used, or has mistakenly been marked for removal")
 
   message("### calling haystack_continuous_spatial2D()...")
   message("### Using ",randomization.count," randomizations...")
@@ -209,6 +210,7 @@ haystack_continuous_spatial = function(coordinates, expression, weights.advanced
 #'
 #' @return Pairwise density contributions between all pairs of cell or spots.
 get_parameters_haystack_spatial = function(coordinates, bandwidth.multiplier = 1){
+  stop("This function should not be used, or has mistakenly been marked for removal")
 
   # get pairwise distances between spots
   pairwise.dists <- as.matrix(dist(coordinates))
@@ -239,6 +241,8 @@ get_parameters_haystack_spatial = function(coordinates, bandwidth.multiplier = 1
 #' @return A list with two components, Q for the reference distribution and pseudocounts pseudo.
 #'
 get_reference_spatial <- function(pairwise.densities, use.advanced.sampling = NULL) {
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   density <- apply(pairwise.densities,1,sum)
 
   if (!is.null(use.advanced.sampling)) {
@@ -269,6 +273,7 @@ get_reference_spatial <- function(pairwise.densities, use.advanced.sampling = NU
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_continuous_spatial = function(weights, density.contributions, reference.prob, pseudo = 0){
+  stop("This function should not be used, or has mistakenly been marked for removal")
 
   # the reference distribution Q of cells in the space
   Q <- reference.prob
