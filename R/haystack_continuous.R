@@ -870,7 +870,7 @@ hclust_haystack_continuous = function(x, expression, genes, method="ward.D", gri
   } else if( inherits(expression, "dgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- colSums(density.contributions*extract_row_lgRMatrix(expression,gene_index))
+      densities[g,] <- colSums(density.contributions*extract_row_dgRMatrix(expression,gene_index))
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
@@ -938,7 +938,7 @@ kmeans_haystack_continuous = function(x, expression, genes, grid.coordinates = N
   } else if( inherits(expression, "dgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- colSums(density.contributions*extract_row_lgRMatrix(expression,gene_index))
+      densities[g,] <- colSums(density.contributions*extract_row_dgRMatrix(expression,gene_index))
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
@@ -1005,7 +1005,7 @@ louvain_haystack_continuous = function(x, expression, genes, grid.coordinates = 
   } else if( inherits(expression, "dgRMatrix") ){
     for(g in 1:length(row.index.subset)){
       gene_index <- row.index.subset[g]
-      densities[g,] <- colSums(density.contributions*extract_row_lgRMatrix(expression,gene_index))
+      densities[g,] <- colSums(density.contributions*extract_row_dgRMatrix(expression,gene_index))
       setTxtProgressBar(pb, g) # progress bar
     }
   } else {
