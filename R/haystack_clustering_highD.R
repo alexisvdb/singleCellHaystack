@@ -15,6 +15,7 @@
 #' @examples
 #' # to be added
 hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coordinates = NULL, scale = TRUE){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))
@@ -119,6 +120,7 @@ hclust_haystack_highD = function(x, detection, genes, method="ward.D", grid.coor
 #' @examples
 #' # to be added
 kmeans_haystack_highD = function(x, detection, genes, grid.coordinates = NULL, k, scale = TRUE, ...){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # if data.frame, convert to matrix
   if(is.data.frame(x))

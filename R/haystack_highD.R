@@ -33,6 +33,7 @@ get_dist_two_sets = function(set1,set2){
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo = 0){
+  # note: might be deprecated
 
   class.types = c(FALSE, TRUE)
 
@@ -152,6 +153,8 @@ get_grid_points = function(input, method="centroid", grid.points = 100){
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="centroid"){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
+
   message("### calling haystack_highD()...")
 
   # check input

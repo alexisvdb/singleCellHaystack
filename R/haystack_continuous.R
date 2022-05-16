@@ -338,6 +338,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_continuous_2D = function(x, y, expression, weights.advanced.Q = NULL, dir.randomization = NULL, randomization.count = 100, n.genes.to.randomize = 100, selection.method.genes.to.randomize = "heavytails", spline.method = "ns"){
+  stop("This function should not be used, or has mistakenly been marked for removal")
+
   message("### calling haystack_continuous_2D()...")
   message("### Using ",randomization.count," randomizations...")
   message("### Using ",n.genes.to.randomize," genes to randomize...")
@@ -561,6 +563,7 @@ get_D_KL_continuous_highD = function(weights, density.contributions, reference.p
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_continuous_2D = function(weights, parameters, reference.prob, pseudo){
+  stop("This function should not be used, or has mistakenly been marked for removal")
 
   # the reference distribution Q of cells in the 2D plot
   Q <- reference.prob
