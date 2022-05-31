@@ -598,9 +598,9 @@ get_D_KL_continuous_2D = function(weights, parameters, reference.prob, pseudo){
 get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVar, train.coeffVar, output.dir = NULL, spline.method="ns"){
 
   # prepare data for fitting
-  log2.D_KL <- log2(D_KL.randomized)
-  D_KL.log.mean <- apply(log2.D_KL,1,mean)
-  D_KL.log.sd   <- apply(log2.D_KL,1,sd)
+  log.D_KL <- log(D_KL.randomized)
+  D_KL.log.mean <- apply(log.D_KL,1,mean)
+  D_KL.log.sd   <- apply(log.D_KL,1,sd)
 
 
   # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
@@ -646,7 +646,7 @@ get_log_p_D_KL_continuous = function(D_KL.observed, D_KL.randomized, all.coeffVa
 
   # ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
   # estimate p values
-  fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.D_KL_log.mean, sd = fitted.D_KL_log.sd, lower.tail = FALSE, log.p = T)/log(10)
+  fitted.log.p.vals <- pnorm(log(D_KL.observed), mean = fitted.D_KL_log.mean, sd = fitted.D_KL_log.sd, lower.tail = FALSE, log.p = T)/log(10)
 
   list(fitted=fitted.log.p.vals, info=info)
 }
