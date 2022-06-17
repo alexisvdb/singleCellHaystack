@@ -277,6 +277,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                       output.dir = dir.randomization,
                                       spline.method = spline.method)
   info <- p.vals$info
+  info$method <- spline.method
   p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing

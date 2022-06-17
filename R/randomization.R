@@ -20,6 +20,14 @@ plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
   df <- d$cv.selected["df"]
   rmsd <- format(d$cv.selected["rmsd"], digits=2)
 
+  spline_method <- x$info$randomization$method
+
+  if (spline_method == "bs")
+    subtitle <- paste0("spline: ", spline_method, "; degree: ", degree, "; df: ", df, ", rmsd: ", rmsd)
+
+  if (spline_method == "ns")
+    subtitle <- paste0("spline: ", spline_method, "; df: ", df, "; rmsd: ", rmsd)
+
   method <- strsplit(x$info$method, "_")[[1]]
 
   if (method[1] == "continuous")
@@ -37,5 +45,5 @@ plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
       x = xlab,
       y = ylab,
       title=paste0(x$info$method, ": fitted values for ", type),
-      subtitle=paste0("degree: ", degree, ", df: ", df, ", rmsd: ", rmsd))
+      subtitle=subtitle)
 }
