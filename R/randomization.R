@@ -23,10 +23,10 @@ plot_rand_fit.haystack <- function(x, type=c("mean", "sd")) {
   spline_method <- x$info$randomization$method
 
   if (spline_method == "bs")
-    subtitle <- paste0("spline: ", spline_method, "; degree: ", degree, "; df: ", df, ", rmsd: ", rmsd)
+    subtitle <- paste0("spline=", spline_method, " degree=", degree, " df=", df, " rmsd=", rmsd)
 
   if (spline_method == "ns")
-    subtitle <- paste0("spline: ", spline_method, "; df: ", df, "; rmsd: ", rmsd)
+    subtitle <- paste0("spline=", spline_method, " df=", df, " rmsd=", rmsd)
 
   method <- strsplit(x$info$method, "_")[[1]]
 
