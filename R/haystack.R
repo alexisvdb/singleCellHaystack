@@ -564,14 +564,19 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities
 }
 
+#' show_result_haystack
+#'
 #' Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.
 #'
-#' @param res.haystack A 'haystack' result variable
-#' @param n If defined, the top "n" sigificant genes will be returned. Default: NA, which shows all results.
+#' @param res.haystack A 'haystack' result object.
+#' @param n If defined, the top "n" significant genes will be returned. Default: NA, which shows all results.
 #' @param p.value.threshold If defined, genes passing this p-value threshold will be returned.
 #' @param gene If defined, the results of this (these) gene(s) will be returned.
-#'
-#' @return A table with a sorted subset of the 'haystack' result according to input parameters.
+#' @details The output is a data.frame with the following columns:
+#' * D_KL the calculated KL divergence.
+#' * log.p.vals log10 p.values calculated from randomization.
+#' * log.p.adj log10 p.values adjusted by Bonferroni correction.
+#' @return A data.frame with 'haystack' results sorted by log.p.vals.
 #' @export
 #'
 #' @examples
@@ -590,37 +595,46 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
 #' # 3. list a set of specified genes
 #' set <- c("gene_497","gene_386", "gene_275")
 #' show_result_haystack(res.haystack = res, gene = set)
-show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=NA){
+show_result_haystack <- function(res.haystack, n=NULL, p.value.threshold=NULL, gene=NULL) {
+  UseMethod("show_result_haystack")
+}
+#' @rdname show_result_haystack
+#' @export
+show_result_haystack.haystack <- function(res.haystack, n=NULL, p.value.threshold=NULL, gene=NULL){
 
   # check input
-  if(missing(res.haystack))
-    stop("Parameter 'res.haystack' ('haystack' result) is missing")
-  if(class(res.haystack)!="haystack")
-    stop("'res.haystack' must be of class 'haystack'")
-  if(is.null(res.haystack$results))
-    stop("Results seem to be missing from 'haystack' result. Is 'res.haystack' a valid 'haystack' result?")
-  if(!is.na(n) & !is.numeric(n))
+  #if(missing(res.haystack))
+  #  stop("Parameter 'res.haystack' ('haystack' result) is missing")
+  #if(class(res.haystack)!="haystack")
+  #  stop("'res.haystack' must be of class 'haystack'")
+
+  result <- res.haystack$results
+  if(is.null(result))
+    stop("Results seem to be missing from 'haystack' object. Is 'res.haystack' a valid 'haystack' result?")
+  if(!is.null(n) & !is.numeric(n))
     stop("The value of 'n' should be an integer")
-  if(!is.na(n) & n > nrow(res.haystack$results))
-    warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
-  if(!is.na(p.value.threshold) & (p.value.threshold<0 | p.value.threshold>1))
-    stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
+  if(!is.null(n))
+     if(n > nrow(res.haystack$results))
+        warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
+  if(!is.null(p.value.threshold))
+     if (p.value.threshold<0 | p.value.threshold>1)
+        stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
 
   # run through filters, one by one, if they are not NA
   # priority is genes > p.value.threshold > n
-  result <- res.haystack$results
-  if(any(!is.na(gene))){
+  if(any(!is.null(gene))){
     result <- result[is.element(rownames(result), gene), ]
   }
-  if(!is.na(p.value.threshold)){
+  if(!is.null(p.value.threshold)){
     result <- result[result[["log.p.vals"]] <= log10(p.value.threshold), ]
   }
 
   # at this point: 1) decide no. to return, and 2) sort by significance
-  n.to.select <- ifelse(is.na(n), nrow(result), min(n, nrow(result)))
+  n.to.select <- ifelse(is.null(n), nrow(result), min(n, nrow(result)))
   o <- order(result$log.p.vals)
   result[o[1:n.to.select],]
 }
+
 
 
 
