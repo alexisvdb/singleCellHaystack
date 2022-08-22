@@ -614,7 +614,7 @@ show_result_haystack.haystack <- function(res.haystack, n=NULL, p.value.threshol
   if(!is.null(n) & !is.numeric(n))
     stop("The value of 'n' should be an integer")
   if(!is.null(n))
-     if(n > nrow(res.haystack$results))
+     if(n > nrow(result))
         warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
   if(!is.null(p.value.threshold))
      if (p.value.threshold<0 | p.value.threshold>1)
@@ -622,17 +622,20 @@ show_result_haystack.haystack <- function(res.haystack, n=NULL, p.value.threshol
 
   # run through filters, one by one, if they are not NA
   # priority is genes > p.value.threshold > n
-  if(any(!is.null(gene))){
+  if(!is.null(gene)){
     result <- result[is.element(rownames(result), gene), ]
   }
   if(!is.null(p.value.threshold)){
     result <- result[result[["log.p.vals"]] <= log10(p.value.threshold), ]
   }
 
+  result <- result[order(result[["log.p.vals"]]), ]
+  result
   # at this point: 1) decide no. to return, and 2) sort by significance
-  n.to.select <- ifelse(is.null(n), nrow(result), min(n, nrow(result)))
-  o <- order(result$log.p.vals)
-  result[o[1:n.to.select],]
+  #n.to.select <- ifelse(is.null(n), nrow(result), min(n, nrow(result)))
+  #result[1:n.to.select, ]
+  #o <- order(result$log.p.vals)
+  #result[o[1:n.to.select],]
 }
 
 
