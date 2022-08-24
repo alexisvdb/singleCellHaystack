@@ -276,8 +276,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                       train.coeffVar = coeffVar[genes.to.randomize],
                                       output.dir = dir.randomization,
                                       spline.method = spline.method)
-  info <- p.vals$info
-  info$method <- spline.method
+  rand_info <- p.vals$info
+  rand_info$method <- spline.method
+  rand_info$genes_to_randomize <- genes.to.randomize
   p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
@@ -307,8 +308,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     ),
     info = list(
       method="continuous_highD",
-      randomization = info,
-      grid.coordinates = grid.coord
+      randomization = rand_info,
+      grid.coordinates = grid.coord,
+      cv = coeffVar
     )
      #,
     #all.D_KL.randomized = all.D_KL.randomized
