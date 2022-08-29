@@ -33,7 +33,7 @@ get_dist_two_sets = function(set1,set2){
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo = 0){
-  # note: might be deprecated
+  # NOTE: Remove when we remove binary version.
 
   class.types = c(FALSE, TRUE)
 

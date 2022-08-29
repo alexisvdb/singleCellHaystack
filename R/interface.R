@@ -104,18 +104,6 @@ haystack_interface_raw <- function(expression = NULL, coordinates = NULL, type =
         message("### calling haystack version highD continuous...")
         res <- haystack_continuous_highD(x = coordinates, expression = expression, ...)
       }
-
-      if (type == "2D") {
-        # 2D continuous
-        message("### calling haystack version 2D continuous...")
-        res <- haystack_continuous_2D(x = coordinates[, 1], y = coordinates[, 2], expression = expression, ...)
-      }
-
-      if(type == "spatial") {
-        # spatial continuous
-        message("### calling haystack version spatial continuous...")
-        res <- haystack_continuous_spatial(coordinates = coordinates, expression = expression, ...)
-      }
     }
   }
 

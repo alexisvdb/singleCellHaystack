@@ -6,7 +6,7 @@
 #'
 #' @return A row (logical vector) of the sparse matrix
 extract_row_lgRMatrix <- function(m, i = 1) {
-  # note: might be deprecated
+  # NOTE: Remove when we remove binary version.
 
   r <- logical(ncol(m)) ## set up vector with FALSE values for results
   inds <- seq(
