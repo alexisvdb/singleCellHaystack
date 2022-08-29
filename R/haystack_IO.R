@@ -29,7 +29,7 @@ write_haystack = function (res.haystack, file){
   # check input
   if(missing(res.haystack))
     stop("Parameter 'res.haystack' ('haystack' result) is missing")
-  if(class(res.haystack)!="haystack")
+  if(! inherits(res.haystack, "haystack"))
     stop("'res.haystack' must be of class 'haystack'")
   if(is.null(res.haystack$results))
     stop("Results seem to be missing from 'haystack' result. Is 'res.haystack' a valid 'haystack' result?")
