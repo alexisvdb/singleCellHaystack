@@ -16,7 +16,7 @@ plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
 
   d <- cbind(d1, d2)
 
-  ggplot(d, aes(rank1, rank2)) +
+  ggplot(d, aes(.data[["rank1"]], .data[["rank2"]])) +
     geom_point(size=.1) +
     geom_abline(slope=1, intercept=0, color="limegreen") +
     theme(panel.grid=element_line(size=.1))
