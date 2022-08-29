@@ -2,7 +2,10 @@ context("test-haystack")
 
 # Test haystack 2D
 set.seed(123)
+
+suppressWarnings({
 x <- haystack(dat.tsne, detection = dat.expression > 1, method = "2D")
+})
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -15,7 +18,9 @@ test_that("haystack works", {
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
 
+suppressWarnings({
 x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "centroid", grid.points = 60)
+})
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -30,7 +35,9 @@ test_that("haystack works", {
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
 
+suppressWarnings({
 x <- haystack(dat.tsne, detection = dat.expression > 1, method = "highD", grid.method = "seeding", grid.points = 60)
+})
 
 test_that("haystack works", {
   expect_type(x, "list")

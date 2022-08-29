@@ -6,7 +6,9 @@ dat.detection.sparse <- dat.expression.sparse > 1
 
 # Test haystack 2D
 set.seed(123)
-x <- haystack(dat.tsne, detection = dat.detection.sparse, method = "2D")
+suppressWarnings({
+  x <- haystack(dat.tsne, detection = dat.detection.sparse, method = "2D")
+})
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -19,7 +21,9 @@ test_that("haystack works", {
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
 
+suppressWarnings({
 x <- haystack(dat.tsne, detection = dat.detection.sparse, method = "highD", grid.method = "centroid", grid.points = 60)
+})
 
 test_that("haystack works", {
   expect_type(x, "list")
@@ -34,7 +38,9 @@ test_that("haystack works", {
   expect_equal(x$results["gene_1", "T.counts"], 27)
 })
 
+suppressWarnings({
 x <- haystack(dat.tsne, detection = dat.detection.sparse, method = "highD", grid.method = "seeding", grid.points = 60)
+})
 
 test_that("haystack works", {
   expect_type(x, "list")
