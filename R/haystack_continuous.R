@@ -25,6 +25,9 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
                                      randomization.count = 100, n.genes.to.randomize = 100,
                                      selection.method.genes.to.randomize = "heavytails", grid.coord=NULL,
                                      spline.method="ns"){
+
+  renderPB <- isFALSE(getOption("rstudio.notebook.executing"))
+
   message("### calling haystack_continuous_highD()...")
 
   if (!is.null(grid.coord))
@@ -182,20 +185,20 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   # get D_KL (or relative entropy) of this P vs reference Q
   message("### calculating Kullback-Leibler divergences...")
   D_KL.observed <- rep(0,count.genes)
-  pb <- txtProgressBar(min = 0, max = count.genes, style = 3, file = stderr()) # progress bar
+  if (renderPB)
+    pb <- txtProgressBar(min = 0, max = count.genes, style = 3, file = stderr()) # progress bar
   if(is.matrix(expression)){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL_continuous_highD(weights=expression[i,], density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
-      setTxtProgressBar(pb, i) # progress bar
+      if (renderPB) setTxtProgressBar(pb, i) # progress bar
     }
   } else if(inherits(expression, "dgRMatrix")){
     for(i in 1:count.genes){
       D_KL.observed[i] <- get_D_KL_continuous_highD_SPARSE(weights_list=extract_row_dgRMatrix_as_sparse(expression,i), density.contributions = density.contributions, reference.prob = Q, pseudo = pseudo)
-      setTxtProgressBar(pb, i) # progress bar
+      if (renderPB) setTxtProgressBar(pb, i) # progress bar
     }
   }
-  close(pb) # progress bar
-
+  if (renderPB) close(pb) # progress bar
 
   ### use randomization to estimate expected values
   ### and p values for D_KL
@@ -234,7 +237,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   if(is.matrix(expression)){
     for(i in 1:n.genes.to.randomize){
-      setTxtProgressBar(pb, i) # progress bar
+      if (renderPB) setTxtProgressBar(pb, i) # progress bar
 
       D_KL.randomized <- rep(NA,randomization.count)
       vector.to.randomize <- expression[genes.to.randomize[i],]
@@ -250,7 +253,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     }# end for all T counts to select
   } else if(inherits(expression, "dgRMatrix")){
     for(i in 1:n.genes.to.randomize){
-      setTxtProgressBar(pb, i) # progress bar
+      if (renderPB) setTxtProgressBar(pb, i) # progress bar
 
       D_KL.randomized <- rep(NA,randomization.count)
       weights.list.to.randomize <- extract_row_dgRMatrix_as_sparse(expression,genes.to.randomize[i])
@@ -266,7 +269,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       all.D_KL.randomized[i,] <- D_KL.randomized
     }# end for all T counts to select
   }
-  close(pb) # progress bar
+  if (renderPB) close(pb) # progress bar
 
 
   message("### estimating p-values...")
