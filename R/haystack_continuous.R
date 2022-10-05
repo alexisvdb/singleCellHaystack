@@ -587,7 +587,7 @@ get_D_KL_continuous_highD_SPARSE = function(weights_list, density.contributions,
 }
 
 
-hclust_haystack_continuous = function(x, expression, genes, method="ward.D", grid.coordinates = NULL, scale = TRUE, ...){
+hclust_haystack_continuous = function(x, expression, genes, hclust.method="ward.D", cor.method="spearman", grid.coordinates = NULL, scale = TRUE, ...){
 
   # many checks on input
   # see haystack_continuous_highD and also
@@ -650,8 +650,8 @@ hclust_haystack_continuous = function(x, expression, genes, method="ward.D", gri
   #heatmap(dist.to.grid.norm, Rowv=NA, Colv=NA, scale="none")
   #heatmap(densities, Rowv=NA, Colv=NA, scale="none")
 
-  dist <- as.dist(1 - cor(t(densities),method = "spearman")) # dist(densities)
-  hc <- hclust(dist, method=method)
+  dist <- as.dist(1 - cor(t(densities),method=cor.method)) # dist(densities)
+  hc <- hclust(dist, method=hclust.method)
   hc
 }
 
