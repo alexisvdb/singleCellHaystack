@@ -25,19 +25,3 @@ An object of class kmeans, describing a clustering into 'k' clusters
 \description{
 Function for k-means clustering of genes according to their distribution on a 2D plot.
 }
-\examples{
-# using the toy example of the singleCellHaystack package
-# define a logical matrix with detection of each gene (rows) in each cell (columns)
-dat.detection <- dat.expression > 1
-
-# running haystack in default mode
-res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-
-# get biased genes, store in variable gene.subset
-sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
-gene.subset <- row.names(sorted.table)
-
-# k-means clustering into 5 clusters
-km <- kmeans_haystack(dat.tsne, detection=dat.detection, genes=gene.subset, k=5)
-km.clusters <- km$cluster
-}

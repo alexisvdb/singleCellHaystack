@@ -42,11 +42,9 @@ The output is a data.frame with the following columns:
 }
 \examples{
 # using the toy example of the singleCellHaystack package
-# define a logical matrix with detection of each gene (rows) in each cell (columns)
-dat.detection <- dat.expression > 1
 
-# running haystack in default mode
-res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
+# running haystack
+res <- haystack(dat.tsne, dat.expression)
 
 # below are variations for showing the results in a table
 # 1. list top 10 biased genes

@@ -51,6 +51,10 @@ An object of class "haystack", including the results of the analysis, and the co
 The main Haystack function, for higher-dimensional spaces and continuous expression levels.
 }
 \examples{
-# I need to add some examples.
-# A toy example will be added too.
+# using the toy example of the singleCellHaystack package
+
+# running haystack
+res <- haystack(dat.tsne, dat.expression)
+# list top 10 biased genes
+show_result_haystack(res, n=10)
 }

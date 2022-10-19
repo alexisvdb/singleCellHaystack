@@ -260,16 +260,6 @@ get_reference <- function(param, use.advanced.sampling = NULL) {
 #'
 #' @return An object of class "haystack"
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#' # list top 10 biased genes
-#' show_result_haystack(res, n =10)
 haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
   .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
   message("### calling haystack_2D()...")
@@ -581,11 +571,9 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
 #'
 #' @examples
 #' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
 #'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
+#' # running haystack
+#' res <- haystack(dat.tsne, dat.expression)
 #'
 #' # below are variations for showing the results in a table
 #' # 1. list top 10 biased genes

@@ -29,13 +29,3 @@ An object of class "haystack"
 \description{
 The main Haystack function, for 2-dimensional spaces.
 }
-\examples{
-# using the toy example of the singleCellHaystack package
-# define a logical matrix with detection of each gene (rows) in each cell (columns)
-dat.detection <- dat.expression > 1
-
-# running haystack in default mode
-res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-# list top 10 biased genes
-show_result_haystack(res, n =10)
-}

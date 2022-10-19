@@ -7,22 +7,6 @@
 #' @param file A file to write to
 #'
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#'
-#' outfile <- file.path(tempdir(), "output.csv")
-#'
-#' # write result to file outfile.csv
-#' write_haystack(res, file = outfile)
-#'
-#' # read in result from file
-#' res.copy <- read_haystack(file = outfile)
 write_haystack = function (res.haystack, file){
   .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
@@ -49,22 +33,6 @@ write_haystack = function (res.haystack, file){
 #'
 #' @return An object of class "haystack"
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#'
-#' outfile <- file.path(tempdir(), "output.csv")
-#'
-#' # write result to file outfile.csv
-#' write_haystack(res, file = outfile)
-#'
-#' # read in result from file
-#' res.copy <- read_haystack(file = outfile)
 read_haystack = function (file){
   .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
