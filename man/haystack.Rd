@@ -12,11 +12,8 @@ haystack(x, ...)
 
 \method{haystack}{matrix}(
   x,
-  dim1 = 1,
-  dim2 = 2,
-  detection,
-  method = "highD",
-  use.advanced.sampling = NULL,
+  expression,
+  weights.advanced.Q = NULL,
   dir.randomization = NULL,
   scale = TRUE,
   grid.points = 100,
@@ -26,11 +23,8 @@ haystack(x, ...)
 
 \method{haystack}{data.frame}(
   x,
-  dim1 = 1,
-  dim2 = 2,
-  detection,
-  method = "highD",
-  use.advanced.sampling = NULL,
+  expression,
+  weights.advanced.Q = NULL,
   dir.randomization = NULL,
   scale = TRUE,
   grid.points = 100,
@@ -40,13 +34,13 @@ haystack(x, ...)
 
 \method{haystack}{Seurat}(
   x,
+  coord,
   assay = "RNA",
   slot = "data",
-  coord = "pca",
   dims = NULL,
   cutoff = 1,
   method = NULL,
-  use.advanced.sampling = NULL,
+  weights.advanced.Q = NULL,
   ...
 )
 
@@ -57,7 +51,7 @@ haystack(x, ...)
   dims = NULL,
   cutoff = 1,
   method = NULL,
-  use.advanced.sampling = NULL,
+  weights.advanced.Q = NULL,
   ...
 )
 }
@@ -66,15 +60,9 @@ haystack(x, ...)
 
 \item{...}{further parameters passed down to methods.}
 
-\item{dim1}{column index or name of matrix for x-axis coordinates.}
+\item{expression}{a matrix with expression data of genes (rows) in cells (columns)}
 
-\item{dim2}{column index or name of matrix for y-axis coordinates.}
-
-\item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
-
-\item{method}{choose between highD (default) and 2D haystack.}
-
-\item{use.advanced.sampling}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
+\item{weights.advanced.Q}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
 
 \item{dir.randomization}{If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.}
 
@@ -84,15 +72,17 @@ haystack(x, ...)
 
 \item{grid.method}{The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".}
 
+\item{coord}{name of coordinates slot for specific methods.}
+
 \item{assay}{name of assay data for Seurat method.}
 
 \item{slot}{name of slot for assay data for Seurat method.}
 
-\item{coord}{name of coordinates slot for specific methods.}
-
 \item{dims}{dimensions from coord to use. By default, all.}
 
 \item{cutoff}{cutoff for detection.}
+
+\item{method}{choose between highD (default) and 2D haystack.}
 }
 \value{
 An object of class "haystack"
