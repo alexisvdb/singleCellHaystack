@@ -35,7 +35,9 @@ Suggests:
     wrswoR,
     sparseMatrixStats,
     bluster,
-    igraph
+    igraph,
+    ComplexHeatmap,
+    patchwork
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
