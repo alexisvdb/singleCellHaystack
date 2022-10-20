@@ -34,8 +34,6 @@ Suggests:
     testthat,
     wrswoR,
     sparseMatrixStats,
-    bluster,
-    igraph,
     ComplexHeatmap,
     patchwork
 License: MIT + file LICENSE
