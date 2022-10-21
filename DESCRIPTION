@@ -26,12 +26,11 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
+    testthat,
     SummarizedExperiment,
     SingleCellExperiment,
     SeuratObject,
-    Rtsne,
     cowplot,
-    testthat,
     wrswoR,
     sparseMatrixStats,
     ComplexHeatmap,
