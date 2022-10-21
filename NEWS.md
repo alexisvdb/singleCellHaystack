@@ -1,3 +1,7 @@
+# singleCellHaystack 0.9.x (unreleased)
+
+* Add new continuous method.
+
 # singleCellHaystack 0.3.4
 
 * Add `NEWS.md` file to track changes to the package.
