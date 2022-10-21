@@ -13,31 +13,35 @@ Downloads](https://cranlogs.r-pkg.org/badges/singleCellHaystack)](https://cran.r
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
 <!-- badges: end -->
 
+:warning: We are updating `singleCellHaystack`. For the version
+described [here](https://doi.org/10.1038/s41467-020-17900-3), please use
+branch “binary”. The version on CRAN is also the same binary version.
+The master branch on GitHub is now the updated version. :warning:
+
 `singleCellHaystack` is a package for predicting differentially active
 features (e.g. genes) in single-cell and spatial transcriptomics and
 genomics data. While `singleCellHaystack` originally focused on the
 prediction of differentially expressed genes (DEGs; see
 [here](https://doi.org/10.1038/s41467-020-17900-3)), we have updated the
-method and made it more generally applicable ([LINK ON
-BIORXIV](https:placeholder)). It can now also be used for finding
-differentially accessible genomic regions in scATAC-seq, DEGs along a
-trajectory, spatial DEGs, or any other features with non-random levels
-of activity inside any input space (1D, 2D, or \>2D). It does so without
-relying on clustering of samples into arbitrary clusters.
-`singleCellHaystack` uses Kullback-Leibler Divergence to find features
-that have patterns of activity in subsets of samples that are
-non-randomly positioned inside any input space.
+method and made it more generally applicable (coming soon on bioRxiv).
+It can now also be used for finding differentially accessible genomic
+regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any
+other features with non-random levels of activity inside any input space
+(1D, 2D, or \>2D). It does so without relying on clustering of samples
+into arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler
+Divergence to find features that have patterns of activity in subsets of
+samples that are non-randomly positioned inside any input space.
 
 ## Citations
 
-- Our manuscript describing the updated, more generally applicable
-  version of `singleCellHaystack` will be available on bioRxiv soon.
+-   Our manuscript describing the updated, more generally applicable
+    version of `singleCellHaystack` will be available on bioRxiv soon.
 
-- Our manuscript describing the original implementation of
-  `singleCellHaystack` ([version
-  0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has
-  been published in [Nature
-  Communications](https://doi.org/10.1038/s41467-020-17900-3).
+-   Our manuscript describing the original implementation of
+    `singleCellHaystack` ([version
+    0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has
+    been published in [Nature
+    Communications](https://doi.org/10.1038/s41467-020-17900-3).
 
 If you use `singleCellHaystack` in your research please cite our work
 using:
@@ -49,25 +53,40 @@ differentially expressed genes in single-cell transcriptome data.”
 
 ## Documentation and Demo
 
+:warning: We are in the process of updating this documentation :warning:
+
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/)
 includes a few example applications showing how to use our package:
 
-- [Toy
-  example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
-- [Multi-dimensional
-  coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
-- [Advanced mode on multi-dimensional
-  coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
-- [Spatial
-  transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
-- [MOCA 100k
-  cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
-- [2D t-SNE
-  coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
-- [Advanced mode on 2D t-SNE
-  coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
+-   [Toy
+    example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
+-   [Multi-dimensional
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
+-   [Advanced mode on multi-dimensional
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
+-   [Spatial
+    transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
+-   [MOCA 100k
+    cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
+-   [2D t-SNE
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
+-   [Advanced mode on 2D t-SNE
+    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
 
 ## Installation
+
+You can install the updated version of `singleCellHaystack` from the
+GitHub repository as shown below. Typical installation times should be
+less than 1 minute.
+
+``` r
+require(remotes)
+remotes::install_github("alexisvdb/singleCellHaystack")
+```
+
+For the binary version of `singleCellHaystack` as described
+[here](https://doi.org/10.1038/s41467-020-17900-3), you can use one of
+these options:
 
 You can install the released version of `singleCellHaystack` from
 [CRAN](https://CRAN.R-project.org/package=singleCellHaystack) with:
@@ -76,12 +95,11 @@ You can install the released version of `singleCellHaystack` from
 install.packages("singleCellHaystack")
 ```
 
-You can also install `singleCellHaystack` from the GitHub repository as
-shown below. Typical installation times should be less than 1 minute.
+Or, install from the binary branch on GitHub:
 
 ``` r
 require(remotes)
-remotes::install_github("alexisvdb/singleCellHaystack")
+remotes::install_github("alexisvdb/singleCellHaystack@binary")
 ```
 
 ## System Requirements
