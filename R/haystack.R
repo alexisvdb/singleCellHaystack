@@ -13,12 +13,15 @@ kde2d_faster = function (dens.x, dens.y){
 #'
 #' @return A suitable bandwith.
 default_bandwidth.nrd = function(x){
+  # NOTE: Remove when we remove binary version.
+
   r <- quantile(x, c(0.25, 0.75))
   h <- (r[2] - r[1]) / 1.34
   1.06 * min(sqrt(var(x)), h) * length(x) ^ (-1 / 5)
 }
 
-#' Function that decides most of the parameters that will used be during the "Haystack" analysis.
+
+#' Function that decides most of the parameters that will be used during the "Haystack" analysis.
 #'
 #' @param x x-axis coordinates of cells in a 2D representation (e.g. resulting from PCA or t-SNE)
 #' @param y y-axis coordinates of cells in a 2D representation
@@ -26,6 +29,7 @@ default_bandwidth.nrd = function(x){
 #'
 #' @return A list containing various parameters to use in the analysis.
 get_parameters_haystack = function(x, y, high.resolution = FALSE){
+  # NOTE: Remove when we remove binary version.
 
   # the bandwidths used for the kernel function
   bandwidth.x <- default_bandwidth.nrd(x)
@@ -106,6 +110,7 @@ get_parameters_haystack = function(x, y, high.resolution = FALSE){
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL = function(classes, parameters, reference.prob, pseudo){
+  # NOTE: Remove when we remove binary version.
 
   class.types = c(FALSE, TRUE)
 
@@ -139,7 +144,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
   sum(D_KLs)
 }
 
-#' Estimates the significance of the observed Kullback-Leibler divergence by comparig to randomizations.
+#' Estimates the significance of the observed Kullback-Leibler divergence by comparing to randomizations.
 #'
 #' @param T.counts The number of cells in which a gene is detected.
 #' @param D_KL.observed A vector of observed Kullback-Leibler divergences.
@@ -148,6 +153,7 @@ get_D_KL = function(classes, parameters, reference.prob, pseudo){
 #'
 #' @return A vector of log10 p values, not corrected for multiple testing using the Bonferroni correction.
 get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir = NULL){
+  # NOTE: Remove when we remove binary version.
 
   t.points <- as.numeric(row.names(D_KL.randomized))
   dat.mean.log2 <- apply(log2(D_KL.randomized),1,mean)
@@ -169,8 +175,14 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
   t.seq <- seq(t.range[1],t.range[2],length.out=1000)
   fitted.mean.log2 <- predict(model.mean.log2, data.frame(t.points=t.seq), type="response")
 
+  info <- list()
+  info$mean <- list()
+  info$mean$observed <- data.frame(feature=t.points, x=t.points, y=dat.mean.log2)
+  info$mean$fitted <- data.frame(x=t.seq, y=fitted.mean.log2)
+
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.mean.log.D_KL_df",df.mean,".pdf")
+    message("### writing plot to ", outfile)
     pdf(outfile)
     plot(t.points, dat.mean.log2)
     points(t.seq,fitted.mean.log2,col="red", type="l")
@@ -190,8 +202,13 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   fitted.sd.log2 <- predict(model.sd.log2, data.frame(t.points=t.seq), type="response")
 
+  info$sd <- list()
+  info$sd$observed <- data.frame(feature=t.points, x=t.points, y=dat.sd.log2)
+  info$sd$fitted <- data.frame(x=t.seq, y=fitted.sd.log2)
+
   if(!is.null(output.dir)){
     outfile <- paste0(output.dir,"/fit.sd.log.D_KL_df",df.sd,".pdf")
+    message("### writing plot to ", outfile)
     pdf(outfile)
     plot(t.points, dat.sd.log2)
     points(t.seq,fitted.sd.log2,col="red", type="l")
@@ -205,7 +222,7 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 
   fitted.log.p.vals <- pnorm(log2(D_KL.observed), mean = fitted.mean.log2, sd = fitted.sd.log2, lower.tail = FALSE, log.p = T)/log(10)
 
-  fitted.log.p.vals
+  list(fitted=fitted.log.p.vals, info=info)
 }
 
 
@@ -217,6 +234,8 @@ get_log_p_D_KL = function(T.counts, D_KL.observed, D_KL.randomized, output.dir =
 #' @return A list with two components, Q for the reference distribution and pseudo.
 #'
 get_reference <- function(param, use.advanced.sampling = NULL) {
+  # NOTE: Remove when we remove binary version.
+
   if (is.null(use.advanced.sampling)) {
     density <- kde2d_faster(param$dens.x, param$dens.y)
     pseudo <- quantile(density[density > 0], 0.01)
@@ -242,17 +261,8 @@ get_reference <- function(param, use.advanced.sampling = NULL) {
 #'
 #' @return An object of class "haystack"
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#' # list top 10 biased genes
-#' show_result_haystack(res, n =10)
 haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomization = NULL){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
   message("### calling haystack_2D()...")
 
   # check input
@@ -460,6 +470,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
+  info <- p.vals$info
+  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
+  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -480,6 +494,10 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
       log.p.adj = p.adjs,
       T.counts = T.counts,
       row.names = row.names(detection)
+    ),
+    info = list(
+      method="binary_2D",
+      randomization = info
     )
   )
   class(res) <- "haystack"
@@ -496,6 +514,7 @@ haystack_2D = function(x, y, detection, use.advanced.sampling=NULL, dir.randomiz
 #'
 #' @return A 3-dimensional array (dim 1: genes/rows of expression, dim 2 and 3: x and y grid points) with density data
 get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.resolution = FALSE){
+  # NOTE: Remove when we remove binary version.
 
   # set the parameters for getting the densities
   parameters <- get_parameters_haystack(x,y,high.resolution)
@@ -536,23 +555,26 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
   densities
 }
 
+#' show_result_haystack
+#'
 #' Shows the results of the 'haystack' analysis in various ways, sorted by significance. Priority of params is genes > p.value.threshold > n.
 #'
-#' @param res.haystack A 'haystack' result variable
-#' @param n If defined, the top "n" sigificant genes will be returned. Default: NA, which shows all results.
+#' @param res.haystack A 'haystack' result object.
+#' @param n If defined, the top "n" significant genes will be returned. Default: NA, which shows all results.
 #' @param p.value.threshold If defined, genes passing this p-value threshold will be returned.
 #' @param gene If defined, the results of this (these) gene(s) will be returned.
-#'
-#' @return A table with a sorted subset of the 'haystack' result according to input parameters.
+#' @details The output is a data.frame with the following columns:
+#' * D_KL the calculated KL divergence.
+#' * log.p.vals log10 p.values calculated from randomization.
+#' * log.p.adj log10 p.values adjusted by Bonferroni correction.
+#' @return A data.frame with 'haystack' results sorted by log.p.vals.
 #' @export
 #'
 #' @examples
 #' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
 #'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
+#' # running haystack
+#' res <- haystack(dat.tsne, dat.expression)
 #'
 #' # below are variations for showing the results in a table
 #' # 1. list top 10 biased genes
@@ -562,37 +584,50 @@ get_density = function(x, y, detection, rows.subset=1:nrow(detection), high.reso
 #' # 3. list a set of specified genes
 #' set <- c("gene_497","gene_386", "gene_275")
 #' show_result_haystack(res.haystack = res, gene = set)
-show_result_haystack = function(res.haystack, n=NA, p.value.threshold=NA, gene=NA){
+show_result_haystack <- function(res.haystack, n=NULL, p.value.threshold=NULL, gene=NULL) {
+  UseMethod("show_result_haystack")
+}
+
+#' @rdname show_result_haystack
+#' @export
+show_result_haystack.haystack <- function(res.haystack, n=NULL, p.value.threshold=NULL, gene=NULL){
 
   # check input
-  if(missing(res.haystack))
-    stop("Parameter 'res.haystack' ('haystack' result) is missing")
-  if(class(res.haystack)!="haystack")
-    stop("'res.haystack' must be of class 'haystack'")
-  if(is.null(res.haystack$results))
-    stop("Results seem to be missing from 'haystack' result. Is 'res.haystack' a valid 'haystack' result?")
-  if(!is.na(n) & !is.numeric(n))
+  #if(missing(res.haystack))
+  #  stop("Parameter 'res.haystack' ('haystack' result) is missing")
+  #if(class(res.haystack)!="haystack")
+  #  stop("'res.haystack' must be of class 'haystack'")
+
+  result <- res.haystack$results
+  if(is.null(result))
+    stop("Results seem to be missing from 'haystack' object. Is 'res.haystack' a valid 'haystack' result?")
+  if(!is.null(n) & !is.numeric(n))
     stop("The value of 'n' should be an integer")
-  if(!is.na(n) & n > nrow(res.haystack$results))
-    warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
-  if(!is.na(p.value.threshold) & (p.value.threshold<0 | p.value.threshold>1))
-    stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
+  if(!is.null(n))
+     if(n > nrow(result))
+        warning("Integer value of 'n' is larger than the number of rows in the 'haystack' results. Will return all results sorted.")
+  if(!is.null(p.value.threshold))
+     if (p.value.threshold<0 | p.value.threshold>1)
+        stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
 
   # run through filters, one by one, if they are not NA
   # priority is genes > p.value.threshold > n
-  result <- res.haystack$results
-  if(any(!is.na(gene))){
+  if(!is.null(gene)){
     result <- result[is.element(rownames(result), gene), ]
   }
-  if(!is.na(p.value.threshold)){
+  if(!is.null(p.value.threshold)){
     result <- result[result[["log.p.vals"]] <= log10(p.value.threshold), ]
   }
 
+  result <- result[order(result[["log.p.vals"]]), ]
+  result
   # at this point: 1) decide no. to return, and 2) sort by significance
-  n.to.select <- ifelse(is.na(n), nrow(result), min(n, nrow(result)))
-  o <- order(result$log.p.vals)
-  result[o[1:n.to.select],]
+  #n.to.select <- ifelse(is.null(n), nrow(result), min(n, nrow(result)))
+  #result[1:n.to.select, ]
+  #o <- order(result$log.p.vals)
+  #result[o[1:n.to.select],]
 }
+
 
 
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/haystack.R
 \name{get_parameters_haystack}
 \alias{get_parameters_haystack}
-\title{Function that decides most of the parameters that will be during the "Haystack" analysis.}
+\title{Function that decides most of the parameters that will be used during the "Haystack" analysis.}
 \usage{
 get_parameters_haystack(x, y, high.resolution = FALSE)
 }
@@ -17,5 +17,5 @@ get_parameters_haystack(x, y, high.resolution = FALSE)
 A list containing various parameters to use in the analysis.
 }
 \description{
-Function that decides most of the parameters that will be during the "Haystack" analysis.
+Function that decides most of the parameters that will be used during the "Haystack" analysis.
 }

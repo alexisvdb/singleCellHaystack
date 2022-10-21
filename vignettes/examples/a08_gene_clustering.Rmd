@@ -1,0 +1,134 @@
+---
+title: "Clustering singleCellHaystack results into gene modules"
+author: "Diego Diez"
+date: "2022-10-09"
+output: html_notebook
+---
+
+```{r setup}
+library(ggplot2)
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+library(ComplexHeatmap)
+
+theme_set(cowplot::theme_cowplot())
+
+select_cell_markers <- function(scores, max.overlap=1) {
+  sel <- apply(scores, 1, function(x) {
+    pos <- x > 0
+    npos <- sum(pos)
+    if (npos > 0 & npos <= max.overlap)
+      return(TRUE)
+    return(FALSE)
+  })
+  #rownames(scores)[sel]
+  scores[sel,]
+}
+
+set.seed(1)
+```
+
+# Introduction
+
+In this vignette we use the PBMC dataset from 10x available in the `SeuratData` package.
+
+```{r}
+pbmc <- LoadData("pbmc3k", "pbmc3k.final")
+pbmc
+```
+
+```{r}
+DimPlot(pbmc, label=TRUE) + NoLegend() + NoAxes()
+```
+
+# Run haystack
+
+```{r}
+coord <- Embeddings(pbmc, reduction="pca")
+dim(coord)
+```
+
+```{r}
+exprs <- GetAssayData(pbmc, assay="RNA", slot="data")
+exprs[1:4, 1:4]
+```
+
+```{r}
+res <- haystack_continuous_highD(coord, exprs)
+```
+
+```{r}
+plot_rand_fit(res, "mean")
+plot_rand_fit(res, "sd")
+```
+
+```{r}
+sum <- show_result_haystack(res)
+head(sum)
+```
+
+```{r}
+ggplot(sum, aes(x=seq_len(nrow(sum)), y=log.p.adj)) +
+  geom_point() + 
+  geom_vline(xintercept=c(100, 1000), color=c("limegreen", "violetred"))
+```
+
+Next we look at the top 100 genes identified by haystack.
+
+```{r}
+top_100_haystack <- head(sum, 100)
+head(top_100_haystack)
+```
+
+# Using whole expression profiles
+
+We can use the top genes to calculate gene clusters using the single cell expression data.
+
+```{r}
+m <- as.matrix(exprs[rownames(top_100_haystack), ])
+m[1:3, 1:3]
+```
+
+```{r fig.width=4, fig.height=8}
+Heatmap(m, column_split=pbmc$seurat_annotations, name="Expression", show_column_names=FALSE, column_title_rot=45)
+```
+
+# Usingn cluster-wise averages
+
+We can calculate cluster scores for each gene. Basically we compute the average of each gene in each cluster.
+
+```{r}
+scores <- AverageExpression(pbmc, features=rownames(top_100_haystack), assays="RNA")[["RNA"]]
+head(scores)
+```
+```{r}
+genes.pass <- apply(scores, 1, function(x) {
+  sum(x > 1)
+})
+table(genes.pass)
+```
+
+```{r}
+Heatmap(t(scale(t(scores[genes.pass, ]))))
+```
+
+We need to scale the scores.
+
+```{r}
+scores <- t(scale(t(scores)))
+head(scores)
+```
+We can see that there are clear cluster specific markers.
+
+```{r fig.width=4, fig.height=8}
+Heatmap(scores, name="Score")
+```
+# Using the distribution P
+
+Another approach is to use the distribution P used by haystack. This is the density weighted expression at the grid points. Haystack returns by default the density.
+
+```{r}
+scores <- res$info$P
+```
+

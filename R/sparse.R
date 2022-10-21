@@ -6,6 +6,8 @@
 #'
 #' @return A row (logical vector) of the sparse matrix
 extract_row_lgRMatrix <- function(m, i = 1) {
+  # NOTE: Remove when we remove binary version.
+
   r <- logical(ncol(m)) ## set up vector with FALSE values for results
   inds <- seq(
     from = m@p[i] + 1,
@@ -32,4 +34,16 @@ extract_row_dgRMatrix <- function(m, i = 1) {
   )
   r[m@j[inds] + 1] <- m@x[inds] ## set values
   return(r)
+}
+
+extract_row_dgRMatrix_as_sparse = function(m, i){
+  cut.index1 <- m@p[i]
+  cut.index2 <- m@p[i+1]
+  ind <- numeric()
+  val <- numeric()
+  if(cut.index1 < cut.index2){
+    ind <- m@j[((cut.index1+1):cut.index2)] + 1
+    val <- m@x[((cut.index1+1):cut.index2)]
+  }
+  list(ind = ind, val = val)
 }

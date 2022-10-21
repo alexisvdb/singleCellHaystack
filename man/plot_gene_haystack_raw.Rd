@@ -38,13 +38,3 @@ A plot
 \description{
 Visualizing the detection/expression of a gene in a 2D plot
 }
-\examples{
-# using the toy example of the singleCellHaystack package
-# define a logical matrix with detection of each gene (rows) in each cell (columns)
-dat.detection <- dat.expression > 1
-# various was of plotting gene expression patterns
-plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
- detection = dat.detection, high.resolution = TRUE)
-plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
- detection = dat.detection, high.resolution = TRUE, point.size = .1)
-}

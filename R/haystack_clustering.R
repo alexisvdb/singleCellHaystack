@@ -11,23 +11,8 @@
 #'
 #' @return An object of class hclust, describing a hierarchical clustering tree.
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#'
-#' # get biased genes, store in variable gene.subset
-#' sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
-#' gene.subset <- row.names(sorted.table)
-#'
-#' # hierarchical clustering, and cutting into 5 clusters
-#' hc <- hclust_haystack(dat.tsne, detection=dat.detection, genes=gene.subset)
-#' hc.clusters <- cutree(hc,k = 5)
 hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))
@@ -77,23 +62,8 @@ hclust_haystack_raw = function(x, y, detection, genes, method="ward.D"){
 #'
 #' @return An object of class kmeans, describing a clustering into 'k' clusters
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # running haystack in default mode
-#' res <- haystack(dat.tsne, detection=dat.detection, method = "2D")
-#'
-#' # get biased genes, store in variable gene.subset
-#' sorted.table <- show_result_haystack(res, p.value.threshold = 1e-5)
-#' gene.subset <- row.names(sorted.table)
-#'
-#' # k-means clustering into 5 clusters
-#' km <- kmeans_haystack(dat.tsne, detection=dat.detection, genes=gene.subset, k=5)
-#' km.clusters <- km$cluster
 kmeans_haystack_raw = function(x, y, detection, genes, k, ...){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))

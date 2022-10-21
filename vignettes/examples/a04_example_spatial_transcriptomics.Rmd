@@ -13,7 +13,7 @@ vignette: >
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	fig.align = "center",
-	message = FALSE,
+	message = TRUE,
 	warning = TRUE
 )
 library(Seurat)
@@ -78,7 +78,7 @@ At the moment there is no direct interface to apply `haystack` on spatial transc
 coord <- GetTissueCoordinates(anterior1, "anterior1")
 counts <- GetAssayData(anterior1, slot = "data")
 
-res <- haystack_2D(coord$imagecol, coord$imagerow, detection = as.matrix(counts > 1))
+res <- haystack(coord, counts)
 ```
 
 We can check the top genes with spatial biased distribution.

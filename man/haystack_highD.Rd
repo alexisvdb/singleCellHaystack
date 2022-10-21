@@ -19,7 +19,7 @@ haystack_highD(
 
 \item{detection}{A logical matrix showing which genes (rows) are detected in which cells (columns)}
 
-\item{grid.points}{An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.}
+\item{grid.points}{An integer specifying the number of centers (grid points) to be used for estimating the density distributions of cells. Default is set to 100.}
 
 \item{use.advanced.sampling}{If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.}
 

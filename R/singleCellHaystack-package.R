@@ -4,7 +4,7 @@
 #' @importFrom graphics plot points
 #' @importFrom grDevices pdf dev.off
 #' @importFrom utils read.csv write.csv
-#' @importFrom splines bs
+#' @importFrom splines bs ns
 #' @importFrom utils setTxtProgressBar txtProgressBar
-#' @importFrom Matrix rowSums colSums colMeans
+#' @importFrom Matrix rowSums colSums colMeans rowMeans
 "_PACKAGE"

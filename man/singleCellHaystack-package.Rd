@@ -6,15 +6,7 @@
 \alias{singleCellHaystack-package}
 \title{singleCellHaystack: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)}
 \description{
-Identification of differentially expressed genes (DEGs) is a key step in single-cell 
-    transcriptomics data analysis. 'singleCellHaystack' predicts DEGs without relying on 
-    clustering of cells into arbitrary clusters. Single-cell RNA-seq (scRNA-seq) data is 
-    often processed to fewer dimensions using Principal Component Analysis (PCA) and 
-    represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). 'singleCellHaystack' 
-    uses Kullback-Leibler divergence to find genes that are expressed in subsets of cells 
-    that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. 
-    For the theoretical background of 'singleCellHaystack' we refer to 
-    Vandenbon and Diez (Nature Communications, 2020) <doi:10.1038/s41467-020-17900-3>.
+Identification of differentially expressed genes (DEGs) is a key step in single-cell transcriptomics data analysis. 'singleCellHaystack' predicts DEGs without relying on clustering of cells into arbitrary clusters. Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). 'singleCellHaystack' uses Kullback-Leibler divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. For the theoretical background of 'singleCellHaystack' we refer to Vandenbon and Diez (Nature Communications, 2020) \doi{10.1038/s41467-020-17900-3}.
 }
 \author{
 \strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com} (\href{https://orcid.org/0000-0003-2180-5732}{ORCID})

@@ -33,6 +33,7 @@ get_dist_two_sets = function(set1,set2){
 #'
 #' @return A numerical value, the Kullback-Leibler divergence
 get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo = 0){
+  # NOTE: Remove when we remove binary version.
 
   class.types = c(FALSE, TRUE)
 
@@ -49,7 +50,7 @@ get_D_KL_highD = function(classes, density.contributions, reference.prob, pseudo
       #D_KLs[c] <- 0
       return(0)
     } else {
-      P <- apply(density.contributions[cl.subset, , drop = FALSE], 2, sum)
+      P <- colSums(density.contributions[cl.subset, , drop = FALSE])
       P <- P + pseudo
       P <- P / sum(P)
       D_KL <- sum(P * log(P/Q))
@@ -142,7 +143,7 @@ get_grid_points = function(input, method="centroid", grid.points = 100){
 #' @param use.advanced.sampling If NULL naive sampling is used. If a vector is given (of length = no. of cells) sampling is done according to the values in the vector.
 #' @param dir.randomization If NULL, no output is made about the random sampling step. If not NULL, files related to the randomizations are printed to this directory.
 #' @param scale Logical (default=TRUE) indicating whether input coordinates in x should be scaled to mean 0 and standard deviation 1.
-#' @param grid.points An integer specifying the number of centers (gridpoints) to be used for estimating the density distributions of cells. Default is set to 100.
+#' @param grid.points An integer specifying the number of centers (grid points) to be used for estimating the density distributions of cells. Default is set to 100.
 #' @param grid.method The method to decide grid points for estimating the density in the high-dimensional space. Should be "centroid" (default) or "seeding".
 #'
 #' @return An object of class "haystack", including the results of the analysis, and the coordinates of the grid points used to estimate densities.
@@ -152,13 +153,15 @@ get_grid_points = function(input, method="centroid", grid.points = 100){
 #' # I need to add some examples.
 #' # A toy example will be added too.
 haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling=NULL, dir.randomization = NULL, scale=TRUE, grid.method="centroid"){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
+
   message("### calling haystack_highD()...")
 
   # check input
-  if(!is.numeric(x))
-    stop("'x' must be a numeric matrix")
-  if(!is.matrix(x))
-    stop("'x' must be a numeric matrix")
+  if(!is.numeric(x) && !all(apply(x, 2, is.numeric)))
+    stop("'x' must be a numeric matrix or data.frame")
+  if(!is.matrix(x) && !is.data.frame(x))
+    stop("'x' must be a numeric matrix or data.frame")
   if(ncol(x) < 2)
     stop("'x' must have at least 2 columns")
   if(!is.matrix(detection) && ! inherits(detection, "lgCMatrix") && ! inherits(detection, "lgRMatrix"))
@@ -392,6 +395,10 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
 
   message("### estimating p-values...")
   p.vals <- get_log_p_D_KL(T.counts = T.counts, D_KL.observed = D_KL.observed, D_KL.randomized = all.D_KL.randomized, output.dir = dir.randomization)
+  info <- p.vals$info
+  info$mean$observed$feature <- rownames(detection)[info$mean$observed$x]
+  info$sd$observed$feature <- rownames(detection)[info$sd$observed$x]
+  p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
   p.adjs <- p.vals + log10(length(p.vals))
@@ -419,7 +426,11 @@ haystack_highD = function(x, detection, grid.points = 100, use.advanced.sampling
       T.counts = T.counts,
       row.names = row.names(detection)
     ),
-    grid.coordinates = grid.coord
+    info = list(
+      method="binary_highD",
+      randomization = info,
+      grid.coordinates = grid.coord
+    )
   )
   class(res) <- "haystack"
   res

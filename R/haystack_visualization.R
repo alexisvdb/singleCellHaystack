@@ -13,17 +13,8 @@
 #'
 #' @return A plot
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#' # various was of plotting gene expression patterns
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
-#'  detection = dat.detection, high.resolution = TRUE)
-#' plot_gene_haystack(dat.tsne, expression=dat.expression, gene="gene_242",
-#'  detection = dat.detection, high.resolution = TRUE, point.size = .1)
 plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high.resolution = FALSE, point.size = 1, order.by.signal = FALSE){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   if(is.data.frame(expression)){
     warning("'expression' is a matrix, should be a matrix. Converting to matrix.")
@@ -155,22 +146,8 @@ plot_gene_haystack_raw = function(x, y, gene, expression, detection = NULL, high
 #'
 #' @return A plot
 #' @export
-#'
-#' @examples
-#' # using the toy example of the singleCellHaystack package
-#' # define a logical matrix with detection of each gene (rows) in each cell (columns)
-#' dat.detection <- dat.expression > 1
-#'
-#' # define a set of genes that we want to visualize
-#' # this might be a set of differnentially expressed genes
-#' # predicted by haystack and clustered together by hclust_haystack
-#' gene_set <- c("gene_9", "gene_59", "gene_112", "gene_137", "gene_155",
-#'   "gene_216", "gene_234", "gene_275", "gene_291", "gene_317",
-#'   "gene_339", "gene_340", "gene_351", "gene_400", "gene_424", "gene_479")
-#'
-#' # visualize the expression pattern of the set of genes
-#' plot_gene_set_haystack(dat.tsne, detection=dat.detection, genes=gene_set)
 plot_gene_set_haystack_raw = function(x, y, genes=NA, detection, high.resolution = TRUE, point.size=1, order.by.signal = FALSE){
+  .Deprecated(msg = "This function has been deprecated and will be removed in the future.")
 
   # check input
   if(!is.numeric(x))

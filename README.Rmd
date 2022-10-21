@@ -22,12 +22,14 @@ knitr::opts_chunk$set(
   [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
 <!-- badges: end -->
 
-`singleCellHaystack` is a package for predicting differentially expressed genes (DEGs) in single cell transcriptome data. It does so without relying on clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). `singleCellHaystack` uses Kullback-Leibler Divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. 
+`singleCellHaystack` is a package for predicting differentially active features (e.g. genes) in single-cell and spatial transcriptomics and genomics data. While `singleCellHaystack` originally focused on the prediction of differentially expressed genes (DEGs; see [here](https://doi.org/10.1038/s41467-020-17900-3)), we have updated the method and made it more generally applicable ([LINK ON BIORXIV](https:placeholder)). It can now also be used for finding differentially accessible genomic regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features with non-random levels of activity inside any input space (1D, 2D, or >2D). It does so without relying on clustering of samples into arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler Divergence to find features that have patterns of activity in subsets of samples that are non-randomly positioned inside any input space.
 
 
-## Citation
+## Citations
 
-Our manuscript describing `singleCellHaystack` has been published in [Nature Communications](https://doi.org/10.1038/s41467-020-17900-3).
+- Our manuscript describing the updated, more generally applicable version of `singleCellHaystack` will be available on bioRxiv soon.
+
+- Our manuscript describing the original implementation of `singleCellHaystack` ([version 0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has been published in [Nature Communications](https://doi.org/10.1038/s41467-020-17900-3).
 
 If you use `singleCellHaystack` in your research please cite our work using:
 

@@ -6,20 +6,45 @@
 \alias{hclust_haystack.data.frame}
 \title{Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space}
 \usage{
-hclust_haystack(x, ...)
+hclust_haystack(
+  x,
+  expression,
+  grid.coordinates,
+  hclust.method = "ward.D",
+  cor.method = "spearman",
+  ...
+)
 
-\method{hclust_haystack}{matrix}(x, dim1 = 1, dim2 = 2, ...)
+\method{hclust_haystack}{matrix}(
+  x,
+  expression,
+  grid.coordinates,
+  hclust.method = "ward.D",
+  cor.method = "spearman",
+  ...
+)
 
-\method{hclust_haystack}{data.frame}(x, dim1 = 1, dim2 = 2, ...)
+\method{hclust_haystack}{data.frame}(
+  x,
+  expression,
+  grid.coordinates,
+  hclust.method = "ward.D",
+  cor.method = "spearman",
+  ...
+)
 }
 \arguments{
 \item{x}{a matrix or other object from which coordinates of cells can be extracted.}
 
+\item{expression}{expression matrix.}
+
+\item{grid.coordinates}{coordinates of the grid points.}
+
+\item{hclust.method}{method used with hclust.}
+
+\item{cor.method}{method used with cor.}
+
 \item{...}{further parameters passed down to methods.}
-
-\item{dim1}{column index or name of matrix for x-axis coordinates.}
-
-\item{dim2}{column index or name of matrix for y-axis coordinates.}
 }
 \description{
 Function for hierarchical clustering of genes according to their expression distribution in 2D or multi-dimensional space
