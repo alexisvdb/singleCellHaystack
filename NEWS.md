@@ -2,6 +2,8 @@
 
 * Add new continuous method.
 
+* Rename `use.advanced.sampling` option to `weights.advanced.Q`.
+
 # singleCellHaystack 0.3.4
 
 * Add `NEWS.md` file to track changes to the package.
