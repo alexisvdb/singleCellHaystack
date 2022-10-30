@@ -13,13 +13,11 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  #fig.width = 6,
-  #fig.height = 5,
   fig.align = 'center'
 )
 
-dat.tsne <- singleCellHaystack::dat.tsne
-dat.expression <- singleCellHaystack::dat.expression
+library(ggplot2)
+theme_set(cowplot::theme_cowplot())
 ```
 
 # Application on a toy dataset
@@ -63,13 +61,12 @@ d <- cbind(dat.tsne, t(dat.expression))
 d[1:4, 1:4]
 ```
 
-```{r}
+```{r fig.width=6, fig.height=4}
 library(ggplot2)
 
 ggplot(d, aes(tSNE1, tSNE2, color=gene_497)) +
   geom_point() +
-  scale_color_distiller(palette="Spectral") +
-  theme_bw()
+  scale_color_distiller(palette="Spectral")
 ```
 
 Yes, the coordinates of the cells in this toy example t-SNE space roughly resemble a haystack; see [the Haystack paintings by Monet](https://en.wikipedia.org/wiki/Haystacks_(Monet_series)).
@@ -93,7 +90,7 @@ hm <- hclust_haystack(dat.tsne, dat.expression[gene.subset, ], grid.coordinates=
 
 ... and visualize the pattern of the selected genes.
 
-```{r fig.width=4, fig.height=4}
+```{r fig.width=6, fig.height=8}
 ComplexHeatmap::Heatmap(dat.expression[gene.subset, ], show_column_names=FALSE, cluster_rows=hm, name="expression")
 ```
 
@@ -112,12 +109,11 @@ for (cluster in unique(hm.clusters)) {
 }
 ```
 
-```{r}
+```{r fig.width=8, fig.height=6}
 lapply(c("cluster_1", "cluster_2", "cluster_3", "cluster_4"), function(cluster) {
   ggplot(d, aes(tSNE1, tSNE2, color=.data[[cluster]])) +
   geom_point() +
-  scale_color_distiller(palette="Spectral") +
-  theme_bw()
+  scale_color_distiller(palette="Spectral")
 }) |> patchwork::wrap_plots()
 ```
 
