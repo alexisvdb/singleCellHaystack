@@ -610,16 +610,21 @@ show_result_haystack.haystack <- function(res.haystack, n=NULL, p.value.threshol
      if (p.value.threshold<0 | p.value.threshold>1)
         stop("If 'p.value.threshold' is given as input, it should be between 0 and 1")
 
+  result <- result[order(result[["log.p.vals"]]), ]
+
   # run through filters, one by one, if they are not NA
   # priority is genes > p.value.threshold > n
   if(!is.null(gene)){
     result <- result[is.element(rownames(result), gene), ]
   }
+
   if(!is.null(p.value.threshold)){
     result <- result[result[["log.p.vals"]] <= log10(p.value.threshold), ]
   }
 
-  result <- result[order(result[["log.p.vals"]]), ]
+  if (!is.null(n))
+    result <- head(result, n)
+
   result
   # at this point: 1) decide no. to return, and 2) sort by significance
   #n.to.select <- ifelse(is.null(n), nrow(result), min(n, nrow(result)))
