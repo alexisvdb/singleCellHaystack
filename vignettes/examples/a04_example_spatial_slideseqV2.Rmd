@@ -1,0 +1,99 @@
+---
+title: "Analysis of Slide-seqV2 data with singleCellHaystack"
+author: "Alexis Vandenbon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis of Slide-seqV2 data with singleCellHaystack}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	fig.align = "center",
+	message = TRUE,
+	warning = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center'
+)
+
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+
+set.seed(1)
+```
+
+We can apply `singleCellHaystack` to spatial transcriptomics data as well. Here we use [Seurat](https://github.com/satijalab/seurat) and the spatial transcriptomics data available in the [SeuratData](https://github.com/satijalab/seurat-data) package. For this example we use Slide-seqV2 hippocampus data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette [here](https://satijalab.org/seurat/).
+
+
+# Preparing input data
+
+```{r eval=FALSE}
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+```
+
+We focus on the ssHippo slice.
+
+```{r}
+if (!"ssHippo" %in% SeuratData::InstalledData()[["Dataset"]]) {
+  SeuratData::InstallData("ssHippo")
+}
+
+ssHippo <- LoadData("ssHippo")
+ssHippo
+```
+
+
+We filter genes with less 10 cells with non-zero counts. This reduces the computational time by eliminating very lowly expressed genes.
+
+```{r}
+counts <- GetAssayData(ssHippo, slot = "counts")
+sel.ok <- Matrix::rowSums(counts > 1) > 10
+
+ssHippo <- ssHippo[sel.ok, ]
+ssHippo
+```
+
+We can plot the total number of counts per bead, superimposed on the image of the brain.
+
+```{r}
+SpatialFeaturePlot(ssHippo, features = "nCount_Spatial")
+```
+
+We normalize the data we use log normalization.
+
+```{r}
+ssHippo <- NormalizeData(ssHippo)
+```
+
+# Running `haystack` on the spatial coordinates
+
+The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Slide-seq V2 pucks. Please note that we are not use an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this dataset contains about 53k spots and 11k genes, a run of `singleCellHaystack` can take a few minutes.
+
+```{r}
+dat.expression <- GetAssayData(ssHippo, slot = "data")
+dat.coord <- GetTissueCoordinates(ssHippo)
+
+set.seed(123)
+res <- haystack(dat.coord[,1:2], dat.expression)
+```
+
+We can check the top genes with spatial biased distribution.
+
+```{r}
+show_result_haystack(res.haystack = res, n = 10)
+```
+
+And we can visualize the expression of the 6 top-scoring genes in the spatial plot.
+
+```{r fig.width=8, fig.height=6}
+top6 <- show_result_haystack(res.haystack = res, n = 6)
+SpatialFeaturePlot(ssHippo, features = rownames(top6))
+```
+
