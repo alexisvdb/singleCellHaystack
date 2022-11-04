@@ -1,0 +1,144 @@
+---
+title: "Application to single-cell RNA-seq data"
+author: "Alexis Vandenbon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Application to single-cell RNA-seq data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center'
+)
+
+library(ggplot2)
+library(cowplot)
+```
+
+
+In this article, we show the application of `singleCellHaystack` to predict differentially expressed genes (DEGs) in a single-cell RNA-seq dataset. The input data is 1) the gene expression data and 2) the coordinates of each cell in an input space. 
+
+In this example, the gene expression data is an ordinary matrix (genes versus cells), but a Seurat object (for example) could also be used. The input space in this example will be the first principal components of the cells. `singleCellHaystack` predicts DEGs by looking at the "expression distribution" of a gene (i.e. the distribution in the input space of cells that express a gene).
+
+# Preparing input data
+The data used in these examples can be found [here](https://figshare.com/articles/dataset/Example_datasets_for_singleCellHaystack_GitHub_vignettes_2022_/21499071). We recommend downloading the .rda file and loading it using the `load()` function. You can also download the individual data files separately.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+load(url("https://figshare.com/ndownloader/files/38094522"))
+ls()
+```
+
+This data should include the following objects:
+
+- `dat.expression`: a matrix object with the expression of genes (rows) in each cell (columns).
+- `dat.pca`:        the output of PCA. This data.frame contains the first 20 pricipal components (PCs).
+- `dat.tsne`:       a data.frame with t-SNE coordinates (2D) based on the first 20 PCs.
+
+Let's have a look at this example dataset:
+
+```{r}
+# this data contains 10,537 genes and 1,429 cells
+dim(dat.expression)
+
+# visualizing the cells in a t-SNE plot:
+ggplot(dat.tsne, aes(x = tSNE_1, y = tSNE_2)) + geom_point()
+
+# the t-SNE coordinates are based on the 20 PCs
+dim(dat.pca) # the PCA data contains 1,429 cells and 20 PCs
+```
+
+There are several groups of cells, although the borders between them are not clear and several might consist of additional subclusters. We can use `singleCellHaystack` to predict DEGs without relying on grouping of the cells into arbitrary clusters.
+
+
+# Running `haystack` on multi-dimensional coordinates
+
+First, load the package.
+
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
+library(singleCellHaystack)
+```
+Next, run `haystack` on the first 20 principal components. We also give the expression data as input. This example dataset is relatively small, containing 1,429 cells, so running 'haystack' should take just 1 to 3 minutes to finish. We also set a random seed to ensure replicability.
+
+```{r}
+set.seed(123)
+res.pc20 <- haystack(x = dat.pca, expression = dat.expression)
+```
+
+Let's have a look at the most significant DEGs. The gene with the strongest differential expression is Cd53. We can plot the expression and detection of this gene using the `plot_gene_haystack` function. From the t-SNE plots we can see that Cd53 is expressed in cells at the bottom left. In contrast, the expression of Top2a is limited to a different subset of cells, on the right. 
+
+```{r}
+show_result_haystack(res.haystack = res.pc20, n = 10)
+```
+
+
+```{r}
+
+# prepare a data.frame for plotting
+d <- cbind(dat.tsne, t(dat.expression))
+d[1:4, 1:4]
+
+# plotting gene Cd53
+ggplot(d, aes(tSNE_1, tSNE_2, color=Cd53)) +
+  geom_point() +
+  scale_color_distiller(palette="Spectral") +
+  theme_bw()
+
+# plotting gene Top2a
+ggplot(d, aes(tSNE_1, tSNE_2, color=Top2a)) +
+  geom_point() +
+  scale_color_distiller(palette="Spectral") +
+  theme_bw()
+
+
+```
+
+# Clustering and visualization
+
+Next, let's take the top 1000 DEGs, and cluster them by their expression pattern in the input space (first 20 PCs). Here we use `hclust_haystack`, which uses hierarchical clustering. Alternatively, we could use `kmeans_haystack` for k-means clustering.
+
+```{r}
+# get the 1000 most significant DEGs, and cluster them by their distribution pattern in the 2D plot
+sorted.table <- show_result_haystack(res.haystack = res.pc20, n = 1000)
+gene.subset <- row.names(sorted.table)
+
+# cluster the genes by their expression pattern in the input space using hierarchical clustering
+res.hc <- hclust_haystack(dat.pca, dat.expression[gene.subset, ], grid.coordinates=res.pc20$info$grid.coordinates)
+```
+
+`hclust_haystack` returns as result a `hclust` tree, which we can cut into clusters using the `cutree` function. Here, we arbitrarily set the number of clusters to 5.
+
+```{r}
+res.hc.clusters <- cutree(res.hc, k=5)
+table(res.hc.clusters)
+``` 
+
+While some clusters contain hundreds of genes, others are quite small. 
+
+Next, let's calculate the average expression of the genes in each cluster.
+
+```{r}
+for (cluster in unique(res.hc.clusters)) {
+  d[[paste0("cluster_", cluster)]] <- colMeans(dat.expression[names(which(res.hc.clusters == cluster)), ])
+}
+```
+
+Let's run through the 5 clusters and plot their averaged detection pattern using `plot_gene_set_haystack`, which is similar to `plot_gene_haystack` but uses a set of genes as input instead of just 1 gene. 
+
+```{r fig.width=8, fig.height=6}
+lapply(c("cluster_1", "cluster_2", "cluster_3", "cluster_4", "cluster_5"), function(cluster) {
+  ggplot(d, aes(tSNE_1, tSNE_2, color=.data[[cluster]])) +
+  geom_point() +
+  scale_color_distiller(palette="Spectral")
+}) |> patchwork::wrap_plots()
+```
+As we can see from these plots, each cluster has a distinct pattern. Some clusters have high expression over a broad range of cells, while cluster 5 is limited to a smaller subset.
+
+```{r example9}
+res.hc.clusters["Cd53"]
+```
+The most significant DEG, Cd53, was clustered into cluster 1. Comparing its expression pattern (see above) with that of each cluster, we can indeed see that it fits most closely with that cluster.
