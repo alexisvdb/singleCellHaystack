@@ -64,10 +64,8 @@ includes a few example applications showing how to use our package:
     RNA-seq](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_scRNAseq.html)
 -   [Spatial transcriptomics using
     Visium](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
-    Coming soon…
 -   [Spatial transcriptomics using Slide-seq
     V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
-    Coming soon…
 -   [MOCA 100k
     cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
     Needs update…
