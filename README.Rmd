@@ -52,8 +52,8 @@ Our [documentation](https://alexisvdb.github.io/singleCellHaystack/) includes a 
 - [Spatial transcriptomics using Slide-seq V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
 - [MOCA 100k cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html) Needs update...
 - [Predicting DEGs along a trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_trajectory.html) Coming soon...
-- [Analysis of gene set activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html) Coming soon...
-- Anything else?
+- [Analysis of gene set activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html)
+- Anything else to add?
 
 
 

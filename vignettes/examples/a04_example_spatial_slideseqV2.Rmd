@@ -74,7 +74,7 @@ ssHippo <- NormalizeData(ssHippo)
 
 # Running `haystack` on the spatial coordinates
 
-The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Slide-seq V2 pucks. Please note that we are not use an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this dataset contains about 53k spots and 11k genes, a run of `singleCellHaystack` can take a few minutes.
+The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Slide-seq V2 pucks. Please note that we are not using an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this dataset contains about 53k spots and 11k genes, a run of `singleCellHaystack` can take a few minutes.
 
 ```{r}
 dat.expression <- GetAssayData(ssHippo, slot = "data")

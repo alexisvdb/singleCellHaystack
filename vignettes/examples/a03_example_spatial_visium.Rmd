@@ -74,7 +74,7 @@ anterior1 <- NormalizeData(anterior1)
 
 # Running `haystack` on the spatial coordinates
 
-The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Visium spots. Please note that we are not use an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this Visium dataset only contains about 2.7k spots and 12k genes, running `singleCellHaystack` should only take about a minute.
+The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Visium spots. Please note that we are not using an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this Visium dataset only contains about 2.7k spots and 12k genes, running `singleCellHaystack` should only take about a minute.
 
 ```{r}
 dat.expression <- GetAssayData(anterior1, slot = "data")

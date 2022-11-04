@@ -1,0 +1,87 @@
+---
+title: "Analysis of gene set activities with singleCellHaystack"
+author: "Alexis Vandenbon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis of gene set activities with singleCellHaystack}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	fig.align = "center",
+	message = TRUE,
+	warning = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center'
+)
+
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+```
+
+Because `singleCellHaystack` makes few assumptions about the properties of input data, it can be applied to any numerical data. Here we used [Seurat's AddModuleScore](https://satijalab.org/seurat/reference/addmodulescore) to calculated scores for sets of genes that share a common function (based on GO annotations), and applied it to a spatial transcriptomics dataset. For this example we use 10x Genomics Visium platform brain data.
+
+# Preparing input data
+
+```{r eval=FALSE}
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+```
+
+We focus on the 10x Genomics Visium anterior1 slice. This datasets contains 31,053 genes and 2,696 spots.
+
+```{r}
+if (!"stxBrain" %in% SeuratData::InstalledData()[["Dataset"]]) {
+  SeuratData::InstallData("stxBrain")
+}
+
+anterior1 <- LoadData("stxBrain", type = "anterior1")
+anterior1
+```
+We used Seurat's AddModuleScore function to calculate numerical values reflecting the average activity of sets of genes associated with common GO terms. We did this for 2,939 Biological Process GO terms that have between 20 and 250 genes in this anterior1 dataset. This calculation takes some time. Here we will use pre-calculated scores that we made [available on figshare](https://figshare.com/articles/dataset/Example_datasets_for_singleCellHaystack_GitHub_vignettes_2022_/21499071). 
+
+```{r}
+load(url("https://figshare.com/ndownloader/files/38100246"))
+ls()
+dim(dat.scores)
+dat.scores[1:3,1:3]
+```
+
+We can add these module scores as meta data to the Seurat object, and visualize one of them as an example. Here we visualize the scores for the GO term "acetyl CoA metabolic process".
+
+```{r}
+anterior1 <- AddMetaData(anterior1,t(dat.scores), col.name = rownames(dat.scores))
+SpatialFeaturePlot(anterior1, features = "GOBP_ACETYL_COA_METABOLIC_PROCESS")
+```
+
+# Running `haystack` on the spatial coordinates
+
+Next, we want to find biological processes that have a biased activity within the tissue. For this, the two inputs to `singleCellHaystack` are 1) the module score data and 2) the spatial coordinates of the Visium spots. Please note that we are not using an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this Visium dataset only contains about 2.7k spots and we have scores for about 2.9k GO terms, running `singleCellHaystack` should only take about a minute.
+
+```{r}
+dat.coord <- GetTissueCoordinates(anterior1, "anterior1")
+
+set.seed(123)
+res <- haystack(x = dat.coord, expression = dat.scores)
+```
+
+We can check the top GO processes with spatially biased score distributions.
+
+```{r}
+show_result_haystack(res.haystack = res, n = 10)
+```
+
+And we can visualize the distribution of scores for the 6 top-scoring GO terms in the spatial plot as an example.
+
+```{r}
+top6 <- show_result_haystack(res.haystack = res, n = 6)
+SpatialFeaturePlot(anterior1, features = rownames(top6))
+```
+
