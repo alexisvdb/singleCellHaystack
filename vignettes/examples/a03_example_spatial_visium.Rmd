@@ -1,0 +1,99 @@
+---
+title: "Analysis of Visium data with singleCellHaystack"
+author: "Alexis Vandenbon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Analysis of Visium data with singleCellHaystack}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	fig.align = "center",
+	message = TRUE,
+	warning = TRUE,
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = 'center'
+)
+
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+
+set.seed(1)
+```
+
+We can apply `singleCellHaystack` to spatial transcriptomics data as well. Here we use [Seurat](https://github.com/satijalab/seurat) and the spatial transcriptomics data available in the [SeuratData](https://github.com/satijalab/seurat-data) package. For this example we use 10x Genomics Visium platform brain data. For more details about analyzing spatial transcriptomics with Seurat take a look at their spatial transcriptomics vignette [here](https://satijalab.org/seurat/).
+
+
+# Preparing input data
+
+```{r eval=FALSE}
+library(Seurat)
+library(SeuratData)
+library(singleCellHaystack)
+```
+
+We focus on the anterior1 slice.
+
+```{r}
+if (!"stxBrain" %in% SeuratData::InstalledData()[["Dataset"]]) {
+  SeuratData::InstallData("stxBrain")
+}
+
+anterior1 <- LoadData("stxBrain", type = "anterior1")
+anterior1
+```
+
+
+We filter genes with less 10 cells with non-zero counts. This reduces the computational time by eliminating very lowly expressed genes.
+
+```{r}
+counts <- GetAssayData(anterior1, slot = "counts")
+sel.ok <- Matrix::rowSums(counts > 1) > 10
+
+anterior1 <- anterior1[sel.ok, ]
+anterior1
+```
+
+We can plot the total number of counts per bead, superimposed on the image of the brain.
+
+```{r}
+SpatialFeaturePlot(anterior1, features = "nCount_Spatial")
+```
+
+We normalize the data we use log normalization.
+
+```{r}
+anterior1 <- NormalizeData(anterior1)
+```
+
+# Running `haystack` on the spatial coordinates
+
+The two inputs to `singleCellHaystack` are 1) the gene expression data and 2) the spatial coordinates of the Visium spots. Please note that we are not use an embedding as input space here, but the actual 2D coordinates of spots inside the tissue. Since this Visium dataset only contains about 2.7k spots and 12k genes, running `singleCellHaystack` should only take about a minute.
+
+```{r}
+dat.expression <- GetAssayData(anterior1, slot = "data")
+dat.coord <- GetTissueCoordinates(anterior1, "anterior1")
+
+set.seed(123)
+res <- haystack(dat.coord, dat.expression)
+```
+
+We can check the top genes with spatial biased distribution.
+
+```{r}
+show_result_haystack(res.haystack = res, n = 10)
+```
+
+And we can visualize the expression of the 6 top-scoring genes in the spatial plot.
+
+```{r fig.width=8, fig.height=6}
+top6 <- show_result_haystack(res.haystack = res, n = 6)
+SpatialFeaturePlot(anterior1, features = rownames(top6))
+```
+

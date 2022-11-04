@@ -66,13 +66,16 @@ includes a few example applications showing how to use our package:
     Visium](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
     Coming soon…
 -   [Spatial transcriptomics using Slide-seq
-    V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
+    V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
     Coming soon…
 -   [MOCA 100k
     cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
     Needs update…
 -   [Predicting DEGs along a
     trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_trajectory.html)
+    Coming soon…
+-   [Analysis of gene set
+    activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html)
     Coming soon…
 -   Anything else?
 
