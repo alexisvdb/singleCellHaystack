@@ -48,8 +48,8 @@ using:
 
 Vandenbon A, Diez D (2020). “A clustering-independent method for finding
 differentially expressed genes in single-cell transcriptome data.”
-*Nature Communications*, *11*(1), 4318. <doi:10.1038/s41467-020-17900-3>
-<https://doi.org/10.1038/s41467-020-17900-3>.
+*Nature Communications*, *11*(1), 4318. doi: 10.1038/s41467-020-17900-3
+(URL: <https://doi.org/10.1038/s41467-020-17900-3>).
 
 ## Documentation and Demo
 
@@ -60,18 +60,21 @@ includes a few example applications showing how to use our package:
 
 -   [Toy
     example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
--   [Multi-dimensional
-    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html)
--   [Advanced mode on multi-dimensional
-    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html)
--   [Spatial
-    transcriptomics](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html)
+-   [Single-cell
+    RNA-seq](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_scRNAseq.html)
+-   [Spatial transcriptomics using
+    Visium](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
+    Coming soon…
+-   [Spatial transcriptomics using Slide-seq
+    V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
+    Coming soon…
 -   [MOCA 100k
     cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
--   [2D t-SNE
-    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html)
--   [Advanced mode on 2D t-SNE
-    coordinates](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html)
+    Needs update…
+-   [Predicting DEGs along a
+    trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_trajectory.html)
+    Coming soon…
+-   Anything else?
 
 ## Installation
 
