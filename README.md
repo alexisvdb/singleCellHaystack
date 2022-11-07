@@ -48,8 +48,8 @@ using:
 
 Vandenbon A, Diez D (2020). “A clustering-independent method for finding
 differentially expressed genes in single-cell transcriptome data.”
-*Nature Communications*, *11*(1), 4318. doi: 10.1038/s41467-020-17900-3
-(URL: <https://doi.org/10.1038/s41467-020-17900-3>).
+*Nature Communications*, *11*(1), 4318. <doi:10.1038/s41467-020-17900-3>
+<https://doi.org/10.1038/s41467-020-17900-3>.
 
 ## Documentation and Demo
 
@@ -74,8 +74,7 @@ includes a few example applications showing how to use our package:
     Coming soon…
 -   [Analysis of gene set
     activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html)
-    Coming soon…
--   Anything else?
+-   Anything else to add?
 
 ## Installation
 
