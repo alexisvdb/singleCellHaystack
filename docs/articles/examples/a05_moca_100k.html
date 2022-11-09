@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
       </span>
     </div>
 
@@ -39,7 +41,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -47,7 +49,7 @@
   <a href="../../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -76,14 +78,11 @@
     </li>
   </ul>
 </li>
-<li>
-  <a href="../../news/index.html">Changelog</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/alexisvdb/singleCellHaystack" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -97,13 +96,14 @@
 
       
 
-      </header><script src="a05_moca_100k_files/header-attrs-2.7/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Application on MOCA 100k</h1>
-                        <h4 class="author">Alexis Vandenbon &amp; Diego Diez</h4>
+                        <h4 data-toc-skip class="author">Alexis
+Vandenbon &amp; Diego Diez</h4>
             
-            <h4 class="date">2020-09-17</h4>
+            <h4 data-toc-skip class="date">2022-11-09</h4>
       
       
       <div class="hidden name"><code>a05_moca_100k.Rmd</code></div>
@@ -112,56 +112,61 @@
 
     
     
-<div id="load-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#load-data" class="anchor"></a>Load data</h1>
-<p>Here we apply <code>haystack</code> to 100k cells from the Mouse Organogenesis Cell Atlas (MOCA). The sparse matrix data was downloaded from the <a href="https://oncoscape.v3.sttrcancer.org/atlas.gs.washington.edu.mouse.rna/landing">MOCA website</a>. The data was converted into a Seurat object and processed following the <a href="https://satijalab.org/seurat/v3.2/pbmc3k_tutorial.html">standard pipeline</a>.</p>
+<div class="section level2">
+<h2 id="load-data">Load data<a class="anchor" aria-label="anchor" href="#load-data"></a>
+</h2>
+<p>Here we apply <code>haystack</code> to 100k cells from the Mouse
+Organogenesis Cell Atlas (MOCA). The sparse matrix data was downloaded
+from the <a href="https://oncoscape.v3.sttrcancer.org/atlas.gs.washington.edu.mouse.rna/landing" class="external-link">MOCA
+website</a>. The data was converted into a Seurat object and processed
+following the <a href="https://satijalab.org/seurat/v3.2/pbmc3k_tutorial.html" class="external-link">standard
+pipeline</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/">here</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddiez/scmisc">scmisc</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://here.r-lib.org/" class="external-link">here</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">read_rds</span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data-raw/moca_100k.rds"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">x</span></code></pre></div>
-<pre><code>## An object of class Seurat 
-## 16811 features across 100000 samples within 1 assay 
-## Active assay: RNA (16811 features, 2000 variable features)
-##  2 dimensional reductions calculated: pca, umap</code></pre>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/moca_100k.rds"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code></pre></div>
+<pre><code><span><span class="co">## An object of class Seurat </span></span>
+<span><span class="co">## 16811 features across 100000 samples within 1 assay </span></span>
+<span><span class="co">## Active assay: RNA (16811 features, 2000 variable features)</span></span>
+<span><span class="co">##  2 dimensional reductions calculated: pca, umap</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html">DimPlot</a></span><span class="op">(</span><span class="va">x</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoLegend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoAxes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="figure/plot_dim-1.png" title="plot of chunk plot_dim" alt="plot of chunk plot_dim" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">x</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoAxes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="figure/plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;"></p>
 </div>
-<div id="haystack" class="section level1">
-<h1 class="hasAnchor">
-<a href="#haystack" class="anchor"></a>Haystack</h1>
-<p>We run <code>haystack</code> using the method <em>highD</em> with the default threshold for detection, which is more than 1.</p>
+<div class="section level2">
+<h2 id="haystack">Haystack<a class="anchor" aria-label="anchor" href="#haystack"></a>
+</h2>
+<p>We run <code>haystack</code> using PCA coordinates with 50 PCs.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/system.time.html">system.time</a></span><span class="op">(</span><span class="op">{</span>
-  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span><span class="op">(</span><span class="va">x</span>, method <span class="op">=</span> <span class="st">"highD"</span><span class="op">)</span>
-<span class="op">}</span><span class="op">)</span></code></pre></div>
-<pre><code>##     user   system  elapsed 
-## 2397.740  480.219 2878.232</code></pre>
-<p>It takes 48 minutes to complete in a standard personal computer. Here we show the top 10 genes selected by <code>haystack</code>.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/system.time.html" class="external-link">system.time</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span><span class="op">(</span><span class="va">x</span>, coord<span class="op">=</span><span class="st">"pca"</span><span class="op">)</span></span>
+<span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    user  system elapsed </span></span>
+<span><span class="co">## 258.032  25.021 283.174</span></span></code></pre>
+<p>It takes around 5 minutes to complete in a standard personal
+computer. Here we show the top 10 genes selected by
+<code>haystack</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
-<span class="va">top</span></code></pre></div>
-<pre><code>##               D_KL log.p.vals log.p.adj T.counts
-## Ppp1r1c 0.17135507  -176.2468 -172.0212     1041
-## Itih2   0.17876325  -172.0384 -167.8128      634
-## A1cf    0.27125529  -168.8895 -164.6639      418
-## Gm43449 0.15025195  -161.1296 -156.9040      585
-## Fyb     0.14040878  -158.3336 -154.1080      590
-## Apob    0.15036594  -157.6220 -153.3965      539
-## Trim55  0.12758730  -156.5981 -152.3725      640
-## Inpp5d  0.10239601  -152.3932 -148.1676      881
-## Abcc2   0.23483323  -150.4938 -146.2682      359
-## Cdh19   0.09594113  -149.7875 -145.5619      903</code></pre>
+<code class="sourceCode R"><span><span class="va">top</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">top</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##               D_KL log.p.vals log.p.adj</span></span>
+<span><span class="co">## Ppp1r1c 0.25684566  -202.6767 -198.4511</span></span>
+<span><span class="co">## Acp5    0.13324559  -173.9745 -169.7489</span></span>
+<span><span class="co">## Itih2   0.19905815  -168.2541 -164.0285</span></span>
+<span><span class="co">## A1cf    0.27878610  -161.4285 -157.2029</span></span>
+<span><span class="co">## Kel     0.08720005  -158.6047 -154.3791</span></span>
+<span><span class="co">## Rhag    0.08512571  -157.6347 -153.4091</span></span>
+<span><span class="co">## Ermap   0.08432139  -157.2455 -153.0199</span></span>
+<span><span class="co">## Pkhd1l1 0.09157942  -156.9557 -152.7301</span></span>
+<span><span class="co">## Spta1   0.08178285  -155.5603 -151.3347</span></span>
+<span><span class="co">## Gm43449 0.16349201  -155.3943 -151.1687</span></span></code></pre>
 <p>And here we plot the expression of the top 4 genes.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html">FeaturePlot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">top</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, order <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html">NoAxes</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><img src="figure/plot_results-1.png" title="plot of chunk plot_results" alt="plot of chunk plot_results" style="display: block; margin: auto;"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">top</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>, order<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoAxes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="figure/plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;"></p>
 </div>
   </div>
 
@@ -176,11 +181,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexis Vandenbon, Diego Diez.</p>
+  <p></p>
+<p>Developed by Alexis Vandenbon, Diego Diez.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -188,6 +195,8 @@
 
   
 
+
+  
 
   </body>
 </html>

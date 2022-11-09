@@ -1,7 +1,7 @@
 ---
 title: "Application on MOCA 100k"
 author: "Alexis Vandenbon & Diego Diez"
-date: "2020-09-17"
+date: "2022-11-09"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Application on MOCA 100k}
@@ -9,19 +9,20 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
 ```{r setup, include=FALSE}
 library(here)
-library(tidyverse)
 library(Seurat)
 library(singleCellHaystack)
 
 knitr::opts_chunk$set(
 	fig.align = "center",
-	fig.width = 7,
+	fig.width = 8,
+	fig.height = 6,
 	message = FALSE,
 	warning = TRUE
 )
+
+set.seed(1)
 ```
 
 # Load data
@@ -30,55 +31,45 @@ Here we apply `haystack` to 100k cells from the Mouse Organogenesis Cell Atlas (
 
 ```{r eval=FALSE}
 library(here)
-library(tidyverse)
 library(Seurat)
 library(singleCellHaystack)
-library(scmisc)
 ```
-
 
 ```{r load}
-x <- read_rds(here("data-raw/moca_100k.rds"))
+x <- readRDS(here("data-raw/moca_100k.rds"))
 x
 ```
-
 
 ```{r plot_dim}
 DimPlot(x, label = TRUE) + NoLegend() + NoAxes()
 ```
- 
- 
+
 # Haystack
 
-We run `haystack` using the method _highD_ with the default threshold for detection, which is more than 1.
-
+We run `haystack` using PCA coordinates with 50 PCs.
 
 ```{r eval=FALSE}
 system.time({
-  res <- haystack(x, method = "highD")
+  res <- haystack(x, coord="pca")
 })
 ```
 
-
 ```{r haystack, echo=FALSE}
 r <- system.time({
-  res <- haystack(x, method = "highD")
+  res <- haystack(x, coord="pca")
 })
 r
 ```
 
-
-It takes `r format(unname(r)[3] / 60, digits = 0)` minutes to complete in a standard personal computer. Here we show the top 10 genes selected by `haystack`.
+It takes around `r format(unname(r)[3] / 60, digits=1)` minutes to complete in a standard personal computer. Here we show the top 10 genes selected by `haystack`.
 
 ```{r top}
-top <- show_result_haystack(res, n = 10)
-top
+top <- show_result_haystack(res)
+head(top, n=10)
 ```
 
 And here we plot the expression of the top 4 genes.
 
 ```{r plot_results}
-FeaturePlot(x, rownames(top)[1:4], order = TRUE) & NoAxes()
+FeaturePlot(x, head(rownames(top), 4), order=TRUE) & NoAxes()
 ```
-
-

@@ -1,14 +1,13 @@
 ---
 title: "Application on MOCA 100k"
 author: "Alexis Vandenbon & Diego Diez"
-date: "2020-09-17"
+date: "2022-11-09"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Application on MOCA 100k}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
 
 
 
@@ -19,16 +18,13 @@ Here we apply `haystack` to 100k cells from the Mouse Organogenesis Cell Atlas (
 
 ```r
 library(here)
-library(tidyverse)
 library(Seurat)
 library(singleCellHaystack)
-library(scmisc)
 ```
 
 
-
 ```r
-x <- read_rds(here("data-raw/moca_100k.rds"))
+x <- readRDS(here("data-raw/moca_100k.rds"))
 x
 ```
 
@@ -40,63 +36,56 @@ x
 ```
 
 
-
 ```r
 DimPlot(x, label = TRUE) + NoLegend() + NoAxes()
 ```
 
-<img src="figure/plot_dim-1.png" title="plot of chunk plot_dim" alt="plot of chunk plot_dim" style="display: block; margin: auto;" />
- 
- 
+<img src="figure/plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;" />
+
 # Haystack
 
-We run `haystack` using the method _highD_ with the default threshold for detection, which is more than 1.
-
+We run `haystack` using PCA coordinates with 50 PCs.
 
 
 ```r
 system.time({
-  res <- haystack(x, method = "highD")
+  res <- haystack(x, coord="pca")
 })
 ```
 
 
-
 ```
-##     user   system  elapsed 
-## 2397.740  480.219 2878.232
+##    user  system elapsed 
+## 258.032  25.021 283.174
 ```
 
-
-It takes 48 minutes to complete in a standard personal computer. Here we show the top 10 genes selected by `haystack`.
+It takes around 5 minutes to complete in a standard personal computer. Here we show the top 10 genes selected by `haystack`.
 
 
 ```r
-top <- show_result_haystack(res, n = 10)
-top
+top <- show_result_haystack(res)
+head(top, n=10)
 ```
 
 ```
-##               D_KL log.p.vals log.p.adj T.counts
-## Ppp1r1c 0.17135507  -176.2468 -172.0212     1041
-## Itih2   0.17876325  -172.0384 -167.8128      634
-## A1cf    0.27125529  -168.8895 -164.6639      418
-## Gm43449 0.15025195  -161.1296 -156.9040      585
-## Fyb     0.14040878  -158.3336 -154.1080      590
-## Apob    0.15036594  -157.6220 -153.3965      539
-## Trim55  0.12758730  -156.5981 -152.3725      640
-## Inpp5d  0.10239601  -152.3932 -148.1676      881
-## Abcc2   0.23483323  -150.4938 -146.2682      359
-## Cdh19   0.09594113  -149.7875 -145.5619      903
+##               D_KL log.p.vals log.p.adj
+## Ppp1r1c 0.25684566  -202.6767 -198.4511
+## Acp5    0.13324559  -173.9745 -169.7489
+## Itih2   0.19905815  -168.2541 -164.0285
+## A1cf    0.27878610  -161.4285 -157.2029
+## Kel     0.08720005  -158.6047 -154.3791
+## Rhag    0.08512571  -157.6347 -153.4091
+## Ermap   0.08432139  -157.2455 -153.0199
+## Pkhd1l1 0.09157942  -156.9557 -152.7301
+## Spta1   0.08178285  -155.5603 -151.3347
+## Gm43449 0.16349201  -155.3943 -151.1687
 ```
 
 And here we plot the expression of the top 4 genes.
 
 
 ```r
-FeaturePlot(x, rownames(top)[1:4], order = TRUE) & NoAxes()
+FeaturePlot(x, head(rownames(top), 4), order=TRUE) & NoAxes()
 ```
 
-<img src="figure/plot_results-1.png" title="plot of chunk plot_results" alt="plot of chunk plot_results" style="display: block; margin: auto;" />
-
-
+<img src="figure/plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;" />
