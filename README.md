@@ -68,7 +68,6 @@ includes a few example applications showing how to use our package:
     V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
 -   [MOCA 100k
     cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
-    Needs update…
 -   [Predicting DEGs along a
     trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_trajectory.html)
     Coming soon…
