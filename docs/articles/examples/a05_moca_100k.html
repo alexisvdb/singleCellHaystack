@@ -126,7 +126,7 @@ pipeline</a>.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/moca_100k.rds"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html" class="external-link">here</a></span><span class="op">(</span><span class="st">"data-raw/data/moca_100k.rds"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">x</span></span></code></pre></div>
 <pre><code><span><span class="co">## An object of class Seurat </span></span>
 <span><span class="co">## 16811 features across 100000 samples within 1 assay </span></span>
@@ -134,7 +134,7 @@ pipeline</a>.</p>
 <span><span class="co">##  2 dimensional reductions calculated: pca, umap</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">x</span>, label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoAxes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figure/plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;"></p>
+<p><img src="figures/a05-plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;"></p>
 </div>
 <div class="section level2">
 <h2 id="haystack">Haystack<a class="anchor" aria-label="anchor" href="#haystack"></a>
@@ -145,7 +145,7 @@ pipeline</a>.</p>
 <span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack.html">haystack</a></span><span class="op">(</span><span class="va">x</span>, coord<span class="op">=</span><span class="st">"pca"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    user  system elapsed </span></span>
-<span><span class="co">## 258.032  25.021 283.174</span></span></code></pre>
+<span><span class="co">## 256.045  28.569 284.612</span></span></code></pre>
 <p>It takes around 5 minutes to complete in a standard personal
 computer. Here we show the top 10 genes selected by
 <code>haystack</code>.</p>
@@ -166,7 +166,7 @@ computer. Here we show the top 10 genes selected by
 <p>And here we plot the expression of the top 4 genes.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">top</span><span class="op">)</span>, <span class="fl">4</span><span class="op">)</span>, order<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoAxes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="figure/plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;"></p>
+<p><img src="figures/a05-plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;"></p>
 </div>
   </div>
 
