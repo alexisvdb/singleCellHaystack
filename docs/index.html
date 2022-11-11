@@ -27,6 +27,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -39,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
       </span>
     </div>
 
@@ -47,7 +49,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -55,7 +57,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -65,33 +67,30 @@
       <a href="articles/a01_toy_example.html">Toy example</a>
     </li>
     <li>
-      <a href="articles/examples/a02_example_highD_default.html">Multi-dimensional coordinates</a>
+      <a href="articles/examples/a02_example_scRNAseq.html">Example on scRNA-seq</a>
     </li>
     <li>
-      <a href="articles/examples/a03_example_highD_advanced.html">Advanced mode on multi-dimensional coordinates</a>
+      <a href="articles/examples/a03_example_spatial_visium.html">Example on Spatial Visium</a>
     </li>
     <li>
-      <a href="articles/examples/a04_example_spatial_transcriptomics.html">Spatial transcriptomics</a>
+      <a href="articles/examples/a04_example_spatial_slideseqV2.html">Example on Spatial Slide-seqV2</a>
     </li>
     <li>
-      <a href="articles/examples/a05_moca_100k.html">MOCA 100k cells</a>
+      <a href="articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="articles/examples/a06_example_tsne2D_default.html">2D t-SNE coordinates</a>
+      <a href="articles/examples/a06_pseudotime.html">Application to pseudotime</a>
     </li>
     <li>
-      <a href="articles/examples/a07_example_tsne2D_advanced.html">Advanced mode on 2D t-SNE coordinates</a>
+      <a href="articles/examples/a07_gene_sets.html">Application to gene sets</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="news/index.html">Changelog</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/alexisvdb/singleCellHaystack">
-    <span class="fas fa-github fa-lg"></span>
+  <a href="https://github.com/alexisvdb/singleCellHaystack" class="external-link">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -108,56 +107,67 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
-<div id="singlecellhaystack" class="section level2">
-<h2 class="hasAnchor">
-<a href="#singlecellhaystack" class="anchor"></a>singleCellHaystack</h2>
+<div class="section level2">
+<h2 id="singlecellhaystack">singleCellHaystack<a class="anchor" aria-label="anchor" href="#singlecellhaystack"></a>
+</h2>
 <!-- badges: start -->
 
-<p><code>singleCellHaystack</code> is a package for predicting differentially expressed genes (DEGs) in single cell transcriptome data. It does so without relying on clustering of cells into arbitrary clusters! Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations.</p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> We are updating <code>singleCellHaystack</code>. For the version described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, please use branch “binary”. The version on CRAN is also the same binary version. The master branch on GitHub is now the updated version. <span class="emoji" data-emoji="warning">⚠️</span></p>
+<p><code>singleCellHaystack</code> is a package for predicting differentially active features (e.g. genes) in single-cell and spatial transcriptomics and genomics data. While <code>singleCellHaystack</code> originally focused on the prediction of differentially expressed genes (DEGs; see <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>), we have updated the method and made it more generally applicable (coming soon on bioRxiv). It can now also be used for finding differentially accessible genomic regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features with non-random levels of activity inside any input space (1D, 2D, or &gt;2D). It does so without relying on clustering of samples into arbitrary clusters. <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find features that have patterns of activity in subsets of samples that are non-randomly positioned inside any input space.</p>
 </div>
-<div id="citation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#citation" class="anchor"></a>Citation</h2>
-<p>Our manuscript describing <code>singleCellHaystack</code> has been published in <a href="https://doi.org/10.1038/s41467-020-17900-3">Nature Communications</a>.</p>
+<div class="section level2">
+<h2 id="citations">Citations<a class="anchor" aria-label="anchor" href="#citations"></a>
+</h2>
+<ul>
+<li><p>Our manuscript describing the updated, more generally applicable version of <code>singleCellHaystack</code> will be available on bioRxiv soon.</p></li>
+<li><p>Our manuscript describing the original implementation of <code>singleCellHaystack</code> (<a href="https://github.com/alexisvdb/singleCellHaystack/tree/binary" class="external-link">version 0.3.4</a>)has been published in <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">Nature Communications</a>.</p></li>
+</ul>
 <p>If you use <code>singleCellHaystack</code> in your research please cite our work using:</p>
-<p>Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” <em>Nature Communications</em>, <em>11</em>(1), 4318. doi: 10.1038/s41467-020-17900-3 (URL: <a href="https://doi.org/10.1038/s41467-020-17900-3" class="uri">https://doi.org/10.1038/s41467-020-17900-3</a>).</p>
+<p>Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” <em>Nature Communications</em>, <em>11</em>(1), 4318. <a href="doi:10.1038/s41467-020-17900-3" class="uri">doi:10.1038/s41467-020-17900-3</a> <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link uri">https://doi.org/10.1038/s41467-020-17900-3</a>.</p>
 </div>
-<div id="documentation-and-demo" class="section level2">
-<h2 class="hasAnchor">
-<a href="#documentation-and-demo" class="anchor"></a>Documentation and Demo</h2>
+<div class="section level2">
+<h2 id="documentation-and-demo">Documentation and Demo<a class="anchor" aria-label="anchor" href="#documentation-and-demo"></a>
+</h2>
+<p><span class="emoji" data-emoji="warning">⚠️</span> We are in the process of updating this documentation <span class="emoji" data-emoji="warning">⚠️</span></p>
 <p>Our <a href="https://alexisvdb.github.io/singleCellHaystack/">documentation</a> includes a few example applications showing how to use our package:</p>
 <ul>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html">Toy example</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_highD_default.html">Multi-dimensional coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_highD_advanced.html">Advanced mode on multi-dimensional coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_transcriptomics.html">Spatial transcriptomics</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_scRNAseq.html">Single-cell RNA-seq</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html">Spatial transcriptomics using Visium</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html">Spatial transcriptomics using Slide-seq V2</a></li>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html">MOCA 100k cells</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_example_tsne2D_default.html">2D t-SNE coordinates</a></li>
-<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_example_tsne2D_advanced.html">Advanced mode on 2D t-SNE coordinates</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_pseudotime.html">Predicting DEGs along a trajectory</a></li>
+<li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html">Analysis of gene set activities</a></li>
+<li>Anything else to add?</li>
 </ul>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install the released version of <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack">CRAN</a> with:</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the updated version of <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"singleCellHaystack"</span><span class="op">)</span></code></pre></div>
-<p>You can also install <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alexisvdb/singleCellHaystack"</span><span class="op">)</span></span></code></pre></div>
+<p>For the binary version of <code>singleCellHaystack</code> as described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, you can use one of these options:</p>
+<p>You can install the released version of <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org">remotes</a></span><span class="op">)</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"alexisvdb/singleCellHaystack"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"singleCellHaystack"</span><span class="op">)</span></span></code></pre></div>
+<p>Or, install from the binary branch on GitHub:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alexisvdb/singleCellHaystack@binary"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="system-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#system-requirements" class="anchor"></a>System Requirements</h2>
-<div id="hardware-requirements" class="section level3">
-<h3 class="hasAnchor">
-<a href="#hardware-requirements" class="anchor"></a>Hardware Requirements</h3>
+<div class="section level2">
+<h2 id="system-requirements">System Requirements<a class="anchor" aria-label="anchor" href="#system-requirements"></a>
+</h2>
+<div class="section level3">
+<h3 id="hardware-requirements">Hardware Requirements<a class="anchor" aria-label="anchor" href="#hardware-requirements"></a>
+</h3>
 <p><code>singleCellHaystack</code> requires only a standard computer with sufficient RAM to support running R or RStudio. Memory requirements depend on the size of the input dataset.</p>
 </div>
-<div id="software-requirements" class="section level3">
-<h3 class="hasAnchor">
-<a href="#software-requirements" class="anchor"></a>Software Requirements</h3>
+<div class="section level3">
+<h3 id="software-requirements">Software Requirements<a class="anchor" aria-label="anchor" href="#software-requirements"></a>
+</h3>
 <p>This package has been tested on Windows (Windows 10), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).</p>
 <p><code>singleCellHaystack</code> depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3).</p>
 </div>
@@ -167,54 +177,59 @@
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=singleCellHaystack">https://​cloud.r-project.org/​package=singleCellHaystack</a>
-</li>
-<li>Learn more at <br><a href="https://doi.org/10.1038/s41467-020-17900-3">https://​doi.org/​10.1038/​s41467-020-17900-3</a>
-</li>
-</ul>
-</div>
-<div class="license">
-<h2>License</h2>
-<ul class="list-unstyled">
-<li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
-</ul>
-</div>
-<div class="citation">
-<h2>Citation</h2>
-<ul class="list-unstyled">
-<li><a href="authors.html">Citing singleCellHaystack</a></li>
-</ul>
-</div>
-<div class="developers">
-<h2>Developers</h2>
-<ul class="list-unstyled">
-<li>Alexis Vandenbon <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2180-5732" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li>Diego Diez <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2325-4893" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="https://cloud.r-project.org/package=singleCellHaystack" class="external-link">View on CRAN</a></li>
+<li><a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">Learn more</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="license">
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/alexisvdb/singleCellHaystack/actions"><img src="https://github.com/alexisvdb/singleCellHaystack/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://www.r-pkg.org/badges/version/singleCellHaystack" alt="CRAN_Status_Badge"></a></li>
-<li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://cranlogs.r-pkg.org/badges/singleCellHaystack" alt="CRAN Downloads"></a></li>
-<li><a href="https://cran.r-project.org/package=singleCellHaystack"><img src="https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack" alt="CRAN Downloads"></a></li>
+<li><a href="LICENSE.html">Full license</a></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing singleCellHaystack</a></li>
+</ul>
 </div>
+
+<div class="developers">
+<h2 data-toc-skip>Developers</h2>
+<ul class="list-unstyled">
+<li>Alexis Vandenbon <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2180-5732" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li>Diego Diez <br><small class="roles"> Author </small> <a href="https://orcid.org/0000-0002-2325-4893" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+</ul>
+</div>
+
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://github.com/alexisvdb/singleCellHaystack/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/alexisvdb/singleCellHaystack/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://cran.r-project.org/package=singleCellHaystack" class="external-link"><img src="https://www.r-pkg.org/badges/version/singleCellHaystack" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=singleCellHaystack" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/singleCellHaystack" alt="CRAN Downloads"></a></li>
+<li><a href="https://cran.r-project.org/package=singleCellHaystack" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack" alt="CRAN Downloads"></a></li>
+</ul>
+</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Alexis Vandenbon, Diego Diez.</p>
+  <p></p>
+<p>Developed by Alexis Vandenbon, Diego Diez.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -222,6 +237,8 @@
 
   
 
+
+  
 
   </body>
 </html>

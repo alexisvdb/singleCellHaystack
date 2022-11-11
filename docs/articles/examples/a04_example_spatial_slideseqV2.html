@@ -59,22 +59,22 @@
       <a href="../../articles/a01_toy_example.html">Toy example</a>
     </li>
     <li>
-      <a href="../../articles/examples/a02_example_highD_default.html">Multi-dimensional coordinates</a>
+      <a href="../../articles/examples/a02_example_scRNAseq.html">Example on scRNA-seq</a>
     </li>
     <li>
-      <a href="../../articles/examples/a03_example_highD_advanced.html">Advanced mode on multi-dimensional coordinates</a>
+      <a href="../../articles/examples/a03_example_spatial_visium.html">Example on Spatial Visium</a>
     </li>
     <li>
-      <a href="../../articles/examples/a04_example_spatial_transcriptomics.html">Spatial transcriptomics</a>
+      <a href="../../articles/examples/a04_example_spatial_slideseqV2.html">Example on Spatial Slide-seqV2</a>
     </li>
     <li>
-      <a href="../../articles/examples/a05_moca_100k.html">MOCA 100k cells</a>
+      <a href="../../articles/examples/a05_moca_100k.html">Application to MOCA 100k cells</a>
     </li>
     <li>
-      <a href="../../articles/examples/a06_example_tsne2D_default.html">2D t-SNE coordinates</a>
+      <a href="../../articles/examples/a06_pseudotime.html">Application to pseudotime</a>
     </li>
     <li>
-      <a href="../../articles/examples/a07_example_tsne2D_advanced.html">Advanced mode on 2D t-SNE coordinates</a>
+      <a href="../../articles/examples/a07_gene_sets.html">Application to gene sets</a>
     </li>
   </ul>
 </li>
@@ -104,7 +104,7 @@ singleCellHaystack</h1>
                         <h4 data-toc-skip class="author">Alexis
 Vandenbon</h4>
             
-            <h4 data-toc-skip class="date">2022-11-04</h4>
+            <h4 data-toc-skip class="date">2022-11-11</h4>
       
       
       <div class="hidden name"><code>a04_example_spatial_slideseqV2.Rmd</code></div>
@@ -131,6 +131,8 @@ spatial transcriptomics vignette <a href="https://satijalab.org/seurat/" class="
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"ssHippo"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu">SeuratData</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/InstalledData.html" class="external-link">InstalledData</a></span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="st">"Dataset"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">SeuratData</span><span class="fu">::</span><span class="fu"><a href="https://satijalab.org/seurat/reference/InstallData.html" class="external-link">InstallData</a></span><span class="op">(</span><span class="st">"ssHippo"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
+<span><span class="co">#&gt; Installing package into '/private/var/folders/n6/545knts914jdtmsjz1vgpd8w0000gn/T/RtmpkGXBz3/temp_libpath58ed7b944549'</span></span>
+<span><span class="co">#&gt; (as 'lib' is unspecified)</span></span>
 <span></span>
 <span><span class="va">ssHippo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LoadData.html" class="external-link">LoadData</a></span><span class="op">(</span><span class="st">"ssHippo"</span><span class="op">)</span></span>
 <span><span class="va">ssHippo</span></span>
@@ -164,9 +166,9 @@ image of the brain.</p>
 </h2>
 <p>The two inputs to <code>singleCellHaystack</code> are 1) the gene
 expression data and 2) the spatial coordinates of the Slide-seq V2
-pucks. Please note that we are not use an embedding as input space here,
-but the actual 2D coordinates of spots inside the tissue. Since this
-dataset contains about 53k spots and 11k genes, a run of
+pucks. Please note that we are not using an embedding as input space
+here, but the actual 2D coordinates of spots inside the tissue. Since
+this dataset contains about 53k spots and 11k genes, a run of
 <code>singleCellHaystack</code> can take a few minutes.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat.expression</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">ssHippo</span>, slot <span class="op">=</span> <span class="st">"data"</span><span class="op">)</span></span>

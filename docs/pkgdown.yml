@@ -1,16 +1,17 @@
-pandoc: 2.11.4
-pkgdown: 1.6.1
+pandoc: 2.19.2
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   a01_toy_example: a01_toy_example.html
-  examples/a02_example_highD_default: a02_example_highD_default.html
-  examples/a03_example_highD_advanced: a03_example_highD_advanced.html
-  examples/a04_example_spatial_transcriptomics: a04_example_spatial_transcriptomics.html
-  examples/a05_moca_100k: a05_moca_100k.html
-  examples/a06_example_tsne2D_default: a06_example_tsne2D_default.html
-  examples/a07_example_tsne2D_advanced: a07_example_tsne2D_advanced.html
-last_built: 2021-03-29T09:15Z
+  a02_example_scRNAseq: examples/a02_example_scRNAseq.html
+  a03_example_spatial_visium: examples/a03_example_spatial_visium.html
+  a04_example_spatial_slideseqV2: examples/a04_example_spatial_slideseqV2.html
+  a05_moca_100k: examples/a05_moca_100k.html
+  a06_pseudotime: examples/a06_pseudotime.html
+  a07_gene_sets: examples/a07_gene_sets.html
+  a08_gene_clustering: examples/a08_gene_clustering.html
+last_built: 2022-11-11T11:10Z
 urls:
-  reference: https://alexisvdb.github.io/singleCellHaystack//reference
-  article: https://alexisvdb.github.io/singleCellHaystack//articles
+  reference: https://alexisvdb.github.io/singleCellHaystack/reference
+  article: https://alexisvdb.github.io/singleCellHaystack/articles
 
