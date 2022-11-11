@@ -80,18 +80,18 @@ navbar:
       menu:
       - text: Toy example
         href: articles/a01_toy_example.html
-      - text: Multi-dimensional coordinates
-        href: articles/examples/a02_example_highD_default.html
-      - text: Advanced mode on multi-dimensional coordinates
-        href: articles/examples/a03_example_highD_advanced.html
-      - text: Spatial transcriptomics
-        href: articles/examples/a04_example_spatial_transcriptomics.html
-      - text: MOCA 100k cells
+      - text: Example on scRNA-seq
+        href: articles/examples/a02_example_scRNAseq.html
+      - text: Example on Spatial Visium
+        href: articles/examples/a03_example_spatial_visium.html
+      - text: Example on Spatial Slide-seqV2
+        href: articles/examples/a04_example_spatial_slideseqV2.html
+      - text: Application to MOCA 100k cells
         href: articles/examples/a05_moca_100k.html
-      - text: 2D t-SNE coordinates
-        href: articles/examples/a06_example_tsne2D_default.html
-      - text: Advanced mode on 2D t-SNE coordinates
-        href: articles/examples/a07_example_tsne2D_advanced.html
+      - text: Application to pseudotime
+        href: articles/examples/a06_example_pseudotime.html
+      - text: Application to gene sets
+        href: articles/examples/a07_example_gene_sets.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
