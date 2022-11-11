@@ -17,6 +17,7 @@ reference:
   - haystack
   - haystack_2D
   - haystack_highD
+  - haystack_continuous_highD
   - show_result_haystack
 
 - title: Visualization functions
@@ -25,6 +26,7 @@ reference:
   - plot_gene_haystack_raw
   - plot_gene_set_haystack
   - plot_gene_set_haystack_raw
+  - plot_rand_fit
 
 - title: Clustering functions
   contents:
@@ -52,11 +54,13 @@ reference:
   - extract_row_lgRMatrix
   - get_D_KL
   - get_D_KL_highD
+  - get_D_KL_continuous_highD
   - get_density
   - get_dist_two_sets
   - get_euclidean_distance
   - get_grid_points
   - get_log_p_D_KL
+  - get_log_p_D_KL_continuous
   - get_parameters_haystack
   - get_reference
   - kde2d_faster
@@ -89,9 +93,9 @@ navbar:
       - text: Application to MOCA 100k cells
         href: articles/examples/a05_moca_100k.html
       - text: Application to pseudotime
-        href: articles/examples/a06_example_pseudotime.html
+        href: articles/examples/a06_pseudotime.html
       - text: Application to gene sets
-        href: articles/examples/a07_example_gene_sets.html
+        href: articles/examples/a07_gene_sets.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
