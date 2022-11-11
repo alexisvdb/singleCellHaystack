@@ -15,11 +15,12 @@ library(Seurat)
 library(singleCellHaystack)
 
 knitr::opts_chunk$set(
-	fig.align = "center",
-	fig.width = 8,
-	fig.height = 6,
-	message = FALSE,
-	warning = TRUE
+  fig.path="figures/a05-",
+	fig.align="center",
+	fig.width=8,
+	fig.height=6,
+	message=FALSE,
+	warning=TRUE
 )
 
 set.seed(1)
@@ -36,7 +37,7 @@ library(singleCellHaystack)
 ```
 
 ```{r load}
-x <- readRDS(here("data-raw/moca_100k.rds"))
+x <- readRDS(here("data-raw/data/moca_100k.rds"))
 x
 ```
 

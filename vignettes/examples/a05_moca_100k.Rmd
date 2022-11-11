@@ -24,7 +24,7 @@ library(singleCellHaystack)
 
 
 ```r
-x <- readRDS(here("data-raw/moca_100k.rds"))
+x <- readRDS(here("data-raw/data/moca_100k.rds"))
 x
 ```
 
@@ -40,7 +40,7 @@ x
 DimPlot(x, label = TRUE) + NoLegend() + NoAxes()
 ```
 
-<img src="figure/plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;" />
+<img src="figures/a05-plot_dim-1.png" alt="plot of chunk plot_dim" style="display: block; margin: auto;" />
 
 # Haystack
 
@@ -56,7 +56,7 @@ system.time({
 
 ```
 ##    user  system elapsed 
-## 258.032  25.021 283.174
+## 256.045  28.569 284.612
 ```
 
 It takes around 5 minutes to complete in a standard personal computer. Here we show the top 10 genes selected by `haystack`.
@@ -88,4 +88,4 @@ And here we plot the expression of the top 4 genes.
 FeaturePlot(x, head(rownames(top), 4), order=TRUE) & NoAxes()
 ```
 
-<img src="figure/plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;" />
+<img src="figures/a05-plot_results-1.png" alt="plot of chunk plot_results" style="display: block; margin: auto;" />
