@@ -4,7 +4,7 @@ author: "Diego Diez"
 date: "2022-11-09"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Application on MOCA 100k}
+  %\VignetteIndexEntry{Application to trajectories}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -210,7 +210,7 @@ system.time({
 
 ```
 ##    user  system elapsed 
-##   4.980   2.018   6.938
+##   5.509   2.184   7.962
 ```
 
 Check that the KL_D fitting parameters look fine.

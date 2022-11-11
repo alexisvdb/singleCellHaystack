@@ -4,7 +4,7 @@ author: "Diego Diez"
 date: "2022-11-09"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Application on MOCA 100k}
+  %\VignetteIndexEntry{Application to trajectories}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
