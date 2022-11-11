@@ -34,14 +34,14 @@ samples that are non-randomly positioned inside any input space.
 
 ## Citations
 
--   Our manuscript describing the updated, more generally applicable
-    version of `singleCellHaystack` will be available on bioRxiv soon.
+- Our manuscript describing the updated, more generally applicable
+  version of `singleCellHaystack` will be available on bioRxiv soon.
 
--   Our manuscript describing the original implementation of
-    `singleCellHaystack` ([version
-    0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has
-    been published in [Nature
-    Communications](https://doi.org/10.1038/s41467-020-17900-3).
+- Our manuscript describing the original implementation of
+  `singleCellHaystack` ([version
+  0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has
+  been published in [Nature
+  Communications](https://doi.org/10.1038/s41467-020-17900-3).
 
 If you use `singleCellHaystack` in your research please cite our work
 using:
@@ -58,22 +58,21 @@ differentially expressed genes in single-cell transcriptome data.”
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/)
 includes a few example applications showing how to use our package:
 
--   [Toy
-    example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
--   [Single-cell
-    RNA-seq](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_scRNAseq.html)
--   [Spatial transcriptomics using
-    Visium](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
--   [Spatial transcriptomics using Slide-seq
-    V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
--   [MOCA 100k
-    cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
--   [Predicting DEGs along a
-    trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_trajectory.html)
-    Coming soon…
--   [Analysis of gene set
-    activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html)
--   Anything else to add?
+- [Toy
+  example](https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html)
+- [Single-cell
+  RNA-seq](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a02_example_scRNAseq.html)
+- [Spatial transcriptomics using
+  Visium](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a03_example_spatial_visium.html)
+- [Spatial transcriptomics using Slide-seq
+  V2](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a04_example_spatial_slideseqV2.html)
+- [MOCA 100k
+  cells](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html)
+- [Predicting DEGs along a
+  trajectory](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_pseudotime.html)
+- [Analysis of gene set
+  activities](https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html)
+- Anything else to add?
 
 ## Installation
 
