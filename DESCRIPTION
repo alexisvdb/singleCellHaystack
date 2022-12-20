@@ -1,6 +1,6 @@
 Package: singleCellHaystack
 Type: Package
-Title: A universal differential expression prediction tool for single-cell and spatial genomics data
+Title: A Universal Differential Expression Prediction Tool for Single-Cell and Spatial Genomics Data
 Version: 1.0.0
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre"),
