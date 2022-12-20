@@ -10,7 +10,7 @@ Authors@R: c(
     )
 Description: One key exploratory analysis step in single-cell genomics data analysis
     is the prediction of features with different activity levels. For example, we want 
-    to predict differentially expressed genes (DEGs)  in single-cell RNA-seq data, 
+    to predict differentially expressed genes (DEGs) in single-cell RNA-seq data, 
     spatial DEGs in spatial transcriptomics data, or differentially accessible 
     regions (DARs) in single-cell ATAC-seq data. 'singleCellHaystack' predicts differentially
     active features in single cell omics datasets without relying on the clustering
