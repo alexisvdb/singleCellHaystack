@@ -5,22 +5,26 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data) • singleCellHaystack</title>
+<title>A Universal Differential Expression Prediction Tool for Single-Cell and Spatial Genomics Data • singleCellHaystack</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)">
-<meta property="og:description" content="Identification of differentially expressed genes (DEGs) is a key step in single-cell 
-    transcriptomics data analysis. singleCellHaystack predicts DEGs without relying on 
-    clustering of cells into arbitrary clusters. Single-cell RNA-seq (scRNA-seq) data is 
-    often processed to fewer dimensions using Principal Component Analysis (PCA) and 
-    represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). singleCellHaystack 
-    uses Kullback-Leibler divergence to find genes that are expressed in subsets of cells 
-    that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. 
-    For the theoretical background of singleCellHaystack we refer to 
-    Vandenbon and Diez (Nature Communications, 2020) &lt;doi:10.1038/s41467-020-17900-3&gt;.">
+<script src="pkgdown.js"></script><meta property="og:title" content="A Universal Differential Expression Prediction Tool for Single-Cell and Spatial Genomics Data">
+<meta property="og:description" content="One key exploratory analysis step in single-cell genomics data analysis
+    is the prediction of features with different activity levels. For example, we want 
+    to predict differentially expressed genes (DEGs) in single-cell RNA-seq data, 
+    spatial DEGs in spatial transcriptomics data, or differentially accessible 
+    regions (DARs) in single-cell ATAC-seq data. singleCellHaystack predicts differentially
+    active features in single cell omics datasets without relying on the clustering
+    of cells into arbitrary clusters. singleCellHaystack uses Kullback-Leibler 
+    divergence to find features (e.g., genes, genomic regions, etc) that are active
+    in subsets of cells that are non-randomly positioned inside an input space (such as 
+    1D trajectories, 2D tissue sections, multi-dimensional embeddings, etc). For 
+    the theoretical background of singleCellHaystack we refer to our original paper
+    Vandenbon and Diez (Nature Communications, 2020) &lt;doi:10.1038/s41467-020-17900-3&gt;
+    and our update Vandenbon and Diez (bioRxiv, 2022) &lt;doi:10.1101/2022.11.13.516355&gt;.">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -41,7 +45,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -112,23 +116,24 @@
 </h2>
 <!-- badges: start -->
 
-<p><span class="emoji" data-emoji="warning">⚠️</span> We are updating <code>singleCellHaystack</code>. For the version described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, please use branch “binary”. The version on CRAN is also the same binary version. The master branch on GitHub is now the updated version. <span class="emoji" data-emoji="warning">⚠️</span></p>
-<p><code>singleCellHaystack</code> is a package for predicting differentially active features (e.g. genes) in single-cell and spatial transcriptomics and genomics data. While <code>singleCellHaystack</code> originally focused on the prediction of differentially expressed genes (DEGs; see <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>), we have updated the method and made it more generally applicable (coming soon on bioRxiv). It can now also be used for finding differentially accessible genomic regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features with non-random levels of activity inside any input space (1D, 2D, or &gt;2D). It does so without relying on clustering of samples into arbitrary clusters. <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find features that have patterns of activity in subsets of samples that are non-randomly positioned inside any input space.</p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> We updated <code>singleCellHaystack</code> in late 2022. The master branch on GitHub is now the updated version 1.0, described <a href="https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1" class="external-link">here</a>. The version on CRAN is also this updated version. For the older version described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, please use branch “binary”. <span class="emoji" data-emoji="warning">⚠️</span></p>
+<p><code>singleCellHaystack</code> is a package for predicting differentially active features (e.g. genes) in single-cell and spatial transcriptomics and genomics data. While <code>singleCellHaystack</code> originally focused on the prediction of differentially expressed genes (DEGs; see <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>), we have updated the method and made it more generally applicable (<a href="https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1" class="external-link">see bioRxiv</a>). It can now also be used for finding differentially accessible genomic regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features with non-random levels of activity inside any input space (1D, 2D, or &gt;2D). It does so without relying on clustering of samples into arbitrary clusters. <code>singleCellHaystack</code> uses Kullback-Leibler Divergence to find features that have patterns of activity in subsets of samples that are non-randomly positioned inside any input space.</p>
 </div>
 <div class="section level2">
 <h2 id="citations">Citations<a class="anchor" aria-label="anchor" href="#citations"></a>
 </h2>
 <ul>
-<li><p>Our manuscript describing the updated, more generally applicable version of <code>singleCellHaystack</code> will be available on bioRxiv soon.</p></li>
+<li><p>Our manuscript describing the updated, more generally applicable version of <code>singleCellHaystack</code> is <a href="https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1" class="external-link">available on bioRxiv</a>.</p></li>
 <li><p>Our manuscript describing the original implementation of <code>singleCellHaystack</code> (<a href="https://github.com/alexisvdb/singleCellHaystack/tree/binary" class="external-link">version 0.3.4</a>)has been published in <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">Nature Communications</a>.</p></li>
 </ul>
 <p>If you use <code>singleCellHaystack</code> in your research please cite our work using:</p>
-<p>Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” <em>Nature Communications</em>, <em>11</em>(1), 4318. <a href="doi:10.1038/s41467-020-17900-3" class="uri">doi:10.1038/s41467-020-17900-3</a> <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link uri">https://doi.org/10.1038/s41467-020-17900-3</a>.</p>
+<p>Vandenbon A, Diez D (2020). “A clustering-independent method for finding differentially expressed genes in single-cell transcriptome data.” <em>Nature Communications</em>, <em>11</em>(1), 4318. doi: 10.1038/s41467-020-17900-3 (URL: <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link uri">https://doi.org/10.1038/s41467-020-17900-3</a>).</p>
+<p>Vandenbon A, Diez D (2022). “A universal differential expression prediction tool for single-cell and spatial genomics data.” <em>bioRxiv</em>. doi: 10.1101/2022.11.13.516355 (URL: <a href="https://doi.org/10.1101/2022.11.13.516355" class="external-link uri">https://doi.org/10.1101/2022.11.13.516355</a>).</p>
 </div>
 <div class="section level2">
 <h2 id="documentation-and-demo">Documentation and Demo<a class="anchor" aria-label="anchor" href="#documentation-and-demo"></a>
 </h2>
-<p><span class="emoji" data-emoji="warning">⚠️</span> We are in the process of updating this documentation <span class="emoji" data-emoji="warning">⚠️</span></p>
+<p><span class="emoji" data-emoji="warning">⚠️</span> We updated this documentation to reflect the new version 1.0 <span class="emoji" data-emoji="warning">⚠️</span></p>
 <p>Our <a href="https://alexisvdb.github.io/singleCellHaystack/">documentation</a> includes a few example applications showing how to use our package:</p>
 <ul>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/a01_toy_example.html">Toy example</a></li>
@@ -138,21 +143,20 @@
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a05_moca_100k.html">MOCA 100k cells</a></li>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a06_pseudotime.html">Predicting DEGs along a trajectory</a></li>
 <li><a href="https://alexisvdb.github.io/singleCellHaystack/articles/examples/a07_gene_sets.html">Analysis of gene set activities</a></li>
-<li>Anything else to add?</li>
+<li>Anything else to add? Please let us know!</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the updated version of <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
+<p>You can install <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack" class="external-link">CRAN</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"singleCellHaystack"</span><span class="op">)</span></span></code></pre></div>
+<p>Or, you can install <code>singleCellHaystack</code> from the GitHub repository as shown below. Typical installation times should be less than 1 minute.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alexisvdb/singleCellHaystack"</span><span class="op">)</span></span></code></pre></div>
-<p>For the binary version of <code>singleCellHaystack</code> as described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, you can use one of these options:</p>
-<p>You can install the released version of <code>singleCellHaystack</code> from <a href="https://CRAN.R-project.org/package=singleCellHaystack" class="external-link">CRAN</a> with:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"singleCellHaystack"</span><span class="op">)</span></span></code></pre></div>
-<p>Or, install from the binary branch on GitHub:</p>
+<p>For the old binary version of <code>singleCellHaystack</code> as described <a href="https://doi.org/10.1038/s41467-020-17900-3" class="external-link">here</a>, you can use the binary branch on GitHub:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org" class="external-link">remotes</a></span><span class="op">)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"alexisvdb/singleCellHaystack@binary"</span><span class="op">)</span></span></code></pre></div>
@@ -168,8 +172,8 @@
 <div class="section level3">
 <h3 id="software-requirements">Software Requirements<a class="anchor" aria-label="anchor" href="#software-requirements"></a>
 </h3>
-<p>This package has been tested on Windows (Windows 10), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).</p>
-<p><code>singleCellHaystack</code> depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3).</p>
+<p>This package has been tested on Windows (Windows 10 &amp; 11), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 7.9 and Ubuntu 19.10).</p>
+<p><code>singleCellHaystack</code> depends on the following packages: Matrix (1.5-1), splines (4.1.3), ggplot2 (3.3.6) and reshape2 (1.4.4).</p>
 </div>
 </div>
 
@@ -229,7 +233,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

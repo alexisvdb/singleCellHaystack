@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">singleCellHaystack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.0</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### best df    : 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### picking model for stdev D_KL...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### using natural splines</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.018</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.015</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### best df    : 4</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### returning result...</span>
 <span class="r-in"><span></span></span>
@@ -164,75 +164,75 @@
 <span class="r-in"><span><span class="co"># 1. list top 10 biased genes</span></span></span>
 <span class="r-in"><span><span class="fu">show_result_haystack</span><span class="op">(</span>res.haystack <span class="op">=</span> <span class="va">res</span>, n <span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              D_KL log.p.vals log.p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  2.109978  -36.89496 -34.19599</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_61  2.095796  -35.75287 -33.05390</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.208038  -34.46184 -31.76287</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.875956  -34.45565 -31.75668</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_99  2.017610  -33.06250 -30.36353</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_444 1.963573  -32.83715 -30.13818</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_339 1.868211  -32.79171 -30.09274</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 1.868483  -32.08044 -29.38147</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.871301  -31.57997 -28.88100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_71  2.505652  -31.38314 -28.68417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.900159  -36.34655 -33.64758</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.237174  -34.97892 -32.27995</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_61  2.068980  -34.81782 -32.11885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  1.989213  -33.88287 -31.18390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_444 1.988849  -33.20264 -30.50367</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.785670  -31.88295 -29.18398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 1.840483  -31.81217 -29.11320</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.862287  -31.46813 -28.76916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_99  1.934713  -30.92677 -28.22780</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_429 1.745737  -30.89821 -28.19924</span>
 <span class="r-in"><span><span class="co"># 2. list genes with p value below a certain threshold</span></span></span>
 <span class="r-in"><span><span class="fu">show_result_haystack</span><span class="op">(</span>res.haystack <span class="op">=</span> <span class="va">res</span>, p.value.threshold<span class="op">=</span><span class="fl">1e-10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              D_KL log.p.vals  log.p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  2.109978  -36.89496 -34.195985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_61  2.095796  -35.75287 -33.053904</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.208038  -34.46184 -31.762874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.875956  -34.45565 -31.756680</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_99  2.017610  -33.06250 -30.363526</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_444 1.963573  -32.83715 -30.138178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_339 1.868211  -32.79171 -30.092744</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 1.868483  -32.08044 -29.381473</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.871301  -31.57997 -28.880996</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_71  2.505652  -31.38314 -28.684166</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_429 1.784322  -31.04067 -28.341704</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.761348  -30.48882 -27.789849</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_137 1.780374  -29.92616 -27.227192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_300 2.128255  -28.96860 -26.269629</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_479 2.311933  -28.82584 -26.126866</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_317 1.731105  -28.80559 -26.106623</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_321 2.324771  -27.24310 -24.544133</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_325 1.664610  -26.18602 -23.487048</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_155 1.980354  -25.66228 -22.963308</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_59  2.127830  -25.36601 -22.667043</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_313 1.629849  -25.33257 -22.633603</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_112 2.135417  -25.32436 -22.625386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_340 2.265802  -24.89204 -22.193071</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_24  2.417165  -24.40300 -21.704035</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_244 1.522756  -24.30693 -21.607956</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_213 1.527215  -23.73415 -21.035176</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_381 2.185395  -23.38588 -20.686909</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_424 2.375324  -22.86083 -20.161855</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_51  2.711843  -22.20605 -19.507085</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_458 1.430809  -21.13419 -18.435222</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_57  2.325346  -21.11508 -18.416106</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_400 2.468799  -19.93427 -17.235296</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_463 2.755731  -19.50091 -16.801936</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_135 2.382106  -19.06350 -16.364528</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_78  2.806871  -18.85727 -16.158300</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_295 2.463360  -16.80082 -14.101846</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_216 3.004364  -16.18816 -13.489192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_291 2.712180  -16.08182 -13.382853</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_449 3.219535  -15.44642 -12.747448</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_13  2.304398  -15.40043 -12.701464</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_10  2.187587  -14.63827 -11.939304</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_488 3.266444  -14.52657 -11.827604</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_136 2.669582  -14.16005 -11.461082</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_176 3.078777  -13.66620 -10.967233</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_156 2.496897  -13.01641 -10.317436</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_225 2.867361  -12.60903  -9.910056</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_9   3.153705  -11.81336  -9.114391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_201 2.416615  -11.01261  -8.313642</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_234 3.305842  -10.18107  -7.482105</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.900159  -36.34655 -33.647584</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.237174  -34.97892 -32.279953</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_61  2.068980  -34.81782 -32.118854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  1.989213  -33.88287 -31.183905</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_444 1.988849  -33.20264 -30.503667</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.785670  -31.88295 -29.183979</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 1.840483  -31.81217 -29.113204</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.862287  -31.46813 -28.769163</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_99  1.934713  -30.92677 -28.227805</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_429 1.745737  -30.89821 -28.199244</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_71  2.391586  -30.14138 -27.442407</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_300 2.144801  -29.60178 -26.902812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_479 2.315855  -29.50101 -26.802044</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_325 1.746532  -28.24227 -25.543296</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_313 1.731401  -27.89502 -25.196054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_321 2.279258  -27.22289 -24.523918</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_155 2.034497  -27.09020 -24.391226</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_339 1.596495  -26.84914 -24.150174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_213 1.629577  -26.72606 -24.027091</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_244 1.584252  -26.52728 -23.828311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_381 2.233813  -24.96956 -22.270592</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_317 1.518662  -24.02622 -21.327254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_137 1.522466  -24.01957 -21.320604</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_24  2.294962  -23.58092 -20.881955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_458 1.475453  -22.67433 -19.975358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_57  2.328396  -22.16051 -19.461544</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_51  2.595802  -22.00362 -19.304652</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_400 2.532468  -21.82195 -19.122975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_291 3.160579  -21.57637 -18.877403</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_135 2.485737  -21.42512 -18.726154</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_59  1.859318  -21.14511 -18.446140</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_463 2.773410  -20.85622 -18.157246</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_78  2.871959  -20.68588 -17.986915</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_340 1.957126  -20.63622 -17.937250</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_424 2.141243  -20.45695 -17.757982</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_112 1.762119  -19.23574 -16.536767</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_295 2.476866  -17.97710 -15.278129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_13  2.387906  -17.32226 -14.623286</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_488 3.339279  -15.66320 -12.964230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_136 2.703013  -15.33182 -12.632854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_10  2.141630  -14.98755 -12.288576</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_216 2.759649  -14.75644 -12.057471</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_449 3.059416  -14.65668 -11.957711</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_156 2.567836  -14.52540 -11.826433</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_176 3.064945  -14.08711 -11.388139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_225 2.958600  -14.02095 -11.321975</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_201 2.470913  -12.18803  -9.489063</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_234 3.443085  -11.19281  -8.493844</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_9   2.984528  -10.53198  -7.833011</span>
 <span class="r-in"><span><span class="co"># 3. list a set of specified genes</span></span></span>
 <span class="r-in"><span><span class="va">set</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gene_497"</span>,<span class="st">"gene_386"</span>, <span class="st">"gene_275"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">show_result_haystack</span><span class="op">(</span>res.haystack <span class="op">=</span> <span class="va">res</span>, gene <span class="op">=</span> <span class="va">set</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              D_KL  log.p.vals log.p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.871301 -31.5799660 -28.88100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.761348 -30.4888187 -27.78985</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_386 0.634804  -0.2093525   0.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>               D_KL  log.p.vals log.p.adj</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.7856696 -31.8829492 -29.18398</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_497 1.8622874 -31.4681333 -28.76916</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_386 0.7448268  -0.8429364   0.00000</span>
 </code></pre></div>
     </div>
   </div>
@@ -247,7 +247,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

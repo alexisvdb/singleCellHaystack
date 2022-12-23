@@ -1,5 +1,5 @@
 pandoc: 2.19.2
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   a01_toy_example: a01_toy_example.html
@@ -10,7 +10,7 @@ articles:
   a06_pseudotime: examples/a06_pseudotime.html
   a07_gene_sets: examples/a07_gene_sets.html
   a08_gene_clustering: examples/a08_gene_clustering.html
-last_built: 2022-11-11T11:10Z
+last_built: 2022-12-23T06:12Z
 urls:
   reference: https://alexisvdb.github.io/singleCellHaystack/reference
   article: https://alexisvdb.github.io/singleCellHaystack/articles
