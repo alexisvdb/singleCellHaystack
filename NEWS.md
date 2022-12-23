@@ -1,3 +1,9 @@
+# singleCellHaystack 1.0.0
+
+* CRAN release of the new continuous method.
+
+* Details explained in Vandenbon and Diez, bioRxiv, 2022.
+
 # singleCellHaystack 0.9.x (unreleased)
 
 * Add new continuous method.
