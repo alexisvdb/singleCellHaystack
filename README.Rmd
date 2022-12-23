@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
   [![CRAN Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](https://cran.r-project.org/package=singleCellHaystack)
 <!-- badges: end -->
 
-:warning: We are updating `singleCellHaystack`. For the older version described [here](https://doi.org/10.1038/s41467-020-17900-3), please use branch "binary". The version on CRAN is also the older binary version. The master branch on GitHub is now the updated version, described [here](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1). :warning:
+:warning: We updated `singleCellHaystack` in late 2022. The master branch on GitHub is now the updated version 1.0, described [here](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1). The version on CRAN is also this updated version. For the older version described [here](https://doi.org/10.1038/s41467-020-17900-3), please use branch "binary". :warning:
 
 `singleCellHaystack` is a package for predicting differentially active features (e.g. genes) in single-cell and spatial transcriptomics and genomics data. While `singleCellHaystack` originally focused on the prediction of differentially expressed genes (DEGs; see [here](https://doi.org/10.1038/s41467-020-17900-3)), we have updated the method and made it more generally applicable ([see bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1)). It can now also be used for finding differentially accessible genomic regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features with non-random levels of activity inside any input space (1D, 2D, or >2D). It does so without relying on clustering of samples into arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler Divergence to find features that have patterns of activity in subsets of samples that are non-randomly positioned inside any input space.
 
@@ -42,7 +42,7 @@ print(cit, style = "text")
 
 
 ## Documentation and Demo
-:warning: We are in the process of updating this documentation :warning:
+:warning: We updated this documentation to reflect the new version 1.0 :warning:
 
 Our [documentation](https://alexisvdb.github.io/singleCellHaystack/) includes a few example applications showing how to use our package:
 
@@ -59,21 +59,19 @@ Our [documentation](https://alexisvdb.github.io/singleCellHaystack/) includes a 
 
 ## Installation
 
-You can install the updated version of `singleCellHaystack` from the GitHub repository as shown below. Typical installation times should be less than 1 minute.
+You can install `singleCellHaystack` from [CRAN](https://CRAN.R-project.org/package=singleCellHaystack) with:
+``` r
+install.packages("singleCellHaystack")
+```
+
+Or, you can install `singleCellHaystack` from the GitHub repository as shown below. Typical installation times should be less than 1 minute.
 
 ``` r
 require(remotes)
 remotes::install_github("alexisvdb/singleCellHaystack")
 ```
 
-For the binary version of `singleCellHaystack` as described [here](https://doi.org/10.1038/s41467-020-17900-3), you can use one of these options:
-
-You can install the released version of `singleCellHaystack` from [CRAN](https://CRAN.R-project.org/package=singleCellHaystack) with:
-
-``` r
-install.packages("singleCellHaystack")
-```
-Or, install from the binary branch on GitHub:
+For the old binary version of `singleCellHaystack` as described [here](https://doi.org/10.1038/s41467-020-17900-3), you can use the binary branch on GitHub:
 
 ``` r
 require(remotes)
@@ -89,8 +87,7 @@ remotes::install_github("alexisvdb/singleCellHaystack@binary")
 
 ### Software Requirements
 
-This package has been tested on Windows (Windows 10), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 6.9 and Ubuntu 19.10).
+This package has been tested on Windows (Windows 10 & 11), macOS (Mojave 10.14.1 and Catalina 10.15.1), and Linux (CentOS 7.9 and Ubuntu 19.10).
 
-`singleCellHaystack` depends on the following packages: splines (3.6.0), ggplot2 (3.2.0), reshape2 (1.4.3).
-
+`singleCellHaystack` depends on the following packages: Matrix (1.5-1), splines (4.1.3), ggplot2 (3.3.6) and reshape2 (1.4.4).
 
