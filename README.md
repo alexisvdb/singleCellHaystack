@@ -55,6 +55,11 @@ differentially expressed genes in single-cell transcriptome data.”
 *Nature Communications*, *11*(1), 4318. doi: 10.1038/s41467-020-17900-3
 (URL: <https://doi.org/10.1038/s41467-020-17900-3>).
 
+Vandenbon A, Diez D (2022). “A universal differential expression
+prediction tool for single-cell and spatial genomics data.” *bioRxiv*.
+doi: 10.1101/2022.11.13.516355 (URL:
+<https://doi.org/10.1101/2022.11.13.516355>).
+
 ## Documentation and Demo
 
 :warning: We updated this documentation to reflect the new version 1.0
