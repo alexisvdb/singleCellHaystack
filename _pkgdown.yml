@@ -96,6 +96,8 @@ navbar:
         href: articles/examples/a06_pseudotime.html
       - text: Application to gene sets
         href: articles/examples/a07_gene_sets.html
+      #- text: Clustering genes
+      #  href: articles/examples/a08_gene_clustering.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/alexisvdb/singleCellHaystack
