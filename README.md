@@ -35,6 +35,9 @@ into arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler
 Divergence to find features that have patterns of activity in subsets of
 samples that are non-randomly positioned inside any input space.
 
+For the Python implementation, please see
+[here](https://github.com/ddiez/singleCellHaystack-py).
+
 ## Citations
 
 - Our manuscript describing the updated, more generally applicable
@@ -52,13 +55,8 @@ using:
 
 Vandenbon A, Diez D (2020). “A clustering-independent method for finding
 differentially expressed genes in single-cell transcriptome data.”
-*Nature Communications*, *11*(1), 4318. doi: 10.1038/s41467-020-17900-3
-(URL: <https://doi.org/10.1038/s41467-020-17900-3>).
-
-Vandenbon A, Diez D (2022). “A universal differential expression
-prediction tool for single-cell and spatial genomics data.” *bioRxiv*.
-doi: 10.1101/2022.11.13.516355 (URL:
-<https://doi.org/10.1101/2022.11.13.516355>).
+*Nature Communications*, *11*(1), 4318. <doi:10.1038/s41467-020-17900-3>
+<https://doi.org/10.1038/s41467-020-17900-3>.
 
 ## Documentation and Demo
 
