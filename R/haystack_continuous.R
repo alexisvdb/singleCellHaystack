@@ -317,6 +317,8 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
       method="continuous_highD",
       randomization = rand_info,
       grid.coordinates = grid.coord,
+      coord_mean = x.scale.center,
+      coord_std = x.scale.scale,
       densities = density.contributions,
       cv = coeffVar
     )
