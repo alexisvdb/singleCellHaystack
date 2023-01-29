@@ -34,8 +34,16 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
 
   message("### calling haystack_continuous_highD()...")
 
-  if (!is.null(grid.coord))
+  if (!is.null(grid.coord)) {
     grid.points <- nrow(grid.coord)
+
+    if (ncol(x) != ncol(grid.coord))
+      stop("Coordinates and grid points have different number of columns.")
+
+    if (!is.null(colnames(x)) || !is.null(colnames(grid.coord)))
+      if (! identical(colnames(x), colnames(grid.coord)))
+        stop("Coordinates and grid points have different column names.")
+  }
 
   # Check for sparseMatrixStats package.
   if(requireNamespace("sparseMatrixStats", quietly = TRUE)){
