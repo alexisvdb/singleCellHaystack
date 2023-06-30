@@ -4,9 +4,9 @@
 \name{singleCellHaystack-package}
 \alias{singleCellHaystack}
 \alias{singleCellHaystack-package}
-\title{singleCellHaystack: Finding Needles (=differentially Expressed Genes) in Haystacks (=single Cell Data)}
+\title{singleCellHaystack: A Universal Differential Expression Prediction Tool for Single-Cell and Spatial Genomics Data}
 \description{
-Identification of differentially expressed genes (DEGs) is a key step in single-cell transcriptomics data analysis. 'singleCellHaystack' predicts DEGs without relying on clustering of cells into arbitrary clusters. Single-cell RNA-seq (scRNA-seq) data is often processed to fewer dimensions using Principal Component Analysis (PCA) and represented in 2-dimensional plots (e.g. t-SNE or UMAP plots). 'singleCellHaystack' uses Kullback-Leibler divergence to find genes that are expressed in subsets of cells that are non-randomly positioned in a these multi-dimensional spaces or 2D representations. For the theoretical background of 'singleCellHaystack' we refer to Vandenbon and Diez (Nature Communications, 2020) \doi{10.1038/s41467-020-17900-3}.
+One key exploratory analysis step in single-cell genomics data analysis is the prediction of features with different activity levels. For example, we want to predict differentially expressed genes (DEGs) in single-cell RNA-seq data, spatial DEGs in spatial transcriptomics data, or differentially accessible regions (DARs) in single-cell ATAC-seq data. 'singleCellHaystack' predicts differentially active features in single cell omics datasets without relying on the clustering of cells into arbitrary clusters. 'singleCellHaystack' uses Kullback-Leibler divergence to find features (e.g., genes, genomic regions, etc) that are active in subsets of cells that are non-randomly positioned inside an input space (such as 1D trajectories, 2D tissue sections, multi-dimensional embeddings, etc). For the theoretical background of 'singleCellHaystack' we refer to our original paper Vandenbon and Diez (Nature Communications, 2020) \doi{10.1038/s41467-020-17900-3} and our update Vandenbon and Diez (bioRxiv, 2022) \doi{10.1101/2022.11.13.516355}.
 }
 \author{
 \strong{Maintainer}: Alexis Vandenbon \email{alexis.vandenbon@gmail.com} (\href{https://orcid.org/0000-0003-2180-5732}{ORCID})
