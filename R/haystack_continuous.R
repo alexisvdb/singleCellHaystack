@@ -294,6 +294,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
   rand_info <- p.vals$info
   rand_info$method <- spline.method
   rand_info$genes_to_randomize <- genes.to.randomize
+  rand_info$KLD_rand <- all.D_KL.randomized
   p.vals <- p.vals$fitted
 
   # bonferroni correction for multiple testing
