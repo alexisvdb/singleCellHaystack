@@ -1,3 +1,9 @@
+#' plot_compare_ranks
+#'
+#' @param res1 haystack result.
+#' @param res2 haystack result.
+#' @param sort_by column to sort results (default: log.p.vals).
+#'
 plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
   sum1 <- res1$results
   sum1 <- sum1[order(sum1[[sort_by]]), ]
