@@ -21,3 +21,45 @@ plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
     geom_abline(slope=1, intercept=0, color="limegreen") +
     theme(panel.grid=element_line(size=.1))
 }
+
+#' plot_rand_KLD
+#'
+#' Plots the distribution of randomized KLD for each of the genes, together with
+#' the mean and standard deviation, the 0.95 quantile and the 0.95 quantile from
+#' a normal distribution with mean and standard deviations from the distribution
+#' of KLDs. The logCV is indicated in the subtitle of each plot.
+#'
+#' @param x haystack result.
+#' @param n number of genes from randomization set to plot.
+#' @param log whether to use log of KLD.
+#' @param tail whether the genes are chosen from the tail of randomized genes.
+#'
+plot_rand_KLD <- function(x, n=12, log=TRUE, tail=FALSE) {
+  kld_rand <- x$info$randomization$KLD_rand
+  if (log) kld_rand <- log(kld_rand)
+  logcv <- x$info$randomization$mean$observed$x
+
+  N <- seq_len(n)
+  if (tail) N <- rev(N)
+
+  ngenes <- nrow(kld_rand)
+  select_k <- function(i, tail=FALSE) {
+    if (tail)
+      i <- ngenes - i
+    i
+  }
+  lapply(N, function(i) {
+    k <- select_k(i, tail)
+    m <- mean(kld_rand[k, ])
+    s <- sd(kld_rand[k, ])
+    q95 <- quantile(kld_rand[k, ], 0.95)
+    n95 <- qnorm(0.95, mean=m, sd=s)
+    qplot(kld_rand[k, ], bins=30) +
+      geom_vline(xintercept=m, color="limegreen") +
+      geom_vline(xintercept=c(m-s, m+s), color="violetred") +
+      geom_vline(xintercept=q95, color="steelblue1") +
+      geom_vline(xintercept=n95, color="red") +
+      theme(axis.text=element_blank()) +
+      labs(x=k, subtitle=paste0("log10CV: ", format(logcv[k], digits=2, nsmall=2)))
+  }) |> patchwork::wrap_plots()
+}
