@@ -15,23 +15,23 @@ Downloads](https://cranlogs.r-pkg.org/badges/grand-total/singleCellHaystack)](ht
 
 :warning: We updated `singleCellHaystack` in late 2022. The master
 branch on GitHub is now the updated version 1.0, described
-[here](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1). The
-version on CRAN is also this updated version. For the older version
-described [here](https://doi.org/10.1038/s41467-020-17900-3), please use
-branch “binary”. :warning:
+[here](https://doi.org/10.1038/s41598-023-38965-2). The version on CRAN
+is also this updated version. For the older version described
+[here](https://doi.org/10.1038/s41467-020-17900-3), please use branch
+“binary”. :warning:
 
 `singleCellHaystack` is a package for predicting differentially active
-features (e.g. genes) in single-cell and spatial transcriptomics and
-genomics data. While `singleCellHaystack` originally focused on the
-prediction of differentially expressed genes (DEGs; see
+features (e.g. genes, proteins, chromatin accessibility) in single-cell
+and spatial genomics data. While `singleCellHaystack` originally focused
+on the prediction of differentially expressed genes (DEGs; see
 [here](https://doi.org/10.1038/s41467-020-17900-3)), we have updated the
-method and made it more generally applicable ([see
-bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1)).
-It can now also be used for finding differentially accessible genomic
-regions in scATAC-seq, DEGs along a trajectory, spatial DEGs, or any
-other features with non-random levels of activity inside any input space
-(1D, 2D, or \>2D). It does so without relying on clustering of samples
-into arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler
+method and made it more generally applicable (see [Sci
+Rep](https://doi.org/10.1038/s41598-023-38965-2)). It can now also be
+used for finding differentially accessible genomic regions in
+scATAC-seq, DEGs along a trajectory, spatial DEGs, or any other features
+with non-random levels of activity inside any input space (1D, 2D, or
+\>2D). It does so without relying on clustering of samples into
+arbitrary clusters. `singleCellHaystack` uses Kullback-Leibler
 Divergence to find features that have patterns of activity in subsets of
 samples that are non-randomly positioned inside any input space.
 
@@ -41,22 +41,30 @@ For the Python implementation, please see
 ## Citations
 
 - Our manuscript describing the updated, more generally applicable
-  version of `singleCellHaystack` is [available on
-  bioRxiv](https://www.biorxiv.org/content/10.1101/2022.11.13.516355v1).
+  version of `singleCellHaystack` has been published in [Scientific
+  Reports](https://doi.org/10.1038/s41598-023-38965-2).
 
 - Our manuscript describing the original implementation of
   `singleCellHaystack` ([version
-  0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))has
-  been published in [Nature
+  0.3.4](https://github.com/alexisvdb/singleCellHaystack/tree/binary))
+  has been published in [Nature
   Communications](https://doi.org/10.1038/s41467-020-17900-3).
 
 If you use `singleCellHaystack` in your research please cite our work
 using:
 
+<p>
 Vandenbon A, Diez D (2020). “A clustering-independent method for finding
 differentially expressed genes in single-cell transcriptome data.”
-*Nature Communications*, *11*(1), 4318. <doi:10.1038/s41467-020-17900-3>
-<https://doi.org/10.1038/s41467-020-17900-3>.
+<em>Nature Communications</em>, <b>11</b>(1), 4318.
+<a href="https://doi.org/10.1038/s41467-020-17900-3">doi:10.1038/s41467-020-17900-3</a>.
+</p>
+<p>
+Vandenbon A, Diez D (2023). “A universal tool for predicting
+differentially active features in single-cell and spatial genomics
+data.” <em>Scientific Reports</em>, <b>13</b>(1), 11830.
+<a href="https://doi.org/10.1038/s41598-023-38965-2">doi:10.1038/s41598-023-38965-2</a>.
+</p>
 
 ## Documentation and Demo
 
