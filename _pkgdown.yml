@@ -65,6 +65,11 @@ reference:
   - get_reference
   - kde2d_faster
 
+- title: Development
+  contents:
+  - plot_compare_ranks
+  - plot_rand_KLD
+
 navbar:
   structure:
     left:
