@@ -14,14 +14,17 @@ citEntry(entry="article",
                "Nature Communications" ) )
 
 citEntry(entry="article",
-         title = "A universal differential expression prediction tool for single-cell and spatial genomics data.",
+         title = "A universal tool for predicting differentially active features in single-cell and spatial genomics data.",
          author = personList( as.person("Alexis Vandenbon"),
                               as.person("Diego Diez")),
-         year = 2022,
-         doi = "10.1101/2022.11.13.516355",
-         journal = "bioRxiv",
+         year = 2023,
+         number = 1,
+         volume = 13,
+         pages = 11830,
+         doi = "10.1038/s41598-023-38965-2",
+         journal = "Scientific Reports",
          textVersion =
-         paste("Alexis Vandenbon and Diego Diez (2022):",
-               "A universal differential expression prediction tool for single-cell and spatial genomics data.",
-               "bioRxiv" ) )
+         paste("Alexis Vandenbon and Diego Diez (2023):",
+               "A universal tool for predicting differentially active features in single-cell and spatial genomics data.",
+               "Scientific Reports" ) )
 
