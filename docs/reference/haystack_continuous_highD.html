@@ -96,6 +96,7 @@
 <span>  n.genes.to.randomize <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  selection.method.genes.to.randomize <span class="op">=</span> <span class="st">"heavytails"</span>,</span>
 <span>  grid.coord <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  genes.to.randomize <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  spline.method <span class="op">=</span> <span class="st">"ns"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -177,26 +178,26 @@
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### estimating p-values...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### picking model for mean D_KL...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### using natural splines</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.092</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.09</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### best df    : 3</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### picking model for stdev D_KL...</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### using natural splines</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.017</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best df    : 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best RMSD  : 0.018</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> ### best df    : 5</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> ### returning result...</span>
 <span class="r-in"><span><span class="co"># list top 10 biased genes</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span>, n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              D_KL log.p.vals log.p.adj</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  2.305333  -41.47782 -38.77885</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 2.100506  -40.37729 -37.67832</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 2.026455  -39.90383 -37.20486</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_339 1.977039  -38.36620 -35.66723</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_71  2.869281  -37.13528 -34.43631</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.429784  -36.32357 -33.62460</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_479 2.657068  -34.29632 -31.59735</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_137 1.842053  -33.78155 -31.08258</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.702307  -32.35780 -29.65883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> gene_61  2.010113  -32.20090 -29.50193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_79  2.405028  -38.82043 -36.12146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_242 1.850754  -38.06052 -35.36155</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_339 1.940697  -37.15175 -34.45278</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_71  2.673197  -36.08386 -33.38489</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_275 1.841230  -35.32151 -32.62254</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_62  2.175734  -34.89847 -32.19950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_351 1.906705  -33.77042 -31.07145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_479 2.455483  -33.13287 -30.43390</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_300 2.230951  -32.52041 -29.82144</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> gene_429 1.705867  -31.71053 -29.01156</span>
 </code></pre></div>
     </div>
   </div>

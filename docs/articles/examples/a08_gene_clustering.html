@@ -115,8 +115,16 @@ modules</h1>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
+<span><span class="co">## which was just loaded, will retire in October 2023.</span></span>
+<span><span class="co">## Please refer to R-spatial evolution reports for details, especially</span></span>
+<span><span class="co">## https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
+<span><span class="co">## It may be desirable to make the sf package available;</span></span>
+<span><span class="co">## package maintainers should consider adding sf to Suggests:.</span></span>
+<span><span class="co">## The sp package is now running under evolution status 2</span></span>
+<span><span class="co">##      (status 2 uses the sf package in place of rgdal)</span></span></code></pre>
 <pre><code><span><span class="co">## Attaching SeuratObject</span></span></code></pre>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.satijalab.org/seurat" class="external-link">SeuratData</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── <span style="font-weight: bold;">Installed datasets</span> ───────────────────────────────────── SeuratData v0.2.2 ──</span></span></code></pre>
 <pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">pbmc3k  </span> 3.1.4                        <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stxBrain</span> 0.1.1</span></span>
@@ -125,12 +133,12 @@ modules</h1>
 <pre><code><span><span class="co">## <span style="color: #00BB00;">✔</span> Dataset loaded successfully</span></span>
 <span><span class="co">## <span style="color: #BBBB00;">❯</span> Dataset built with a newer version of Seurat than installed</span></span>
 <span><span class="co">## <span style="color: #BB0000;">❓</span> Unknown version of Seurat installed</span></span></code></pre>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">singleCellHaystack</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Loading required package: grid</span></span></code></pre>
 <pre><code><span><span class="co">## ========================================</span></span>
-<span><span class="co">## ComplexHeatmap version 2.14.0</span></span>
+<span><span class="co">## ComplexHeatmap version 2.16.0</span></span>
 <span><span class="co">## Bioconductor page: http://bioconductor.org/packages/ComplexHeatmap/</span></span>
 <span><span class="co">## Github page: https://github.com/jokergoo/ComplexHeatmap</span></span>
 <span><span class="co">## Documentation: http://jokergoo.github.io/ComplexHeatmap-reference</span></span>
@@ -147,7 +155,7 @@ modules</h1>
 <span><span class="co">## This message can be suppressed by:</span></span>
 <span><span class="co">##   suppressPackageStartupMessages(library(ComplexHeatmap))</span></span>
 <span><span class="co">## ========================================</span></span></code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/theme_cowplot.html" class="external-link">theme_cowplot</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">select_cell_markers</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">scores</span>, <span class="va">max.overlap</span><span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">{</span></span>
@@ -168,25 +176,25 @@ modules</h1>
 </h2>
 <p>In this vignette we use the PBMC dataset from 10x available in the
 <code>SeuratData</code> package.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/LoadData.html" class="external-link">LoadData</a></span><span class="op">(</span><span class="st">"pbmc3k"</span>, <span class="st">"pbmc3k.final"</span><span class="op">)</span></span>
 <span><span class="va">pbmc</span></span></code></pre></div>
 <pre><code><span><span class="co">## An object of class Seurat </span></span>
 <span><span class="co">## 13714 features across 2638 samples within 1 assay </span></span>
 <span><span class="co">## Active assay: RNA (13714 features, 2000 variable features)</span></span>
 <span><span class="co">##  2 dimensional reductions calculated: pca, umap</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">pbmc</span>, label<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoLegend</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/SeuratTheme.html" class="external-link">NoAxes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a08_gene_clustering_files/figure-html/unnamed-chunk-2-1.png" width="700"></p>
 </div>
 <div class="section level2">
 <h2 id="run-haystack">Run haystack<a class="anchor" aria-label="anchor" href="#run-haystack"></a>
 </h2>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coord</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/Embeddings.html" class="external-link">Embeddings</a></span><span class="op">(</span><span class="va">pbmc</span>, reduction<span class="op">=</span><span class="st">"pca"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">coord</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 2638   50</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">exprs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mojaveazure.github.io/seurat-object/reference/AssayData.html" class="external-link">GetAssayData</a></span><span class="op">(</span><span class="va">pbmc</span>, assay<span class="op">=</span><span class="st">"RNA"</span>, slot<span class="op">=</span><span class="st">"data"</span><span class="op">)</span></span>
 <span><span class="va">exprs</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## 4 x 4 sparse Matrix of class "dgCMatrix"</span></span>
@@ -195,7 +203,7 @@ modules</h1>
 <span><span class="co">## AP006222.2                 .              .              .              .</span></span>
 <span><span class="co">## RP11-206L10.2              .              .              .              .</span></span>
 <span><span class="co">## RP11-206L10.9              .              .              .              .</span></span></code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/haystack_continuous_highD.html">haystack_continuous_highD</a></span><span class="op">(</span><span class="va">coord</span>, <span class="va">exprs</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ### calling haystack_continuous_highD()...</span></span></code></pre>
 <pre><code><span><span class="co">## ### Using package sparseMatrixStats to speed up statistics in sparse matrices.</span></span></code></pre>
@@ -218,13 +226,13 @@ modules</h1>
 <pre><code><span><span class="co">## ### best RMSD  : 0.08</span></span></code></pre>
 <pre><code><span><span class="co">## ### best df    : 9</span></span></code></pre>
 <pre><code><span><span class="co">## ### returning result...</span></span></code></pre>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/plot_rand_fit.html">plot_rand_fit</a></span><span class="op">(</span><span class="va">res</span>, <span class="st">"mean"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a08_gene_clustering_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../../reference/plot_rand_fit.html">plot_rand_fit</a></span><span class="op">(</span><span class="va">res</span>, <span class="st">"sd"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a08_gene_clustering_files/figure-html/unnamed-chunk-6-2.png" width="700"></p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sum</span> <span class="op">&lt;-</span> <span class="fu"><a href="../../reference/show_result_haystack.html">show_result_haystack</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   D_KL log.p.vals log.p.adj</span></span>
@@ -234,13 +242,13 @@ modules</h1>
 <span><span class="co">## GZMB       0.005030405  -47.99422 -43.85709</span></span>
 <span><span class="co">## CLDN5      0.864521392  -44.88222 -40.74509</span></span>
 <span><span class="co">## FGFBP2     0.004488329  -43.42574 -39.28861</span></span></code></pre>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">sum</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">sum</span><span class="op">)</span><span class="op">)</span>, y<span class="op">=</span><span class="va">log.p.adj</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1000</span><span class="op">)</span>, color<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"limegreen"</span>, <span class="st">"violetred"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="a08_gene_clustering_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Next we look at the top 100 genes identified by haystack.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">top_100_haystack</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sum</span>, <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">top_100_haystack</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                   D_KL log.p.vals log.p.adj</span></span>
@@ -256,21 +264,18 @@ modules</h1>
 </h2>
 <p>We can use the top genes to calculate gene clusters using the single
 cell expression data.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">m</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">exprs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">top_100_haystack</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">m</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##            AAACATACAACCAC AAACATTGAGCTAC AAACATTGATCAGC</span></span>
 <span><span class="co">## LY6G6F                  0              0              0</span></span>
 <span><span class="co">## AP001189.4              0              0              0</span></span>
 <span><span class="co">## GP9                     0              0              0</span></span></code></pre>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/ComplexHeatmap/man/Heatmap.html" class="external-link">Heatmap</a></span><span class="op">(</span><span class="va">m</span>, column_split<span class="op">=</span><span class="va">pbmc</span><span class="op">$</span><span class="va">seurat_annotations</span>, name<span class="op">=</span><span class="st">"Expression"</span>, show_column_names<span class="op">=</span><span class="cn">FALSE</span>, column_title_rot<span class="op">=</span><span class="fl">45</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## `use_raster` is automatically set to TRUE for a matrix with more than</span></span>
 <span><span class="co">## 2000 columns You can control `use_raster` argument by explicitly</span></span>
 <span><span class="co">## setting TRUE/FALSE to it.</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## Set `ht_opt$message = FALSE` to turn off this message.</span></span></code></pre>
-<pre><code><span><span class="co">## 'magick' package is suggested to install to give better rasterization.</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Set `ht_opt$message = FALSE` to turn off this message.</span></span></code></pre>
 <p><img src="a08_gene_clustering_files/figure-html/unnamed-chunk-11-1.png" width="384"></p>

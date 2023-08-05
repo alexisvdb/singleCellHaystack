@@ -130,6 +130,9 @@
     <loc>https://alexisvdb.github.io/singleCellHaystack/reference/kmeans_haystack_raw.html</loc>
   </url>
   <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack/reference/plot_compare_ranks.html</loc>
+  </url>
+  <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack/reference/plot_gene_haystack.html</loc>
   </url>
   <url>
@@ -140,6 +143,9 @@
   </url>
   <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack/reference/plot_gene_set_haystack_raw.html</loc>
+  </url>
+  <url>
+    <loc>https://alexisvdb.github.io/singleCellHaystack/reference/plot_rand_KLD.html</loc>
   </url>
   <url>
     <loc>https://alexisvdb.github.io/singleCellHaystack/reference/plot_rand_fit.html</loc>
