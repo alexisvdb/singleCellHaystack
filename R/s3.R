@@ -50,7 +50,10 @@ haystack.Seurat <- function(x, coord, assay = "RNA", slot = "data", dims = NULL,
 
   if (missing(coord)) stop("Please specify an embedding. One of: ", paste0(SeuratObject::Reductions(x), collapse=", "))
 
-  expression <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
+  if (packageVersion("Seurat") >= "5.0.0")
+    expression <- SeuratObject::GetAssayData(x, layer = slot, assay = assay)
+  else
+    expression <- SeuratObject::GetAssayData(x, slot = slot, assay = assay)
   coord <- SeuratObject::Embeddings(x, coord)
 
   if (! is.null(dims)) {
