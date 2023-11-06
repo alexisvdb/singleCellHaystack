@@ -1,3 +1,7 @@
+# singleCellHaystack 1.0.1
+
+* Add support for Seurat v5.
+
 # singleCellHaystack 1.0.0
 
 * CRAN release of the new continuous method.
