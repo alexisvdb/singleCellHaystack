@@ -69,7 +69,7 @@ haystack_continuous_highD = function(x, expression, grid.points = 100, weights.a
     stop("Some features have an average signal < 0. Expect average signal >= 0.")
 
   if (useSMS)
-    expr.sd <- sparseMatrixStats::rowSds(expression)
+    expr.sd <- sparseMatrixStats::rowSds(expression, useNames=FALSE)
   else
     expr.sd <- apply(expression,1,sd)
 
