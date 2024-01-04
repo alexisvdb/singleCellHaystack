@@ -1,3 +1,9 @@
+# singleCellHaystack 1.0.2
+
+* Fix call to sparseMatrixStats::rowSds.
+
+* Fix citation of newest paper in DESCRIPTION.
+
 # singleCellHaystack 1.0.1
 
 * Add support for Seurat v5.
