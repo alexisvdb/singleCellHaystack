@@ -1,7 +1,7 @@
 Package: singleCellHaystack
 Type: Package
 Title: A Universal Differential Expression Prediction Tool for Single-Cell and Spatial Genomics Data
-Version: 1.0.1
+Version: 1.0.2
 Authors@R: c(
     person("Alexis", "Vandenbon", email = "alexis.vandenbon@gmail.com", role = c("aut", "cre"),
         comment = c(ORCID = "0000-0003-2180-5732")),
@@ -20,7 +20,7 @@ Description: One key exploratory analysis step in single-cell genomics data anal
     1D trajectories, 2D tissue sections, multi-dimensional embeddings, etc). For 
     the theoretical background of 'singleCellHaystack' we refer to our original paper
     Vandenbon and Diez (Nature Communications, 2020) <doi:10.1038/s41467-020-17900-3>
-    and our update Vandenbon and Diez (bioRxiv, 2022) <doi:10.1101/2022.11.13.516355>.
+    and our update Vandenbon and Diez (Scientific Reports, 2023) <doi:10.1038/s41598-023-38965-2>.
 Imports: 
     methods,
     Matrix,
