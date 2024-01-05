@@ -41,6 +41,8 @@ Suggests:
     patchwork
 License: MIT + file LICENSE
 Encoding: UTF-8
+URL: https://alexisvdb.github.io/singleCellHaystack/, https://github.com/alexisvdb/singleCellHaystack
+BugReports: https://github.com/alexisvdb/singleCellHaystack/issues
 LazyData: true
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
