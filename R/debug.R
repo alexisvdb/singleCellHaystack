@@ -1,10 +1,4 @@
-#' plot_compare_ranks
-#'
-#' @param res1 haystack result.
-#' @param res2 haystack result.
-#' @param sort_by column to sort results (default: log.p.vals).
-#'
-plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
+compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
   sum1 <- res1$results
   sum1 <- sum1[order(sum1[[sort_by]]), ]
 
@@ -21,10 +15,22 @@ plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
     stop("Features in res1 and res2 results not identical.")
 
   d <- cbind(d1, d2)
+  return(d)
+}
+
+#' plot_compare_ranks
+#'
+#' @param res1 haystack result.
+#' @param res2 haystack result.
+#' @param sort_by column to sort results (default: log.p.vals).
+#'
+plot_compare_ranks <- function(res1, res2, sort_by="log.p.vals") {
+  d <- compare_ranks(res1, res2, sort_by)
 
   ggplot(d, aes(.data[["rank1"]], .data[["rank2"]])) +
     geom_point(size=.1) +
     geom_abline(slope=1, intercept=0, color="limegreen") +
+    labs(title=sort_by) +
     theme(panel.grid=element_line(size=.1))
 }
 
