@@ -54,7 +54,7 @@ plot_rand_KLD <- function(x, n=12, log=TRUE, tail=FALSE) {
       i <- ngenes - i
     i
   }
-  lapply(N, function(i) {
+  p <- lapply(N, function(i) {
     k <- select_k(i, tail)
     m <- mean(kld_rand[k, ])
     s <- sd(kld_rand[k, ])
@@ -67,5 +67,7 @@ plot_rand_KLD <- function(x, n=12, log=TRUE, tail=FALSE) {
       geom_vline(xintercept=n95, color="red") +
       theme(axis.text=element_blank()) +
       labs(x=k, subtitle=paste0("log10CV: ", format(logcv[k], digits=2, nsmall=2)))
-  }) |> patchwork::wrap_plots()
+  })
+  
+  patchwork::wrap_plots(p)
 }
