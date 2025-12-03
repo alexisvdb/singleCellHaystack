@@ -60,7 +60,9 @@ plot_rand_KLD <- function(x, n=12, log=TRUE, tail=FALSE) {
     s <- sd(kld_rand[k, ])
     q95 <- quantile(kld_rand[k, ], 0.95)
     n95 <- qnorm(0.95, mean=m, sd=s)
-    qplot(kld_rand[k, ], bins=30) +
+    d <- data.frame(kld_rand=kld_rand[k, ])
+    ggplot(d, aes(.data[["kld_rand"]])) +
+      geom_histogram(bins=30) +
       geom_vline(xintercept=m, color="limegreen") +
       geom_vline(xintercept=c(m-s, m+s), color="violetred") +
       geom_vline(xintercept=q95, color="steelblue1") +
@@ -68,6 +70,6 @@ plot_rand_KLD <- function(x, n=12, log=TRUE, tail=FALSE) {
       theme(axis.text=element_blank()) +
       labs(x=k, subtitle=paste0("log10CV: ", format(logcv[k], digits=2, nsmall=2)))
   })
-  
+
   patchwork::wrap_plots(p)
 }
